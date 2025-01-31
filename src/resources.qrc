@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/pix">
+        <file>images/palettes/pacman.png</file>
+    </qresource>
+    <qresource prefix="/bin"/>
+    <qresource prefix="/txt">
+        <file>config.json</file>
+    </qresource>
+</RCC>
