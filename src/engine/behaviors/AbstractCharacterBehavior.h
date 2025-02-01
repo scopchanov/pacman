@@ -14,8 +14,8 @@ public:
 	AbstractCharacterBehavior();
 
 	virtual void setGameObject(GameObject *gameObject);
-	void setGameController(GameController *gameController);
-	void setTilemap(Tilemap *tilemap);
+	virtual void setGameController(GameController *gameController);
+	virtual void setTilemap(Tilemap *tilemap);
 
 	void execute() override final;
 

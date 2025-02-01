@@ -1,10 +1,13 @@
-QT += widgets
+QT += widgets multimedia
 
 CONFIG += c++20
 
 SOURCES += \
+    Message.cpp \
+    engine/PathBuilder.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractCharacterBehavior.cpp \
+    engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/PlayerController.cpp \
@@ -21,8 +24,11 @@ SOURCES += \
     MainWindow.cpp
 
 HEADERS += \
+    Message.h \
+    engine/PathBuilder.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractCharacterBehavior.h \
+    engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
     engine/behaviors/DotsEating.h \
     engine/behaviors/PlayerController.h \

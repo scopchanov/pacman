@@ -5,25 +5,25 @@
 #include <QFile>
 
 FileHandler::FileHandler(QObject *parent) :
-    QObject(parent)
+	QObject(parent)
 {
 
 }
 
 QJsonObject FileHandler::readFile(const QString &filename)
 {
-    QFile file(filename);
+	QFile file(filename);
 
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-        return QJsonObject();
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+		return QJsonObject();
 
-    QJsonParseError err;
-    const QJsonDocument &doc{QJsonDocument::fromJson(file.readAll(), &err)};
+	QJsonParseError err;
+	const QJsonDocument &doc{QJsonDocument::fromJson(file.readAll(), &err)};
 
-    file.close();
+	file.close();
 
-    if (err.error || !doc.isObject())
-        return QJsonObject();
+	if (err.error || !doc.isObject())
+		return QJsonObject();
 
-    return doc.object();
+	return doc.object();
 }

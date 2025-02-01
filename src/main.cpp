@@ -1,12 +1,16 @@
 #include "MainWindow.h"
 #include <QApplication>
+#include <QFontDatabase>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
+	QApplication a(argc, argv);
+	MainWindow w;
 
-    w.show();
+	QFontDatabase::addApplicationFont(":/bin/fonts/neucha/neucha-regular.ttf");
+	QGuiApplication::setFont(QFont("Neucha", 14));
 
-    return a.exec();
+	w.show();
+
+	return a.exec();
 }

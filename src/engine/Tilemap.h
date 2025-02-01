@@ -27,7 +27,7 @@ public:
 
 private:
 	void deleteTile(Tile *tile);
-	void foo(int row, int col, Tile *tile);
+	void addTile(int row, int col, Tile *tile);
 
 	int m_gridRows;
 	int m_gridColumns;

@@ -75,7 +75,7 @@ void CharacterMovement::makeNextMove()
 
 bool CharacterMovement::aligned() const
 {
-	return distanceToTarget() < 0.001;
+	return distanceToTarget() < 0.01;
 }
 
 qreal CharacterMovement::distanceToTarget() const

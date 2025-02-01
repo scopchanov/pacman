@@ -2,8 +2,15 @@
     <qresource prefix="/pix">
         <file>images/palettes/pacman.png</file>
     </qresource>
-    <qresource prefix="/bin"/>
+    <qresource prefix="/bin">
+        <file>fonts/patrick-hand/PatrickHand-Regular.ttf</file>
+        <file>fonts/neucha/neucha-regular.ttf</file>
+    </qresource>
     <qresource prefix="/txt">
         <file>config.json</file>
+    </qresource>
+    <qresource prefix="/snd">
+        <file>audio/effects/notification.wav</file>
+        <file>audio/effects/win.wav</file>
     </qresource>
 </RCC>

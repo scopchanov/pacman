@@ -3,16 +3,22 @@
 
 #include "AbstractCharacterBehavior.h"
 
+class QSoundEffect;
+
 class DotsEating : public AbstractCharacterBehavior
 {
 public:
 	explicit DotsEating();
+	~DotsEating();
 
 protected:
 	void performActions() override;
 
 private:
 	void eatDotIfAvailable();
+
+	QSoundEffect *m_effectEat;
+	QSoundEffect *m_effectWin;
 };
 
 #endif // DOTSEATING_H

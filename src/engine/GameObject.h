@@ -1,11 +1,11 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 
-#include <QGraphicsPixmapItem>
+#include <QGraphicsPathItem>
 
 class AbstractBehavior;
 
-class GameObject : public QGraphicsPixmapItem
+class GameObject : public QGraphicsPathItem
 {
 public:
     explicit GameObject(QGraphicsItem *parent = nullptr);

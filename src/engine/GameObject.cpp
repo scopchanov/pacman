@@ -2,37 +2,37 @@
 #include "behaviors/AbstractBehavior.h"
 
 GameObject::GameObject(QGraphicsItem *parent) :
-    QGraphicsPixmapItem(parent)
+	QGraphicsPathItem(parent)
 {
 
 }
 
 GameObject::~GameObject()
 {
-    while (!m_behaviors.isEmpty())
-        delete m_behaviors.takeFirst();
+	while (!m_behaviors.isEmpty())
+		delete m_behaviors.takeFirst();
 }
 
 void GameObject::addBehavior(AbstractBehavior *behavior)
 {
-    m_behaviors.append(behavior);
+	m_behaviors.append(behavior);
 }
 
 int GameObject::behaviorCount() const
 {
-    return m_behaviors.count();
+	return m_behaviors.count();
 }
 
 AbstractBehavior *GameObject::behavior(int n)
 {
-    return m_behaviors.at(n);
+	return m_behaviors.at(n);
 }
 
 void GameObject::advance(int phase)
 {
-    if (!phase)
-        return;
+	if (!phase)
+		return;
 
-    for (auto *behavior : std::as_const(m_behaviors))
-        behavior->execute();
+	for (auto *behavior : std::as_const(m_behaviors))
+		behavior->execute();
 }

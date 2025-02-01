@@ -62,9 +62,9 @@ bool Tilemap::setTile(int row, int col, Tile *tile)
 
 	if (oldTile) {
 		deleteTile(oldTile);
-		foo(row, col, tile);
+		addTile(row, col, tile);
 	} else {
-		foo(row, col, tile);
+		addTile(row, col, tile);
 	}
 
 	m_tiles[row][col] = tile;
@@ -104,7 +104,7 @@ void Tilemap::deleteTile(Tile *tile)
 	m_tileCount--;
 }
 
-void Tilemap::foo(int row, int col, Tile *tile)
+void Tilemap::addTile(int row, int col, Tile *tile)
 {
 	if (!tile)
 		return;

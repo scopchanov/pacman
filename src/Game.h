@@ -7,28 +7,36 @@
 class GameController;
 class GameObject;
 class Scene;
+class Message;
 class InputSystem;
 class Tilemap;
 class Tile;
 
-class Game : QObject
+class Game : public QObject
 {
     Q_OBJECT
 public:
     explicit Game(QObject *parent = nullptr);
 
 	Scene *scene() const;
-	bool config(const QJsonObject &json);
+	bool configure(const QJsonObject &json);
+
+public slots:
 	void start();
 
 private:
 	Tilemap *createTilemap(int rows, int columns, const QSizeF &cellSize);
-    void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix);
-    Tile *createTile(int x, int y);
+	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
+	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	GameObject *createPlayer(Tilemap *tmLayout, Tilemap *tmDots);
 
     GameController *m_controller;
 	Scene *m_scene;
+	Message *m_message;
+	GameObject *m_player;
+
+private slots:
+	void onStartupTimeout();
 };
 
 #endif // GAME_H

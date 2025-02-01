@@ -35,7 +35,7 @@ void AbstractCharacterBehavior::execute()
 
 Vector2 AbstractCharacterBehavior::currentCell() const
 {
-	const QSize &halfPixmapSize{0.5*m_gameObject->pixmap().size()};
+	const QSize &halfPixmapSize{0.5*QSize(72, 72)};
 	qreal x{m_gameObject->pos().x() + halfPixmapSize.width()};
 	qreal y{m_gameObject->pos().y() + halfPixmapSize.height()};
 
