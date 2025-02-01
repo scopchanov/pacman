@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/pix"/>
     <qresource prefix="/bin">
-        <file>fonts/patrick-hand/PatrickHand-Regular.ttf</file>
         <file>fonts/neucha/neucha-regular.ttf</file>
     </qresource>
     <qresource prefix="/txt">
