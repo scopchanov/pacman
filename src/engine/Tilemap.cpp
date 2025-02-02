@@ -1,51 +1,32 @@
 #include "Tilemap.h"
+#include "Grid.h"
 #include "Tile.h"
 
 Tilemap::Tilemap(QGraphicsItem *parent) :
 	GameObject(parent),
-	m_gridRows{0},
-	m_gridColumns{0},
-	m_cellSize{QSizeF(64, 64)},
+	m_grid{nullptr},
 	m_tileCount{0}
 {
 
 }
 
-int Tilemap::gridRows() const
+Grid *Tilemap::grid() const
 {
-	return m_gridRows;
+	return m_grid;
 }
 
-int Tilemap::gridColumns() const
+void Tilemap::setGrid(Grid *grid)
 {
-	return m_gridColumns;
-}
+	m_grid = grid;
 
-void Tilemap::setGridSize(int rows, int columns)
-{
-	m_gridRows = rows;
-	m_gridColumns = columns;
+	if (!m_grid)
+		return;
 
 	QList<Tile *> row;
 
-	row.fill(nullptr, m_gridColumns);
+	row.fill(nullptr, m_grid->columnCount());
 
-	m_tiles.fill(row, m_gridRows);
-}
-
-QSizeF Tilemap::cellSize() const
-{
-	return m_cellSize;
-}
-
-void Tilemap::setCellSize(const QSizeF &sz)
-{
-	m_cellSize = sz;
-}
-
-void Tilemap::setCellSize(qreal width, qreal height)
-{
-	setCellSize(QSizeF(width, height));
+	m_tiles.fill(row, m_grid->rowCount());
 }
 
 int Tilemap::tileCount() const
@@ -55,7 +36,8 @@ int Tilemap::tileCount() const
 
 bool Tilemap::setTile(int row, int col, Tile *tile)
 {
-	if (row < 0 || row >= m_gridRows || col < 0 || col >= m_gridColumns)
+	if (!m_grid || row < 0 || row >= m_grid->rowCount()
+		|| col < 0 || col >= m_grid->columnCount())
 		return false;
 
 	auto *oldTile = m_tiles.at(row).at(col);
@@ -82,21 +64,6 @@ bool Tilemap::hasTile(int row, int col) const
 	return m_tiles.at(row).at(col);
 }
 
-QPointF Tilemap::cellPosition(int col, int row) const
-{
-	return QPointF(col*m_cellSize.width(), row*m_cellSize.height());
-}
-
-QPoint Tilemap::posToCell(QPointF position) const
-{
-	return posToCell(position.x(), position.y());
-}
-
-QPoint Tilemap::posToCell(qreal x, qreal y) const
-{
-	return QPoint(floor(x/m_cellSize.width()), floor(y/m_cellSize.height()));
-}
-
 void Tilemap::deleteTile(Tile *tile)
 {
 	delete tile;
@@ -106,11 +73,13 @@ void Tilemap::deleteTile(Tile *tile)
 
 void Tilemap::addTile(int row, int col, Tile *tile)
 {
-	if (!tile)
+	if (!m_grid || !tile)
 		return;
 
+	const QSizeF &cellSize{m_grid->cellSize()};
+
 	tile->setParentItem(this);
-	tile->setPos(col*m_cellSize.width(), row*m_cellSize.height());
+	tile->setPos(col*cellSize.width(), row*cellSize.height());
 
 	m_tileCount++;
 }

@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-class QGraphicsScene;
 class QElapsedTimer;
+class Scene;
 
 class GameTimer : public QObject
 {
@@ -14,14 +14,15 @@ public:
 	~GameTimer();
 
     qreal deltaTime() const;
-    void setScene(QGraphicsScene *scene);
+	void setScene(Scene *scene);
 
 public slots:
     void start();
+	void pause();
     void stop();
 
 private:
-    QGraphicsScene *m_scene;
+	Scene *m_scene;
     QElapsedTimer *m_time;
     QTimer *m_timer;
 

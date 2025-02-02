@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	gameView->setSceneRect(0, 0, 720, 792);
 	gameView->setFrameStyle(QFrame::NoFrame);
 	gameView->setBackgroundBrush(QBrush(Qt::black));
-	gameView->scale(3, 3);
+	// gameView->scale(3, 3);
 	gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	gameView->centerOn(360, 588);

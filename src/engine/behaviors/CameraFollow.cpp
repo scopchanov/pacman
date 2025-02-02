@@ -24,5 +24,5 @@ void CameraFollow::performActions()
 	if (!m_view)
 		return;
 
-	m_view->centerOn(parent()->pos() + QPointF(36, 36));
+	m_view->centerOn(parent()->pos());
 }

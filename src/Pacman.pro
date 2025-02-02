@@ -5,6 +5,7 @@ CONFIG += c++20
 SOURCES += \
     Message.cpp \
     engine/GameTimer.cpp \
+    engine/Grid.cpp \
     engine/PathBuilder.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
@@ -23,12 +24,14 @@ SOURCES += \
     FileHandler.cpp \
     Game.cpp \
     engine/behaviors/PlayerOrientation.cpp \
+    engine/behaviors/Teleporting.cpp \
     main.cpp \
     MainWindow.cpp
 
 HEADERS += \
     Message.h \
     engine/GameTimer.h \
+    engine/Grid.h \
     engine/PathBuilder.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \
@@ -47,7 +50,8 @@ HEADERS += \
     FileHandler.h \
     Game.h \
     MainWindow.h \
-    engine/behaviors/PlayerOrientation.h
+    engine/behaviors/PlayerOrientation.h \
+    engine/behaviors/Teleporting.h
 
 RESOURCES += \
     resources.qrc

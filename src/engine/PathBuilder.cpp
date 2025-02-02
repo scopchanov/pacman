@@ -48,6 +48,8 @@ QPainterPath PathBuilder::build(PathType type)
 		return playerFrame1();
 	case PT_PlayerFrame2:
 		return playerFrame2();
+	case PT_Teleporter:
+		return teleporter();
 	default:
 		return QPainterPath();
 	}
@@ -221,7 +223,7 @@ QPainterPath PathBuilder::dot()
 {
 	QPainterPath p;
 
-	p.addEllipse(7, 7, 10, 10);;
+	p.addEllipse(7, 7, 10, 10);
 
 	return p;
 }
@@ -230,8 +232,7 @@ QPainterPath PathBuilder::playerFrame1()
 {
 	QPainterPath p;
 
-	p.moveTo(36, 36);
-	p.arcTo(16, 16, 40, 40, 135, -270);
+	p.arcTo(-20, -20, 40, 40, 135, -270);
 
 	return p;
 }
@@ -240,8 +241,16 @@ QPainterPath PathBuilder::playerFrame2()
 {
 	QPainterPath p;
 
-	p.moveTo(36, 36);
-	p.arcTo(16, 16, 40, 40, 170, -340);
+	p.arcTo(-20, -20, 40, 40, 170, -340);
+
+	return p;
+}
+
+QPainterPath PathBuilder::teleporter()
+{
+	QPainterPath p;
+
+	p.addRect(-6, -6, 12, 12);
 
 	return p;
 }

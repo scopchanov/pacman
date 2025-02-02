@@ -2,6 +2,7 @@
 #include "engine/GameObject.h"
 #include "engine/GameTimer.h"
 #include "engine/Tilemap.h"
+#include "engine/Grid.h"
 
 CharacterMovement::CharacterMovement(GameObject *parent) :
 	AbstractSpatialBehavior(parent),
@@ -102,8 +103,8 @@ bool CharacterMovement::canMove(const Vector2 &direction) const
 
 Vector2 CharacterMovement::nextCellPosition(const Vector2 &direction) const
 {
-	Vector2 srcCell{tilemap()->posToCell(parent()->pos())};
+	Vector2 srcCell{tilemap()->grid()->posToCell(parent()->pos())};
 	const Vector2 &dstCell{srcCell + direction};
 
-	return Vector2(tilemap()->cellPosition(dstCell.x(), dstCell.y()));
+	return Vector2(tilemap()->grid()->cellPosition(dstCell.y(), dstCell.x()));
 }

@@ -29,7 +29,8 @@ public:
 		PT_SmallCircleDownRight,
 		PT_Dot,
 		PT_PlayerFrame1,
-		PT_PlayerFrame2
+		PT_PlayerFrame2,
+		PT_Teleporter
 	};
 
 	explicit PathBuilder(QObject *parent = nullptr);
@@ -56,6 +57,7 @@ private:
 	static QPainterPath dot();
 	static QPainterPath playerFrame1();
 	static QPainterPath playerFrame2();
+	static QPainterPath teleporter();
 };
 
 #endif // PATHBUILDER_H

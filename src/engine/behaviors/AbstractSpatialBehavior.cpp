@@ -1,5 +1,6 @@
 #include "AbstractSpatialBehavior.h"
 #include "engine/Tilemap.h"
+#include "engine/Grid.h"
 
 AbstractSpatialBehavior::AbstractSpatialBehavior(GameObject *parent) :
 	AbstractTimedBehavior(parent),
@@ -28,9 +29,5 @@ void AbstractSpatialBehavior::performTimedActions()
 
 Vector2 AbstractSpatialBehavior::currentCell() const
 {
-	const QSize &halfPixmapSize{0.5*QSize(72, 72)};
-	qreal x{parent()->pos().x() + halfPixmapSize.width()};
-	qreal y{parent()->pos().y() + halfPixmapSize.height()};
-
-	return Vector2(m_tilemap->posToCell(QPointF(x, y)));
+	return Vector2(m_tilemap->grid()->posToCell(parent()->pos()));
 }

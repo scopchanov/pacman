@@ -9,7 +9,9 @@
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/CameraFollow.h"
 #include "engine/behaviors/Animation.h"
+#include "engine/behaviors/Teleporting.h"
 #include "engine/Tilemap.h"
+#include "engine/Grid.h"
 #include "engine/Tile.h"
 #include <QJsonObject>
 #include <QJsonArray>
@@ -21,8 +23,7 @@ Game::Game(QObject *parent) :
 	QObject(parent),
 	m_gameTimer{new GameTimer(this)},
 	m_scene{new Scene(this)},
-	m_message(new Message()),
-	m_player{nullptr}
+	m_message(new Message())
 {
 	m_message->setBasePosition(360, 444);
 	m_gameTimer->setScene(m_scene);
@@ -37,22 +38,30 @@ bool Game::configure(const QJsonObject &json)
 {
 	const QJsonArray &wallMatrix{json.value("walls").toArray()};
 	const QJsonArray &dotMatrix{json.value("dots").toArray()};
-	int rows{json.value("gridSize").toObject().value("rows").toInt()};
-	int columns{json.value("gridSize").toObject().value("columns").toInt()};
-	qreal width{json.value("cellSize").toObject().value("width").toDouble()};
-	qreal height{json.value("cellSize").toObject().value("height").toDouble()};
-	const QSizeF &cellSize{width, height};
+	const QJsonObject &gridSize{json.value("gridSize").toObject()};
+	const QJsonObject &cellSize{json.value("cellSize").toObject()};
+	int rows{gridSize.value("rows").toInt()};
+	int columns{gridSize.value("columns").toInt()};
+	qreal width{cellSize.value("width").toDouble()};
+	qreal height{cellSize.value("height").toDouble()};
+	auto *grid{new Grid()};
+	auto *tmLayout{new Tilemap()};
+	auto *tmDots{new Tilemap()};
 
-	auto *tmLayout{createTilemap(rows, columns, cellSize)};
-	auto *tmDots{createTilemap(rows, columns, cellSize)};
-	m_player = createPlayer(tmLayout, tmDots);
+	grid->setGridSize(rows, columns);
+	grid->setCellSize(QSizeF(width, height));
+
+	tmLayout->setGrid(grid);
+	tmDots->setGrid(grid);
 
 	buildTilemap(tmLayout, wallMatrix, QPen(QColor(0x00A3FF), 4), QBrush(Qt::transparent));
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	m_scene->addItem(m_player);
+	m_scene->addItem(createPlayer(tmLayout, tmDots));
 	m_scene->addItem(tmLayout);
 	m_scene->addItem(tmDots);
+	m_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
+	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 1)));
 
 	return true;
 }
@@ -69,16 +78,6 @@ void Game::start()
 	connect(timer, &QTimer::timeout, this, &Game::onStartupTimeout);
 
 	timer->start(5000);
-}
-
-Tilemap *Game::createTilemap(int rows, int columns, const QSizeF &cellSize)
-{
-	auto *tilemap{new Tilemap()};
-
-	tilemap->setGridSize(rows, columns);
-	tilemap->setCellSize(cellSize);
-
-	return tilemap;
 }
 
 void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush)
@@ -118,7 +117,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 {
 	auto *player{new GameObject()};
 
-	player->setPos(324, 552);
+	player->setPos(360, 588);
 
 	auto *movement{new CharacterMovement(player)};
 	auto *orientation{new PlayerOrientation(player)};
@@ -132,7 +131,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 
 	movement->setGameTimer(m_gameTimer);
 	movement->setTilemap(tmLayout);
-	movement->setMovingSpeed(150);
+	movement->setMovingSpeed(200);
 	movement->setNextMove(Vector2(-1, 0));
 
 	orientation->setMovement(movement);
@@ -153,12 +152,29 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	player->addBehavior(cameraFollow);
 	player->addBehavior(dotsEating);
 
-	player->setTransformOriginPoint(36, 36);
 	player->setPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
 	player->setPen(QPen(Qt::transparent));
 	player->setBrush(Qt::white);
 
 	return player;
+}
+
+GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
+{
+	auto *teleporter{new GameObject()};
+	auto *teleporting{new Teleporting(teleporter)};
+
+	teleporting->setDestination(dst);
+
+	teleporter->setPos(src);
+	teleporter->addBehavior(teleporting);
+
+	teleporter->setPath(PathBuilder::build(PathBuilder::PT_Teleporter));
+	teleporter->setPen(QPen(Qt::transparent));
+	teleporter->setBrush(Qt::white);
+	// teleporter->setFlag(QGraphicsItem::ItemHasNoContents);
+
+	return teleporter;
 }
 
 void Game::onStartupTimeout()

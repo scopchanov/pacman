@@ -1,5 +1,5 @@
 #include "GameTimer.h"
-#include <QGraphicsScene>
+#include "Scene.h"
 #include <QElapsedTimer>
 #include <QTimer>
 
@@ -22,9 +22,12 @@ qreal GameTimer::deltaTime() const
 	return m_time->elapsed()/1000.0;
 }
 
-void GameTimer::setScene(QGraphicsScene *scene)
+void GameTimer::setScene(Scene *scene)
 {
 	m_scene = scene;
+
+	connect(m_scene, &Scene::pauseGame, this, &GameTimer::stop);
+	connect(m_scene, &Scene::resumeGame, this, &GameTimer::start);
 }
 
 void GameTimer::start()
@@ -34,6 +37,11 @@ void GameTimer::start()
 
 	m_timer->start(30);
 	m_time->start();
+}
+
+void GameTimer::pause()
+{
+	m_timer->stop();
 }
 
 void GameTimer::stop()

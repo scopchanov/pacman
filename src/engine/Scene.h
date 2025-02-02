@@ -18,6 +18,10 @@ protected:
 
 private:
     InputSystem *m_inputSystem;
+
+signals:
+	void pauseGame();
+	void resumeGame();
 };
 
 #endif // SCENE_H

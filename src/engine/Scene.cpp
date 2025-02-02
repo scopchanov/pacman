@@ -16,24 +16,27 @@ InputSystem *Scene::inputSystem() const
 
 void Scene::keyPressEvent(QKeyEvent *event)
 {
-	Vector2 userInput;
-
 	switch (event->key()) {
 	case Qt::Key_Left:
-		userInput.set(-1, 0);
+		m_inputSystem->setUserInput(Vector2(-1, 0));
 		break;
 	case Qt::Key_Right:
-		userInput.set(1, 0);
+		m_inputSystem->setUserInput(Vector2(1, 0));
 		break;
 	case Qt::Key_Up:
-		userInput.set(0, -1);
+		m_inputSystem->setUserInput(Vector2(0, -1));
 		break;
 	case Qt::Key_Down:
-		userInput.set(0, 1);
+		m_inputSystem->setUserInput(Vector2(0, 1));
+		break;
+	case Qt::Key_Escape:
+		emit pauseGame();
+		break;
+	case Qt::Key_Space:
+		emit resumeGame();
 		break;
 	default:
 		break;
 	}
 
-	m_inputSystem->setUserInput(userInput);
 }
