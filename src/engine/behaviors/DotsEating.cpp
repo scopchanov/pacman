@@ -4,8 +4,8 @@
 #include <QPointF>
 #include <QSoundEffect>
 
-DotsEating::DotsEating() :
-	AbstractCharacterBehavior(),
+DotsEating::DotsEating(GameObject *parent) :
+	AbstractCharacterBehavior(parent),
 	m_effectEat{new QSoundEffect()},
 	m_effectWin{new QSoundEffect()}
 {
@@ -32,17 +32,17 @@ void DotsEating::eatDotIfAvailable()
 	int row{cell.y()};
 	int column{cell.x()};
 
-	if (!m_tilemap->hasTile(row, column))
+	if (!tilemap()->hasTile(row, column))
 		return;
 
-	m_tilemap->resetTile(row, column);
+	tilemap()->resetTile(row, column);
 
 	m_effectEat->play();
 
-	if (m_tilemap->tileCount())
+	if (tilemap()->tileCount())
 		return;
 
-	m_gameController->stop();
+	gameController()->stop();
 
 	if (m_effectEat->isPlaying())
 		m_effectEat->stop();

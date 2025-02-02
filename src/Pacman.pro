@@ -7,6 +7,7 @@ SOURCES += \
     engine/PathBuilder.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractCharacterBehavior.cpp \
+    engine/behaviors/Animation.cpp \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
     engine/behaviors/DotsEating.cpp \
@@ -28,6 +29,7 @@ HEADERS += \
     engine/PathBuilder.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractCharacterBehavior.h \
+    engine/behaviors/Animation.h \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
     engine/behaviors/DotsEating.h \

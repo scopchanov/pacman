@@ -9,7 +9,7 @@ class CharacterMovement;
 class PlayerController : public AbstractBehavior
 {
 public:
-	explicit PlayerController();
+	explicit PlayerController(GameObject *parent = nullptr);
 
 	void setInputSystem(InputSystem *inputSystem);
 	void setCharacterMovement(CharacterMovement *characterMovement);

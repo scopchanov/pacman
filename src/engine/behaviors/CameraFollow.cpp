@@ -1,9 +1,11 @@
 #include "CameraFollow.h"
 #include "engine/GameObject.h"
+#include "engine/GameController.h"
 #include <QGraphicsView>
+#include <QScrollBar>
 
-CameraFollow::CameraFollow() :
-	AbstractCharacterBehavior()
+CameraFollow::CameraFollow(GameObject *parent) :
+	AbstractCharacterBehavior(parent)
 {
 
 }
@@ -23,5 +25,5 @@ void CameraFollow::performActions()
 	if (!m_view)
 		return;
 
-	m_view->centerOn(m_gameObject->pos() + QPointF(36, 36));
+	m_view->centerOn(parent()->pos() + QPointF(36, 36));
 }

@@ -8,11 +8,11 @@
 class CharacterMovement : public AbstractCharacterBehavior
 {
 public:
-	explicit CharacterMovement();
+	explicit CharacterMovement(GameObject *parent = nullptr);
 
-	void setGameObject(GameObject *gameObject) override;
 	qreal movingSpeed() const;
 	void setMovingSpeed(qreal value);
+	Vector2 nextMove() const;
 	void setNextMove(const Vector2 &direction);
 
 protected:

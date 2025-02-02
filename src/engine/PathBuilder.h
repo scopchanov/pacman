@@ -28,7 +28,8 @@ public:
 		PT_SmallCircleDownLeft,
 		PT_SmallCircleDownRight,
 		PT_Dot,
-		PT_PlayerFrame1
+		PT_PlayerFrame1,
+		PT_PlayerFrame2
 	};
 
 	explicit PathBuilder(QObject *parent = nullptr);
@@ -54,6 +55,7 @@ private:
 	static QPainterPath smallCircleDownRight();
 	static QPainterPath dot();
 	static QPainterPath playerFrame1();
+	static QPainterPath playerFrame2();
 };
 
 #endif // PATHBUILDER_H

@@ -2,8 +2,8 @@
 #include "engine/InputSystem.h"
 #include "CharacterMovement.h"
 
-PlayerController::PlayerController() :
-	AbstractBehavior(),
+PlayerController::PlayerController(GameObject *parent) :
+	AbstractBehavior(parent),
 	m_inputSystem{nullptr},
 	m_characterMovement{nullptr}
 {

@@ -8,7 +8,7 @@ class QSoundEffect;
 class DotsEating : public AbstractCharacterBehavior
 {
 public:
-	explicit DotsEating();
+	explicit DotsEating(GameObject *parent = nullptr);
 	~DotsEating();
 
 protected:

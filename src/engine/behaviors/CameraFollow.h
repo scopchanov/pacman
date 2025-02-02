@@ -8,7 +8,7 @@ class QGraphicsView;
 class CameraFollow : public AbstractCharacterBehavior
 {
 public:
-	explicit CameraFollow();
+	explicit CameraFollow(GameObject *parent = nullptr);
 
 	QGraphicsView *view() const;
 	void setView(QGraphicsView *view);

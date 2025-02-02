@@ -7,6 +7,7 @@
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/CameraFollow.h"
+#include "engine/behaviors/Animation.h"
 #include "engine/Tilemap.h"
 #include "engine/Tile.h"
 #include <QJsonObject>
@@ -114,42 +115,47 @@ Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 
 GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 {
-	auto *gameObject{new GameObject()};
-	auto *movement{new CharacterMovement()};
-	auto *dotsEating{new DotsEating()};
-	auto *cameraFollow{new CameraFollow()};
-	auto *playerController{new PlayerController()};
+	auto *player{new GameObject()};
 
-	gameObject->setPos(324, 552);
+	player->setPos(324, 552);
+
+	auto *movement{new CharacterMovement(player)};
+	auto *dotsEating{new DotsEating(player)};
+	auto *cameraFollow{new CameraFollow(player)};
+	auto *playerController{new PlayerController(player)};
+	auto *animation{new Animation(player)};
+
 
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(m_scene->inputSystem());
 
-	movement->setGameObject(gameObject);
 	movement->setGameController(m_controller);
 	movement->setTilemap(tmLayout);
 	movement->setMovingSpeed(150);
 	movement->setNextMove(Vector2(-1, 0));
 
-	dotsEating->setGameObject(gameObject);
 	dotsEating->setGameController(m_controller);
 	dotsEating->setTilemap(tmDots);
 
-	cameraFollow->setGameObject(gameObject);
 	cameraFollow->setGameController(m_controller);
 	cameraFollow->setTilemap(tmLayout);
 	cameraFollow->setView(m_scene->views().at(0));
 
-	gameObject->addBehavior(playerController);
-	gameObject->addBehavior(movement);
-	gameObject->addBehavior(dotsEating);
-	gameObject->addBehavior(cameraFollow);
+	animation->setGameController(m_controller);
+	animation->addPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
+	animation->addPath(PathBuilder::build(PathBuilder::PT_PlayerFrame2));
 
-	gameObject->setPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
-	gameObject->setPen(QPen(Qt::transparent));
-	gameObject->setBrush(Qt::white);
+	player->addBehavior(playerController);
+	player->addBehavior(movement);
+	player->addBehavior(dotsEating);
+	player->addBehavior(cameraFollow);
+	player->addBehavior(animation);
 
-	return gameObject;
+	player->setPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
+	player->setPen(QPen(Qt::transparent));
+	player->setBrush(Qt::white);
+
+	return player;
 }
 
 void Game::onStartupTimeout()

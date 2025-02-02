@@ -46,6 +46,8 @@ QPainterPath PathBuilder::build(PathType type)
 		return dot();
 	case PT_PlayerFrame1:
 		return playerFrame1();
+	case PT_PlayerFrame2:
+		return playerFrame2();
 	default:
 		return QPainterPath();
 	}
@@ -228,7 +230,18 @@ QPainterPath PathBuilder::playerFrame1()
 {
 	QPainterPath p;
 
-	p.addEllipse(16, 16, 40, 40);;
+	p.moveTo(36, 36);
+	p.arcTo(16, 16, 40, 40, 135, -270);
+
+	return p;
+}
+
+QPainterPath PathBuilder::playerFrame2()
+{
+	QPainterPath p;
+
+	p.moveTo(36, 36);
+	p.arcTo(16, 16, 40, 40, 170, -340);
 
 	return p;
 }

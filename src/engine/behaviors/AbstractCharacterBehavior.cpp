@@ -1,23 +1,27 @@
 #include "AbstractCharacterBehavior.h"
 #include "engine/Tilemap.h"
 
-AbstractCharacterBehavior::AbstractCharacterBehavior() :
-	AbstractBehavior(),
-	m_gameObject{nullptr},
+AbstractCharacterBehavior::AbstractCharacterBehavior(GameObject *parent) :
+	AbstractBehavior(parent),
 	m_gameController{nullptr},
 	m_tilemap{nullptr}
 {
 
 }
 
-void AbstractCharacterBehavior::setGameObject(GameObject *gameObject)
+GameController *AbstractCharacterBehavior::gameController() const
 {
-	m_gameObject = gameObject;
+	return m_gameController;
 }
 
 void AbstractCharacterBehavior::setGameController(GameController *gameController)
 {
 	m_gameController = gameController;
+}
+
+Tilemap *AbstractCharacterBehavior::tilemap() const
+{
+	return m_tilemap;
 }
 
 void AbstractCharacterBehavior::setTilemap(Tilemap *tilemap)
@@ -27,7 +31,7 @@ void AbstractCharacterBehavior::setTilemap(Tilemap *tilemap)
 
 void AbstractCharacterBehavior::execute()
 {
-	if (!m_gameObject || !m_gameController || !m_tilemap)
+	if (!parent() || !m_gameController || !m_tilemap)
 		return;
 
 	performActions();
@@ -36,8 +40,8 @@ void AbstractCharacterBehavior::execute()
 Vector2 AbstractCharacterBehavior::currentCell() const
 {
 	const QSize &halfPixmapSize{0.5*QSize(72, 72)};
-	qreal x{m_gameObject->pos().x() + halfPixmapSize.width()};
-	qreal y{m_gameObject->pos().y() + halfPixmapSize.height()};
+	qreal x{parent()->pos().x() + halfPixmapSize.width()};
+	qreal y{parent()->pos().y() + halfPixmapSize.height()};
 
 	return Vector2(m_tilemap->posToCell(QPointF(x, y)));
 }
