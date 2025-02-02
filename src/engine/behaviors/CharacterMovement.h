@@ -1,11 +1,11 @@
 #ifndef CHARACTERMOVEMENT_H
 #define CHARACTERMOVEMENT_H
 
-#include "AbstractCharacterBehavior.h"
+#include "AbstractSpatialBehavior.h"
 #include <QtGlobal>
 #include <QPointF>
 
-class CharacterMovement : public AbstractCharacterBehavior
+class CharacterMovement : public AbstractSpatialBehavior
 {
 public:
 	explicit CharacterMovement(GameObject *parent = nullptr);
@@ -14,9 +14,10 @@ public:
 	void setMovingSpeed(qreal value);
 	Vector2 nextMove() const;
 	void setNextMove(const Vector2 &direction);
+	Vector2 direction() const;
 
 private:
-	void performCharacterActions() override;
+	void performSpatialActions() override;
 	void moveCharacter();
 	void decideWhatToDoNext();
 	void turnWhenAligned();

@@ -1,32 +1,32 @@
-#include "AbstractCharacterBehavior.h"
+#include "AbstractSpatialBehavior.h"
 #include "engine/Tilemap.h"
 
-AbstractCharacterBehavior::AbstractCharacterBehavior(GameObject *parent) :
+AbstractSpatialBehavior::AbstractSpatialBehavior(GameObject *parent) :
 	AbstractTimedBehavior(parent),
 	m_tilemap{nullptr}
 {
 
 }
 
-Tilemap *AbstractCharacterBehavior::tilemap() const
+Tilemap *AbstractSpatialBehavior::tilemap() const
 {
 	return m_tilemap;
 }
 
-void AbstractCharacterBehavior::setTilemap(Tilemap *tilemap)
+void AbstractSpatialBehavior::setTilemap(Tilemap *tilemap)
 {
 	m_tilemap = tilemap;
 }
 
-void AbstractCharacterBehavior::performTimedActions()
+void AbstractSpatialBehavior::performTimedActions()
 {
 	if (!m_tilemap)
 		return;
 
-	performCharacterActions();
+	performSpatialActions();
 }
 
-Vector2 AbstractCharacterBehavior::currentCell() const
+Vector2 AbstractSpatialBehavior::currentCell() const
 {
 	const QSize &halfPixmapSize{0.5*QSize(72, 72)};
 	qreal x{parent()->pos().x() + halfPixmapSize.width()};

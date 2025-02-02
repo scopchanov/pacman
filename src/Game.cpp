@@ -4,6 +4,7 @@
 #include "engine/GameTimer.h"
 #include "engine/Scene.h"
 #include "engine/behaviors/PlayerController.h"
+#include "engine/behaviors/PlayerOrientation.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/CameraFollow.h"
@@ -120,6 +121,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	player->setPos(324, 552);
 
 	auto *movement{new CharacterMovement(player)};
+	auto *orientation{new PlayerOrientation(player)};
 	auto *dotsEating{new DotsEating(player)};
 	auto *cameraFollow{new CameraFollow(player)};
 	auto *playerController{new PlayerController(player)};
@@ -133,6 +135,8 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	movement->setMovingSpeed(150);
 	movement->setNextMove(Vector2(-1, 0));
 
+	orientation->setMovement(movement);
+
 	dotsEating->setGameTimer(m_gameTimer);
 	dotsEating->setTilemap(tmDots);
 
@@ -144,10 +148,12 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 
 	player->addBehavior(playerController);
 	player->addBehavior(movement);
+	player->addBehavior(orientation);
+	player->addBehavior(animation);
 	player->addBehavior(cameraFollow);
 	player->addBehavior(dotsEating);
-	player->addBehavior(animation);
 
+	player->setTransformOriginPoint(36, 36);
 	player->setPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
 	player->setPen(QPen(Qt::transparent));
 	player->setBrush(Qt::white);

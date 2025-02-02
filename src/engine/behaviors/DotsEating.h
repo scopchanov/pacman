@@ -1,18 +1,18 @@
 #ifndef DOTSEATING_H
 #define DOTSEATING_H
 
-#include "AbstractCharacterBehavior.h"
+#include "AbstractSpatialBehavior.h"
 
 class QSoundEffect;
 
-class DotsEating : public AbstractCharacterBehavior
+class DotsEating : public AbstractSpatialBehavior
 {
 public:
 	explicit DotsEating(GameObject *parent = nullptr);
 	~DotsEating();
 
 private:
-	void performCharacterActions() override;
+	void performSpatialActions() override;
 	void eatDotIfAvailable();
 
 	QSoundEffect *m_effectEat;

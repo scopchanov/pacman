@@ -56,8 +56,12 @@ public:
     bool operator==(const Vector2 &other) const;
     Vector2 operator+(const Vector2 &other) const;
     Vector2 operator-(const Vector2 &other) const;
+	Vector2 operator*(qreal k) const;
+	Vector2 operator/(qreal k) const;
     void operator+=(const Vector2 &other);
     void operator-=(const Vector2 &other);
+	void operator*=(qreal k);
+	void operator/=(qreal k);
     operator QString() const;
 
 private:

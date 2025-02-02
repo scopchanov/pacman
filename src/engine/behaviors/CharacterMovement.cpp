@@ -4,7 +4,7 @@
 #include "engine/Tilemap.h"
 
 CharacterMovement::CharacterMovement(GameObject *parent) :
-	AbstractCharacterBehavior(parent),
+	AbstractSpatialBehavior(parent),
 	m_movingSpeed{0.0}
 {
 	if (!parent)
@@ -33,7 +33,12 @@ void CharacterMovement::setNextMove(const Vector2 &direction)
 	m_nextMove = direction;
 }
 
-void CharacterMovement::performCharacterActions()
+Vector2 CharacterMovement::direction() const
+{
+	return m_direction;
+}
+
+void CharacterMovement::performSpatialActions()
 {
 	moveCharacter();
 	decideWhatToDoNext();

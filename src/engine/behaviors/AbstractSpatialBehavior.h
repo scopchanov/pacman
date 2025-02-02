@@ -1,5 +1,5 @@
-#ifndef ABSTRACTCHARACTERBEHAVIOR_H
-#define ABSTRACTCHARACTERBEHAVIOR_H
+#ifndef ABSTRACTSPATIALBEHAVIOR_H
+#define ABSTRACTSPATIALBEHAVIOR_H
 
 #include "AbstractTimedBehavior.h"
 #include "engine/Vector2.h"
@@ -7,10 +7,10 @@
 class GameObject;
 class Tilemap;
 
-class AbstractCharacterBehavior : public AbstractTimedBehavior
+class AbstractSpatialBehavior : public AbstractTimedBehavior
 {
 public:
-	explicit AbstractCharacterBehavior(GameObject *parent = nullptr);
+	explicit AbstractSpatialBehavior(GameObject *parent = nullptr);
 
 	Tilemap *tilemap() const;
 	virtual void setTilemap(Tilemap *tilemap);
@@ -20,9 +20,9 @@ protected:
 
 private:
 	void performTimedActions() override final;
-	virtual void performCharacterActions() = 0;
+	virtual void performSpatialActions() = 0;
 
 	Tilemap *m_tilemap;
 };
 
-#endif // ABSTRACTCHARACTERBEHAVIOR_H
+#endif // ABSTRACTSPATIALBEHAVIOR_H

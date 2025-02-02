@@ -7,7 +7,7 @@ SOURCES += \
     engine/GameTimer.cpp \
     engine/PathBuilder.cpp \
     engine/behaviors/AbstractBehavior.cpp \
-    engine/behaviors/AbstractCharacterBehavior.cpp \
+    engine/behaviors/AbstractSpatialBehavior.cpp \
     engine/behaviors/AbstractTimedBehavior.cpp \
     engine/behaviors/Animation.cpp \
     engine/behaviors/CameraFollow.cpp \
@@ -22,6 +22,7 @@ SOURCES += \
     engine/Vector2.cpp \
     FileHandler.cpp \
     Game.cpp \
+    engine/behaviors/PlayerOrientation.cpp \
     main.cpp \
     MainWindow.cpp
 
@@ -30,7 +31,7 @@ HEADERS += \
     engine/GameTimer.h \
     engine/PathBuilder.h \
     engine/behaviors/AbstractBehavior.h \
-    engine/behaviors/AbstractCharacterBehavior.h \
+    engine/behaviors/AbstractSpatialBehavior.h \
     engine/behaviors/AbstractTimedBehavior.h \
     engine/behaviors/Animation.h \
     engine/behaviors/CameraFollow.h \
@@ -45,7 +46,8 @@ HEADERS += \
     engine/Vector2.h \
     FileHandler.h \
     Game.h \
-    MainWindow.h
+    MainWindow.h \
+    engine/behaviors/PlayerOrientation.h
 
 RESOURCES += \
     resources.qrc

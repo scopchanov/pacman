@@ -5,7 +5,7 @@
 #include <QSoundEffect>
 
 DotsEating::DotsEating(GameObject *parent) :
-	AbstractCharacterBehavior(parent),
+	AbstractSpatialBehavior(parent),
 	m_effectEat{new QSoundEffect()},
 	m_effectWin{new QSoundEffect()}
 {
@@ -21,7 +21,7 @@ DotsEating::~DotsEating()
 	m_effectWin->deleteLater();
 }
 
-void DotsEating::performCharacterActions()
+void DotsEating::performSpatialActions()
 {
 	if (!m_effectEat || !m_effectWin)
 		return;
