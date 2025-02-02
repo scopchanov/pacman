@@ -1,6 +1,6 @@
 #include "CharacterMovement.h"
 #include "engine/GameObject.h"
-#include "engine/GameController.h"
+#include "engine/GameTimer.h"
 #include "engine/Tilemap.h"
 
 CharacterMovement::CharacterMovement(GameObject *parent) :
@@ -33,7 +33,7 @@ void CharacterMovement::setNextMove(const Vector2 &direction)
 	m_nextMove = direction;
 }
 
-void CharacterMovement::performActions()
+void CharacterMovement::performCharacterActions()
 {
 	moveCharacter();
 	decideWhatToDoNext();
@@ -41,7 +41,7 @@ void CharacterMovement::performActions()
 
 void CharacterMovement::moveCharacter()
 {
-	qreal maxDistanceDelta{m_movingSpeed*gameController()->deltaTime()};
+	qreal maxDistanceDelta{m_movingSpeed*gameTimer()->deltaTime()};
 	Vector2 position{parent()->pos()};
 
 	position.moveTowards(m_targetPosition, maxDistanceDelta);

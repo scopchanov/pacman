@@ -1,5 +1,5 @@
 #include "DotsEating.h"
-#include "engine/GameController.h"
+#include "engine/GameTimer.h"
 #include "engine/Tilemap.h"
 #include <QPointF>
 #include <QSoundEffect>
@@ -21,8 +21,11 @@ DotsEating::~DotsEating()
 	m_effectWin->deleteLater();
 }
 
-void DotsEating::performActions()
+void DotsEating::performCharacterActions()
 {
+	if (!m_effectEat || !m_effectWin)
+		return;
+
 	eatDotIfAvailable();
 }
 
@@ -42,7 +45,7 @@ void DotsEating::eatDotIfAvailable()
 	if (tilemap()->tileCount())
 		return;
 
-	gameController()->stop();
+	gameTimer()->stop();
 
 	if (m_effectEat->isPlaying())
 		m_effectEat->stop();

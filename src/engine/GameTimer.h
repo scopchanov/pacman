@@ -1,17 +1,17 @@
-#ifndef GAMECONTROLLER_H
-#define GAMECONTROLLER_H
+#ifndef GAMETIMER_H
+#define GAMETIMER_H
 
 #include <QObject>
 
 class QGraphicsScene;
 class QElapsedTimer;
 
-class GameController : public QObject
+class GameTimer : public QObject
 {
     Q_OBJECT
 public:
-    explicit GameController(QObject *parent = nullptr);
-    ~GameController();
+	explicit GameTimer(QObject *parent = nullptr);
+	~GameTimer();
 
     qreal deltaTime() const;
     void setScene(QGraphicsScene *scene);
@@ -29,4 +29,4 @@ private slots:
     void onTimeout();
 };
 
-#endif // GAMECONTROLLER_H
+#endif // GAMETIMER_H

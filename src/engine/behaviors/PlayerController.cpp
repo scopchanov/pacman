@@ -20,7 +20,7 @@ void PlayerController::setCharacterMovement(CharacterMovement *characterMovement
 	m_characterMovement = characterMovement;
 }
 
-void PlayerController::execute()
+void PlayerController::performActions()
 {
 	if (!m_inputSystem || !m_characterMovement)
 		return;

@@ -1,11 +1,11 @@
 #ifndef CAMERAFOLLOW_H
 #define CAMERAFOLLOW_H
 
-#include "AbstractCharacterBehavior.h"
+#include "AbstractBehavior.h"
 
 class QGraphicsView;
 
-class CameraFollow : public AbstractCharacterBehavior
+class CameraFollow : public AbstractBehavior
 {
 public:
 	explicit CameraFollow(GameObject *parent = nullptr);
@@ -13,10 +13,9 @@ public:
 	QGraphicsView *view() const;
 	void setView(QGraphicsView *view);
 
-protected:
+private:
 	void performActions() override;
 
-private:
 	QGraphicsView *m_view;
 };
 

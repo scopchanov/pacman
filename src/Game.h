@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QSize>
 
-class GameController;
+class GameTimer;
 class GameObject;
 class Scene;
 class Message;
@@ -30,7 +30,7 @@ private:
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	GameObject *createPlayer(Tilemap *tmLayout, Tilemap *tmDots);
 
-    GameController *m_controller;
+    GameTimer *m_gameTimer;
 	Scene *m_scene;
 	Message *m_message;
 	GameObject *m_player;

@@ -1,11 +1,10 @@
 #include "CameraFollow.h"
 #include "engine/GameObject.h"
-#include "engine/GameController.h"
 #include <QGraphicsView>
 #include <QScrollBar>
 
 CameraFollow::CameraFollow(GameObject *parent) :
-	AbstractCharacterBehavior(parent)
+	AbstractBehavior(parent)
 {
 
 }

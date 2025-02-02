@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "Message.h"
 #include "engine/PathBuilder.h"
-#include "engine/GameController.h"
+#include "engine/GameTimer.h"
 #include "engine/Scene.h"
 #include "engine/behaviors/PlayerController.h"
 #include "engine/behaviors/CharacterMovement.h"
@@ -18,13 +18,13 @@
 
 Game::Game(QObject *parent) :
 	QObject(parent),
-	m_controller{new GameController(this)},
+	m_gameTimer{new GameTimer(this)},
 	m_scene{new Scene(this)},
 	m_message(new Message()),
 	m_player{nullptr}
 {
 	m_message->setBasePosition(360, 444);
-	m_controller->setScene(m_scene);
+	m_gameTimer->setScene(m_scene);
 }
 
 Scene *Game::scene() const
@@ -125,30 +125,27 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	auto *playerController{new PlayerController(player)};
 	auto *animation{new Animation(player)};
 
-
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(m_scene->inputSystem());
 
-	movement->setGameController(m_controller);
+	movement->setGameTimer(m_gameTimer);
 	movement->setTilemap(tmLayout);
 	movement->setMovingSpeed(150);
 	movement->setNextMove(Vector2(-1, 0));
 
-	dotsEating->setGameController(m_controller);
+	dotsEating->setGameTimer(m_gameTimer);
 	dotsEating->setTilemap(tmDots);
 
-	cameraFollow->setGameController(m_controller);
-	cameraFollow->setTilemap(tmLayout);
 	cameraFollow->setView(m_scene->views().at(0));
 
-	animation->setGameController(m_controller);
+	animation->setGameTimer(m_gameTimer);
 	animation->addPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
 	animation->addPath(PathBuilder::build(PathBuilder::PT_PlayerFrame2));
 
 	player->addBehavior(playerController);
 	player->addBehavior(movement);
-	player->addBehavior(dotsEating);
 	player->addBehavior(cameraFollow);
+	player->addBehavior(dotsEating);
 	player->addBehavior(animation);
 
 	player->setPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
@@ -164,5 +161,5 @@ void Game::onStartupTimeout()
 
 	m_scene->removeItem(m_message);
 
-	m_controller->start();
+	m_gameTimer->start();
 }

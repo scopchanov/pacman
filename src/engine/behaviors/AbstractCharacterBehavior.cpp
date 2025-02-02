@@ -2,21 +2,10 @@
 #include "engine/Tilemap.h"
 
 AbstractCharacterBehavior::AbstractCharacterBehavior(GameObject *parent) :
-	AbstractBehavior(parent),
-	m_gameController{nullptr},
+	AbstractTimedBehavior(parent),
 	m_tilemap{nullptr}
 {
 
-}
-
-GameController *AbstractCharacterBehavior::gameController() const
-{
-	return m_gameController;
-}
-
-void AbstractCharacterBehavior::setGameController(GameController *gameController)
-{
-	m_gameController = gameController;
 }
 
 Tilemap *AbstractCharacterBehavior::tilemap() const
@@ -29,12 +18,12 @@ void AbstractCharacterBehavior::setTilemap(Tilemap *tilemap)
 	m_tilemap = tilemap;
 }
 
-void AbstractCharacterBehavior::execute()
+void AbstractCharacterBehavior::performTimedActions()
 {
-	if (!parent() || !m_gameController || !m_tilemap)
+	if (!m_tilemap)
 		return;
 
-	performActions();
+	performCharacterActions();
 }
 
 Vector2 AbstractCharacterBehavior::currentCell() const

@@ -1,20 +1,14 @@
 #include "Animation.h"
 #include "engine/GameObject.h"
-#include "engine/GameController.h"
+#include "engine/GameTimer.h"
 
 Animation::Animation(GameObject *parent) :
-	AbstractBehavior(parent),
-	m_controller{nullptr},
+	AbstractTimedBehavior(parent),
 	m_frameDuration{200},
 	m_timecode{0},
 	m_frameNumber{1}
 {
 
-}
-
-void Animation::setGameController(GameController *controller)
-{
-	m_controller = controller;
 }
 
 void Animation::addPath(const QPainterPath &path)
@@ -37,12 +31,9 @@ void Animation::rewind()
 	m_frameNumber = 0;
 }
 
-void Animation::execute()
+void Animation::performTimedActions()
 {
-	if (!parent() || !m_controller)
-		return;
-
-	m_timecode += 1000*m_controller->deltaTime();
+	m_timecode += 1000*gameTimer()->deltaTime();
 
 	if (m_timecode < m_frameDuration)
 		return;

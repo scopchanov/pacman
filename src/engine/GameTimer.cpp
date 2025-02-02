@@ -1,33 +1,33 @@
-#include "GameController.h"
+#include "GameTimer.h"
 #include <QGraphicsScene>
 #include <QElapsedTimer>
 #include <QTimer>
 
-GameController::GameController(QObject *parent) :
+GameTimer::GameTimer(QObject *parent) :
 	QObject{parent},
 	m_scene{nullptr},
 	m_time{new QElapsedTimer()},
 	m_timer{new QTimer(this)}
 {
-	connect(m_timer, &QTimer::timeout, this, &GameController::onTimeout);
+	connect(m_timer, &QTimer::timeout, this, &GameTimer::onTimeout);
 }
 
-GameController::~GameController()
+GameTimer::~GameTimer()
 {
 	delete m_time;
 }
 
-qreal GameController::deltaTime() const
+qreal GameTimer::deltaTime() const
 {
 	return m_time->elapsed()/1000.0;
 }
 
-void GameController::setScene(QGraphicsScene *scene)
+void GameTimer::setScene(QGraphicsScene *scene)
 {
 	m_scene = scene;
 }
 
-void GameController::start()
+void GameTimer::start()
 {
 	if (m_timer->isActive())
 		return;
@@ -36,12 +36,12 @@ void GameController::start()
 	m_time->start();
 }
 
-void GameController::stop()
+void GameTimer::stop()
 {
 	m_timer->stop();
 }
 
-void GameController::onTimeout()
+void GameTimer::onTimeout()
 {
 	if (!m_scene || !m_timer->isActive())
 		return;

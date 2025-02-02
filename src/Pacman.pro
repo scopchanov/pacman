@@ -4,15 +4,16 @@ CONFIG += c++20
 
 SOURCES += \
     Message.cpp \
+    engine/GameTimer.cpp \
     engine/PathBuilder.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractCharacterBehavior.cpp \
+    engine/behaviors/AbstractTimedBehavior.cpp \
     engine/behaviors/Animation.cpp \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/PlayerController.cpp \
-    engine/GameController.cpp \
     engine/GameObject.cpp \
     engine/InputSystem.cpp \
     engine/Scene.cpp \
@@ -26,15 +27,16 @@ SOURCES += \
 
 HEADERS += \
     Message.h \
+    engine/GameTimer.h \
     engine/PathBuilder.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractCharacterBehavior.h \
+    engine/behaviors/AbstractTimedBehavior.h \
     engine/behaviors/Animation.h \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
     engine/behaviors/DotsEating.h \
     engine/behaviors/PlayerController.h \
-    engine/GameController.h \
     engine/GameObject.h \
     engine/InputSystem.h \
     engine/Scene.h \

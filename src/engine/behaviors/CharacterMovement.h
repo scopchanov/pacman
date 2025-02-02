@@ -15,10 +15,8 @@ public:
 	Vector2 nextMove() const;
 	void setNextMove(const Vector2 &direction);
 
-protected:
-	void performActions() override;
-
 private:
+	void performCharacterActions() override;
 	void moveCharacter();
 	void decideWhatToDoNext();
 	void turnWhenAligned();

@@ -12,9 +12,11 @@ public:
 	GameObject *parent() const;
 	virtual void setParent(GameObject *parent);
 
-	virtual void execute() = 0;
+	void execute();
 
 private:
+	virtual void performActions() = 0;
+
 	GameObject *m_parent;
 };
 

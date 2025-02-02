@@ -11,10 +11,8 @@ public:
 	explicit DotsEating(GameObject *parent = nullptr);
 	~DotsEating();
 
-protected:
-	void performActions() override;
-
 private:
+	void performCharacterActions() override;
 	void eatDotIfAvailable();
 
 	QSoundEffect *m_effectEat;
