@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Message.h"
+#include "StartupSequence.h"
 #include "engine/PathBuilder.h"
 #include "engine/GameTimer.h"
 #include "engine/Scene.h"
@@ -17,20 +18,13 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
-#include <QTimer>
-#include <QSoundEffect>
 
 Game::Game(QObject *parent) :
 	QObject(parent),
 	m_gameTimer{new GameTimer(this)},
-	m_scene{new Scene(this)},
-	m_message(new Message()),
-	m_countDown{0},
-	m_countBeep{new QSoundEffect(this)}
+	m_scene{new Scene(this)}
 {
-	m_message->setBasePosition(360, 444);
 	m_gameTimer->setScene(m_scene);
-	m_countBeep->setSource(QUrl::fromLocalFile(":/snd/audio/effects/notification.wav"));
 }
 
 Scene *Game::scene() const
@@ -72,17 +66,13 @@ bool Game::configure(const QJsonObject &json)
 
 void Game::start()
 {
-	auto *timer{new QTimer(this)};
+	auto *sequence{new StartupSequence(this)};
 
-	m_countDown = 5;
-	updateMessage();
-	m_scene->addItem(m_message);
+	m_scene->addItem(sequence->message());
 
-	// timer->setSingleShot(false);
+	connect(sequence, &StartupSequence::go, m_gameTimer, &GameTimer::start);
 
-	connect(timer, &QTimer::timeout, this, &Game::onStartupTimeout);
-
-	timer->start(1000);
+	sequence->start();
 }
 
 void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
@@ -181,40 +171,4 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 	teleporter->setFlag(QGraphicsItem::ItemHasNoContents);
 
 	return teleporter;
-}
-
-void Game::updateMessage()
-{
-	if (m_countDown) {
-		m_message->setText(tr("Get ready! %1").arg(m_countDown));
-		m_countBeep->play();
-	} else {
-		m_message->setText(tr("Go!"));
-		m_countBeep->play();
-		m_countBeep->play();
-	}
-}
-
-void Game::onStartupTimeout()
-{
-	m_countDown--;
-
-	updateMessage();
-
-	if (m_countDown)
-		return;
-
-	auto *timer{static_cast<QTimer *>(sender())};
-
-	disconnect(timer, &QTimer::timeout, this, &Game::onStartupTimeout);
-	connect(timer, &QTimer::timeout, this, &Game::onHideTimeout);
-
-	m_gameTimer->start();
-}
-
-void Game::onHideTimeout()
-{
-	sender()->deleteLater();
-
-	m_scene->removeItem(m_message);
 }

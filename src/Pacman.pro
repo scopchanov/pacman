@@ -4,6 +4,7 @@ CONFIG += c++20
 
 SOURCES += \
     Message.cpp \
+    StartupSequence.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
     engine/Grid.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
 
 HEADERS += \
     Message.h \
+    StartupSequence.h \
     engine/GameTimer.h \
     engine/GameView.h \
     engine/Grid.h \

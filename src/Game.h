@@ -4,11 +4,10 @@
 #include <QObject>
 #include <QSize>
 
-class QSoundEffect;
+
 class GameTimer;
 class GameObject;
 class Scene;
-class Message;
 class InputSystem;
 class Tilemap;
 class Tile;
@@ -30,17 +29,9 @@ private:
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	GameObject *createPlayer(Tilemap *tmLayout, Tilemap *tmDots);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
-	void updateMessage();
 
     GameTimer *m_gameTimer;
 	Scene *m_scene;
-	Message *m_message;
-	int m_countDown;
-	QSoundEffect *m_countBeep;
-
-private slots:
-	void onStartupTimeout();
-	void onHideTimeout();
 };
 
 #endif // GAME_H
