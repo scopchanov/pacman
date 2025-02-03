@@ -18,16 +18,19 @@
 #include <QJsonArray>
 #include <QJsonValue>
 #include <QTimer>
-#include <QGraphicsView>
+#include <QSoundEffect>
 
 Game::Game(QObject *parent) :
 	QObject(parent),
 	m_gameTimer{new GameTimer(this)},
 	m_scene{new Scene(this)},
-	m_message(new Message())
+	m_message(new Message()),
+	m_countDown{0},
+	m_countBeep{new QSoundEffect(this)}
 {
 	m_message->setBasePosition(360, 444);
 	m_gameTimer->setScene(m_scene);
+	m_countBeep->setSource(QUrl::fromLocalFile(":/snd/audio/effects/notification.wav"));
 }
 
 Scene *Game::scene() const
@@ -71,14 +74,15 @@ void Game::start()
 {
 	auto *timer{new QTimer(this)};
 
-	m_message->setText(tr("Get ready!"));
+	m_countDown = 5;
+	updateMessage();
 	m_scene->addItem(m_message);
 
-	timer->setSingleShot(true);
+	// timer->setSingleShot(false);
 
 	connect(timer, &QTimer::timeout, this, &Game::onStartupTimeout);
 
-	timer->start(5000);
+	timer->start(1000);
 }
 
 void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
@@ -179,11 +183,38 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 	return teleporter;
 }
 
+void Game::updateMessage()
+{
+	if (m_countDown) {
+		m_message->setText(tr("Get ready! %1").arg(m_countDown));
+		m_countBeep->play();
+	} else {
+		m_message->setText(tr("Go!"));
+		m_countBeep->play();
+		m_countBeep->play();
+	}
+}
+
 void Game::onStartupTimeout()
+{
+	m_countDown--;
+
+	updateMessage();
+
+	if (m_countDown)
+		return;
+
+	auto *timer{static_cast<QTimer *>(sender())};
+
+	disconnect(timer, &QTimer::timeout, this, &Game::onStartupTimeout);
+	connect(timer, &QTimer::timeout, this, &Game::onHideTimeout);
+
+	m_gameTimer->start();
+}
+
+void Game::onHideTimeout()
 {
 	sender()->deleteLater();
 
 	m_scene->removeItem(m_message);
-
-	m_gameTimer->start();
 }
