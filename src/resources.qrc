@@ -9,5 +9,6 @@
     <qresource prefix="/snd">
         <file>audio/effects/notification.wav</file>
         <file>audio/effects/win.wav</file>
+        <file>audio/effects/died.wav</file>
     </qresource>
 </RCC>

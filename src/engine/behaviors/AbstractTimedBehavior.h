@@ -8,7 +8,7 @@ class GameTimer;
 class AbstractTimedBehavior : public AbstractBehavior
 {
 public:
-	AbstractTimedBehavior(GameObject *parent = nullptr);
+	explicit AbstractTimedBehavior(GameObject *parent = nullptr);
 
 	GameTimer *gameTimer() const;
 	virtual void setGameTimer(GameTimer *gameTimer);

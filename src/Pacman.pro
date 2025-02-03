@@ -5,9 +5,11 @@ CONFIG += c++20
 SOURCES += \
     FileHandler.cpp \
     Game.cpp \
+    LivesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
     PathBuilder.cpp \
+    ScoreDisplay.cpp \
     StartupSequence.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
@@ -20,6 +22,8 @@ SOURCES += \
     engine/behaviors/CharacterMovement.cpp \
     engine/behaviors/Debug.cpp \
     engine/behaviors/DotsEating.cpp \
+    engine/behaviors/EnemyController.cpp \
+    engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
     engine/GameObject.cpp \
@@ -35,9 +39,11 @@ SOURCES += \
 HEADERS += \
     FileHandler.h \
     Game.h \
+    LivesDisplay.h \
     MainWindow.h \
     Message.h \
     PathBuilder.h \
+    ScoreDisplay.h \
     StartupSequence.h \
     engine/GameTimer.h \
     engine/GameView.h \
@@ -50,6 +56,8 @@ HEADERS += \
     engine/behaviors/CharacterMovement.h \
     engine/behaviors/Debug.h \
     engine/behaviors/DotsEating.h \
+    engine/behaviors/EnemyController.h \
+    engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
     engine/GameObject.h \

@@ -6,9 +6,11 @@
 #include "engine/Scene.h"
 #include "engine/behaviors/PlayerController.h"
 #include "engine/behaviors/PlayerOrientation.h"
+#include "engine/behaviors/CameraFollow.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
-#include "engine/behaviors/CameraFollow.h"
+#include "engine/behaviors/EnemyController.h"
+#include "engine/behaviors/KillPlayer.h"
 #include "engine/behaviors/PlayerAnimation.h"
 #include "engine/behaviors/Teleporting.h"
 #include "engine/behaviors/Debug.h"
@@ -32,7 +34,7 @@ Scene *Game::scene() const
 	return m_scene;
 }
 
-bool Game::configure(const QJsonObject &json)
+void Game::configure(const QJsonObject &json)
 {
 	const QJsonArray &wallMatrix{json.value("walls").toArray()};
 	const QJsonArray &dotMatrix{json.value("dots").toArray()};
@@ -55,13 +57,14 @@ bool Game::configure(const QJsonObject &json)
 	buildTilemap(tmLayout, wallMatrix, QPen(QColor(0x00A3FF), 4), QBrush(Qt::transparent));
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	m_scene->addItem(createPlayer(tmLayout, tmDots));
+	auto *player{createPlayer(tmLayout, tmDots)};
+
+	m_scene->addItem(player);
 	m_scene->addItem(tmLayout);
 	m_scene->addItem(tmDots);
+	m_scene->addItem(createEnemy(tmLayout, player));
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 2)));
-
-	return true;
 }
 
 void Game::start()
@@ -151,6 +154,47 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	player->setBrush(Qt::white);
 
 	return player;
+}
+
+GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
+{
+	auto *enemy{new GameObject()};
+
+	enemy->setPos(360, 300);
+
+	auto *movement{new CharacterMovement(enemy)};
+	// auto *orientation{new PlayerOrientation(enemy)};
+	auto *enemyController{new EnemyController(enemy)};
+	// auto *animation{new PlayerAnimation(enemy)};
+	auto *killPlayer{new KillPlayer(enemy)};
+
+	enemyController->setCharacterMovement(movement);
+	// playerController->setInputSystem(m_scene->inputSystem());
+
+	movement->setGameTimer(m_gameTimer);
+	movement->setTilemap(tmLayout);
+	movement->setMovingSpeed(200);
+	movement->setNextMove(Vector2(-1, 0));
+
+	// orientation->setMovement(movement);
+
+	// animation->setGameTimer(m_gameTimer);
+
+	killPlayer->setGameTimer(m_gameTimer);
+	killPlayer->setPlayer(player);
+
+	enemy->addBehavior(enemyController);
+	enemy->addBehavior(movement);
+	// enemy->addBehavior(orientation);
+	// enemy->addBehavior(animation);
+	enemy->addBehavior(killPlayer);
+
+
+	enemy->setPath(PathBuilder::playerPath(45));
+	enemy->setPen(QPen(Qt::transparent));
+	enemy->setBrush(Qt::white);
+
+	return enemy;
 }
 
 GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)

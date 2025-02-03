@@ -23,6 +23,7 @@ public:
 	void setNextMove(const Vector2 &direction);
 	Vector2 direction() const;
 	Vector2 targetPosition() const;
+	bool canMove(const Vector2 &direction) const;
 	void relocateGameObject(const QPointF destination);
 	int type() const override;
 
@@ -36,7 +37,6 @@ private:
 	qreal distanceToTarget() const;
 	void keepMovingInTheSameDirection();
 	void setCurrentCellAsTarget();
-	bool canMove(const Vector2 &direction) const;
 	Vector2 currentCellPosition() const;
 	Vector2 nextCellPosition(const Vector2 &direction) const;
 

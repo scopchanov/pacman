@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QSize>
 
-
 class GameTimer;
 class GameObject;
 class Scene;
@@ -19,7 +18,7 @@ public:
     explicit Game(QObject *parent = nullptr);
 
 	Scene *scene() const;
-	bool configure(const QJsonObject &json);
+	void configure(const QJsonObject &json);
 
 public slots:
 	void start();
@@ -28,6 +27,7 @@ private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	GameObject *createPlayer(Tilemap *tmLayout, Tilemap *tmDots);
+	GameObject *createEnemy(Tilemap *tmLayout, GameObject *player);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 
     GameTimer *m_gameTimer;
