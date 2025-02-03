@@ -13,6 +13,7 @@ public:
 	explicit PlayerOrientation(GameObject *parent = nullptr);
 
 	void setMovement(CharacterMovement *movement);
+	int type() const override;
 
 private:
 	void performActions() override;

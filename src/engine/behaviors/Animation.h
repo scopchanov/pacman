@@ -15,6 +15,7 @@ public:
 	void addPath(const QPainterPath &path);
 	qreal frameDuration() const;
 	void setFrameDuration(qreal value);
+	int type() const override;
 
 	void rewind();
 
@@ -24,7 +25,7 @@ private:
 	QList<QPainterPath> m_paths;
 	qreal m_frameDuration;
 	qreal m_timecode;
-	int m_frameNumber;	
+	int m_frameNumber;
 };
 
 #endif // ANIMATION_H

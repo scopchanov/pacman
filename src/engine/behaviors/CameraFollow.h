@@ -12,6 +12,7 @@ public:
 
 	QGraphicsView *view() const;
 	void setView(QGraphicsView *view);
+	int type() const override;
 
 private:
 	void performActions() override;

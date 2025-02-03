@@ -1,7 +1,11 @@
 #include "GameObject.h"
 #include "behaviors/AbstractBehavior.h"
+#include <QStyleOptionGraphicsItem>
+#include <QPainter>
 
-GameObject::GameObject(QGraphicsItem *parent) :
+// #define DEBUG
+
+GameObject::GameObject(GameObject *parent) :
 	QGraphicsPathItem(parent)
 {
 
@@ -28,6 +32,11 @@ AbstractBehavior *GameObject::behavior(int n)
 	return m_behaviors.at(n);
 }
 
+int GameObject::type() const
+{
+	return QGraphicsItem::UserType;
+}
+
 void GameObject::advance(int phase)
 {
 	if (!phase)
@@ -35,4 +44,22 @@ void GameObject::advance(int phase)
 
 	for (auto *behavior : std::as_const(m_behaviors))
 		behavior->execute();
+}
+
+void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
+{
+	painter->save();
+	painter->setPen(pen());
+	painter->setBrush(brush());
+	painter->setClipping(true);
+	painter->setClipRect(option->rect);
+	painter->setRenderHint(QPainter::Antialiasing);
+	painter->drawPath(path());
+
+#ifdef DEBUG
+	painter->setPen(QPen(Qt::red, 1));
+	painter->setBrush(Qt::transparent);
+	painter->drawRect(boundingRect());
+#endif
+	painter->restore();
 }

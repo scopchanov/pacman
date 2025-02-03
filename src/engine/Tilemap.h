@@ -9,7 +9,7 @@ class Tile;
 class Tilemap : public GameObject
 {
 public:
-    explicit Tilemap(QGraphicsItem *parent = nullptr);
+	explicit Tilemap(GameObject *parent = nullptr);
 
 	Grid *grid() const;
 	void setGrid(Grid *grid);

@@ -13,8 +13,9 @@ public:
 
 	void setInputSystem(InputSystem *inputSystem);
 	void setCharacterMovement(CharacterMovement *characterMovement);
+	int type() const override;
 
-	void performActions() override;
+	void performActions() override;	
 
 private:
 	InputSystem *m_inputSystem;

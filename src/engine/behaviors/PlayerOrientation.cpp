@@ -4,7 +4,8 @@
 #include <QHash>
 
 PlayerOrientation::PlayerOrientation(GameObject *parent) :
-	AbstractBehavior(parent)
+	AbstractBehavior(parent),
+	m_movement{nullptr}
 {
 
 }
@@ -12,6 +13,11 @@ PlayerOrientation::PlayerOrientation(GameObject *parent) :
 void PlayerOrientation::setMovement(CharacterMovement *movement)
 {
 	m_movement = movement;
+}
+
+int PlayerOrientation::type() const
+{
+	return BT_PlayerOrientation;
 }
 
 void PlayerOrientation::performActions()

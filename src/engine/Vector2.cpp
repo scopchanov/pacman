@@ -213,6 +213,58 @@ Vector2 Vector2::operator-(const Vector2 &other) const
 	return Vector2(m_x - other.x(), m_y - other.y());
 }
 
+Vector2 Vector2::operator*(const Vector2 &other) const
+{
+	return Vector2(m_x*other.x(), m_y*other.y());
+}
+
+Vector2 Vector2::operator/(const Vector2 &other) const
+{
+	try {
+		return Vector2(m_x/other.x(), m_y/other.y());
+	} catch (...) {
+		qCritical() << "Division by zero!";
+	}
+
+	return Vector2();
+}
+
+Vector2 Vector2::operator+(const QPointF &other) const
+{
+	return Vector2(m_x + other.x(), m_y + other.y());
+}
+
+Vector2 Vector2::operator-(const QPointF &other) const
+{
+	return Vector2(m_x - other.x(), m_y - other.y());
+}
+
+Vector2 Vector2::operator*(const QPointF &other) const
+{
+	return Vector2(m_x*other.x(), m_y*other.y());
+}
+
+Vector2 Vector2::operator/(const QPointF &other) const
+{
+	try {
+		return Vector2(m_x/other.x(), m_y/other.y());
+	} catch (...) {
+		qCritical() << "Division by zero!";
+	}
+
+	return Vector2();
+}
+
+Vector2 Vector2::operator+(qreal k) const
+{
+	return Vector2(m_x + k, m_y + k);
+}
+
+Vector2 Vector2::operator-(qreal k) const
+{
+	return Vector2(m_x - k, m_y - k);
+}
+
 Vector2 Vector2::operator*(qreal k) const
 {
 	return Vector2(m_x*k, m_y*k);
@@ -239,6 +291,34 @@ void Vector2::operator-=(const Vector2 &other)
 {
 	m_x -= other.x();
 	m_y -= other.y();
+}
+
+void Vector2::operator*=(const Vector2 &other)
+{
+	m_x *= other.x();
+	m_y *= other.y();
+}
+
+void Vector2::operator/=(const Vector2 &other)
+{
+	try {
+		m_x /= other.x();
+		m_y /= other.y();
+	} catch (...) {
+		qCritical() << "Division by zero!";
+	}
+}
+
+void Vector2::operator+=(qreal k)
+{
+	m_x += k;
+	m_y += k;
+}
+
+void Vector2::operator-=(qreal k)
+{
+	m_x -= k;
+	m_y -= k;
 }
 
 void Vector2::operator*=(qreal k)

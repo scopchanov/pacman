@@ -6,7 +6,7 @@
 class Tile : public GameObject
 {
 public:
-    explicit Tile(QGraphicsItem *parent = nullptr);
+	explicit Tile(GameObject *parent = nullptr);
 };
 
 #endif // TILE_H

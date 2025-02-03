@@ -21,6 +21,11 @@ DotsEating::~DotsEating()
 	m_effectWin->deleteLater();
 }
 
+int DotsEating::type() const
+{
+	return BT_DotsEating;
+}
+
 void DotsEating::performSpatialActions()
 {
 	if (!m_effectEat || !m_effectWin)

@@ -3,6 +3,7 @@
 #include "engine/GameTimer.h"
 #include "engine/Tilemap.h"
 #include "engine/Grid.h"
+#include <QHash>
 
 CharacterMovement::CharacterMovement(GameObject *parent) :
 	AbstractSpatialBehavior(parent),
@@ -39,6 +40,25 @@ Vector2 CharacterMovement::direction() const
 	return m_direction;
 }
 
+Vector2 CharacterMovement::targetPosition() const
+{
+	return m_targetPosition;
+}
+
+void CharacterMovement::relocateGameObject(const QPointF destination)
+{
+	const QSizeF &cellSize{tilemap()->grid()->cellSize()};
+	const Vector2 &a{m_direction*Vector2(cellSize.width(), cellSize.height())};
+
+	parent()->setPos(destination);
+	m_targetPosition = a + destination;
+}
+
+int CharacterMovement::type() const
+{
+	return BT_CharacterMovement;
+}
+
 void CharacterMovement::performSpatialActions()
 {
 	moveCharacter();
@@ -56,13 +76,12 @@ void CharacterMovement::moveCharacter()
 
 void CharacterMovement::decideWhatToDoNext()
 {
-	if (distanceToTarget() >= 0.5)
-		return;
-
 	if (canMove(m_nextMove))
 		turnWhenAligned();
 	else if (canMove(m_direction))
 		keepMovingInTheSameDirection();
+	else
+		setCurrentCellAsTarget();
 }
 
 void CharacterMovement::turnWhenAligned()
@@ -79,7 +98,7 @@ void CharacterMovement::makeNextMove()
 
 bool CharacterMovement::aligned() const
 {
-	return distanceToTarget() < 0.01;
+	return distanceToTarget() < 0.001;
 }
 
 qreal CharacterMovement::distanceToTarget() const
@@ -92,6 +111,11 @@ void CharacterMovement::keepMovingInTheSameDirection()
 	m_targetPosition = nextCellPosition(m_direction);
 }
 
+void CharacterMovement::setCurrentCellAsTarget()
+{
+	m_targetPosition = currentCellPosition();
+}
+
 bool CharacterMovement::canMove(const Vector2 &direction) const
 {
 	const QPoint &nextCell{(currentCell() + direction).toPoint()};
@@ -99,6 +123,16 @@ bool CharacterMovement::canMove(const Vector2 &direction) const
 	int column{nextCell.x()};
 
 	return !tilemap()->hasTile(row, column);
+}
+
+Vector2 CharacterMovement::currentCellPosition() const
+{
+	const Vector2 &cell{currentCell()};
+	qreal row{cell.y()};
+	qreal column{cell.x()};
+	const QPointF &cellPos{tilemap()->grid()->cellPosition(row, column)};
+
+	return Vector2(cellPos);
 }
 
 Vector2 CharacterMovement::nextCellPosition(const Vector2 &direction) const

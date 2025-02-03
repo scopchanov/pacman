@@ -19,6 +19,11 @@ void CameraFollow::setView(QGraphicsView *view)
 	m_view = view;
 }
 
+int CameraFollow::type() const
+{
+	return BT_CameraFollow;
+}
+
 void CameraFollow::performActions()
 {
 	if (!m_view)

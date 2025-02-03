@@ -20,6 +20,11 @@ void PlayerController::setCharacterMovement(CharacterMovement *characterMovement
 	m_characterMovement = characterMovement;
 }
 
+int PlayerController::type() const
+{
+	return BT_PlayerController;
+}
+
 void PlayerController::performActions()
 {
 	if (!m_inputSystem || !m_characterMovement)

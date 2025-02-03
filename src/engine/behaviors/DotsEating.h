@@ -11,6 +11,8 @@ public:
 	explicit DotsEating(GameObject *parent = nullptr);
 	~DotsEating();
 
+	int type() const override;
+
 private:
 	void performSpatialActions() override;
 	void eatDotIfAvailable();

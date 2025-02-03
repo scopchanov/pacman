@@ -8,14 +8,18 @@ class AbstractBehavior;
 class GameObject : public QGraphicsPathItem
 {
 public:
-    explicit GameObject(QGraphicsItem *parent = nullptr);
+	explicit GameObject(GameObject *parent = nullptr);
     ~GameObject();
 
     void addBehavior(AbstractBehavior *behavior);
     int behaviorCount() const;
     AbstractBehavior *behavior(int n);
 
-    void advance(int phase) override;
+	int type() const override;
+
+	void advance(int phase) override;
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *) override;
+
 
 private:
     QList<AbstractBehavior *> m_behaviors;

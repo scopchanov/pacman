@@ -2,7 +2,7 @@
 #include "Grid.h"
 #include "Tile.h"
 
-Tilemap::Tilemap(QGraphicsItem *parent) :
+Tilemap::Tilemap(GameObject *parent) :
 	GameObject(parent),
 	m_grid{nullptr},
 	m_tileCount{0}

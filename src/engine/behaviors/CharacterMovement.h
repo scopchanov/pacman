@@ -8,6 +8,13 @@
 class CharacterMovement : public AbstractSpatialBehavior
 {
 public:
+	enum DirectionIndex : int {
+		DIR_Left = 0,
+		DIR_Right,
+		DIR_Up,
+		DIR_Down
+	};
+
 	explicit CharacterMovement(GameObject *parent = nullptr);
 
 	qreal movingSpeed() const;
@@ -15,6 +22,9 @@ public:
 	Vector2 nextMove() const;
 	void setNextMove(const Vector2 &direction);
 	Vector2 direction() const;
+	Vector2 targetPosition() const;
+	void relocateGameObject(const QPointF destination);
+	int type() const override;
 
 private:
 	void performSpatialActions() override;
@@ -25,7 +35,9 @@ private:
 	bool aligned() const;
 	qreal distanceToTarget() const;
 	void keepMovingInTheSameDirection();
+	void setCurrentCellAsTarget();
 	bool canMove(const Vector2 &direction) const;
+	Vector2 currentCellPosition() const;
 	Vector2 nextCellPosition(const Vector2 &direction) const;
 
 	qreal m_movingSpeed;

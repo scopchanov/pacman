@@ -1,6 +1,7 @@
 #include "Tile.h"
+#include <QPainter>
 
-Tile::Tile(QGraphicsItem *parent) :
+Tile::Tile(GameObject *parent) :
 	GameObject(parent)
 
 {

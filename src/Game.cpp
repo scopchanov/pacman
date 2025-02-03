@@ -10,6 +10,7 @@
 #include "engine/behaviors/CameraFollow.h"
 #include "engine/behaviors/Animation.h"
 #include "engine/behaviors/Teleporting.h"
+#include "engine/behaviors/Debug.h"
 #include "engine/Tilemap.h"
 #include "engine/Grid.h"
 #include "engine/Tile.h"
@@ -61,7 +62,7 @@ bool Game::configure(const QJsonObject &json)
 	m_scene->addItem(tmLayout);
 	m_scene->addItem(tmDots);
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
-	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 1)));
+	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 2)));
 
 	return true;
 }
@@ -80,7 +81,8 @@ void Game::start()
 	timer->start(5000);
 }
 
-void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush)
+void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
+						const QPen &pen, const QBrush &brush)
 {
 	int m{0};
 
@@ -171,8 +173,8 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 
 	teleporter->setPath(PathBuilder::build(PathBuilder::PT_Teleporter));
 	teleporter->setPen(QPen(Qt::transparent));
-	teleporter->setBrush(Qt::white);
-	// teleporter->setFlag(QGraphicsItem::ItemHasNoContents);
+	teleporter->setBrush(Qt::transparent);
+	teleporter->setFlag(QGraphicsItem::ItemHasNoContents);
 
 	return teleporter;
 }

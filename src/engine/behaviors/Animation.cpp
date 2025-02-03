@@ -26,6 +26,11 @@ void Animation::setFrameDuration(qreal value)
 	m_frameDuration = value;
 }
 
+int Animation::type() const
+{
+	return BT_Animation;
+}
+
 void Animation::rewind()
 {
 	m_frameNumber = 0;

@@ -4,6 +4,8 @@
 #include "AbstractBehavior.h"
 #include <QPointF>
 
+class CharacterMovement;
+
 class Teleporting : public AbstractBehavior
 {
 public:
@@ -11,9 +13,11 @@ public:
 
 	QPointF destination() const;
 	void setDestination(const QPointF &destination);
+	int type() const override;
 
 private:
 	void performActions() override;
+	CharacterMovement *findMovement(GameObject *gameObject) const;
 
 	QPointF m_destination;
 };

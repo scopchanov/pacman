@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "Game.h"
 #include "engine/Scene.h"
+#include "engine/GameView.h"
 #include "FileHandler.h"
 #include <QJsonObject>
 #include <QBoxLayout>
@@ -10,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QWidget(parent)
 {
 	auto *layoutMain{new QHBoxLayout(this)};
-	auto *gameView{new QGraphicsView(this)};
-	auto *scannerView{new QGraphicsView(this)};
+	auto *gameView{new GameView(this)};
+	auto *scannerView{new GameView(this)};
 	auto *game{new Game(this)};
 
 	gameView->setScene(game->scene());
@@ -19,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	gameView->setSceneRect(0, 0, 720, 792);
 	gameView->setFrameStyle(QFrame::NoFrame);
 	gameView->setBackgroundBrush(QBrush(Qt::black));
-	// gameView->scale(3, 3);
+	gameView->scale(3, 3);
 	gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	gameView->centerOn(360, 588);
@@ -30,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	scannerView->setFrameStyle(QFrame::NoFrame);
 	scannerView->setBackgroundBrush(QBrush(0x424242));
 	scannerView->scale(0.25, 0.25);
-	scannerView->resize(300, 300);
+	scannerView->resize(180, 198);
 
 	layoutMain->addWidget(gameView);
 	layoutMain->setContentsMargins(0, 0, 0, 0);
