@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "Message.h"
+#include "PathBuilder.h"
 #include "StartupSequence.h"
-#include "engine/PathBuilder.h"
 #include "engine/GameTimer.h"
 #include "engine/Scene.h"
 #include "engine/behaviors/PlayerController.h"
@@ -9,7 +9,7 @@
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/CameraFollow.h"
-#include "engine/behaviors/Animation.h"
+#include "engine/behaviors/PlayerAnimation.h"
 #include "engine/behaviors/Teleporting.h"
 #include "engine/behaviors/Debug.h"
 #include "engine/Tilemap.h"
@@ -102,7 +102,7 @@ Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 {
 	auto *tile{new Tile()};
 
-	tile->setPath(PathBuilder::build(PathBuilder::PathType(index)));
+	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
 	tile->setPen(pen);
 	tile->setBrush(brush);
 
@@ -120,7 +120,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	auto *dotsEating{new DotsEating(player)};
 	auto *cameraFollow{new CameraFollow(player)};
 	auto *playerController{new PlayerController(player)};
-	auto *animation{new Animation(player)};
+	auto *animation{new PlayerAnimation(player)};
 
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(m_scene->inputSystem());
@@ -138,8 +138,6 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	cameraFollow->setView(m_scene->views().at(0));
 
 	animation->setGameTimer(m_gameTimer);
-	animation->addPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
-	animation->addPath(PathBuilder::build(PathBuilder::PT_PlayerFrame2));
 
 	player->addBehavior(playerController);
 	player->addBehavior(movement);
@@ -148,7 +146,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	player->addBehavior(cameraFollow);
 	player->addBehavior(dotsEating);
 
-	player->setPath(PathBuilder::build(PathBuilder::PT_PlayerFrame1));
+	player->setPath(PathBuilder::playerPath(45));
 	player->setPen(QPen(Qt::transparent));
 	player->setBrush(Qt::white);
 
@@ -165,7 +163,7 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 	teleporter->setPos(src);
 	teleporter->addBehavior(teleporting);
 
-	teleporter->setPath(PathBuilder::build(PathBuilder::PT_Teleporter));
+	teleporter->setPath(PathBuilder::teleporterPath());
 	teleporter->setPen(QPen(Qt::transparent));
 	teleporter->setBrush(Qt::transparent);
 	teleporter->setFlag(QGraphicsItem::ItemHasNoContents);

@@ -3,12 +3,15 @@ QT += widgets multimedia
 CONFIG += c++20
 
 SOURCES += \
+    FileHandler.cpp \
+    Game.cpp \
+    MainWindow.cpp \
     Message.cpp \
+    PathBuilder.cpp \
     StartupSequence.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
     engine/Grid.cpp \
-    engine/PathBuilder.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
     engine/behaviors/AbstractTimedBehavior.cpp \
@@ -17,6 +20,7 @@ SOURCES += \
     engine/behaviors/CharacterMovement.cpp \
     engine/behaviors/Debug.cpp \
     engine/behaviors/DotsEating.cpp \
+    engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
     engine/GameObject.cpp \
     engine/InputSystem.cpp \
@@ -24,20 +28,20 @@ SOURCES += \
     engine/Tile.cpp \
     engine/Tilemap.cpp \
     engine/Vector2.cpp \
-    FileHandler.cpp \
-    Game.cpp \
     engine/behaviors/PlayerOrientation.cpp \
     engine/behaviors/Teleporting.cpp \
-    main.cpp \
-    MainWindow.cpp
+    main.cpp
 
 HEADERS += \
+    FileHandler.h \
+    Game.h \
+    MainWindow.h \
     Message.h \
+    PathBuilder.h \
     StartupSequence.h \
     engine/GameTimer.h \
     engine/GameView.h \
     engine/Grid.h \
-    engine/PathBuilder.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \
     engine/behaviors/AbstractTimedBehavior.h \
@@ -46,6 +50,7 @@ HEADERS += \
     engine/behaviors/CharacterMovement.h \
     engine/behaviors/Debug.h \
     engine/behaviors/DotsEating.h \
+    engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
     engine/GameObject.h \
     engine/InputSystem.h \
@@ -53,9 +58,6 @@ HEADERS += \
     engine/Tile.h \
     engine/Tilemap.h \
     engine/Vector2.h \
-    FileHandler.h \
-    Game.h \
-    MainWindow.h \
     engine/behaviors/PlayerOrientation.h \
     engine/behaviors/Teleporting.h
 

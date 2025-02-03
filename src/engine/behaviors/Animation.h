@@ -26,6 +26,7 @@ private:
 	qreal m_frameDuration;
 	qreal m_timecode;
 	int m_frameNumber;
+	qreal m_angle;
 };
 
 #endif // ANIMATION_H

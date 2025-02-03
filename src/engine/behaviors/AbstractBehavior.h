@@ -12,6 +12,7 @@ public:
 		BT_CharacterMovement,
 		BT_Debug,
 		BT_DotsEating,
+		BT_PlayerAnimation,
 		BT_PlayerController,
 		BT_PlayerOrientation,
 		BT_Teleporting

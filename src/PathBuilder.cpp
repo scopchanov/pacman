@@ -7,52 +7,56 @@ PathBuilder::PathBuilder(QObject *parent) :
 
 }
 
-QPainterPath PathBuilder::build(PathType type)
+QPainterPath PathBuilder::tilePath(TileType type)
 {
 	switch (type) {
-	case PT_ShortLineLowLeft:
+	case TT_ShortLineLowLeft:
 		return shortLineLowLeft();
-	case PT_ShortLineLowRight:
+	case TT_ShortLineLowRight:
 		return shortLineLowRight();
-	case PT_ShortLineHighLeft:
+	case TT_ShortLineHighLeft:
 		return shortLineHighLeft();
-	case PT_ShortLineHighRight:
+	case TT_ShortLineHighRight:
 		return shortLineHighRight();
-	case PT_HLineLow:
+	case TT_HLineLow:
 		return hLineLow();
-	case PT_HLineHigh:
+	case TT_HLineHigh:
 		return hLineHigh();
-	case PT_VLineLeft:
+	case TT_VLineLeft:
 		return vLineLeft();
-	case PT_VLineRight:
+	case TT_VLineRight:
 		return vLineRight();
-	case PT_BigCircleUpLeft:
+	case TT_BigCircleUpLeft:
 		return bigCircleUpLeft();
-	case PT_BigCircleUpRight:
+	case TT_BigCircleUpRight:
 		return bigCircleUpRight();
-	case PT_BigCircleDownLeft:
+	case TT_BigCircleDownLeft:
 		return bigCircleDownLeft();
-	case PT_BigCircleDownRight:
+	case TT_BigCircleDownRight:
 		return bigCircleDownRight();
-	case PT_SmallCircleUpLeft:
+	case TT_SmallCircleUpLeft:
 		return smallCircleUpLeft();
-	case PT_SmallCircleUpRight:
+	case TT_SmallCircleUpRight:
 		return smallCircleUpRight();
-	case PT_SmallCircleDownLeft:
+	case TT_SmallCircleDownLeft:
 		return smallCircleDownLeft();
-	case PT_SmallCircleDownRight:
+	case TT_SmallCircleDownRight:
 		return smallCircleDownRight();
-	case PT_Dot:
+	case TT_Dot:
 		return dot();
-	case PT_PlayerFrame1:
-		return playerFrame1();
-	case PT_PlayerFrame2:
-		return playerFrame2();
-	case PT_Teleporter:
-		return teleporter();
 	default:
 		return QPainterPath();
 	}
+}
+
+QPainterPath PathBuilder::playerPath(qreal angle)
+{
+	return player(angle);
+}
+
+QPainterPath PathBuilder::teleporterPath()
+{
+	return teleporter();
 }
 
 QPainterPath PathBuilder::shortLineLowLeft()
@@ -228,20 +232,13 @@ QPainterPath PathBuilder::dot()
 	return p;
 }
 
-QPainterPath PathBuilder::playerFrame1()
+QPainterPath PathBuilder::player(qreal angle)
 {
+	qreal startAngle{180 - angle};
+	qreal sweepLength{-2*startAngle};
 	QPainterPath p;
 
-	p.arcTo(-20, -20, 40, 40, 135, -270);
-
-	return p;
-}
-
-QPainterPath PathBuilder::playerFrame2()
-{
-	QPainterPath p;
-
-	p.arcTo(-20, -20, 40, 40, 170, -340);
+	p.arcTo(-20, -20, 40, 40, startAngle, sweepLength);
 
 	return p;
 }

@@ -9,33 +9,31 @@ class PathBuilder : public QObject
 {
 	Q_OBJECT
 public:
-	enum PathType : int {
-		PT_ShortLineLowLeft = 0,
-		PT_HLineLow,
-		PT_ShortLineLowRight,
-		PT_ShortLineHighLeft,
-		PT_HLineHigh,
-		PT_ShortLineHighRight,
-		PT_BigCircleUpLeft,
-		PT_BigCircleUpRight,
-		PT_VLineLeft,
-		PT_BigCircleDownLeft,
-		PT_BigCircleDownRight,
-		PT_VLineRight,
-		PT_SmallCircleUpLeft,
-		PT_SmallCircleUpRight,
-		PM_15,
-		PT_SmallCircleDownLeft,
-		PT_SmallCircleDownRight,
-		PT_Dot,
-		PT_PlayerFrame1,
-		PT_PlayerFrame2,
-		PT_Teleporter
+	enum TileType : int {
+		TT_ShortLineLowLeft = 0,
+		TT_HLineLow = 1,
+		TT_ShortLineLowRight = 2,
+		TT_ShortLineHighLeft = 3,
+		TT_HLineHigh = 4,
+		TT_ShortLineHighRight = 5,
+		TT_BigCircleUpLeft = 6,
+		TT_BigCircleUpRight = 7,
+		TT_VLineLeft = 8,
+		TT_BigCircleDownLeft = 9,
+		TT_BigCircleDownRight = 10,
+		TT_VLineRight = 11,
+		TT_SmallCircleUpLeft = 12,
+		TT_SmallCircleUpRight = 13,
+		TT_SmallCircleDownLeft = 15,
+		TT_SmallCircleDownRight = 16,
+		TT_Dot = 17
 	};
 
 	explicit PathBuilder(QObject *parent = nullptr);
 
-	static QPainterPath build(PathType type);
+	static QPainterPath tilePath(TileType type);
+	static QPainterPath playerPath(qreal angle);
+	static QPainterPath teleporterPath();
 
 private:
 	static QPainterPath shortLineLowLeft();
@@ -55,8 +53,7 @@ private:
 	static QPainterPath smallCircleDownLeft();
 	static QPainterPath smallCircleDownRight();
 	static QPainterPath dot();
-	static QPainterPath playerFrame1();
-	static QPainterPath playerFrame2();
+	static QPainterPath player(qreal angle);
 	static QPainterPath teleporter();
 };
 
