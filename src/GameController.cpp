@@ -4,7 +4,7 @@
 GameController::GameController(QObject *parent) :
 	QObject{parent},
 	m_gameTimer{new GameTimer(this)},
-	m_lifeCount{3},
+	m_lifesLeft{2},
 	m_score{0}
 {
 
@@ -15,9 +15,9 @@ GameTimer *GameController::gameTimer() const
 	return m_gameTimer;
 }
 
-int GameController::lifeCount() const
+int GameController::lifesLeft() const
 {
-	return m_lifeCount;
+	return m_lifesLeft;
 }
 
 int GameController::score() const
@@ -34,16 +34,16 @@ void GameController::increaseScore(int amount)
 
 void GameController::addLife()
 {
-	m_lifeCount++;
+	m_lifesLeft++;
 
-	emit lifeCountChanged(m_lifeCount);
+	emit lifesLeftChanged(m_lifesLeft);
 }
 
 void GameController::removeLife()
 {
-	m_lifeCount--;
+	m_lifesLeft--;
 
-	emit lifeCountChanged(m_lifeCount);
+	emit lifesLeftChanged(m_lifesLeft);
 }
 
 void GameController::start()

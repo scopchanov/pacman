@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	layoutMain->setContentsMargins(0, 0, 0, 0);
 	layoutMain->setSpacing(0);
 
-	connect(game->gameController(), &GameController::lifeCountChanged,
+	connect(game->gameController(), &GameController::lifesLeftChanged,
 			lifesDisplay, &LifesDisplay::setLifeCount);
 	connect(game->gameController(), &GameController::scoreChanged,
 			scoreDisplay, &ScoreDisplay::setScore);
