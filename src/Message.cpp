@@ -1,19 +1,11 @@
 #include "Message.h"
-#include <QGraphicsDropShadowEffect>
 #include <QFont>
 
 Message::Message(QGraphicsItem *parent) :
 	QGraphicsTextItem{parent}
 {
-	auto *effect{new QGraphicsDropShadowEffect(this)};
-
-	effect->setColor(0x00FFFFFF);
-	effect->setOffset(0, 4);
-	// effect->setBlurRadius(20);
-
-	setDefaultTextColor(0xFBC02D);
+	setDefaultTextColor(0xFFC107);
 	setFont(QFont("Neucha", 60, QFont::Bold, false));
-	setGraphicsEffect(effect);
 }
 
 QPointF Message::basePosition() const

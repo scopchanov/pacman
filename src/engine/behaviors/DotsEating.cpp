@@ -1,11 +1,13 @@
 #include "DotsEating.h"
 #include "engine/GameTimer.h"
 #include "engine/Tilemap.h"
+#include "engine/events/PointEaten.h"
 #include <QPointF>
 #include <QSoundEffect>
 
 DotsEating::DotsEating(GameObject *parent) :
 	AbstractSpatialBehavior(parent),
+	m_pointEaten{new PointEaten()},
 	m_effectEat{new QSoundEffect()},
 	m_effectWin{new QSoundEffect()}
 {
@@ -17,8 +19,14 @@ DotsEating::DotsEating(GameObject *parent) :
 
 DotsEating::~DotsEating()
 {
+	m_pointEaten->deleteLater();
 	m_effectEat->deleteLater();
 	m_effectWin->deleteLater();
+}
+
+PointEaten *DotsEating::pointEaten() const
+{
+	return m_pointEaten;
 }
 
 int DotsEating::type() const
@@ -46,16 +54,17 @@ void DotsEating::eatDotIfAvailable()
 	tilemap()->resetTile(row, column);
 
 	m_effectEat->play();
+	m_pointEaten->trigger();
 
-	if (tilemap()->tileCount())
-		return;
+	// if (tilemap()->tileCount())
+	// 	return;
 
-	gameTimer()->stop();
+	// gameTimer()->stop();
 
-	if (m_effectEat->isPlaying())
-		m_effectEat->stop();
+	// if (m_effectEat->isPlaying())
+	// 	m_effectEat->stop();
 
-	m_effectWin->play();
+	// m_effectWin->play();
 
-	qDebug() << "You win!";
+	// qDebug() << "You win!";
 }

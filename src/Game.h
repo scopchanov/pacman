@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QSize>
 
-class GameTimer;
+class GameController;
 class GameObject;
 class Scene;
 class InputSystem;
@@ -17,6 +17,7 @@ class Game : public QObject
 public:
     explicit Game(QObject *parent = nullptr);
 
+	GameController *gameController() const;
 	Scene *scene() const;
 	void configure(const QJsonObject &json);
 
@@ -30,8 +31,11 @@ private:
 	GameObject *createEnemy(Tilemap *tmLayout, GameObject *player);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 
-    GameTimer *m_gameTimer;
+	GameController *m_gameController;
 	Scene *m_scene;
+
+private slots:
+	void onPointEaten();
 };
 
 #endif // GAME_H

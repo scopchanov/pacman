@@ -5,12 +5,14 @@ CONFIG += c++20
 SOURCES += \
     FileHandler.cpp \
     Game.cpp \
-    LivesDisplay.cpp \
+    GameController.cpp \
+    LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
     PathBuilder.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
+    engine/events/AbstractGameEvent.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
     engine/Grid.cpp \
@@ -34,17 +36,20 @@ SOURCES += \
     engine/Vector2.cpp \
     engine/behaviors/PlayerOrientation.cpp \
     engine/behaviors/Teleporting.cpp \
+    engine/events/PointEaten.cpp \
     main.cpp
 
 HEADERS += \
     FileHandler.h \
     Game.h \
-    LivesDisplay.h \
+    GameController.h \
+    LifesDisplay.h \
     MainWindow.h \
     Message.h \
     PathBuilder.h \
     ScoreDisplay.h \
     StartupSequence.h \
+    engine/events/AbstractGameEvent.h \
     engine/GameTimer.h \
     engine/GameView.h \
     engine/Grid.h \
@@ -67,7 +72,8 @@ HEADERS += \
     engine/Tilemap.h \
     engine/Vector2.h \
     engine/behaviors/PlayerOrientation.h \
-    engine/behaviors/Teleporting.h
+    engine/behaviors/Teleporting.h \
+    engine/events/PointEaten.h
 
 RESOURCES += \
     resources.qrc

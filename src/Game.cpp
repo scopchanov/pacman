@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "GameController.h"
 #include "Message.h"
 #include "PathBuilder.h"
 #include "StartupSequence.h"
@@ -14,6 +15,7 @@
 #include "engine/behaviors/PlayerAnimation.h"
 #include "engine/behaviors/Teleporting.h"
 #include "engine/behaviors/Debug.h"
+#include "engine/events/PointEaten.h"
 #include "engine/Tilemap.h"
 #include "engine/Grid.h"
 #include "engine/Tile.h"
@@ -23,10 +25,15 @@
 
 Game::Game(QObject *parent) :
 	QObject(parent),
-	m_gameTimer{new GameTimer(this)},
+	m_gameController{new GameController(this)},
 	m_scene{new Scene(this)}
 {
-	m_gameTimer->setScene(m_scene);
+	m_gameController->gameTimer()->setScene(m_scene);
+}
+
+GameController *Game::gameController() const
+{
+	return m_gameController;
 }
 
 Scene *Game::scene() const
@@ -54,7 +61,7 @@ void Game::configure(const QJsonObject &json)
 	tmLayout->setGrid(grid);
 	tmDots->setGrid(grid);
 
-	buildTilemap(tmLayout, wallMatrix, QPen(QColor(0x00A3FF), 4), QBrush(Qt::transparent));
+	buildTilemap(tmLayout, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
 	auto *player{createPlayer(tmLayout, tmDots)};
@@ -73,7 +80,7 @@ void Game::start()
 
 	m_scene->addItem(sequence->message());
 
-	connect(sequence, &StartupSequence::go, m_gameTimer, &GameTimer::start);
+	connect(sequence, &StartupSequence::go, m_gameController, &GameController::start);
 
 	sequence->start();
 }
@@ -128,19 +135,19 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(m_scene->inputSystem());
 
-	movement->setGameTimer(m_gameTimer);
+	movement->setGameTimer(m_gameController->gameTimer());
 	movement->setTilemap(tmLayout);
 	movement->setMovingSpeed(200);
 	movement->setNextMove(Vector2(-1, 0));
 
 	orientation->setMovement(movement);
 
-	dotsEating->setGameTimer(m_gameTimer);
+	dotsEating->setGameTimer(m_gameController->gameTimer());
 	dotsEating->setTilemap(tmDots);
 
 	cameraFollow->setView(m_scene->views().at(0));
 
-	animation->setGameTimer(m_gameTimer);
+	animation->setGameTimer(m_gameController->gameTimer());
 
 	player->addBehavior(playerController);
 	player->addBehavior(movement);
@@ -152,6 +159,8 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	player->setPath(PathBuilder::playerPath(45));
 	player->setPen(QPen(Qt::transparent));
 	player->setBrush(Qt::white);
+
+	connect(dotsEating->pointEaten(), &PointEaten::pointEaten, this, &Game::onPointEaten);
 
 	return player;
 }
@@ -171,7 +180,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
 	enemyController->setCharacterMovement(movement);
 	// playerController->setInputSystem(m_scene->inputSystem());
 
-	movement->setGameTimer(m_gameTimer);
+	movement->setGameTimer(m_gameController->gameTimer());
 	movement->setTilemap(tmLayout);
 	movement->setMovingSpeed(200);
 	movement->setNextMove(Vector2(-1, 0));
@@ -180,7 +189,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
 
 	// animation->setGameTimer(m_gameTimer);
 
-	killPlayer->setGameTimer(m_gameTimer);
+	killPlayer->setGameTimer(m_gameController->gameTimer());
 	killPlayer->setPlayer(player);
 
 	enemy->addBehavior(enemyController);
@@ -213,4 +222,9 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 	teleporter->setFlag(QGraphicsItem::ItemHasNoContents);
 
 	return teleporter;
+}
+
+void Game::onPointEaten()
+{
+	m_gameController->increaseScore(1);
 }

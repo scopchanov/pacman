@@ -8,6 +8,8 @@ class ScoreDisplay : public QLabel
 	Q_OBJECT
 public:
 	explicit ScoreDisplay(QWidget *parent = nullptr);
+
+	void setScore(int value);
 };
 
 #endif // SCOREDISPLAY_H
