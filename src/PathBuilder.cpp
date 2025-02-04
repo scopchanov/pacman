@@ -54,6 +54,11 @@ QPainterPath PathBuilder::playerPath(qreal angle)
 	return player(angle);
 }
 
+QPainterPath PathBuilder::enemyPath()
+{
+	return enemy();
+}
+
 QPainterPath PathBuilder::teleporterPath()
 {
 	return teleporter();
@@ -239,6 +244,15 @@ QPainterPath PathBuilder::player(qreal angle)
 	QPainterPath p;
 
 	p.arcTo(-20, -20, 40, 40, startAngle, sweepLength);
+
+	return p;
+}
+
+QPainterPath PathBuilder::enemy()
+{
+	QPainterPath p;
+
+	p.addEllipse(-20, -20, 40, 40);
 
 	return p;
 }

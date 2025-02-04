@@ -33,6 +33,7 @@ public:
 
 	static QPainterPath tilePath(TileType type);
 	static QPainterPath playerPath(qreal angle);
+	static QPainterPath enemyPath();
 	static QPainterPath teleporterPath();
 
 private:
@@ -54,6 +55,7 @@ private:
 	static QPainterPath smallCircleDownRight();
 	static QPainterPath dot();
 	static QPainterPath player(qreal angle);
+	static QPainterPath enemy();
 	static QPainterPath teleporter();
 };
 

@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	auto *game{new Game(this)};
 
 	gameView->setScene(game->scene());
-	gameView->scale(3, 3);
+	// gameView->scale(3, 3);
 	gameView->centerOn(360, 588);
 
 	scannerView->setScene(game->scene());

@@ -23,6 +23,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
+#include <QGraphicsSvgItem>
 
 Game::Game(QObject *parent) :
 	QObject(parent),
@@ -71,7 +72,10 @@ void Game::configure(const QJsonObject &json)
 	m_scene->addItem(player);
 	m_scene->addItem(tmLayout);
 	m_scene->addItem(tmDots);
-	m_scene->addItem(createEnemy(tmLayout, player));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 300), "white"));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 348), "violet"));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(408, 348), "orange"));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(312, 348), "green"));
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 2)));
 }
@@ -173,11 +177,11 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	return player;
 }
 
-GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
+GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color)
 {
 	auto *enemy{new GameObject()};
 
-	enemy->setPos(360, 300);
+	enemy->setPos(position);
 
 	auto *movement{new CharacterMovement(enemy)};
 	// auto *orientation{new PlayerOrientation(enemy)};
@@ -191,7 +195,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
 
 	movement->setGameTimer(m_gameController->gameTimer());
 	movement->setTilemap(tmLayout);
-	movement->setMovingSpeed(200);
+	movement->setMovingSpeed(150);
 	movement->setNextMove(Vector2(-1, 0));
 
 	// orientation->setMovement(movement);
@@ -209,9 +213,15 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
 	enemy->addBehavior(killPlayer);
 
 
-	enemy->setPath(PathBuilder::playerPath(45));
+	enemy->setPath(PathBuilder::enemyPath());
 	enemy->setPen(QPen(Qt::transparent));
-	enemy->setBrush(Qt::white);
+	enemy->setBrush(Qt::transparent);
+	enemy->setFlag(QGraphicsItem::ItemHasNoContents);
+
+	auto *svg{new QGraphicsSvgItem(":/pix/svg/enemy-" + color + ".svg")};
+
+	svg->setParentItem(enemy);
+	svg->setPos(-24, -24);
 
 	connect(eventPlayerDies, &GameEvent::triggered, this, &Game::onPlayerDies);
 
