@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "GameController.h"
+#include "SoundEngine.h"
 #include "Message.h"
 #include "PathBuilder.h"
 #include "StartupSequence.h"
@@ -15,10 +16,10 @@
 #include "engine/behaviors/PlayerAnimation.h"
 #include "engine/behaviors/Teleporting.h"
 #include "engine/behaviors/Debug.h"
-#include "engine/events/PointEaten.h"
-#include "engine/Tilemap.h"
+#include "engine/GameEvent.h"
 #include "engine/Grid.h"
 #include "engine/Tile.h"
+#include "engine/Tilemap.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -26,6 +27,7 @@
 Game::Game(QObject *parent) :
 	QObject(parent),
 	m_gameController{new GameController(this)},
+	m_soundEngine{new SoundEngine(this)},
 	m_scene{new Scene(this)}
 {
 	m_gameController->gameTimer()->setScene(m_scene);
@@ -132,6 +134,9 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	auto *playerController{new PlayerController(player)};
 	auto *animation{new PlayerAnimation(player)};
 
+	auto *eventDotEaten{new GameEvent(this)};
+	auto *eventPlayerWins{new GameEvent(this)};
+
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(m_scene->inputSystem());
 
@@ -144,6 +149,8 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 
 	dotsEating->setGameTimer(m_gameController->gameTimer());
 	dotsEating->setTilemap(tmDots);
+	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
+	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
 	cameraFollow->setView(m_scene->views().at(0));
 
@@ -160,7 +167,8 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	player->setPen(QPen(Qt::transparent));
 	player->setBrush(Qt::white);
 
-	connect(dotsEating->pointEaten(), &PointEaten::pointEaten, this, &Game::onPointEaten);
+	connect(eventDotEaten, &GameEvent::triggered, this, &Game::onPointEaten);
+	connect(eventPlayerWins, &GameEvent::triggered, this, &Game::onPlayerWins);
 
 	return player;
 }
@@ -176,6 +184,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
 	auto *enemyController{new EnemyController(enemy)};
 	// auto *animation{new PlayerAnimation(enemy)};
 	auto *killPlayer{new KillPlayer(enemy)};
+	auto *eventPlayerDies{new GameEvent(this)};
 
 	enemyController->setCharacterMovement(movement);
 	// playerController->setInputSystem(m_scene->inputSystem());
@@ -191,6 +200,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
 
 	killPlayer->setGameTimer(m_gameController->gameTimer());
 	killPlayer->setPlayer(player);
+	killPlayer->setEventPlayerDies(eventPlayerDies);
 
 	enemy->addBehavior(enemyController);
 	enemy->addBehavior(movement);
@@ -202,6 +212,8 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player)
 	enemy->setPath(PathBuilder::playerPath(45));
 	enemy->setPen(QPen(Qt::transparent));
 	enemy->setBrush(Qt::white);
+
+	connect(eventPlayerDies, &GameEvent::triggered, this, &Game::onPlayerDies);
 
 	return enemy;
 }
@@ -227,4 +239,18 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 void Game::onPointEaten()
 {
 	m_gameController->increaseScore(1);
+	m_soundEngine->playEffect(SoundEngine::SND_DotEaten);
+}
+
+void Game::onPlayerWins()
+{
+	m_gameController->gameTimer()->stop();
+	m_soundEngine->playEffect(SoundEngine::SND_PlayerWins);
+}
+
+void Game::onPlayerDies()
+{
+	m_gameController->gameTimer()->stop();
+	m_soundEngine->playEffect(SoundEngine::SND_PlayerDies);
+	m_gameController->removeLife();
 }

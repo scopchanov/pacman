@@ -5,6 +5,7 @@
 #include <QSize>
 
 class GameController;
+class SoundEngine;
 class GameObject;
 class Scene;
 class InputSystem;
@@ -32,10 +33,13 @@ private:
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 
 	GameController *m_gameController;
+	SoundEngine *m_soundEngine;
 	Scene *m_scene;
 
 private slots:
 	void onPointEaten();
+	void onPlayerWins();
+	void onPlayerDies();
 };
 
 #endif // GAME_H

@@ -1,32 +1,18 @@
 #include "DotsEating.h"
-#include "engine/GameTimer.h"
+#include "engine/GameEvent.h"
 #include "engine/Tilemap.h"
-#include "engine/events/PointEaten.h"
 #include <QPointF>
-#include <QSoundEffect>
 
 DotsEating::DotsEating(GameObject *parent) :
-	AbstractSpatialBehavior(parent),
-	m_pointEaten{new PointEaten()},
-	m_effectEat{new QSoundEffect()},
-	m_effectWin{new QSoundEffect()}
+	AbstractSpatialBehavior(parent)
 {
-	m_effectEat->setSource(QUrl::fromLocalFile(":/snd/audio/effects/notification.wav"));
-	m_effectEat->setVolume(0.25);
-	m_effectWin->setSource(QUrl::fromLocalFile(":/snd/audio/effects/win.wav"));
-	m_effectWin->setVolume(0.5);
+	for (int n{0}; n < 2; n++)
+		m_gameEvents.append(nullptr);
 }
 
-DotsEating::~DotsEating()
+void DotsEating::setEvent(EventType type, GameEvent *event)
 {
-	m_pointEaten->deleteLater();
-	m_effectEat->deleteLater();
-	m_effectWin->deleteLater();
-}
-
-PointEaten *DotsEating::pointEaten() const
-{
-	return m_pointEaten;
+	m_gameEvents[type] = event;
 }
 
 int DotsEating::type() const
@@ -36,14 +22,6 @@ int DotsEating::type() const
 
 void DotsEating::performSpatialActions()
 {
-	if (!m_effectEat || !m_effectWin)
-		return;
-
-	eatDotIfAvailable();
-}
-
-void DotsEating::eatDotIfAvailable()
-{
 	const QPoint &cell{currentCell().toPoint()};
 	int row{cell.y()};
 	int column{cell.x()};
@@ -52,19 +30,20 @@ void DotsEating::eatDotIfAvailable()
 		return;
 
 	tilemap()->resetTile(row, column);
+	triggerGameEvent(ET_DotEaten);
 
-	m_effectEat->play();
-	m_pointEaten->trigger();
+	if (tilemap()->tileCount())
+		return;
 
-	// if (tilemap()->tileCount())
-	// 	return;
+	triggerGameEvent(ET_PlayerWins);
+}
 
-	// gameTimer()->stop();
+void DotsEating::triggerGameEvent(EventType type)
+{
+	auto *gameEvent{m_gameEvents.at(type)};
 
-	// if (m_effectEat->isPlaying())
-	// 	m_effectEat->stop();
+	if (!gameEvent)
+		return;
 
-	// m_effectWin->play();
-
-	// qDebug() << "You win!";
+	gameEvent->trigger();
 }

@@ -1,19 +1,13 @@
 #include "KillPlayer.h"
-#include "engine/GameTimer.h"
+#include "engine/GameEvent.h"
 #include "engine/GameObject.h"
-#include <QSoundEffect>
 
 KillPlayer::KillPlayer(GameObject *parent) :
 	AbstractTimedBehavior(parent),
 	m_player{nullptr},
-	m_effectDied{new QSoundEffect()}
+	m_eventPlayerDies{nullptr}
 {
-	m_effectDied->setSource(QUrl::fromLocalFile(":/snd/audio/effects/died.wav"));
-}
 
-KillPlayer::~KillPlayer()
-{
-	m_effectDied->deleteLater();
 }
 
 GameObject *KillPlayer::player() const
@@ -24,6 +18,11 @@ GameObject *KillPlayer::player() const
 void KillPlayer::setPlayer(GameObject *player)
 {
 	m_player = player;
+}
+
+void KillPlayer::setEventPlayerDies(GameEvent *gameEvent)
+{
+	m_eventPlayerDies = gameEvent;
 }
 
 int KillPlayer::type() const
@@ -39,8 +38,6 @@ void KillPlayer::performTimedActions()
 	const QList<QGraphicsItem *> &collidingItems{parent()->collidingItems()};
 
 	for (auto *item : collidingItems)
-		if (item == m_player) {
-			gameTimer()->stop();
-			m_effectDied->play();
-		}
+		if (item == m_player && m_eventPlayerDies)
+			m_eventPlayerDies->trigger();
 }

@@ -2,27 +2,28 @@
 #define DOTSEATING_H
 
 #include "AbstractSpatialBehavior.h"
-#include <QObject>
+#include <QList>
 
-class QSoundEffect;
-class PointEaten;
+class GameEvent;
 
 class DotsEating : public AbstractSpatialBehavior
 {
 public:
-	explicit DotsEating(GameObject *parent = nullptr);
-	~DotsEating();
+	enum EventType : int {
+		ET_DotEaten = 0,
+		ET_PlayerWins
+	};
 
-	PointEaten *pointEaten() const;
+	explicit DotsEating(GameObject *parent = nullptr);
+
+	void setEvent(EventType type, GameEvent *event);
 	int type() const override;
 
 private:
 	void performSpatialActions() override;
-	void eatDotIfAvailable();
+	void triggerGameEvent(EventType type);
 
-	PointEaten *m_pointEaten;
-	QSoundEffect *m_effectEat;
-	QSoundEffect *m_effectWin;
+	QList<GameEvent *> m_gameEvents;
 };
 
 #endif // DOTSEATING_H

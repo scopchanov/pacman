@@ -3,16 +3,16 @@
 
 #include "AbstractTimedBehavior.h"
 
-class QSoundEffect;
+class GameEvent;
 
 class KillPlayer : public AbstractTimedBehavior
 {
 public:
 	explicit KillPlayer(GameObject *parent = nullptr);
-	~KillPlayer();
 
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
+	void setEventPlayerDies(GameEvent *gameEvent);
 
 	int type() const override;
 
@@ -20,7 +20,7 @@ private:
 	void performTimedActions() override;
 
 	GameObject *m_player;
-	QSoundEffect *m_effectDied;
+	GameEvent *m_eventPlayerDies;
 };
 
 #endif // KILLPLAYER_H
