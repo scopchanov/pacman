@@ -20,6 +20,7 @@ public:
 
 	GameController *gameController() const;
 	Scene *scene() const;
+
 	void configure(const QJsonObject &json);
 
 public slots:
@@ -29,7 +30,7 @@ private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	GameObject *createPlayer(Tilemap *tmLayout, Tilemap *tmDots);
-	GameObject *createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color);
+	GameObject *createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color, const QPointF &scatterTarget);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 
 	GameController *m_gameController;

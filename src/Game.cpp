@@ -72,10 +72,10 @@ void Game::configure(const QJsonObject &json)
 	m_scene->addItem(player);
 	m_scene->addItem(tmLayout);
 	m_scene->addItem(tmDots);
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 300), "red"));
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 348), "violet"));
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(408, 348), "orange"));
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(312, 348), "green"));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 300), "red", grid->cellPosition(2, 0)));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 448/*300*/)/*QPointF(360, 348)*/, "violet",  grid->cellPosition(28, 0)));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(408, 448)/*QPointF(408, 348)*/, "orange",  grid->cellPosition(2, 33)));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(312, 448)/*QPointF(312, 348)*/, "green",  grid->cellPosition(28, 33)));
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 2)));
 }
@@ -177,7 +177,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	return player;
 }
 
-GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color)
+GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color, const QPointF &scatterTarget)
 {
 	auto *enemy{new GameObject()};
 
@@ -191,7 +191,8 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 	auto *eventPlayerDies{new GameEvent(this)};
 
 	enemyController->setCharacterMovement(movement);
-	// playerController->setInputSystem(m_scene->inputSystem());
+	enemyController->setPlayer(player);
+	enemyController->setScatterTarget(scatterTarget);
 
 	movement->setGameTimer(m_gameController->gameTimer());
 	movement->setTilemap(tmLayout);

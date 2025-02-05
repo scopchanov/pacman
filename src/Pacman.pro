@@ -26,6 +26,7 @@ SOURCES += \
     engine/behaviors/Debug.cpp \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/EnemyController.cpp \
+    engine/behaviors/Foo.cpp \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
@@ -63,6 +64,7 @@ HEADERS += \
     engine/behaviors/Debug.h \
     engine/behaviors/DotsEating.h \
     engine/behaviors/EnemyController.h \
+    engine/behaviors/Foo.h \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \

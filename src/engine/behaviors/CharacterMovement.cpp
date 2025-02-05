@@ -46,6 +46,14 @@ Vector2 CharacterMovement::targetPosition() const
 	return m_targetPosition;
 }
 
+Vector2 CharacterMovement::nextCellPosition(const Vector2 &direction) const
+{
+	Vector2 srcCell{tilemap()->grid()->posToCell(parent()->pos())};
+	const Vector2 &dstCell{srcCell + direction};
+
+	return Vector2(tilemap()->grid()->cellPosition(dstCell.y(), dstCell.x()));
+}
+
 void CharacterMovement::relocateGameObject(const QPointF destination)
 {
 	const QSizeF &cellSize{tilemap()->grid()->cellSize()};
@@ -149,14 +157,6 @@ Vector2 CharacterMovement::currentCellPosition() const
 	const QPointF &cellPos{tilemap()->grid()->cellPosition(row, column)};
 
 	return Vector2(cellPos);
-}
-
-Vector2 CharacterMovement::nextCellPosition(const Vector2 &direction) const
-{
-	Vector2 srcCell{tilemap()->grid()->posToCell(parent()->pos())};
-	const Vector2 &dstCell{srcCell + direction};
-
-	return Vector2(tilemap()->grid()->cellPosition(dstCell.y(), dstCell.x()));
 }
 
 bool CharacterMovement::canMove(const Vector2 &direction) const
