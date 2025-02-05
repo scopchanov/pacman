@@ -72,7 +72,7 @@ void Game::configure(const QJsonObject &json)
 	m_scene->addItem(player);
 	m_scene->addItem(tmLayout);
 	m_scene->addItem(tmDots);
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 300), "white"));
+	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 300), "red"));
 	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 348), "violet"));
 	m_scene->addItem(createEnemy(tmLayout, player, QPointF(408, 348), "orange"));
 	m_scene->addItem(createEnemy(tmLayout, player, QPointF(312, 348), "green"));

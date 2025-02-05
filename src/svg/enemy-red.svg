@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   sodipodi:docname="enemy-orange.svg"
+   sodipodi:docname="enemy-red.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@
      id="layer1"
      inkscape:label="Layer 1">
     <path
-       style="fill:#ff6d00;fill-opacity:1;stroke-width:4;stroke-linecap:round;stroke-linejoin:round"
+       style="fill:#d50000;fill-opacity:1;stroke-width:4;stroke-linecap:round;stroke-linejoin:round"
        d="m -28,12.000002 c 0,0 3.71228,-26.444181 12,-36.000002 1.953434,-2.252329 5.018576,-4 8,-4 2.981424,0 6.0465658,1.747671 8,4 8.2877197,9.555821 12,36.000002 12,36.000002 0,0 -3.6009441,-3.8506399 -6,-3.9999997 C 3.768253,7.8610588 2.2329943,10.8828 0,11.000002 -2.8440865,11.149279 -5.1519987,8.0000023 -8,8.0000023 c -2.848001,0 -5.155914,3.1492767 -8,2.9999997 -2.232994,-0.117202 -3.768253,-3.1389432 -6,-2.9999997 -2.399056,0.1493598 -6,3.9999997 -6,3.9999997 z"
        id="path2"
        sodipodi:nodetypes="caaacaaaaac" />

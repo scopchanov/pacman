@@ -14,6 +14,6 @@
         <file>svg/enemy-green.svg</file>
         <file>svg/enemy-orange.svg</file>
         <file>svg/enemy-violet.svg</file>
-        <file>svg/enemy-white.svg</file>
+        <file>svg/enemy-red.svg</file>
     </qresource>
 </RCC>

@@ -7,7 +7,8 @@
 
 CharacterMovement::CharacterMovement(GameObject *parent) :
 	AbstractSpatialBehavior(parent),
-	m_movingSpeed{0.0}
+	m_movingSpeed{0.0},
+	m_direction{Vector2(-1, 0)}
 {
 	if (!parent)
 		return;
@@ -45,15 +46,6 @@ Vector2 CharacterMovement::targetPosition() const
 	return m_targetPosition;
 }
 
-bool CharacterMovement::canMove(const Vector2 &direction) const
-{
-	const QPoint &nextCell{(currentCell() + direction).toPoint()};
-	int row{nextCell.y()};
-	int column{nextCell.x()};
-
-	return !tilemap()->hasTile(row, column);
-}
-
 void CharacterMovement::relocateGameObject(const QPointF destination)
 {
 	const QSizeF &cellSize{tilemap()->grid()->cellSize()};
@@ -61,6 +53,30 @@ void CharacterMovement::relocateGameObject(const QPointF destination)
 
 	parent()->setPos(destination);
 	m_targetPosition = a + destination;
+}
+
+void CharacterMovement::reverse()
+{
+	m_nextMove = m_direction*Vector2(-1, -1);
+}
+
+QList<Vector2> CharacterMovement::possibleMoves() const
+{
+	QList<Vector2> directions;
+	const Vector2 &forward{m_direction};
+	const Vector2 &left{forward.perpendicular()};
+	const Vector2 &right{left.reversed()};
+
+	if (canMove(forward))
+		directions.append(forward);
+
+	if (canMove(left))
+		directions.append(left);
+
+	if (canMove(right))
+		directions.append(right);
+
+	return directions;
 }
 
 int CharacterMovement::type() const
@@ -141,4 +157,13 @@ Vector2 CharacterMovement::nextCellPosition(const Vector2 &direction) const
 	const Vector2 &dstCell{srcCell + direction};
 
 	return Vector2(tilemap()->grid()->cellPosition(dstCell.y(), dstCell.x()));
+}
+
+bool CharacterMovement::canMove(const Vector2 &direction) const
+{
+	const QPoint &nextCell{(currentCell() + direction).toPoint()};
+	int row{nextCell.y()};
+	int column{nextCell.x()};
+
+	return !tilemap()->hasTile(row, column);
 }

@@ -49,12 +49,36 @@ Vector2 Vector2::normalized() const
 
 Vector2 Vector2::reflected() const
 {
+	// Reflects a vector off the surface defined by a normal.
+
+	// This method calculates a reflected vector using the following
+	// formula: v = inDirection - 2 * inNormal * dot(inDirection inNormal).
+	// The inNormal vector defines a surface. A surface's normal is the vector
+	// that is perpendicular to its surface. The inDirection vector is treated
+	//as a directional arrow coming into the surface. The returned value is a
+	//vector of equal magnitude to inDirection but with its direction reflected.
+
 	return Vector2();
 }
 
 Vector2 Vector2::perpendicular() const
 {
-	return Vector2();
+	return Vector2(-m_y, m_x);
+}
+
+Vector2 Vector2::reversed() const
+{
+	return Vector2(-m_x, -m_y);
+}
+
+Vector2 Vector2::rotated(qreal angle) const
+{
+	qreal cosAngle{cos(angle)};
+	qreal sinAngle{sin(angle)};
+	qreal x{m_x*cosAngle - m_y*sinAngle};
+	qreal y{m_x*sinAngle + m_y*cosAngle};
+
+	return Vector2(x, y);
 }
 
 Vector2 Vector2::movedTowards(const Vector2 &target, qreal maxDistanceDelta) const
@@ -75,18 +99,27 @@ void Vector2::set(const Vector2 &other)
 
 void Vector2::normalize()
 {
-	m_x /= magnitude();
-	m_y /= magnitude();
+	set(normalized());
 }
 
 void Vector2::reflect()
 {
-
+	set(reflected());
 }
 
 void Vector2::makePerpendicular()
 {
+	set(perpendicular());
+}
 
+void Vector2::reverse()
+{
+	set(reversed());
+}
+
+void Vector2::rotate(qreal angle)
+{
+	set(rotated(angle));
 }
 
 void Vector2::moveTowards(const Vector2 &target, qreal maxDistanceDelta)
@@ -187,7 +220,7 @@ Vector2 Vector2::clampedMagnitude(const Vector2 &vector, qreal maxLength)
 
 Vector2 Vector2::perpendicular(const Vector2 &inDirection)
 {
-	return Vector2();
+	return inDirection.perpendicular();
 }
 
 Vector2 Vector2::movedTowards(const Vector2 &source, const Vector2 &target, qreal maxDistanceDelta)
@@ -283,58 +316,42 @@ Vector2 Vector2::operator/(qreal k) const
 
 void Vector2::operator+=(const Vector2 &other)
 {
-	m_x += other.x();
-	m_y += other.y();
+	set(*this + other);
 }
 
 void Vector2::operator-=(const Vector2 &other)
 {
-	m_x -= other.x();
-	m_y -= other.y();
+	set(*this - other);
 }
 
 void Vector2::operator*=(const Vector2 &other)
 {
-	m_x *= other.x();
-	m_y *= other.y();
+	set(*this*other);
 }
 
 void Vector2::operator/=(const Vector2 &other)
 {
-	try {
-		m_x /= other.x();
-		m_y /= other.y();
-	} catch (...) {
-		qCritical() << "Division by zero!";
-	}
+	set(*this/other);
 }
 
 void Vector2::operator+=(qreal k)
 {
-	m_x += k;
-	m_y += k;
+	set(*this + k);
 }
 
 void Vector2::operator-=(qreal k)
 {
-	m_x -= k;
-	m_y -= k;
+	set(*this - k);
 }
 
 void Vector2::operator*=(qreal k)
 {
-	m_x *= k;
-	m_y *= k;
+	set(*this*k);
 }
 
 void Vector2::operator/=(qreal k)
 {
-	try {
-		m_x /= k;
-		m_y /= k;
-	} catch (...) {
-		qCritical() << "Division by zero!";
-	}
+	set(*this/k);
 }
 
 Vector2::operator QString() const

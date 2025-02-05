@@ -35,9 +35,6 @@ void KillPlayer::performTimedActions()
 	if (!m_player)
 		return;
 
-	const QList<QGraphicsItem *> &collidingItems{parent()->collidingItems()};
-
-	for (auto *item : collidingItems)
-		if (item == m_player && m_eventPlayerDies)
-			m_eventPlayerDies->trigger();
+	if (parent()->collidesWithItem(m_player) && m_eventPlayerDies)
+		m_eventPlayerDies->trigger();
 }

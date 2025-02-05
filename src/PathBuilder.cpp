@@ -252,7 +252,7 @@ QPainterPath PathBuilder::enemy()
 {
 	QPainterPath p;
 
-	p.addEllipse(-20, -20, 40, 40);
+	p.addEllipse(-15, -15, 30, 30);
 
 	return p;
 }

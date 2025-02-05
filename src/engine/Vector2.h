@@ -21,6 +21,8 @@ public:
     Vector2 normalized() const;
     Vector2 reflected() const;
     Vector2 perpendicular() const;
+	Vector2 reversed() const;
+	Vector2 rotated(qreal angle) const;
     Vector2 movedTowards(const Vector2 &target, qreal maxDistanceDelta) const;
 
     void set(qreal x, qreal y);
@@ -28,6 +30,8 @@ public:
     void normalize();
     void reflect();
     void makePerpendicular();
+	void reverse();
+	void rotate(qreal angle);
     void moveTowards(const Vector2 &target, qreal maxDistanceDelta);
 
     qreal angleFrom(const Vector2 &vector) const;

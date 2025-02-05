@@ -25,23 +25,16 @@ void EnemyController::performActions()
 	if (!m_characterMovement)
 		return;
 
-	// m_characterMovement->direction();
-	// m_characterMovement->
 
-	int d{QRandomGenerator::global()->bounded(0, 3)};
+	const QList<Vector2> &directions{m_characterMovement->possibleMoves()};
 
-	switch (d) {
-	case 0:
-		m_characterMovement->setNextMove(Vector2(-1, 0));
-		break;
-	case 1:
-		m_characterMovement->setNextMove(Vector2(1, 0));
-		break;
-	case 2:
-		m_characterMovement->setNextMove(Vector2(0, -1));
-		break;
-	case 3:
-		m_characterMovement->setNextMove(Vector2(0, 1));
-		break;
+	if (directions.isEmpty()) {
+		m_characterMovement->reverse();
+		return;
 	}
+
+	int cnt{static_cast<int>(directions.count())};
+	int ind{QRandomGenerator::global()->bounded(0, cnt)};
+
+	m_characterMovement->setNextMove(directions.at(ind));
 }
