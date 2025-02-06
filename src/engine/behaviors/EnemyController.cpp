@@ -57,6 +57,7 @@ int EnemyController::type() const
 void EnemyController::foo()
 {
 	m_chasing = !m_chasing;
+	m_characterMovement->reverse();
 
 	m_timer->setInterval(m_chasing ? 20000 : 7000);
 }

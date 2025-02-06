@@ -81,7 +81,7 @@ void CharacterMovement::relocateCharacter(const QPointF &destination)
 
 void CharacterMovement::reverse()
 {
-	_nextDirection = _currentDirection.reversed();
+	changeDirection(_currentDirection.reversed());
 }
 
 void CharacterMovement::performSpatialActions()
