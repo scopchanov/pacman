@@ -34,7 +34,7 @@ void Teleporting::performActions()
 		auto *movement{findMovement(static_cast<GameObject *>(item))};
 
 		if (movement)
-			movement->relocateGameObject(m_destination);
+			movement->relocateCharacter(m_destination);
 	}
 }
 

@@ -10,7 +10,6 @@ public:
 		BT_Animation = 0,
 		BT_CameraFollow,
 		BT_CharacterMovement,
-		BT_Debug,
 		BT_DotsEating,
 		BT_EnemyController,
 		BT_KillPlayer,

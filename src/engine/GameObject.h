@@ -14,12 +14,10 @@ public:
     void addBehavior(AbstractBehavior *behavior);
     int behaviorCount() const;
     AbstractBehavior *behavior(int n);
-
 	int type() const override;
 
 	void advance(int phase) override;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *) override;
-
 
 private:
     QList<AbstractBehavior *> m_behaviors;

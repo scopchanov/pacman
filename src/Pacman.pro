@@ -1,6 +1,6 @@
 QT += widgets svgwidgets multimedia
 
-CONFIG += c++20
+CONFIG += c++23
 
 SOURCES += \
     FileHandler.cpp \
@@ -23,7 +23,6 @@ SOURCES += \
     engine/behaviors/Animation.cpp \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
-    engine/behaviors/Debug.cpp \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/EnemyController.cpp \
     engine/behaviors/Foo.cpp \
@@ -61,7 +60,6 @@ HEADERS += \
     engine/behaviors/Animation.h \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
-    engine/behaviors/Debug.h \
     engine/behaviors/DotsEating.h \
     engine/behaviors/EnemyController.h \
     engine/behaviors/Foo.h \

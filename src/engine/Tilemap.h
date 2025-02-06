@@ -5,6 +5,7 @@
 
 class Grid;
 class Tile;
+class Vector2;
 
 class Tilemap : public GameObject
 {
@@ -17,6 +18,7 @@ public:
     bool setTile(int row, int col, Tile *tile);
 	bool resetTile(int row, int col);
     bool hasTile(int row, int col) const;
+	bool hasTile(const Vector2 &cell) const;
 
 private:
 	void deleteTile(Tile *tile);

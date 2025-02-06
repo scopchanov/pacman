@@ -86,17 +86,6 @@ Vector2 Vector2::movedTowards(const Vector2 &target, qreal maxDistanceDelta) con
 	return movedTowards(*this, target, maxDistanceDelta);
 }
 
-void Vector2::set(qreal x, qreal y)
-{
-	m_x = x;
-	m_y = y;
-}
-
-void Vector2::set(const Vector2 &other)
-{
-	set(other.x(), other.y());
-}
-
 void Vector2::normalize()
 {
 	set(normalized());
@@ -231,6 +220,22 @@ Vector2 Vector2::movedTowards(const Vector2 &source, const Vector2 &target, qrea
 	return Vector2(x, y);
 }
 
+Vector2 Vector2::operator =(const QPoint &point)
+{
+	m_x = point.x();
+	m_y = point.y();
+
+	return *this;
+}
+
+Vector2 Vector2::operator=(const QPointF &point)
+{
+	m_x = point.x();
+	m_y = point.y();
+
+	return *this;
+}
+
 bool Vector2::operator==(const Vector2 &other) const
 {
 	return m_x == other.x() && m_y == other.y();
@@ -357,6 +362,22 @@ void Vector2::operator/=(qreal k)
 Vector2::operator QString() const
 {
 	return toString();
+}
+
+Vector2::operator QPoint() const
+{
+	return toPoint();
+}
+
+Vector2::operator QPointF() const
+{
+	return toPointF();
+}
+
+void Vector2::set(const Vector2 &other)
+{
+	m_x = other.x();
+	m_y = other.y();
 }
 
 qreal Vector2::moveNumberTowards(qreal source, qreal target, qreal maxDistanceDelta)

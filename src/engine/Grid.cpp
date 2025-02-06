@@ -1,4 +1,5 @@
 #include "Grid.h"
+#include "Vector2.h"
 
 Grid::Grid() :
 	m_rowCount{0},
@@ -41,10 +42,15 @@ QPoint Grid::posToCell(QPointF position) const
 	return QPoint(col, row);
 }
 
-QPointF Grid::cellPosition(int row, int col)
+Vector2 Grid::cellPosition(int row, int col)
 {
 	qreal x{m_cellSize.width()*(col + 0.5)};
 	qreal y{m_cellSize.height()*(row + 0.5)};
 
-	return QPointF(x, y);
+	return Vector2(x, y);
+}
+
+Vector2 Grid::cellPosition(const Vector2 &cell)
+{
+	return cellPosition(cell.y(), cell.x());
 }

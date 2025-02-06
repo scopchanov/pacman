@@ -11,8 +11,8 @@ class Vector2
 public:
     explicit Vector2();
     explicit Vector2(qreal x, qreal y);
-    explicit Vector2(const QPoint &p);
-    explicit Vector2(const QPointF &p);
+	Vector2(const QPoint &p);
+	Vector2(const QPointF &p);
 
     qreal x() const;
     qreal y() const;
@@ -25,8 +25,6 @@ public:
 	Vector2 rotated(qreal angle) const;
     Vector2 movedTowards(const Vector2 &target, qreal maxDistanceDelta) const;
 
-    void set(qreal x, qreal y);
-    void set(const Vector2 &other);
     void normalize();
     void reflect();
     void makePerpendicular();
@@ -57,6 +55,8 @@ public:
     static Vector2 perpendicular(const Vector2 &inDirection);
     static Vector2 movedTowards(const Vector2 &source, const Vector2 &target, qreal maxDistanceDelta);
 
+	Vector2 operator=(const QPoint &point);
+	Vector2 operator=(const QPointF &point);
     bool operator==(const Vector2 &other) const;
     Vector2 operator+(const Vector2 &other) const;
     Vector2 operator-(const Vector2 &other) const;
@@ -79,8 +79,11 @@ public:
 	void operator*=(qreal k);
 	void operator/=(qreal k);
     operator QString() const;
+	operator QPoint() const;
+	operator QPointF() const;
 
 private:
+	void set(const Vector2 &other);
     static qreal moveNumberTowards(qreal source, qreal target, qreal maxDistanceDelta);
 
     qreal m_x;

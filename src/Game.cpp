@@ -15,7 +15,6 @@
 #include "engine/behaviors/KillPlayer.h"
 #include "engine/behaviors/PlayerAnimation.h"
 #include "engine/behaviors/Teleporting.h"
-#include "engine/behaviors/Debug.h"
 #include "engine/GameEvent.h"
 #include "engine/Grid.h"
 #include "engine/Tile.h"
@@ -147,7 +146,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	movement->setGameTimer(m_gameController->gameTimer());
 	movement->setTilemap(tmLayout);
 	movement->setMovingSpeed(200);
-	movement->setNextMove(Vector2(-1, 0));
+	movement->setNextDirection(Vector2(-1, 0));
 
 	orientation->setMovement(movement);
 
@@ -197,7 +196,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 	movement->setGameTimer(m_gameController->gameTimer());
 	movement->setTilemap(tmLayout);
 	movement->setMovingSpeed(150);
-	movement->setNextMove(Vector2(-1, 0));
+	movement->setNextDirection(Vector2(-1, 0));
 
 	// orientation->setMovement(movement);
 

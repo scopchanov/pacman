@@ -33,5 +33,5 @@ void PlayerController::performActions()
 	Vector2 userInput{m_inputSystem->userInput()};
 
 	if (userInput.x() || userInput.y())
-		m_characterMovement->setNextMove(userInput);
+		m_characterMovement->setNextDirection(userInput);
 }

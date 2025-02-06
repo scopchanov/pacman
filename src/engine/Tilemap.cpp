@@ -1,6 +1,7 @@
 #include "Tilemap.h"
 #include "Grid.h"
 #include "Tile.h"
+#include "Vector2.h"
 
 Tilemap::Tilemap(GameObject *parent) :
 	GameObject(parent),
@@ -62,6 +63,11 @@ bool Tilemap::resetTile(int row, int col)
 bool Tilemap::hasTile(int row, int col) const
 {
 	return m_tiles.at(row).at(col);
+}
+
+bool Tilemap::hasTile(const Vector2 &cell) const
+{
+	return hasTile(cell.y(), cell.x());
 }
 
 void Tilemap::deleteTile(Tile *tile)

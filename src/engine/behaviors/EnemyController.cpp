@@ -101,10 +101,12 @@ void EnemyController::performActions()
 		n++;
 	}
 
-	m_characterMovement->setNextMove(directions.at(ind));
+	m_characterMovement->setNextDirection(directions.at(ind));
 }
 
 qreal EnemyController::distanceToTarget(Vector2 direction) const
 {
-	return m_characterMovement->nextCellPosition(direction).distanceTo(Vector2(m_target));
+	// TODO - Improve if possible
+
+	return m_characterMovement->nextCellPositionIn(direction).distanceTo(Vector2(m_target));
 }
