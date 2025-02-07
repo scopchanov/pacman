@@ -11,9 +11,9 @@
         <file>audio/effects/died.wav</file>
     </qresource>
     <qresource prefix="/pix">
-        <file>svg/enemy-green.svg</file>
-        <file>svg/enemy-orange.svg</file>
-        <file>svg/enemy-violet.svg</file>
-        <file>svg/enemy-red.svg</file>
+        <file>svg/enemy-blinky.svg</file>
+        <file>svg/enemy-inky.svg</file>
+        <file>svg/enemy-pinky.svg</file>
+        <file>svg/enemy-clyde.svg</file>
     </qresource>
 </RCC>

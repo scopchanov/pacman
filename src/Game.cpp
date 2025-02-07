@@ -73,10 +73,10 @@ void Game::configure(const QJsonObject &json)
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
 	auto *player{createPlayer(tmLayout, tmDots)};
-	auto *blinky{createEnemy(tmLayout, player, QPointF(360, 300), "red", grid->cellPosition(0, 1))};
-	auto *pinky{createEnemy(tmLayout, player, QPointF(312, 348), "green",  grid->cellPosition(32, 28))};
-	auto *inky{createEnemy(tmLayout, player, QPointF(360, 348), "violet",  grid->cellPosition(0, 28))};
-	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 348), "orange",  grid->cellPosition(32, 1))};
+	auto *blinky{createEnemy(tmLayout, player, QPointF(360, 300), "blinky", grid->cellPosition(0, 1))};
+	auto *inky{createEnemy(tmLayout, player, QPointF(312, 372), "inky",  grid->cellPosition(0, 28))};
+	auto *pinky{createEnemy(tmLayout, player, QPointF(360, 372), "pinky",  grid->cellPosition(32, 28))};
+	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 372), "clyde",  grid->cellPosition(32, 1))};
 
 	auto *shadowing{new Shadowing()};
 	auto *speeding{new Speeding()};
