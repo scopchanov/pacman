@@ -13,7 +13,8 @@ class EnemyController : public AbstractBehavior
 {
 public:
 	enum StateType : int {
-		ST_Scatter = 0,
+		ST_Exit = 0,
+		ST_Scatter,
 		ST_Chase,
 		ST_Frightened,
 		ST_Eaten

@@ -9,7 +9,7 @@
 
 EnemyController::EnemyController(GameObject *parent) :
 	AbstractBehavior(parent),
-	_state{ST_Scatter},
+	_state{ST_Exit},
 	_personality{nullptr},
 	_characterMovement{nullptr},
 	_player{nullptr}
@@ -24,7 +24,7 @@ EnemyController::StateType EnemyController::state() const
 
 void EnemyController::setState(StateType state)
 {
-	_state = state;
+	// _state = state;
 }
 
 AbstractPersonality *EnemyController::personality() const
@@ -124,6 +124,9 @@ void EnemyController::updateTargetPosition()
 		return;
 
 	switch (_state) {
+	case ST_Exit:
+		_targetPosition = QPointF(360, 300);
+		break;
 	case ST_Scatter:
 		_targetPosition = _scatterTargetPosition;
 		break;

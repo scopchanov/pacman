@@ -72,23 +72,8 @@ void Game::configure(const QJsonObject &json)
 	buildTilemap(tmWalls, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	auto *tile1{new Tile()};
-	auto *tile2{new Tile()};
-	QPainterPath p;
-
-	p.moveTo(24, 0);
-	p.lineTo(0, 24);
-
-	tile1->setPath(p);
-	tile1->setPen(QPen(Qt::red));
-	tile1->setBrush(Qt::transparent);
-
-	tile2->setPath(p);
-	tile2->setPen(QPen(Qt::red));
-	tile2->setBrush(Qt::transparent);
-
-	tmWalls->setTile(13, 14, tile1);
-	tmWalls->setTile(13, 15, tile2);
+	tmWalls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
+	tmWalls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 
 	auto *player{createPlayer(tmWalls, tmDots)};
 	auto *blinky{createEnemy(tmWalls, player, QPointF(360, 300), "blinky", grid->cellPosition(0, 28))};
@@ -269,7 +254,6 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 	// enemy->addBehavior(orientation);
 	// enemy->addBehavior(animation);
 	enemy->addBehavior(killPlayer);
-
 
 	enemy->setPath(PathBuilder::enemyPath());
 	enemy->setPen(QPen(Qt::transparent));

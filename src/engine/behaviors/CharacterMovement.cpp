@@ -152,6 +152,16 @@ qreal CharacterMovement::distanceToTargetCell() const
 
 bool CharacterMovement::canMoveIn(const Vector2 &direction) const
 {
+	return isUnderDoor() ? true : isWayClear(direction);
+}
+
+bool CharacterMovement::isUnderDoor() const
+{
+	return currentCell() == QPoint(14, 14) || currentCell() == QPoint(14, 15);
+}
+
+bool CharacterMovement::isWayClear(const Vector2 &direction) const
+{
 	return !tilemap()->hasTile(currentCell() + direction);
 }
 

@@ -35,6 +35,8 @@ private:
 	bool alignedWithTargetCellCenter() const;
 	qreal distanceToTargetCell() const;
 	bool canMoveIn(const Vector2 &direction) const;
+	bool isUnderDoor() const;
+	bool isWayClear(const Vector2 &direction) const;
 	Vector2 currentCellPosition() const;
 
 	qreal _movingSpeed;
