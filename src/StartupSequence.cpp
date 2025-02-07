@@ -7,11 +7,10 @@ StartupSequence::StartupSequence(QObject *parent) :
 	QObject{parent},
 	m_message{new Message()},
 	m_timer{new QTimer(this)},
-	m_countDown{1},
-// m_countDown{5},
+	m_countDown{5},
 	m_countBeep{new QSoundEffect(this)}
 {
-	m_message->setBasePosition(360, 624);
+	m_message->setBasePosition(360, 444);
 	m_countBeep->setSource(QUrl::fromLocalFile(":/snd/audio/effects/notification.wav"));
 
 	connect(m_timer, &QTimer::timeout, this, &StartupSequence::onStartupTimeout);

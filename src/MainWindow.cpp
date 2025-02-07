@@ -16,29 +16,23 @@ MainWindow::MainWindow(QWidget *parent) :
 	auto *layoutMain{new QVBoxLayout(this)};
 	auto *layoutPanel{new QHBoxLayout()};
 	auto *gameView{new GameView(this)};
-	// auto *scannerView{new GameView(this)};
 	auto *scoreDisplay{new ScoreDisplay(this)};
 	auto *lifesDisplay{new LifesDisplay(this)};
 	auto *game{new Game(this)};
 
 	gameView->setScene(game->scene());
-	// gameView->scale(3, 3);
 
-	// scannerView->setScene(game->scene());
-	// scannerView->scale(0.25, 0.25);
-	// scannerView->scale(3, 3);
-	// scannerView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	// scannerView->setMaximumSize(720, 792);
-	// scannerView->centerOn(360, 588);
-
+	layoutPanel->addStretch();
 	layoutPanel->addWidget(scoreDisplay);
-	// layoutPanel->addWidget(scannerView);
 	layoutPanel->addWidget(lifesDisplay);
-	layoutPanel->setContentsMargins(100, 0, 0, 0);
+	layoutPanel->addStretch();
+	layoutPanel->setContentsMargins(0, 0, 0, 0);
 	layoutPanel->setSpacing(0);
 
+	layoutMain->addStretch();
 	layoutMain->addLayout(layoutPanel);
 	layoutMain->addWidget(gameView);
+	layoutMain->addStretch();
 	layoutMain->setContentsMargins(0, 0, 0, 0);
 	layoutMain->setSpacing(0);
 

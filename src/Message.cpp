@@ -5,7 +5,7 @@ Message::Message(QGraphicsItem *parent) :
 	QGraphicsTextItem{parent}
 {
 	setDefaultTextColor(0xFFC107);
-	setFont(QFont("Neucha", 60, QFont::Bold, false));
+	setFont(QFont("Neucha", 26, QFont::Bold, false));
 }
 
 QPointF Message::basePosition() const

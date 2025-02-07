@@ -9,7 +9,8 @@ GameView::GameView(QWidget *parent) :
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setBackgroundBrush(QBrush(Qt::black));
-	setSceneRect(0, 0, 720, 792);
+	setSceneRect(0, 0, 720, 768);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }
 
 void GameView::wheelEvent(QWheelEvent *event)

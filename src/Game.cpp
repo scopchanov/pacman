@@ -8,7 +8,7 @@
 #include "engine/Scene.h"
 #include "engine/behaviors/PlayerController.h"
 #include "engine/behaviors/PlayerOrientation.h"
-#include "engine/behaviors/CameraFollow.h"
+// #include "engine/behaviors/CameraFollow.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/EnemyController.h"
@@ -72,9 +72,9 @@ void Game::configure(const QJsonObject &json)
 
 	auto *player{createPlayer(tmLayout, tmDots)};
 	auto *blinky{createEnemy(tmLayout, player, QPointF(360, 300), "red", grid->cellPosition(0, 1))};
-	auto *pinky{createEnemy(tmLayout, player, QPointF(312, 448)/*QPointF(312, 348)*/, "green",  grid->cellPosition(32, 28))};
-	auto *inky{createEnemy(tmLayout, player, QPointF(360, 448/*300*/)/*QPointF(360, 348)*/, "violet",  grid->cellPosition(0, 28))};
-	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 448)/*QPointF(408, 348)*/, "orange",  grid->cellPosition(32, 1))};
+	auto *pinky{createEnemy(tmLayout, player, QPointF(312, 348), "green",  grid->cellPosition(32, 28))};
+	auto *inky{createEnemy(tmLayout, player, QPointF(360, 348), "violet",  grid->cellPosition(0, 28))};
+	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 348), "orange",  grid->cellPosition(32, 1))};
 
 	auto *shadowing{new Shadowing()};
 	auto *speeding{new Speeding()};
