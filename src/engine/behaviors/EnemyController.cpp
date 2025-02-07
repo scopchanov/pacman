@@ -2,26 +2,39 @@
 #include "engine/Vector2.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/GameObject.h"
-#include "Foo.h"
+#include "AiStateMachine.h"
+#include "engine/Tilemap.h"
+#include "engine/Grid.h"
+#include "engine/Scene.h"
+#include "engine/AbstractChasingStrategy.h"
 #include <QRandomGenerator>
-#include <QTimer>
 #include <QDebug>
 
 EnemyController::EnemyController(GameObject *parent) :
 	AbstractBehavior(parent),
+	_state{ST_Scatter},
 	m_characterMovement{nullptr},
 	m_player{nullptr},
-	m_timer{new QTimer()},
-	m_chasing{false}
+	_chasingStrategy{nullptr}/*,
+	_targetMark{new QGraphicsRectItem()}*/
 {
-	auto *foo{new Foo()};
+	auto *foo{new AiStateMachine()};
 
 	foo->setFoo(this);
 
-	QObject::connect(m_timer, &QTimer::timeout, foo, &Foo::dodd);
+	// _targetMark->setRect(-10, -10, 20, 20);
+	// _targetMark->setPen(QPen(Qt::transparent));
+	// _targetMark->setBrush(Qt::green);
+}
 
-	m_timer->setSingleShot(false);
+EnemyController::StateType EnemyController::state() const
+{
+	return _state;
+}
 
+void EnemyController::setState(StateType state)
+{
+	_state = state;
 }
 
 GameObject *EnemyController::player() const
@@ -36,12 +49,22 @@ void EnemyController::setPlayer(GameObject *player)
 
 QPointF EnemyController::scatterTarget() const
 {
-	return m_scatterTarget;
+	return _scatterTargetPosition;
 }
 
-void EnemyController::setScatterTarget(const QPointF &vector)
+void EnemyController::setScatterTarget(const QPointF &point)
 {
-	m_scatterTarget = vector;
+	_scatterTargetPosition = point;
+}
+
+AbstractChasingStrategy *EnemyController::chasingStrategy() const
+{
+	return _chasingStrategy;
+}
+
+void EnemyController::setChasingStrategy(AbstractChasingStrategy *strategy)
+{
+	_chasingStrategy = strategy;
 }
 
 void EnemyController::setCharacterMovement(CharacterMovement *characterMovement)
@@ -54,21 +77,13 @@ int EnemyController::type() const
 	return BT_EnemyController;
 }
 
-void EnemyController::foo()
-{
-	m_chasing = !m_chasing;
-	m_characterMovement->reverse();
-
-	m_timer->setInterval(m_chasing ? 20000 : 7000);
-}
-
 void EnemyController::performActions()
 {
 	if (!m_characterMovement || !m_player)
 		return;
 
-	if (!m_timer->isActive())
-		m_timer->start(7000);
+	// if (!_targetMark->scene())
+	// 	m_characterMovement->parent()->scene()->addItem(_targetMark);
 
 	const QList<Vector2> &directions{m_characterMovement->possibleMoves()};
 
@@ -82,9 +97,9 @@ void EnemyController::performActions()
 	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
 	// m_characterMovement->setNextMove(directions.at(ind));
 
-	m_target = (m_chasing ? m_player->pos() : m_scatterTarget);
+	foo();
 
-	qreal a{distanceToTarget(directions.first())};
+	qreal dt{distanceToTarget(directions.first())};
 
 	int ind{0};
 	int n{1};
@@ -94,8 +109,8 @@ void EnemyController::performActions()
 	for (const auto &direction : lastDirections) {
 		qreal d{distanceToTarget(direction)};
 
-		if (d < a) {
-			a = d;
+		if (d < dt) {
+			dt = d;
 			ind = n;
 		}
 
@@ -103,11 +118,30 @@ void EnemyController::performActions()
 	}
 
 	m_characterMovement->setNextDirection(directions.at(ind));
+
+	// _targetMark->setPos(_currentTargetPosition);
 }
 
 qreal EnemyController::distanceToTarget(Vector2 direction) const
 {
 	// TODO - Improve if possible
 
-	return m_characterMovement->nextCellPositionIn(direction).distanceTo(Vector2(m_target));
+	return m_characterMovement->nextCellPositionIn(direction).distanceTo(Vector2(_currentTargetPosition));
+}
+
+void EnemyController::foo()
+{
+	if (!_chasingStrategy)
+		return;
+
+	switch (_state) {
+	case ST_Scatter:
+		_currentTargetPosition = _scatterTargetPosition;
+		break;
+	case ST_Chase:
+		_currentTargetPosition = _chasingStrategy->calculateTargetPosition();
+		break;
+	default:
+		break;
+	}
 }

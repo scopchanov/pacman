@@ -23,11 +23,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	gameView->setScene(game->scene());
 	// gameView->scale(3, 3);
-	gameView->centerOn(360, 588);
 
 	// scannerView->setScene(game->scene());
 	// scannerView->scale(0.25, 0.25);
-	// scannerView->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+	// scannerView->scale(3, 3);
+	// scannerView->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+	// scannerView->setMaximumSize(720, 792);
+	// scannerView->centerOn(360, 588);
 
 	layoutPanel->addWidget(scoreDisplay);
 	// layoutPanel->addWidget(scannerView);
@@ -35,8 +37,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	layoutPanel->setContentsMargins(100, 0, 0, 0);
 	layoutPanel->setSpacing(0);
 
-	layoutMain->addWidget(gameView);
 	layoutMain->addLayout(layoutPanel);
+	layoutMain->addWidget(gameView);
 	layoutMain->setContentsMargins(0, 0, 0, 0);
 	layoutMain->setSpacing(0);
 

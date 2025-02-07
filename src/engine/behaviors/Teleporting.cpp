@@ -31,21 +31,14 @@ void Teleporting::performActions()
 		if (item->type() != QGraphicsItem::UserType)
 			continue;
 
-		auto *movement{findMovement(static_cast<GameObject *>(item))};
+		auto *gameObject{static_cast<GameObject *>(item)};
+		auto *behavior{gameObject->findBehavior(BT_CharacterMovement)};
 
-		if (movement)
-			movement->relocateCharacter(m_destination);
+		if (!behavior)
+			continue;
+
+		auto *movement{static_cast<CharacterMovement *>(behavior)};
+
+		movement->relocateCharacter(m_destination);
 	}
-}
-
-CharacterMovement *Teleporting::findMovement(GameObject *gameObject) const
-{
-	for (int n{0}; n < gameObject->behaviorCount(); n++) {
-		auto *behavior{gameObject->behavior(n)};
-
-		if (behavior->type() == BT_CharacterMovement)
-			return static_cast<CharacterMovement *>(behavior);
-	}
-
-	return nullptr;
 }

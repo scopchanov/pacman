@@ -131,6 +131,16 @@ qreal Vector2::distanceTo(const Vector2 &vector) const
 	return sqrt(pow(vector.x() - m_x, 2) + pow(vector.y() - m_y, 2));
 }
 
+qreal Vector2::distanceTo(const QPointF &point) const
+{
+	return distanceTo(Vector2(point));
+}
+
+qreal Vector2::distanceTo(const QPoint &point) const
+{
+	return distanceTo(Vector2(point));
+}
+
 qreal Vector2::dotProduct(const Vector2 &vector) const
 {
 	return 0;

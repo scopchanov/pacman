@@ -7,7 +7,8 @@ StartupSequence::StartupSequence(QObject *parent) :
 	QObject{parent},
 	m_message{new Message()},
 	m_timer{new QTimer(this)},
-	m_countDown{5},
+	m_countDown{1},
+// m_countDown{5},
 	m_countBeep{new QSoundEffect(this)}
 {
 	m_message->setBasePosition(360, 624);

@@ -33,6 +33,15 @@ AbstractBehavior *GameObject::behavior(int n)
 	return m_behaviors.at(n);
 }
 
+AbstractBehavior *GameObject::findBehavior(int type)
+{
+	for (auto *behavior : std::as_const(m_behaviors))
+		if (behavior->type() == type)
+			return behavior;
+
+	return nullptr;
+}
+
 int GameObject::type() const
 {
 	return QGraphicsItem::UserType;

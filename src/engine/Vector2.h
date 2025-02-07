@@ -11,8 +11,8 @@ class Vector2
 public:
     explicit Vector2();
     explicit Vector2(qreal x, qreal y);
-	Vector2(const QPoint &p);
-	Vector2(const QPointF &p);
+	explicit Vector2(const QPoint &p);
+	explicit Vector2(const QPointF &p);
 
     qreal x() const;
     qreal y() const;
@@ -35,6 +35,8 @@ public:
     qreal angleFrom(const Vector2 &vector) const;
     qreal angleTo(const Vector2 &vector) const;
     qreal distanceTo(const Vector2 &vector) const;
+	qreal distanceTo(const QPointF &point) const;
+	qreal distanceTo(const QPoint &point) const;
     qreal dotProduct(const Vector2 &vector) const;
     Vector2 min(const Vector2 &vector) const;
     Vector2 max(const Vector2 &vector) const;

@@ -19,6 +19,10 @@
 #include "engine/Grid.h"
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
+#include "engine/Shadowing.h"
+#include "engine/Speeding.h"
+#include "engine/Shying.h"
+#include "engine/Poking.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -67,14 +71,38 @@ void Game::configure(const QJsonObject &json)
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
 	auto *player{createPlayer(tmLayout, tmDots)};
+	auto *blinky{createEnemy(tmLayout, player, QPointF(360, 300), "red", grid->cellPosition(0, 1))};
+	auto *pinky{createEnemy(tmLayout, player, QPointF(312, 448)/*QPointF(312, 348)*/, "green",  grid->cellPosition(32, 28))};
+	auto *inky{createEnemy(tmLayout, player, QPointF(360, 448/*300*/)/*QPointF(360, 348)*/, "violet",  grid->cellPosition(0, 28))};
+	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 448)/*QPointF(408, 348)*/, "orange",  grid->cellPosition(32, 1))};
+
+	auto *shadowing{new Shadowing()};
+	auto *speeding{new Speeding()};
+	auto *shying{new Shying()};
+	auto *poking{new Poking()};
+
+	shadowing->setPlayer(player);
+	speeding->setPlayer(player);
+	speeding->setGrid(grid);
+	shying->setPlayer(player);
+	shying->setGrid(grid);
+	shying->setEnemy(blinky);
+	poking->setPlayer(player);
+	poking->setEnemy(clyde);
+	poking->setGrid(grid);
+
+	static_cast<EnemyController *>(blinky->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(shadowing);
+	static_cast<EnemyController *>(pinky->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(speeding);
+	static_cast<EnemyController *>(inky->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(shying);
+	static_cast<EnemyController *>(clyde->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(poking);
 
 	m_scene->addItem(player);
 	m_scene->addItem(tmLayout);
 	m_scene->addItem(tmDots);
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 300), "red", grid->cellPosition(2, 0)));
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(360, 448/*300*/)/*QPointF(360, 348)*/, "violet",  grid->cellPosition(28, 0)));
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(408, 448)/*QPointF(408, 348)*/, "orange",  grid->cellPosition(2, 33)));
-	m_scene->addItem(createEnemy(tmLayout, player, QPointF(312, 448)/*QPointF(312, 348)*/, "green",  grid->cellPosition(28, 33)));
+	m_scene->addItem(blinky);
+	m_scene->addItem(pinky);
+	m_scene->addItem(inky);
+	m_scene->addItem(clyde);
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
 	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 2)));
 }
@@ -133,10 +161,9 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	auto *movement{new CharacterMovement(player)};
 	auto *orientation{new PlayerOrientation(player)};
 	auto *dotsEating{new DotsEating(player)};
-	auto *cameraFollow{new CameraFollow(player)};
+	// auto *cameraFollow{new CameraFollow(player)};
 	auto *playerController{new PlayerController(player)};
 	auto *animation{new PlayerAnimation(player)};
-
 	auto *eventDotEaten{new GameEvent(this)};
 	auto *eventPlayerWins{new GameEvent(this)};
 
@@ -155,7 +182,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
-	cameraFollow->setView(m_scene->views().at(0));
+	// cameraFollow->setView(m_scene->views().at(0));
 
 	animation->setGameTimer(m_gameController->gameTimer());
 
@@ -163,7 +190,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	player->addBehavior(movement);
 	player->addBehavior(orientation);
 	player->addBehavior(animation);
-	player->addBehavior(cameraFollow);
+	// player->addBehavior(cameraFollow);
 	player->addBehavior(dotsEating);
 
 	player->setPath(PathBuilder::playerPath(45));

@@ -6,7 +6,7 @@ ScoreDisplay::ScoreDisplay(QWidget *parent) :
 {
 	setFont(QFont("Neucha", 60, QFont::Bold, false));
 
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 
 	setText(tr("Your Score: 00000"));
 	setAlignment(Qt::AlignLeft | Qt::AlignVCenter);

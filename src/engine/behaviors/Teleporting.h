@@ -17,7 +17,6 @@ public:
 
 private:
 	void performActions() override;
-	CharacterMovement *findMovement(GameObject *gameObject) const;
 
 	QPointF m_destination;
 };

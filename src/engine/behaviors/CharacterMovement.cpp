@@ -44,7 +44,7 @@ void CharacterMovement::setNextDirection(const Vector2 &direction)
 
 Vector2 CharacterMovement::nextCellPositionIn(const Vector2 &direction) const
 {
-	const Vector2 &sourceCell{tilemap()->grid()->posToCell(parent()->pos())};
+	Vector2 sourceCell{tilemap()->grid()->posToCell(parent()->pos())};
 
 	return tilemap()->grid()->cellPosition(sourceCell + direction);
 }
@@ -81,7 +81,7 @@ void CharacterMovement::relocateCharacter(const QPointF &destination)
 
 void CharacterMovement::reverse()
 {
-	changeDirection(_currentDirection.reversed());
+	// changeDirection(_currentDirection.reversed());
 }
 
 void CharacterMovement::performSpatialActions()
@@ -93,7 +93,7 @@ void CharacterMovement::performSpatialActions()
 void CharacterMovement::moveCharacter()
 {
 	qreal rate{_movingSpeed*gameTimer()->deltaTime()};
-	const Vector2 &characterPosition{parent()->pos()};
+	Vector2 characterPosition{parent()->pos()};
 
 	parent()->setPos(characterPosition.movedTowards(_targetCellPosition, rate));
 }
