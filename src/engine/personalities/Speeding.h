@@ -1,14 +1,15 @@
 #ifndef SPEEDING_H
 #define SPEEDING_H
 
-#include "AbstractChasingStrategy.h"
+#include "AbstractPersonality.h"
 
 class Grid;
 
-class Speeding : public AbstractChasingStrategy
+class Speeding : public AbstractPersonality
 {
+	Q_OBJECT
 public:
-	explicit Speeding();
+	explicit Speeding(QObject *parent = nullptr);
 
 	Grid *grid() const;
 	void setGrid(Grid *grid);

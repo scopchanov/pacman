@@ -7,7 +7,7 @@
 
 class QGraphicsRectItem;
 class CharacterMovement;
-class AbstractChasingStrategy;
+class AbstractPersonality;
 
 class EnemyController : public AbstractBehavior
 {
@@ -23,14 +23,13 @@ public:
 
 	StateType state() const;
 	void setState(StateType state);
-
+	AbstractPersonality *personality() const;
+	void setPersonality(AbstractPersonality *personality);
+	void setCharacterMovement(CharacterMovement *characterMovement);
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
 	QPointF scatterTarget() const;
 	void setScatterTarget(const QPointF &point);
-	AbstractChasingStrategy *chasingStrategy() const;
-	void setChasingStrategy(AbstractChasingStrategy *strategy);
-	void setCharacterMovement(CharacterMovement *characterMovement);
 	int type() const override;
 
 private:
@@ -39,11 +38,11 @@ private:
 	void updateTargetPosition();
 
 	StateType _state;
+	AbstractPersonality *_personality;
 	CharacterMovement *_characterMovement;
 	GameObject *_player;
 	QPointF _scatterTargetPosition;
-	QPointF _currentTargetPosition;
-	AbstractChasingStrategy *_chasingStrategy;
+	QPointF _targetPosition;
 	// QGraphicsRectItem *_targetMark;
 };
 

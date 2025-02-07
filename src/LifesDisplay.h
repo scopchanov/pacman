@@ -13,7 +13,7 @@ public:
 	void setLifeCount(int value);
 
 protected:
-	void paintEvent(QPaintEvent *event) override;
+	void paintEvent(QPaintEvent *) override;
 
 private:
 	int m_lifeCount;

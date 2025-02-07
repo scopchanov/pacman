@@ -2,8 +2,8 @@
 #include "engine/GameObject.h"
 #include "engine/Vector2.h"
 
-Shadowing::Shadowing() :
-	AbstractChasingStrategy()
+Shadowing::Shadowing(QObject *parent) :
+	AbstractPersonality(parent)
 {
 
 }

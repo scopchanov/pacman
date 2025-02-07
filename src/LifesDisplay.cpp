@@ -16,7 +16,7 @@ void LifesDisplay::setLifeCount(int value)
 	update();
 }
 
-void LifesDisplay::paintEvent(QPaintEvent *event)
+void LifesDisplay::paintEvent(QPaintEvent *)
 {
 	QPainter painter(this);
 

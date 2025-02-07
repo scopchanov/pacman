@@ -29,11 +29,11 @@ SOURCES += \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
-    engine/strategies/AbstractChasingStrategy.cpp \
-    engine/strategies/Poking.cpp \
-    engine/strategies/Shadowing.cpp \
-    engine/strategies/Shying.cpp \
-    engine/strategies/Speeding.cpp \
+    engine/personalities/AbstractPersonality.cpp \
+    engine/personalities/Poking.cpp \
+    engine/personalities/Shadowing.cpp \
+    engine/personalities/Shying.cpp \
+    engine/personalities/Speeding.cpp \
     engine/GameObject.cpp \
     engine/InputSystem.cpp \
     engine/Scene.cpp \
@@ -71,11 +71,11 @@ HEADERS += \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
-    engine/strategies/AbstractChasingStrategy.h \
-    engine/strategies/Poking.h \
-    engine/strategies/Shadowing.h \
-    engine/strategies/Shying.h \
-    engine/strategies/Speeding.h \
+    engine/personalities/AbstractPersonality.h \
+    engine/personalities/Poking.h \
+    engine/personalities/Shadowing.h \
+    engine/personalities/Shying.h \
+    engine/personalities/Speeding.h \
     engine/GameObject.h \
     engine/InputSystem.h \
     engine/Scene.h \

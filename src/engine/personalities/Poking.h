@@ -1,14 +1,15 @@
 #ifndef POKING_H
 #define POKING_H
 
-#include "AbstractChasingStrategy.h"
+#include "AbstractPersonality.h"
 
 class Grid;
 
-class Poking : public AbstractChasingStrategy
+class Poking : public AbstractPersonality
 {
+	Q_OBJECT
 public:
-	explicit Poking();
+	explicit Poking(QObject *parent = nullptr);
 
 	GameObject *enemy() const;
 	void setEnemy(GameObject *enemy);

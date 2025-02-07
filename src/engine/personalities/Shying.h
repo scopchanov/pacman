@@ -1,14 +1,15 @@
 #ifndef SHYING_H
 #define SHYING_H
 
-#include "AbstractChasingStrategy.h"
+#include "AbstractPersonality.h"
 
 class Grid;
 
-class Shying : public AbstractChasingStrategy
+class Shying : public AbstractPersonality
 {
+	Q_OBJECT
 public:
-	explicit Shying();
+	explicit Shying(QObject *parent = nullptr);
 
 	Grid *grid() const;
 	void setGrid(Grid *grid);

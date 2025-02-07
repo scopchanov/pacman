@@ -20,10 +20,10 @@
 #include "engine/Grid.h"
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
-#include "engine/strategies/Shadowing.h"
-#include "engine/strategies/Speeding.h"
-#include "engine/strategies/Shying.h"
-#include "engine/strategies/Poking.h"
+#include "engine/personalities/Shadowing.h"
+#include "engine/personalities/Speeding.h"
+#include "engine/personalities/Shying.h"
+#include "engine/personalities/Poking.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -73,15 +73,15 @@ void Game::configure(const QJsonObject &json)
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
 	auto *player{createPlayer(tmLayout, tmDots)};
-	auto *blinky{createEnemy(tmLayout, player, QPointF(360, 300), "blinky", grid->cellPosition(0, 1))};
+	auto *blinky{createEnemy(tmLayout, player, QPointF(360, 300), "blinky", grid->cellPosition(32, 28))};
 	auto *inky{createEnemy(tmLayout, player, QPointF(312, 372), "inky",  grid->cellPosition(0, 28))};
-	auto *pinky{createEnemy(tmLayout, player, QPointF(360, 372), "pinky",  grid->cellPosition(32, 28))};
-	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 372), "clyde",  grid->cellPosition(32, 1))};
+	auto *pinky{createEnemy(tmLayout, player, QPointF(360, 372), "pinky",  grid->cellPosition(32, 1))};
+	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 372), "clyde",  grid->cellPosition(0, 1))};
 
-	auto *shadowing{new Shadowing()};
-	auto *speeding{new Speeding()};
-	auto *shying{new Shying()};
-	auto *poking{new Poking()};
+	auto *shadowing{new Shadowing(this)};
+	auto *speeding{new Speeding(this)};
+	auto *shying{new Shying(this)};
+	auto *poking{new Poking(this)};
 
 	shadowing->setPlayer(player);
 	speeding->setPlayer(player);
@@ -98,10 +98,10 @@ void Game::configure(const QJsonObject &json)
 	auto *iec{static_cast<EnemyController *>(inky->findBehavior(AbstractBehavior::BT_EnemyController))};
 	auto *cec{static_cast<EnemyController *>(clyde->findBehavior(AbstractBehavior::BT_EnemyController))};
 
-	bec->setChasingStrategy(shadowing);
-	pec->setChasingStrategy(speeding);
-	iec->setChasingStrategy(shying);
-	cec->setChasingStrategy(poking);
+	bec->setPersonality(shadowing);
+	pec->setPersonality(speeding);
+	iec->setPersonality(shying);
+	cec->setPersonality(poking);
 
 	stateMachine->setGameTimer(gameController()->gameTimer());
 	stateMachine->addEnemyController(bec);

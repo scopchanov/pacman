@@ -4,22 +4,17 @@
 #include "engine/GameObject.h"
 #include "engine/Tilemap.h"
 #include "engine/Grid.h"
-#include "engine/Scene.h"
-#include "engine/strategies/AbstractChasingStrategy.h"
+#include "engine/personalities/AbstractPersonality.h"
 #include <QRandomGenerator>
-#include <QDebug>
 
 EnemyController::EnemyController(GameObject *parent) :
 	AbstractBehavior(parent),
 	_state{ST_Scatter},
+	_personality{nullptr},
 	_characterMovement{nullptr},
-	_player{nullptr},
-	_chasingStrategy{nullptr}/*,
-	_targetMark{new QGraphicsRectItem()}*/
+	_player{nullptr}
 {
-	// _targetMark->setRect(-10, -10, 20, 20);
-	// _targetMark->setPen(QPen(Qt::transparent));
-	// _targetMark->setBrush(Qt::green);
+
 }
 
 EnemyController::StateType EnemyController::state() const
@@ -30,6 +25,21 @@ EnemyController::StateType EnemyController::state() const
 void EnemyController::setState(StateType state)
 {
 	_state = state;
+}
+
+AbstractPersonality *EnemyController::personality() const
+{
+	return _personality;
+}
+
+void EnemyController::setPersonality(AbstractPersonality *personality)
+{
+	_personality = personality;
+}
+
+void EnemyController::setCharacterMovement(CharacterMovement *characterMovement)
+{
+	_characterMovement = characterMovement;
 }
 
 GameObject *EnemyController::player() const
@@ -52,21 +62,6 @@ void EnemyController::setScatterTarget(const QPointF &point)
 	_scatterTargetPosition = point;
 }
 
-AbstractChasingStrategy *EnemyController::chasingStrategy() const
-{
-	return _chasingStrategy;
-}
-
-void EnemyController::setChasingStrategy(AbstractChasingStrategy *strategy)
-{
-	_chasingStrategy = strategy;
-}
-
-void EnemyController::setCharacterMovement(CharacterMovement *characterMovement)
-{
-	_characterMovement = characterMovement;
-}
-
 int EnemyController::type() const
 {
 	return BT_EnemyController;
@@ -74,11 +69,10 @@ int EnemyController::type() const
 
 void EnemyController::performActions()
 {
+	// TODO - Imporve me
+
 	if (!_characterMovement || !_player)
 		return;
-
-	// if (!_targetMark->scene())
-	// 	_characterMovement->parent()->scene()->addItem(_targetMark);
 
 	const QList<Vector2> &directions{_characterMovement->possibleMoves()};
 
@@ -119,22 +113,22 @@ void EnemyController::performActions()
 
 qreal EnemyController::distanceToTarget(Vector2 direction) const
 {
-	// TODO - Improve if possible
+	// TODO - Improve me
 
-	return _characterMovement->nextCellPositionIn(direction).distanceTo(Vector2(_currentTargetPosition));
+	return _characterMovement->nextCellPositionIn(direction).distanceTo(Vector2(_targetPosition));
 }
 
 void EnemyController::updateTargetPosition()
 {
-	if (!_chasingStrategy)
+	if (!_personality)
 		return;
 
 	switch (_state) {
 	case ST_Scatter:
-		_currentTargetPosition = _scatterTargetPosition;
+		_targetPosition = _scatterTargetPosition;
 		break;
 	case ST_Chase:
-		_currentTargetPosition = _chasingStrategy->calculateTargetPosition();
+		_targetPosition = _personality->calculateTargetPosition();
 		break;
 	default:
 		break;

@@ -1,26 +1,36 @@
-#include "Speeding.h"
+#include "Shying.h"
 #include "engine/GameObject.h"
 #include "engine/Grid.h"
 #include "engine/Vector2.h"
 #include "engine/behaviors/CharacterMovement.h"
 
-Speeding::Speeding() :
-	_grid{nullptr}
+Shying::Shying(QObject *parent) :
+	AbstractPersonality(parent)
 {
 
 }
 
-Grid *Speeding::grid() const
+Grid *Shying::grid() const
 {
 	return _grid;
 }
 
-void Speeding::setGrid(Grid *grid)
+void Shying::setGrid(Grid *grid)
 {
 	_grid = grid;
 }
 
-Vector2 Speeding::calculateTargetPosition() const
+GameObject *Shying::enemy() const
+{
+	return _enemy;
+}
+
+void Shying::setEnemy(GameObject *enemy)
+{
+	_enemy = enemy;
+}
+
+Vector2 Shying::calculateTargetPosition() const
 {
 	Vector2 playerCell(_grid->posToCell(player()->pos()));
 	auto *behavior{player()->findBehavior(AbstractBehavior::BT_CharacterMovement)};
@@ -30,7 +40,7 @@ Vector2 Speeding::calculateTargetPosition() const
 
 	auto *movement{static_cast<CharacterMovement *>(behavior)};
 	const Vector2 &playerDirection(movement->currentDirection());
-	const Vector2 &fcbp{playerCell + playerDirection*4};
+	const Vector2 &tcbp{playerCell + playerDirection*2};
 
-	return _grid->cellPosition(fcbp);
+	return Vector2(_enemy->pos() - _grid->cellPosition(tcbp)).reversed() + Vector2(_grid->cellPosition(tcbp));
 }

@@ -1,15 +1,16 @@
-#ifndef ABSTRACTCHASINGSTRATEGY_H
-#define ABSTRACTCHASINGSTRATEGY_H
+#ifndef ABSTRACTPERSONALITY_H
+#define ABSTRACTPERSONALITY_H
 
 #include <QObject>
 
 class GameObject;
 class Vector2;
 
-class AbstractChasingStrategy
+class AbstractPersonality : public QObject
 {
+	Q_OBJECT
 public:
-	explicit AbstractChasingStrategy();
+	explicit AbstractPersonality(QObject *parent = nullptr);
 
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
@@ -20,4 +21,4 @@ private:
 	GameObject *_player;
 };
 
-#endif // ABSTRACTCHASINGSTRATEGY_H
+#endif // ABSTRACTPERSONALITY_H

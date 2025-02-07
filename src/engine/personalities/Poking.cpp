@@ -4,8 +4,8 @@
 #include "engine/Vector2.h"
 #include "engine/behaviors/EnemyController.h"
 
-Poking::Poking() :
-	AbstractChasingStrategy()
+Poking::Poking(QObject *parent) :
+	AbstractPersonality(parent)
 {
 
 }
