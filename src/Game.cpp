@@ -59,24 +59,42 @@ void Game::configure(const QJsonObject &json)
 	qreal width{cellSize.value("width").toDouble()};
 	qreal height{cellSize.value("height").toDouble()};
 	auto *grid{new Grid()};
-	auto *tmLayout{new Tilemap()};
+	auto *tmWalls{new Tilemap()};
 	auto *tmDots{new Tilemap()};
 	auto *stateMachine{new AiStateMachine(this)};
 
 	grid->setGridSize(rows, columns);
 	grid->setCellSize(QSizeF(width, height));
 
-	tmLayout->setGrid(grid);
+	tmWalls->setGrid(grid);
 	tmDots->setGrid(grid);
 
-	buildTilemap(tmLayout, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
+	buildTilemap(tmWalls, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
 	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	auto *player{createPlayer(tmLayout, tmDots)};
-	auto *blinky{createEnemy(tmLayout, player, QPointF(360, 300), "blinky", grid->cellPosition(32, 28))};
-	auto *inky{createEnemy(tmLayout, player, QPointF(312, 372), "inky",  grid->cellPosition(0, 28))};
-	auto *pinky{createEnemy(tmLayout, player, QPointF(360, 372), "pinky",  grid->cellPosition(32, 1))};
-	auto *clyde{createEnemy(tmLayout, player, QPointF(408, 372), "clyde",  grid->cellPosition(0, 1))};
+	auto *tile1{new Tile()};
+	auto *tile2{new Tile()};
+	QPainterPath p;
+
+	p.moveTo(24, 0);
+	p.lineTo(0, 24);
+
+	tile1->setPath(p);
+	tile1->setPen(QPen(Qt::red));
+	tile1->setBrush(Qt::transparent);
+
+	tile2->setPath(p);
+	tile2->setPen(QPen(Qt::red));
+	tile2->setBrush(Qt::transparent);
+
+	tmWalls->setTile(13, 14, tile1);
+	tmWalls->setTile(13, 15, tile2);
+
+	auto *player{createPlayer(tmWalls, tmDots)};
+	auto *blinky{createEnemy(tmWalls, player, QPointF(360, 300), "blinky", grid->cellPosition(0, 28))};
+	auto *inky{createEnemy(tmWalls, player, QPointF(312, 372), "inky",  grid->cellPosition(32, 28))};
+	auto *pinky{createEnemy(tmWalls, player, QPointF(360, 372), "pinky",  grid->cellPosition(0, 1))};
+	auto *clyde{createEnemy(tmWalls, player, QPointF(408, 372), "clyde",  grid->cellPosition(32, 1))};
 
 	auto *shadowing{new Shadowing(this)};
 	auto *speeding{new Speeding(this)};
@@ -110,7 +128,7 @@ void Game::configure(const QJsonObject &json)
 	stateMachine->addEnemyController(cec);
 
 	m_scene->addItem(player);
-	m_scene->addItem(tmLayout);
+	m_scene->addItem(tmWalls);
 	m_scene->addItem(tmDots);
 	m_scene->addItem(blinky);
 	m_scene->addItem(pinky);
