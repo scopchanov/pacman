@@ -13,19 +13,14 @@ SOURCES += \
     ScoreDisplay.cpp \
     SoundEngine.cpp \
     StartupSequence.cpp \
-    engine/AbstractChasingStrategy.cpp \
+    engine/AiStateMachine.cpp \
     engine/GameEvent.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
     engine/Grid.cpp \
-    engine/Poking.cpp \
-    engine/Shadowing.cpp \
-    engine/Shying.cpp \
-    engine/Speeding.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
     engine/behaviors/AbstractTimedBehavior.cpp \
-    engine/behaviors/AiStateMachine.cpp \
     engine/behaviors/Animation.cpp \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
@@ -34,6 +29,11 @@ SOURCES += \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
+    engine/strategies/AbstractChasingStrategy.cpp \
+    engine/strategies/Poking.cpp \
+    engine/strategies/Shadowing.cpp \
+    engine/strategies/Shying.cpp \
+    engine/strategies/Speeding.cpp \
     engine/GameObject.cpp \
     engine/InputSystem.cpp \
     engine/Scene.cpp \
@@ -55,19 +55,14 @@ HEADERS += \
     ScoreDisplay.h \
     SoundEngine.h \
     StartupSequence.h \
-    engine/AbstractChasingStrategy.h \
+    engine/AiStateMachine.h \
     engine/GameEvent.h \
     engine/GameTimer.h \
     engine/GameView.h \
     engine/Grid.h \
-    engine/Poking.h \
-    engine/Shadowing.h \
-    engine/Shying.h \
-    engine/Speeding.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \
     engine/behaviors/AbstractTimedBehavior.h \
-    engine/behaviors/AiStateMachine.h \
     engine/behaviors/Animation.h \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
@@ -76,6 +71,11 @@ HEADERS += \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
+    engine/strategies/AbstractChasingStrategy.h \
+    engine/strategies/Poking.h \
+    engine/strategies/Shadowing.h \
+    engine/strategies/Shying.h \
+    engine/strategies/Speeding.h \
     engine/GameObject.h \
     engine/InputSystem.h \
     engine/Scene.h \

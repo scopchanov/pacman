@@ -5,7 +5,6 @@
 #include "engine/Vector2.h"
 #include <QPointF>
 
-class QTimer;
 class QGraphicsRectItem;
 class CharacterMovement;
 class AbstractChasingStrategy;
@@ -34,15 +33,14 @@ public:
 	void setCharacterMovement(CharacterMovement *characterMovement);
 	int type() const override;
 
-
 private:
 	void performActions() override;
 	qreal distanceToTarget(Vector2 direction) const;
-	void foo();
+	void updateTargetPosition();
 
 	StateType _state;
-	CharacterMovement *m_characterMovement;
-	GameObject *m_player;
+	CharacterMovement *_characterMovement;
+	GameObject *_player;
 	QPointF _scatterTargetPosition;
 	QPointF _currentTargetPosition;
 	AbstractChasingStrategy *_chasingStrategy;

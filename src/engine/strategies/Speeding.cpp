@@ -1,8 +1,8 @@
 #include "Speeding.h"
-#include "GameObject.h"
-#include "Vector2.h"
+#include "engine/GameObject.h"
 #include "engine/Grid.h"
-#include "behaviors/CharacterMovement.h"
+#include "engine/Vector2.h"
+#include "engine/behaviors/CharacterMovement.h"
 
 Speeding::Speeding() :
 	_grid{nullptr}

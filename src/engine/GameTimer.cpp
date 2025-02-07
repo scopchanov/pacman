@@ -55,5 +55,8 @@ void GameTimer::onTimeout()
 		return;
 
 	m_scene->advance();
-	m_time->restart();
+
+	emit gameAdvanced();
+
+	m_time->restart();	
 }

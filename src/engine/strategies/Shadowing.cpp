@@ -1,6 +1,6 @@
 #include "Shadowing.h"
-#include "GameObject.h"
-#include "Vector2.h"
+#include "engine/GameObject.h"
+#include "engine/Vector2.h"
 
 Shadowing::Shadowing() :
 	AbstractChasingStrategy()

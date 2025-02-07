@@ -4,6 +4,7 @@
 #include "Message.h"
 #include "PathBuilder.h"
 #include "StartupSequence.h"
+#include "engine/AiStateMachine.h"
 #include "engine/GameTimer.h"
 #include "engine/Scene.h"
 #include "engine/behaviors/PlayerController.h"
@@ -19,10 +20,10 @@
 #include "engine/Grid.h"
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
-#include "engine/Shadowing.h"
-#include "engine/Speeding.h"
-#include "engine/Shying.h"
-#include "engine/Poking.h"
+#include "engine/strategies/Shadowing.h"
+#include "engine/strategies/Speeding.h"
+#include "engine/strategies/Shying.h"
+#include "engine/strategies/Poking.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -60,6 +61,7 @@ void Game::configure(const QJsonObject &json)
 	auto *grid{new Grid()};
 	auto *tmLayout{new Tilemap()};
 	auto *tmDots{new Tilemap()};
+	auto *stateMachine{new AiStateMachine(this)};
 
 	grid->setGridSize(rows, columns);
 	grid->setCellSize(QSizeF(width, height));
@@ -91,10 +93,21 @@ void Game::configure(const QJsonObject &json)
 	poking->setEnemy(clyde);
 	poking->setGrid(grid);
 
-	static_cast<EnemyController *>(blinky->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(shadowing);
-	static_cast<EnemyController *>(pinky->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(speeding);
-	static_cast<EnemyController *>(inky->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(shying);
-	static_cast<EnemyController *>(clyde->findBehavior(AbstractBehavior::BT_EnemyController))->setChasingStrategy(poking);
+	auto *bec{static_cast<EnemyController *>(blinky->findBehavior(AbstractBehavior::BT_EnemyController))};
+	auto *pec{static_cast<EnemyController *>(pinky->findBehavior(AbstractBehavior::BT_EnemyController))};
+	auto *iec{static_cast<EnemyController *>(inky->findBehavior(AbstractBehavior::BT_EnemyController))};
+	auto *cec{static_cast<EnemyController *>(clyde->findBehavior(AbstractBehavior::BT_EnemyController))};
+
+	bec->setChasingStrategy(shadowing);
+	pec->setChasingStrategy(speeding);
+	iec->setChasingStrategy(shying);
+	cec->setChasingStrategy(poking);
+
+	stateMachine->setGameTimer(gameController()->gameTimer());
+	stateMachine->addEnemyController(bec);
+	stateMachine->addEnemyController(pec);
+	stateMachine->addEnemyController(iec);
+	stateMachine->addEnemyController(cec);
 
 	m_scene->addItem(player);
 	m_scene->addItem(tmLayout);

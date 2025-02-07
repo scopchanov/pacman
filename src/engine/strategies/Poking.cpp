@@ -1,7 +1,7 @@
 #include "Poking.h"
-#include "GameObject.h"
-#include "Vector2.h"
+#include "engine/GameObject.h"
 #include "engine/Grid.h"
+#include "engine/Vector2.h"
 #include "engine/behaviors/EnemyController.h"
 
 Poking::Poking() :

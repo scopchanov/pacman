@@ -28,6 +28,9 @@ private:
 
 private slots:
     void onTimeout();
+
+signals:
+	void gameAdvanced();
 };
 
 #endif // GAMETIMER_H
