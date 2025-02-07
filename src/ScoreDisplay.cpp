@@ -11,7 +11,7 @@ ScoreDisplay::ScoreDisplay(QWidget *parent) :
 
 	setPalette(p);
 	setScore(0);
-	setFont(QFont("Neucha", 32, QFont::Bold, false));
+	setFont(QFont("Neucha", 28, QFont::Bold, false));
 	setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }

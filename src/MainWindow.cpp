@@ -13,7 +13,8 @@
 MainWindow::MainWindow(QWidget *parent) :
 	QWidget(parent)
 {
-	auto *layoutMain{new QVBoxLayout(this)};
+	auto *layoutMain{new QHBoxLayout(this)};
+	auto *layoutMiddle{new QVBoxLayout()};
 	auto *layoutPanel{new QHBoxLayout()};
 	auto *gameView{new GameView(this)};
 	auto *scoreDisplay{new ScoreDisplay(this)};
@@ -22,16 +23,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	gameView->setScene(game->scene());
 
-	layoutPanel->addStretch();
 	layoutPanel->addWidget(scoreDisplay);
 	layoutPanel->addWidget(lifesDisplay);
-	layoutPanel->addStretch();
 	layoutPanel->setContentsMargins(0, 0, 0, 0);
 	layoutPanel->setSpacing(0);
 
+	layoutMiddle->addStretch();
+	layoutMiddle->addLayout(layoutPanel);
+	layoutMiddle->addWidget(gameView);
+	layoutMiddle->addStretch();
+	layoutMiddle->setContentsMargins(0, 0, 0, 0);
+	layoutMiddle->setSpacing(0);
+
 	layoutMain->addStretch();
-	layoutMain->addLayout(layoutPanel);
-	layoutMain->addWidget(gameView);
+	layoutMain->addLayout(layoutMiddle);
 	layoutMain->addStretch();
 	layoutMain->setContentsMargins(0, 0, 0, 0);
 	layoutMain->setSpacing(0);
