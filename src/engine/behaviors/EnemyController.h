@@ -6,8 +6,9 @@
 #include <QPointF>
 
 class QGraphicsRectItem;
-class CharacterMovement;
 class AbstractPersonality;
+class CharacterMovement;
+class Grid;
 
 class EnemyController : public AbstractBehavior
 {
@@ -29,6 +30,8 @@ public:
 	void setCharacterMovement(CharacterMovement *characterMovement);
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
+	Grid *grid() const;
+	void setGrid(Grid *grid);
 	QPointF scatterTarget() const;
 	void setScatterTarget(const QPointF &point);
 	int type() const override;
@@ -37,14 +40,15 @@ private:
 	void performActions() override;
 	qreal distanceToTarget(Vector2 direction) const;
 	void updateTargetPosition();
+	void foo();
 
 	StateType _state;
 	AbstractPersonality *_personality;
 	CharacterMovement *_characterMovement;
 	GameObject *_player;
+	Grid *_grid;
 	QPointF _scatterTargetPosition;
 	QPointF _targetPosition;
-	// QGraphicsRectItem *_targetMark;
 };
 
 #endif // ENEMYCONTROLLER_H

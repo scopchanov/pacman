@@ -11,6 +11,7 @@ class Scene;
 class InputSystem;
 class Tilemap;
 class Tile;
+class Grid;
 
 class Game : public QObject
 {
@@ -30,7 +31,7 @@ private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	GameObject *createPlayer(Tilemap *tmLayout, Tilemap *tmDots);
-	GameObject *createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color, const QPointF &scatterTarget);
+	GameObject *createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color, const QPointF &scatterTarget, Grid *grid);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 
 	GameController *m_gameController;

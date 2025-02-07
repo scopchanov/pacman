@@ -76,10 +76,10 @@ void Game::configure(const QJsonObject &json)
 	tmWalls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 
 	auto *player{createPlayer(tmWalls, tmDots)};
-	auto *blinky{createEnemy(tmWalls, player, QPointF(360, 300), "blinky", grid->cellPosition(0, 28))};
-	auto *inky{createEnemy(tmWalls, player, QPointF(312, 372), "inky",  grid->cellPosition(32, 28))};
-	auto *pinky{createEnemy(tmWalls, player, QPointF(360, 372), "pinky",  grid->cellPosition(0, 1))};
-	auto *clyde{createEnemy(tmWalls, player, QPointF(408, 372), "clyde",  grid->cellPosition(32, 1))};
+	auto *blinky{createEnemy(tmWalls, player, QPointF(360, 300), "blinky", grid->cellPosition(0, 28), grid)};
+	auto *inky{createEnemy(tmWalls, player, QPointF(312, 372), "inky",  grid->cellPosition(32, 28), grid)};
+	auto *pinky{createEnemy(tmWalls, player, QPointF(360, 372), "pinky",  grid->cellPosition(0, 1), grid)};
+	auto *clyde{createEnemy(tmWalls, player, QPointF(408, 372), "clyde",  grid->cellPosition(32, 1), grid)};
 
 	auto *shadowing{new Shadowing(this)};
 	auto *speeding{new Speeding(this)};
@@ -219,7 +219,7 @@ GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
 	return player;
 }
 
-GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color, const QPointF &scatterTarget)
+GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color, const QPointF &scatterTarget, Grid *grid)
 {
 	auto *enemy{new GameObject()};
 
@@ -235,6 +235,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 	enemyController->setCharacterMovement(movement);
 	enemyController->setPlayer(player);
 	enemyController->setScatterTarget(scatterTarget);
+	enemyController->setGrid(grid);
 
 	movement->setGameTimer(m_gameController->gameTimer());
 	movement->setTilemap(tmLayout);

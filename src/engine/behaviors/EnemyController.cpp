@@ -12,7 +12,8 @@ EnemyController::EnemyController(GameObject *parent) :
 	_state{ST_Exit},
 	_personality{nullptr},
 	_characterMovement{nullptr},
-	_player{nullptr}
+	_player{nullptr},
+	_grid{nullptr}
 {
 
 }
@@ -24,7 +25,7 @@ EnemyController::StateType EnemyController::state() const
 
 void EnemyController::setState(StateType state)
 {
-	// _state = state;
+	_state = state;
 }
 
 AbstractPersonality *EnemyController::personality() const
@@ -52,6 +53,16 @@ void EnemyController::setPlayer(GameObject *player)
 	_player = player;
 }
 
+Grid *EnemyController::grid() const
+{
+	return _grid;
+}
+
+void EnemyController::setGrid(Grid *grid)
+{
+	_grid = grid;
+}
+
 QPointF EnemyController::scatterTarget() const
 {
 	return _scatterTargetPosition;
@@ -71,8 +82,10 @@ void EnemyController::performActions()
 {
 	// TODO - Imporve me
 
-	if (!_characterMovement || !_player)
+	if (!_characterMovement || !_player || !_grid)
 		return;
+
+	updateTargetPosition();
 
 	const QList<Vector2> &directions{_characterMovement->possibleMoves()};
 
@@ -86,7 +99,7 @@ void EnemyController::performActions()
 	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
 	// m_characterMovement->setNextMove(directions.at(ind));
 
-	updateTargetPosition();
+
 
 	qreal dt{distanceToTarget(directions.first())};
 
@@ -126,6 +139,7 @@ void EnemyController::updateTargetPosition()
 	switch (_state) {
 	case ST_Exit:
 		_targetPosition = QPointF(360, 300);
+		foo();
 		break;
 	case ST_Scatter:
 		_targetPosition = _scatterTargetPosition;
@@ -136,4 +150,12 @@ void EnemyController::updateTargetPosition()
 	default:
 		break;
 	}
+}
+
+void EnemyController::foo()
+{
+	if (_grid->posToCell(parent()->pos()) == _grid->posToCell(_targetPosition))
+		_state = ST_Scatter;
+
+	// if (Vector2(parent()->pos()).distanceTo(_targetPosition) < 1 )
 }
