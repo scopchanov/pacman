@@ -21,7 +21,6 @@ private:
 	void performActions() override;
 
 	CharacterMovement *_movement;
-	// qreal directionToAngle(const Vector2 &direction) const;
 };
 
 #endif // ENEMYORIENTATION_H
