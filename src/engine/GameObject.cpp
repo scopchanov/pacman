@@ -28,12 +28,12 @@ int GameObject::behaviorCount() const
 	return m_behaviors.count();
 }
 
-AbstractBehavior *GameObject::behavior(int n)
+AbstractBehavior *GameObject::behavior(int n) const
 {
 	return m_behaviors.at(n);
 }
 
-AbstractBehavior *GameObject::findBehavior(int type)
+AbstractBehavior *GameObject::findBehavior(int type) const
 {
 	for (auto *behavior : std::as_const(m_behaviors))
 		if (behavior->type() == type)

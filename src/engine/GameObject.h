@@ -13,8 +13,8 @@ public:
 
     void addBehavior(AbstractBehavior *behavior);
     int behaviorCount() const;
-    AbstractBehavior *behavior(int n);
-	AbstractBehavior *findBehavior(int type);
+	AbstractBehavior *behavior(int n) const;
+	AbstractBehavior *findBehavior(int type) const;
 	int type() const override;
 
 	void advance(int phase) override;

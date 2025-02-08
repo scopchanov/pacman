@@ -15,6 +15,11 @@ int PlayerAnimation::type() const
 	return BT_PlayerAnimation;
 }
 
+void PlayerAnimation::reset()
+{
+
+}
+
 void PlayerAnimation::performTimedActions()
 {
 	m_angle += 150*gameTimer()->deltaTime();

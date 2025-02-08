@@ -18,6 +18,7 @@ public:
 	int type() const override;
 
 	void rewind();
+	void reset() override;
 
 private:
 	void performTimedActions() override;

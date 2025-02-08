@@ -54,8 +54,8 @@ private:
 	static QPainterPath smallCircleDownLeft();
 	static QPainterPath smallCircleDownRight();
 	static QPainterPath dot();
-	static QPainterPath player(qreal angle);
-	static QPainterPath enemy();
+	static QPainterPath pacman(qreal angle);
+	static QPainterPath ghost();
 	static QPainterPath teleporter();
 };
 

@@ -36,6 +36,8 @@ public:
 	void setScatterTarget(const QPointF &point);
 	int type() const override;
 
+	void reset() override;
+
 private:
 	void performActions() override;
 	qreal distanceToTarget(Vector2 direction) const;

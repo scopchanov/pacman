@@ -25,6 +25,11 @@ int PlayerController::type() const
 	return BT_PlayerController;
 }
 
+void PlayerController::reset()
+{
+
+}
+
 void PlayerController::performActions()
 {
 	if (!m_inputSystem || !m_characterMovement)

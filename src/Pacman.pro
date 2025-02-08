@@ -14,10 +14,14 @@ SOURCES += \
     SoundEngine.cpp \
     StartupSequence.cpp \
     engine/AiStateMachine.cpp \
+    engine/Character.cpp \
+    engine/Enemy.cpp \
     engine/GameEvent.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
     engine/Grid.cpp \
+    engine/Pacman.cpp \
+    engine/Player.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
     engine/behaviors/AbstractTimedBehavior.cpp \
@@ -56,10 +60,14 @@ HEADERS += \
     SoundEngine.h \
     StartupSequence.h \
     engine/AiStateMachine.h \
+    engine/Character.h \
+    engine/Enemy.h \
     engine/GameEvent.h \
     engine/GameTimer.h \
     engine/GameView.h \
     engine/Grid.h \
+    engine/Pacman.h \
+    engine/Player.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \
     engine/behaviors/AbstractTimedBehavior.h \

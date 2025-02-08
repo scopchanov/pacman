@@ -23,8 +23,9 @@ public:
 	virtual ~AbstractBehavior() = default;
 
 	GameObject *parent() const;
-	virtual void setParent(GameObject *parent);
+	void setParent(GameObject *parent);
 
+	virtual void reset() = 0;
 	void execute();
 
 	virtual int type() const = 0;

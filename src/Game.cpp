@@ -5,21 +5,22 @@
 #include "PathBuilder.h"
 #include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
+#include "engine/Enemy.h"
 #include "engine/GameTimer.h"
+#include "engine/GameEvent.h"
+#include "engine/Grid.h"
+#include "engine/Pacman.h"
 #include "engine/Scene.h"
+#include "engine/Tile.h"
+#include "engine/Tilemap.h"
 #include "engine/behaviors/PlayerController.h"
 #include "engine/behaviors/PlayerOrientation.h"
-// #include "engine/behaviors/CameraFollow.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/EnemyController.h"
 #include "engine/behaviors/KillPlayer.h"
 #include "engine/behaviors/PlayerAnimation.h"
 #include "engine/behaviors/Teleporting.h"
-#include "engine/GameEvent.h"
-#include "engine/Grid.h"
-#include "engine/Tile.h"
-#include "engine/Tilemap.h"
 #include "engine/personalities/Shadowing.h"
 #include "engine/personalities/Speeding.h"
 #include "engine/personalities/Shying.h"
@@ -75,24 +76,24 @@ void Game::configure(const QJsonObject &json)
 	tmWalls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 	tmWalls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 
-	auto *player{createPlayer(tmWalls, tmDots)};
-	auto *blinky{createEnemy(tmWalls, player, QPointF(360, 300), "blinky", grid->cellPosition(0, 28), grid)};
-	auto *inky{createEnemy(tmWalls, player, QPointF(312, 372), "inky",  grid->cellPosition(32, 28), grid)};
-	auto *pinky{createEnemy(tmWalls, player, QPointF(360, 372), "pinky",  grid->cellPosition(0, 1), grid)};
-	auto *clyde{createEnemy(tmWalls, player, QPointF(408, 372), "clyde",  grid->cellPosition(32, 1), grid)};
+	auto *pacman{createPacman(tmWalls, tmDots)};
+	auto *blinky{createEnemy(tmWalls, pacman, QPointF(360, 300), 0xF44336, grid->cellPosition(0, 28), grid)};
+	auto *inky{createEnemy(tmWalls, pacman, QPointF(312, 372), 0x82B1FF,  grid->cellPosition(32, 28), grid)};
+	auto *pinky{createEnemy(tmWalls, pacman, QPointF(360, 372), 0xFF80AB,  grid->cellPosition(0, 1), grid)};
+	auto *clyde{createEnemy(tmWalls, pacman, QPointF(408, 372), 0xFFC107,  grid->cellPosition(32, 1), grid)};
 
 	auto *shadowing{new Shadowing(this)};
 	auto *speeding{new Speeding(this)};
 	auto *shying{new Shying(this)};
 	auto *poking{new Poking(this)};
 
-	shadowing->setPlayer(player);
-	speeding->setPlayer(player);
+	shadowing->setPlayer(pacman);
+	speeding->setPlayer(pacman);
 	speeding->setGrid(grid);
-	shying->setPlayer(player);
+	shying->setPlayer(pacman);
 	shying->setGrid(grid);
 	shying->setEnemy(blinky);
-	poking->setPlayer(player);
+	poking->setPlayer(pacman);
 	poking->setEnemy(clyde);
 	poking->setGrid(grid);
 
@@ -112,7 +113,7 @@ void Game::configure(const QJsonObject &json)
 	stateMachine->addEnemyController(iec);
 	stateMachine->addEnemyController(cec);
 
-	m_scene->addItem(player);
+	m_scene->addItem(pacman);
 	m_scene->addItem(tmWalls);
 	m_scene->addItem(tmDots);
 	m_scene->addItem(blinky);
@@ -159,7 +160,7 @@ void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 
 Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 {
-	auto *tile{new Tile()};
+	auto *tile{new Tile(	)};
 
 	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
 	tile->setPen(pen);
@@ -168,58 +169,32 @@ Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 	return tile;
 }
 
-GameObject *Game::createPlayer(Tilemap *tmLayout, Tilemap *tmDots)
+GameObject *Game::createPacman(Tilemap *tmWalls, Tilemap *tmDots)
 {
-	auto *player{new GameObject()};
-
-	player->setPos(360, 588);
-
-	auto *movement{new CharacterMovement(player)};
-	auto *orientation{new PlayerOrientation(player)};
-	auto *dotsEating{new DotsEating(player)};
-	// auto *cameraFollow{new CameraFollow(player)};
-	auto *playerController{new PlayerController(player)};
-	auto *animation{new PlayerAnimation(player)};
+	auto *gameTimer{m_gameController->gameTimer()};
+	auto *pacman{new Pacman()};
 	auto *eventDotEaten{new GameEvent(this)};
 	auto *eventPlayerWins{new GameEvent(this)};
 
-	playerController->setCharacterMovement(movement);
-	playerController->setInputSystem(m_scene->inputSystem());
+	pacman->playerController()->setInputSystem(m_scene->inputSystem());
 
-	movement->setGameTimer(m_gameController->gameTimer());
-	movement->setTilemap(tmLayout);
-	movement->setMovingSpeed(200);
-	movement->setNextDirection(Vector2(-1, 0));
+	pacman->movement()->setGameTimer(gameTimer);
+	pacman->movement()->setTilemap(tmWalls);
 
-	orientation->setMovement(movement);
+	pacman->dotsEating()->setGameTimer(gameTimer);
+	pacman->dotsEating()->setTilemap(tmDots);
+	pacman->dotsEating()->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
+	pacman->dotsEating()->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
-	dotsEating->setGameTimer(m_gameController->gameTimer());
-	dotsEating->setTilemap(tmDots);
-	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
-	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
-
-	// cameraFollow->setView(m_scene->views().at(0));
-
-	animation->setGameTimer(m_gameController->gameTimer());
-
-	player->addBehavior(playerController);
-	player->addBehavior(movement);
-	player->addBehavior(orientation);
-	player->addBehavior(animation);
-	// player->addBehavior(cameraFollow);
-	player->addBehavior(dotsEating);
-
-	player->setPath(PathBuilder::playerPath(45));
-	player->setPen(QPen(Qt::transparent));
-	player->setBrush(Qt::white);
+	pacman->animation()->setGameTimer(gameTimer);
 
 	connect(eventDotEaten, &GameEvent::triggered, this, &Game::onPointEaten);
 	connect(eventPlayerWins, &GameEvent::triggered, this, &Game::onPlayerWins);
 
-	return player;
+	return pacman;
 }
 
-GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QString &color, const QPointF &scatterTarget, Grid *grid)
+GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QColor &color, const QPointF &scatterTarget, Grid *grid)
 {
 	auto *enemy{new GameObject()};
 
@@ -258,13 +233,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 
 	enemy->setPath(PathBuilder::enemyPath());
 	enemy->setPen(QPen(Qt::transparent));
-	enemy->setBrush(Qt::transparent);
-	enemy->setFlag(QGraphicsItem::ItemHasNoContents);
-
-	auto *svg{new QGraphicsSvgItem(":/pix/svg/enemy-" + color + ".svg")};
-
-	svg->setParentItem(enemy);
-	svg->setPos(-24, -24);
+	enemy->setBrush(color);
 
 	connect(eventPlayerDies, &GameEvent::triggered, this, &Game::onPlayerDies);
 

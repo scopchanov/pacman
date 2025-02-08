@@ -24,6 +24,11 @@ int CameraFollow::type() const
 	return BT_CameraFollow;
 }
 
+void CameraFollow::reset()
+{
+
+}
+
 void CameraFollow::performActions()
 {
 	if (!m_view)

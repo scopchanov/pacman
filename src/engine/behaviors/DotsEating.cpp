@@ -20,6 +20,11 @@ int DotsEating::type() const
 	return BT_DotsEating;
 }
 
+void DotsEating::reset()
+{
+
+}
+
 void DotsEating::performSpatialActions()
 {
 	const QPoint &cell{currentCell().toPoint()};

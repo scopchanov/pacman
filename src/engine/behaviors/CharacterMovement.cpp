@@ -9,12 +9,7 @@ CharacterMovement::CharacterMovement(GameObject *parent) :
 	_movingSpeed{0.0},
 	_currentDirection{Vector2(-1, 0)}
 {
-	targetParentPosition(parent);
-}
-
-void CharacterMovement::setParent(GameObject *parent)
-{
-	targetParentPosition(parent);
+	targetParentPosition();
 }
 
 qreal CharacterMovement::movingSpeed() const
@@ -84,6 +79,11 @@ void CharacterMovement::reverse()
 	// changeDirection(_currentDirection.reversed());
 }
 
+void CharacterMovement::reset()
+{
+	targetParentPosition();
+}
+
 void CharacterMovement::performSpatialActions()
 {
 	chooseHeading();
@@ -122,12 +122,12 @@ void CharacterMovement::changeDirection(const Vector2 &direction)
 	targetNextCell();
 }
 
-void CharacterMovement::targetParentPosition(GameObject *parent)
+void CharacterMovement::targetParentPosition()
 {
-	if (!parent)
+	if (!parent())
 		return;
 
-	_targetCellPosition = parent->pos();
+	_targetCellPosition = parent()->pos();
 }
 
 void CharacterMovement::targetCurrentCell()

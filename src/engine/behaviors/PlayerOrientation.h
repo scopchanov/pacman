@@ -15,6 +15,8 @@ public:
 	void setMovement(CharacterMovement *movement);
 	int type() const override;
 
+	void reset() override;
+
 private:
 	void performActions() override;
 	qreal directionToAngle(const Vector2 &direction) const;

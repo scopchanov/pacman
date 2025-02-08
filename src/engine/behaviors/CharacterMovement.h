@@ -10,7 +10,6 @@ class CharacterMovement : public AbstractSpatialBehavior
 public:
 	explicit CharacterMovement(GameObject *parent = nullptr);
 
-	void setParent(GameObject *parent) override;
 	qreal movingSpeed() const;
 	void setMovingSpeed(qreal value);
 	Vector2 currentDirection() const;
@@ -22,6 +21,7 @@ public:
 
 	void relocateCharacter(const QPointF &destination);
 	void reverse();
+	void reset() override;
 
 private:
 	void performSpatialActions() override;
@@ -29,7 +29,7 @@ private:
 	void chooseHeading();
 	bool headIn(const Vector2 &direction);
 	void changeDirection(const Vector2 &direction);
-	void targetParentPosition(GameObject *parent);
+	void targetParentPosition();
 	void targetCurrentCell();
 	void targetNextCell();
 	bool alignedWithTargetCellCenter() const;

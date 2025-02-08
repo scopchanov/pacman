@@ -36,6 +36,11 @@ void Animation::rewind()
 	m_frameNumber = 0;
 }
 
+void Animation::reset()
+{
+
+}
+
 void Animation::performTimedActions()
 {
 	m_timecode += 1000*gameTimer()->deltaTime();

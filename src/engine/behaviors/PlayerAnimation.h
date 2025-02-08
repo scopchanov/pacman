@@ -11,6 +11,8 @@ public:
 
 	int type() const override;
 
+	void reset() override;
+
 private:
 	void performTimedActions() override;
 

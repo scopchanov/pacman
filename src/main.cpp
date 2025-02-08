@@ -1,6 +1,9 @@
 #include "MainWindow.h"
+#include "qpainterpath.h"
 #include <QApplication>
 #include <QFontDatabase>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 int main(int argc, char *argv[])
 {

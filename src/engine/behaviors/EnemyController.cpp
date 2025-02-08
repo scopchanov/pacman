@@ -78,6 +78,11 @@ int EnemyController::type() const
 	return BT_EnemyController;
 }
 
+void EnemyController::reset()
+{
+
+}
+
 void EnemyController::performActions()
 {
 	// TODO - Imporve me

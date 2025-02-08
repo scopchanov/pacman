@@ -14,10 +14,13 @@ public:
 	void setView(QGraphicsView *view);
 	int type() const override;
 
+	void reset() override;
+
 private:
 	void performActions() override;
 
 	QGraphicsView *m_view;
+
 };
 
 #endif // CAMERAFOLLOW_H

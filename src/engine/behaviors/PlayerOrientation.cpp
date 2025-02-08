@@ -20,6 +20,11 @@ int PlayerOrientation::type() const
 	return BT_PlayerOrientation;
 }
 
+void PlayerOrientation::reset()
+{
+
+}
+
 void PlayerOrientation::performActions()
 {
 	if (!m_movement)

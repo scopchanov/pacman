@@ -51,12 +51,12 @@ QPainterPath PathBuilder::tilePath(TileType type)
 
 QPainterPath PathBuilder::playerPath(qreal angle)
 {
-	return player(angle);
+	return pacman(angle);
 }
 
 QPainterPath PathBuilder::enemyPath()
 {
-	return enemy();
+	return ghost();
 }
 
 QPainterPath PathBuilder::teleporterPath()
@@ -237,7 +237,7 @@ QPainterPath PathBuilder::dot()
 	return p;
 }
 
-QPainterPath PathBuilder::player(qreal angle)
+QPainterPath PathBuilder::pacman(qreal angle)
 {
 	qreal startAngle{180 - angle};
 	qreal sweepLength{-2*startAngle};
@@ -248,11 +248,21 @@ QPainterPath PathBuilder::player(qreal angle)
 	return p;
 }
 
-QPainterPath PathBuilder::enemy()
+QPainterPath PathBuilder::ghost()
 {
 	QPainterPath p;
 
-	p.addEllipse(-15, -15, 30, 30);
+	p.moveTo(-20, 20);
+	p.quadTo(-17, -7, -8, -16);
+	p.cubicTo(-6, -18, -3, -20, 0, -20);
+	p.cubicTo(3, -20, 6, -18, 8, -16);
+	p.quadTo(17, -7, 20, 20);
+	p.quadTo(16, 16, 14, 16);
+	p.cubicTo(12, 16, 10, 19, 8, 19);
+	p.cubicTo(5, 19, 3, 16, 0, 16);
+	p.cubicTo(-3, 16, -5, 19, -8, 19);
+	p.cubicTo(-10, 19, -12, 16, -14, 16);
+	p.quadTo(-16, 16, -20, 20);
 
 	return p;
 }
