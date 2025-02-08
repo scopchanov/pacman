@@ -12,11 +12,10 @@ public:
 		BT_CharacterMovement,
 		BT_DotsEating,
 		BT_EnemyController,
-		BT_EnemyOrientation,
 		BT_KillPlayer,
+		BT_Orientation,
 		BT_PlayerAnimation,
 		BT_PlayerController,
-		BT_PlayerOrientation,
 		BT_Teleporting
 	};
 

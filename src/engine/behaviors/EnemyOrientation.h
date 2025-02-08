@@ -1,26 +1,17 @@
 #ifndef ENEMYORIENTATION_H
 #define ENEMYORIENTATION_H
 
-#include "AbstractBehavior.h"
-#include <QtGlobal>
+#include "AbstractOrientationBehavior.h"
 
-class CharacterMovement;
-class Vector2;
-
-class EnemyOrientation : public AbstractBehavior
+class EnemyOrientation : public AbstractOrientationBehavior
 {
 public:
 	explicit EnemyOrientation(GameObject *parent = nullptr);
 
-	void setMovement(CharacterMovement *movement);
-	int type() const override;
-
 	void reset() override;
 
 private:
-	void performActions() override;
-
-	CharacterMovement *_movement;
+	void performOrientationActions() override;
 };
 
 #endif // ENEMYORIENTATION_H

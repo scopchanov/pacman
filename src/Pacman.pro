@@ -24,6 +24,7 @@ SOURCES += \
     engine/Player.cpp \
     engine/Teleporter.cpp \
     engine/behaviors/AbstractBehavior.cpp \
+    engine/behaviors/AbstractOrientationBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
     engine/behaviors/AbstractTimedBehavior.cpp \
     engine/behaviors/CameraFollow.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     engine/Player.h \
     engine/Teleporter.h \
     engine/behaviors/AbstractBehavior.h \
+    engine/behaviors/AbstractOrientationBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \
     engine/behaviors/AbstractTimedBehavior.h \
     engine/behaviors/CameraFollow.h \

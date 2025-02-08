@@ -4,24 +4,24 @@
 
 AbstractSpatialBehavior::AbstractSpatialBehavior(GameObject *parent) :
 	AbstractTimedBehavior(parent),
-	m_tilemap{nullptr}
+	_tilemap{nullptr}
 {
 
 }
 
 Tilemap *AbstractSpatialBehavior::tilemap() const
 {
-	return m_tilemap;
+	return _tilemap;
 }
 
 void AbstractSpatialBehavior::setTilemap(Tilemap *tilemap)
 {
-	m_tilemap = tilemap;
+	_tilemap = tilemap;
 }
 
 void AbstractSpatialBehavior::performTimedActions()
 {
-	if (!m_tilemap)
+	if (!_tilemap)
 		return;
 
 	performSpatialActions();
@@ -29,5 +29,5 @@ void AbstractSpatialBehavior::performTimedActions()
 
 Vector2 AbstractSpatialBehavior::currentCell() const
 {
-	return Vector2(m_tilemap->grid()->posToCell(parent()->pos()));
+	return Vector2(_tilemap->grid()->posToCell(parent()->pos()));
 }

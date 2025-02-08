@@ -22,7 +22,7 @@ private:
 	void performTimedActions() override final;
 	virtual void performSpatialActions() = 0;
 
-	Tilemap *m_tilemap;
+	Tilemap *_tilemap;
 };
 
 #endif // ABSTRACTSPATIALBEHAVIOR_H

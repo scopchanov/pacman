@@ -4,20 +4,9 @@
 #include <QHash>
 
 PlayerOrientation::PlayerOrientation(GameObject *parent) :
-	AbstractBehavior(parent),
-	_movement{nullptr}
+	AbstractOrientationBehavior(parent)
 {
 
-}
-
-void PlayerOrientation::setMovement(CharacterMovement *movement)
-{
-	_movement = movement;
-}
-
-int PlayerOrientation::type() const
-{
-	return BT_PlayerOrientation;
 }
 
 void PlayerOrientation::reset()
@@ -25,16 +14,15 @@ void PlayerOrientation::reset()
 
 }
 
-void PlayerOrientation::performActions()
+void PlayerOrientation::performOrientationActions()
 {
-	if (!_movement)
-		return;
-
-	parent()->setRotation(directionToAngle(_movement->currentDirection()));
+	parent()->setRotation(directionToAngle(movement()->currentDirection()));
 }
 
 qreal PlayerOrientation::directionToAngle(const Vector2 &direction) const
 {
+	//TODO - Improve me
+
 	if (direction == Vector2(-1, 0))
 		return 0;
 	else if (direction == Vector2(1, 0))

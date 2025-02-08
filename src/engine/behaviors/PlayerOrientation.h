@@ -1,27 +1,21 @@
 #ifndef PLAYERORIENTATION_H
 #define PLAYERORIENTATION_H
 
-#include "AbstractBehavior.h"
+#include "AbstractOrientationBehavior.h"
 #include <QtGlobal>
 
-class CharacterMovement;
 class Vector2;
 
-class PlayerOrientation : public AbstractBehavior
+class PlayerOrientation : public AbstractOrientationBehavior
 {
 public:
 	explicit PlayerOrientation(GameObject *parent = nullptr);
 
-	void setMovement(CharacterMovement *movement);
-	int type() const override;
-
 	void reset() override;
 
 private:
-	void performActions() override;
+	void performOrientationActions() override;
 	qreal directionToAngle(const Vector2 &direction) const;
-
-	CharacterMovement *_movement;
 };
 
 #endif // PLAYERORIENTATION_H
