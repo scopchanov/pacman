@@ -235,6 +235,23 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 	enemy->setPen(QPen(Qt::transparent));
 	enemy->setBrush(color);
 
+	auto *leftEye{new QGraphicsEllipseItem(QRectF(-10, -11, 8, 10), enemy)};
+	auto *rightEye{new QGraphicsEllipseItem(QRectF(2, -11, 8, 10), enemy)};
+	auto *leftEyeBall{new QGraphicsEllipseItem(QRectF(-9, -8, 6, 6), enemy)};
+	auto *rightEyeBall{new QGraphicsEllipseItem(QRectF(3, -8, 6, 6), enemy)};
+
+	leftEye->setPen(QPen(Qt::transparent));
+	leftEye->setBrush(Qt::white);
+
+	leftEyeBall->setPen(QPen(Qt::transparent));
+	leftEyeBall->setBrush(Qt::black);
+
+	rightEye->setPen(QPen(Qt::transparent));
+	rightEye->setBrush(Qt::white);
+
+	rightEyeBall->setPen(QPen(Qt::transparent));
+	rightEyeBall->setBrush(Qt::black);
+
 	connect(eventPlayerDies, &GameEvent::triggered, this, &Game::onPlayerDies);
 
 	return enemy;
