@@ -1,4 +1,8 @@
 #include "Player.h"
+#include "Game.h"
+#include "GameController.h"
+#include "engine/Scene.h"
+#include "engine/GameEvent.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/PlayerAnimation.h"
@@ -8,36 +12,41 @@
 Player::Player(GameObject *parent) :
 	Character(parent)
 {
+
+}
+
+void Player::setup(Game *game)
+{
+	auto *gameTimer{game->gameController()->gameTimer()};
+	auto *eventDotEaten{new GameEvent(game)};
+	auto *eventPlayerWins{new GameEvent(game)};
 	auto *playerController{new PlayerController(this)};
 	auto *movement{new CharacterMovement(this)};
 	auto *orientation{new PlayerOrientation(this)};
+	auto *dotsEating{new DotsEating(this)};
+	auto *animation{new PlayerAnimation(this)};
 
 	playerController->setCharacterMovement(movement);
+	playerController->setInputSystem(game->scene()->inputSystem());
+
+	movement->setGameTimer(gameTimer);
+	movement->setTilemap(game->walls());
+
 	orientation->setMovement(movement);
+
+	dotsEating->setGameTimer(gameTimer);
+	dotsEating->setTilemap(game->dots());
+	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
+	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
+
+	animation->setGameTimer(gameTimer);
 
 	addBehavior(playerController);
 	addBehavior(movement);
 	addBehavior(orientation);
-	addBehavior(new DotsEating(this));
-	addBehavior(new PlayerAnimation(this));
-}
+	addBehavior(dotsEating);
+	addBehavior(animation);
 
-PlayerController *Player::playerController() const
-{
-	return static_cast<PlayerController *>(behavior(0));
-}
-
-CharacterMovement *Player::movement() const
-{
-	return static_cast<CharacterMovement *>(behavior(1));
-}
-
-DotsEating *Player::dotsEating() const
-{
-	return static_cast<DotsEating *>(behavior(3));
-}
-
-PlayerAnimation *Player::animation() const
-{
-	return static_cast<PlayerAnimation *>(behavior(4));
+	QObject::connect(eventDotEaten, &GameEvent::triggered, game, &Game::onDotEaten);
+	QObject::connect(eventPlayerWins, &GameEvent::triggered, game, &Game::onPlayerWins);
 }

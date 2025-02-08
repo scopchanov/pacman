@@ -1,5 +1,5 @@
-#ifndef PLAYERORIENTATION_H
-#define PLAYERORIENTATION_H
+#ifndef ENEMYORIENTATION_H
+#define ENEMYORIENTATION_H
 
 #include "AbstractBehavior.h"
 #include <QtGlobal>
@@ -7,10 +7,10 @@
 class CharacterMovement;
 class Vector2;
 
-class PlayerOrientation : public AbstractBehavior
+class EnemyOrientation : public AbstractBehavior
 {
 public:
-	explicit PlayerOrientation(GameObject *parent = nullptr);
+	explicit EnemyOrientation(GameObject *parent = nullptr);
 
 	void setMovement(CharacterMovement *movement);
 	int type() const override;
@@ -19,9 +19,9 @@ public:
 
 private:
 	void performActions() override;
-	qreal directionToAngle(const Vector2 &direction) const;
 
 	CharacterMovement *_movement;
+	// qreal directionToAngle(const Vector2 &direction) const;
 };
 
-#endif // PLAYERORIENTATION_H
+#endif // ENEMYORIENTATION_H

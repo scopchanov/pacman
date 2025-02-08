@@ -12,6 +12,7 @@ class InputSystem;
 class Tilemap;
 class Tile;
 class Grid;
+class Pacman;
 
 class Game : public QObject
 {
@@ -21,27 +22,31 @@ public:
 
 	GameController *gameController() const;
 	Scene *scene() const;
+	Tilemap *walls() const;
+	Tilemap *dots() const;
 
 	void configure(const QJsonObject &json);
-
-public slots:
 	void start();
 
 private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
-	GameObject *createPacman(Tilemap *tmLayout, Tilemap *tmDots);
-	GameObject *createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QColor &color, const QPointF &scatterTarget, Grid *grid);
+	GameObject *createEnemy(const QPointF &position, const QColor &color, const QPointF &scatterTarget, Grid *grid);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 
-	GameController *m_gameController;
-	SoundEngine *m_soundEngine;
-	Scene *m_scene;
+	GameController *_gameController;
+	SoundEngine *_soundEngine;
+	Scene *_scene;
+	Tilemap *_walls;
+	Tilemap *_dots;
+	Pacman *_pacman;
 
 private slots:
-	void onPointEaten();
+	void onDotEaten();
 	void onPlayerWins();
 	void onPlayerDies();
+
+	friend class Player;
 };
 
 #endif // GAME_H

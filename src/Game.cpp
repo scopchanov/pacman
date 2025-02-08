@@ -5,23 +5,19 @@
 #include "PathBuilder.h"
 #include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
-#include "engine/Enemy.h"
 #include "engine/GameTimer.h"
 #include "engine/GameEvent.h"
 #include "engine/Grid.h"
 #include "engine/Pacman.h"
 #include "engine/Scene.h"
+#include "engine/Teleporter.h"
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
-#include "engine/behaviors/PlayerController.h"
-#include "engine/behaviors/PlayerOrientation.h"
 #include "engine/behaviors/CharacterMovement.h"
-#include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/EnemyAnimation.h"
 #include "engine/behaviors/EnemyController.h"
+#include "engine/behaviors/EnemyOrientation.h"
 #include "engine/behaviors/KillPlayer.h"
-#include "engine/behaviors/PlayerAnimation.h"
-#include "engine/behaviors/Teleporting.h"
 #include "engine/personalities/Shadowing.h"
 #include "engine/personalities/Speeding.h"
 #include "engine/personalities/Shying.h"
@@ -32,21 +28,34 @@
 
 Game::Game(QObject *parent) :
 	QObject(parent),
-	m_gameController{new GameController(this)},
-	m_soundEngine{new SoundEngine(this)},
-	m_scene{new Scene(this)}
+	_gameController{new GameController(this)},
+	_soundEngine{new SoundEngine(this)},
+	_scene{new Scene(this)},
+	_walls{new Tilemap()},
+	_dots{new Tilemap()},
+	_pacman{new Pacman()}
 {
-	m_gameController->gameTimer()->setScene(m_scene);
+	_gameController->gameTimer()->setScene(_scene);
 }
 
 GameController *Game::gameController() const
 {
-	return m_gameController;
+	return _gameController;
 }
 
 Scene *Game::scene() const
 {
-	return m_scene;
+	return _scene;
+}
+
+Tilemap *Game::walls() const
+{
+	return _walls;
+}
+
+Tilemap *Game::dots() const
+{
+	return _dots;
 }
 
 void Game::configure(const QJsonObject &json)
@@ -60,40 +69,39 @@ void Game::configure(const QJsonObject &json)
 	qreal width{cellSize.value("width").toDouble()};
 	qreal height{cellSize.value("height").toDouble()};
 	auto *grid{new Grid()};
-	auto *tmWalls{new Tilemap()};
-	auto *tmDots{new Tilemap()};
 	auto *stateMachine{new AiStateMachine(this)};
 
 	grid->setGridSize(rows, columns);
 	grid->setCellSize(QSizeF(width, height));
 
-	tmWalls->setGrid(grid);
-	tmDots->setGrid(grid);
+	_walls->setGrid(grid);
+	_dots->setGrid(grid);
 
-	buildTilemap(tmWalls, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
-	buildTilemap(tmDots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
+	buildTilemap(_walls, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
+	buildTilemap(_dots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	tmWalls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
-	tmWalls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
+	_walls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
+	_walls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 
-	auto *pacman{createPacman(tmWalls, tmDots)};
-	auto *blinky{createEnemy(tmWalls, pacman, QPointF(360, 300), 0xF44336, grid->cellPosition(0, 28), grid)};
-	auto *inky{createEnemy(tmWalls, pacman, QPointF(312, 372), 0x82B1FF,  grid->cellPosition(32, 28), grid)};
-	auto *pinky{createEnemy(tmWalls, pacman, QPointF(360, 372), 0xFF80AB,  grid->cellPosition(0, 1), grid)};
-	auto *clyde{createEnemy(tmWalls, pacman, QPointF(408, 372), 0xFFC107,  grid->cellPosition(32, 1), grid)};
+	_pacman->setup(this);
+
+	auto *blinky{createEnemy(QPointF(360, 300), 0xF44336, grid->cellPosition(0, 28), grid)};
+	auto *inky{createEnemy(QPointF(312, 372), 0x82B1FF,  grid->cellPosition(32, 28), grid)};
+	auto *pinky{createEnemy(QPointF(360, 372), 0xFF80AB,  grid->cellPosition(0, 1), grid)};
+	auto *clyde{createEnemy(QPointF(408, 372), 0xFFC107,  grid->cellPosition(32, 1), grid)};
 
 	auto *shadowing{new Shadowing(this)};
 	auto *speeding{new Speeding(this)};
 	auto *shying{new Shying(this)};
 	auto *poking{new Poking(this)};
 
-	shadowing->setPlayer(pacman);
-	speeding->setPlayer(pacman);
+	shadowing->setPlayer(_pacman);
+	speeding->setPlayer(_pacman);
 	speeding->setGrid(grid);
-	shying->setPlayer(pacman);
+	shying->setPlayer(_pacman);
 	shying->setGrid(grid);
 	shying->setEnemy(blinky);
-	poking->setPlayer(pacman);
+	poking->setPlayer(_pacman);
 	poking->setEnemy(clyde);
 	poking->setGrid(grid);
 
@@ -113,24 +121,24 @@ void Game::configure(const QJsonObject &json)
 	stateMachine->addEnemyController(iec);
 	stateMachine->addEnemyController(cec);
 
-	m_scene->addItem(pacman);
-	m_scene->addItem(tmWalls);
-	m_scene->addItem(tmDots);
-	m_scene->addItem(blinky);
-	m_scene->addItem(pinky);
-	m_scene->addItem(inky);
-	m_scene->addItem(clyde);
-	m_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
-	m_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 2)));
+	_scene->addItem(_pacman);
+	_scene->addItem(_walls);
+	_scene->addItem(_dots);
+	_scene->addItem(blinky);
+	_scene->addItem(pinky);
+	_scene->addItem(inky);
+	_scene->addItem(clyde);
+	_scene->addItem(createTeleporter(grid->cellPosition(15, 0), grid->cellPosition(15, 28)));
+	_scene->addItem(createTeleporter(grid->cellPosition(15, 29), grid->cellPosition(15, 2)));
 }
 
 void Game::start()
 {
 	auto *sequence{new StartupSequence(this)};
 
-	m_scene->addItem(sequence->message());
+	_scene->addItem(sequence->message());
 
-	connect(sequence, &StartupSequence::go, m_gameController, &GameController::start);
+	connect(sequence, &StartupSequence::go, _gameController, &GameController::start);
 
 	sequence->start();
 }
@@ -160,7 +168,7 @@ void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 
 Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 {
-	auto *tile{new Tile(	)};
+	auto *tile{new Tile()};
 
 	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
 	tile->setPen(pen);
@@ -169,65 +177,40 @@ Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 	return tile;
 }
 
-GameObject *Game::createPacman(Tilemap *tmWalls, Tilemap *tmDots)
-{
-	auto *gameTimer{m_gameController->gameTimer()};
-	auto *pacman{new Pacman()};
-	auto *eventDotEaten{new GameEvent(this)};
-	auto *eventPlayerWins{new GameEvent(this)};
-
-	pacman->playerController()->setInputSystem(m_scene->inputSystem());
-
-	pacman->movement()->setGameTimer(gameTimer);
-	pacman->movement()->setTilemap(tmWalls);
-
-	pacman->dotsEating()->setGameTimer(gameTimer);
-	pacman->dotsEating()->setTilemap(tmDots);
-	pacman->dotsEating()->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
-	pacman->dotsEating()->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
-
-	pacman->animation()->setGameTimer(gameTimer);
-
-	connect(eventDotEaten, &GameEvent::triggered, this, &Game::onPointEaten);
-	connect(eventPlayerWins, &GameEvent::triggered, this, &Game::onPlayerWins);
-
-	return pacman;
-}
-
-GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPointF &position, const QColor &color, const QPointF &scatterTarget, Grid *grid)
+GameObject *Game::createEnemy(const QPointF &position, const QColor &color, const QPointF &scatterTarget, Grid *grid)
 {
 	auto *enemy{new GameObject()};
 
 	enemy->setPos(position);
 
 	auto *movement{new CharacterMovement(enemy)};
-	// auto *orientation{new PlayerOrientation(enemy)};
+	auto *orientation{new EnemyOrientation(enemy)};
 	auto *enemyController{new EnemyController(enemy)};
 	auto *animation{new EnemyAnimation(enemy)};
 	auto *killPlayer{new KillPlayer(enemy)};
 	auto *eventPlayerDies{new GameEvent(this)};
 
 	enemyController->setCharacterMovement(movement);
-	enemyController->setPlayer(player);
+	enemyController->setPlayer(_pacman);
 	enemyController->setScatterTarget(scatterTarget);
 	enemyController->setGrid(grid);
 
-	movement->setGameTimer(m_gameController->gameTimer());
-	movement->setTilemap(tmLayout);
+	movement->setGameTimer(_gameController->gameTimer());
+	movement->setTilemap(_walls);
 	movement->setMovingSpeed(150);
 	movement->setNextDirection(Vector2(-1, 0));
 
-	// orientation->setMovement(movement);
+	orientation->setMovement(movement);
 
-	animation->setGameTimer(m_gameController->gameTimer());
+	animation->setGameTimer(_gameController->gameTimer());
 
-	killPlayer->setGameTimer(m_gameController->gameTimer());
-	killPlayer->setPlayer(player);
+	killPlayer->setGameTimer(_gameController->gameTimer());
+	killPlayer->setPlayer(_pacman);
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
 	enemy->addBehavior(enemyController);
 	enemy->addBehavior(movement);
-	// enemy->addBehavior(orientation);
+	enemy->addBehavior(orientation);
 	enemy->addBehavior(animation);
 	enemy->addBehavior(killPlayer);
 
@@ -237,8 +220,8 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 
 	auto *leftEye{new QGraphicsEllipseItem(QRectF(-10, -11, 8, 10), enemy)};
 	auto *rightEye{new QGraphicsEllipseItem(QRectF(2, -11, 8, 10), enemy)};
-	auto *leftEyeBall{new QGraphicsEllipseItem(QRectF(-9, -8, 6, 6), enemy)};
-	auto *rightEyeBall{new QGraphicsEllipseItem(QRectF(3, -8, 6, 6), enemy)};
+	auto *leftEyeBall{new QGraphicsEllipseItem(QRectF(-9, -6, 6, 6), enemy)};
+	auto *rightEyeBall{new QGraphicsEllipseItem(QRectF(3, -6, 6, 6), enemy)};
 
 	leftEye->setPen(QPen(Qt::transparent));
 	leftEye->setBrush(Qt::white);
@@ -259,37 +242,28 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 
 GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 {
-	auto *teleporter{new GameObject()};
-	auto *teleporting{new Teleporting(teleporter)};
+	auto *teleporter{new Teleporter()};
 
-	teleporting->setDestination(dst);
-
-	teleporter->setPos(src);
-	teleporter->addBehavior(teleporting);
-
-	teleporter->setPath(PathBuilder::teleporterPath());
-	teleporter->setPen(QPen(Qt::transparent));
-	teleporter->setBrush(Qt::transparent);
-	teleporter->setFlag(QGraphicsItem::ItemHasNoContents);
+	teleporter->setup(src, dst);
 
 	return teleporter;
 }
 
-void Game::onPointEaten()
+void Game::onDotEaten()
 {
-	m_gameController->increaseScore(1);
-	m_soundEngine->playEffect(SoundEngine::SND_DotEaten);
+	_gameController->increaseScore(1);
+	_soundEngine->playEffect(SoundEngine::SND_DotEaten);
 }
 
 void Game::onPlayerWins()
 {
-	m_gameController->gameTimer()->stop();
-	m_soundEngine->playEffect(SoundEngine::SND_PlayerWins);
+	_gameController->gameTimer()->stop();
+	_soundEngine->playEffect(SoundEngine::SND_PlayerWins);
 }
 
 void Game::onPlayerDies()
 {
-	m_gameController->gameTimer()->stop();
-	m_soundEngine->playEffect(SoundEngine::SND_PlayerDies);
-	m_gameController->removeLife();
+	_gameController->gameTimer()->stop();
+	_soundEngine->playEffect(SoundEngine::SND_PlayerDies);
+	_gameController->removeLife();
 }

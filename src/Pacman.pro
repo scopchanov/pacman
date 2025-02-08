@@ -22,6 +22,7 @@ SOURCES += \
     engine/Grid.cpp \
     engine/Pacman.cpp \
     engine/Player.cpp \
+    engine/Teleporter.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
     engine/behaviors/AbstractTimedBehavior.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/EnemyAnimation.cpp \
     engine/behaviors/EnemyController.cpp \
+    engine/behaviors/EnemyOrientation.cpp \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
@@ -68,6 +70,7 @@ HEADERS += \
     engine/Grid.h \
     engine/Pacman.h \
     engine/Player.h \
+    engine/Teleporter.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \
     engine/behaviors/AbstractTimedBehavior.h \
@@ -76,6 +79,7 @@ HEADERS += \
     engine/behaviors/DotsEating.h \
     engine/behaviors/EnemyAnimation.h \
     engine/behaviors/EnemyController.h \
+    engine/behaviors/EnemyOrientation.h \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \

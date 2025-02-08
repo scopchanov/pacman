@@ -5,14 +5,14 @@
 
 PlayerOrientation::PlayerOrientation(GameObject *parent) :
 	AbstractBehavior(parent),
-	m_movement{nullptr}
+	_movement{nullptr}
 {
 
 }
 
 void PlayerOrientation::setMovement(CharacterMovement *movement)
 {
-	m_movement = movement;
+	_movement = movement;
 }
 
 int PlayerOrientation::type() const
@@ -27,10 +27,10 @@ void PlayerOrientation::reset()
 
 void PlayerOrientation::performActions()
 {
-	if (!m_movement)
+	if (!_movement)
 		return;
 
-	parent()->setRotation(directionToAngle(m_movement->currentDirection()));
+	parent()->setRotation(directionToAngle(_movement->currentDirection()));
 }
 
 qreal PlayerOrientation::directionToAngle(const Vector2 &direction) const
