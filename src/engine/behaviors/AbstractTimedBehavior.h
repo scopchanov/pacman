@@ -17,7 +17,7 @@ private:
 	void performActions() override final;
 	virtual void performTimedActions() = 0;
 
-	GameTimer *m_gameTimer;
+	GameTimer *_gameTimer;
 };
 
 #endif // ABSTRACTTIMEDBEHAVIOR_H

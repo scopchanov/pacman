@@ -33,7 +33,7 @@ public:
 private:
 	virtual void performActions() = 0;
 
-	GameObject *m_parent;
+	GameObject *_parent;
 };
 
 #endif // ABSTRACTBEHAVIOR_H

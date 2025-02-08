@@ -4,25 +4,25 @@
 
 KillPlayer::KillPlayer(GameObject *parent) :
 	AbstractTimedBehavior(parent),
-	m_player{nullptr},
-	m_eventPlayerDies{nullptr}
+	_player{nullptr},
+	_eventPlayerDies{nullptr}
 {
 
 }
 
 GameObject *KillPlayer::player() const
 {
-	return m_player;
+	return _player;
 }
 
 void KillPlayer::setPlayer(GameObject *player)
 {
-	m_player = player;
+	_player = player;
 }
 
 void KillPlayer::setEventPlayerDies(GameEvent *gameEvent)
 {
-	m_eventPlayerDies = gameEvent;
+	_eventPlayerDies = gameEvent;
 }
 
 int KillPlayer::type() const
@@ -37,9 +37,9 @@ void KillPlayer::reset()
 
 void KillPlayer::performTimedActions()
 {
-	if (!m_player)
+	if (!_player)
 		return;
 
-	if (parent()->collidesWithItem(m_player) && m_eventPlayerDies)
-		m_eventPlayerDies->trigger();
+	if (parent()->collidesWithItem(_player) && _eventPlayerDies)
+		_eventPlayerDies->trigger();
 }

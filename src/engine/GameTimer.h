@@ -4,7 +4,7 @@
 #include <QObject>
 
 class QElapsedTimer;
-class Scene;
+class GameScene;
 
 class GameTimer : public QObject
 {
@@ -14,7 +14,7 @@ public:
 	~GameTimer();
 
     qreal deltaTime() const;
-	void setScene(Scene *scene);
+	void setScene(GameScene *scene);
 
 public slots:
     void start();
@@ -22,9 +22,9 @@ public slots:
     void stop();
 
 private:
-	Scene *m_scene;
-    QElapsedTimer *m_time;
-    QTimer *m_timer;
+	GameScene *_scene;
+	QElapsedTimer *_time;
+	QTimer *_timer;
 
 private slots:
     void onTimeout();

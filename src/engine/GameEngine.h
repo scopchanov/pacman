@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAMEENGINE_H
+#define GAMEENGINE_H
 
 #include <QObject>
 #include <QSize>
@@ -7,21 +7,23 @@
 class GameController;
 class SoundEngine;
 class GameObject;
-class Scene;
+class GameScene;
 class InputSystem;
 class Tilemap;
 class Tile;
 class Grid;
 class Pacman;
+class Vector2;
 
-class Game : public QObject
+class GameEngine : public QObject
 {
     Q_OBJECT
 public:
-    explicit Game(QObject *parent = nullptr);
+    explicit GameEngine(QObject *parent = nullptr);
 
 	GameController *gameController() const;
-	Scene *scene() const;
+	GameScene *scene() const;
+	Grid *grid() const;
 	Tilemap *walls() const;
 	Tilemap *dots() const;
 
@@ -31,12 +33,13 @@ public:
 private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
-	GameObject *createEnemy(const QPointF &position, const QColor &color, const QPointF &scatterTarget, Grid *grid);
+	GameObject *createEnemy(const QPointF &position, const QColor &color, const Vector2 &scatterTargetCell);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 
 	GameController *_gameController;
 	SoundEngine *_soundEngine;
-	Scene *_scene;
+	GameScene *_scene;
+	Grid *_grid;
 	Tilemap *_walls;
 	Tilemap *_dots;
 	Pacman *_pacman;
@@ -49,4 +52,4 @@ private slots:
 	friend class Player;
 };
 
-#endif // GAME_H
+#endif // GAMEENGINE_H

@@ -16,8 +16,8 @@ protected:
 	void paintEvent(QPaintEvent *) override;
 
 private:
-	int m_lifeCount;
-	QPainterPath m_path;
+	int _lifeCount;
+	QPainterPath _path;
 };
 
 #endif // LIFESDISPLAY_H

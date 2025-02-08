@@ -88,8 +88,8 @@ private:
 	void set(const Vector2 &other);
     static qreal moveNumberTowards(qreal source, qreal target, qreal maxDistanceDelta);
 
-    qreal m_x;
-    qreal m_y;
+	qreal _x;
+	qreal _y;
 };
 
 #endif // VECTOR2_H

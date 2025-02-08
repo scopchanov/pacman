@@ -5,57 +5,57 @@
 
 StartupSequence::StartupSequence(QObject *parent) :
 	QObject{parent},
-	m_message{new Message()},
-	m_timer{new QTimer(this)},
-	m_countDown{5},
-	m_countBeep{new QSoundEffect(this)}
+	_message{new Message()},
+	_timer{new QTimer(this)},
+	_countDown{5},
+	_countBeep{new QSoundEffect(this)}
 {
-	m_message->setBasePosition(360, 444);
-	m_countBeep->setSource(QUrl::fromLocalFile(":/snd/audio/effects/notification.wav"));
+	_message->setBasePosition(360, 444);
+	_countBeep->setSource(QUrl::fromLocalFile(":/snd/audio/effects/notification.wav"));
 
-	connect(m_timer, &QTimer::timeout, this, &StartupSequence::onStartupTimeout);
+	connect(_timer, &QTimer::timeout, this, &StartupSequence::onStartupTimeout);
 
 	updateMessage();
 }
 
 StartupSequence::~StartupSequence()
 {
-	delete m_message;
+	delete _message;
 }
 
 Message *StartupSequence::message() const
 {
-	return m_message;
+	return _message;
 }
 
 void StartupSequence::start()
 {
-	m_timer->start(1000);
+	_timer->start(1000);
 }
 
 void StartupSequence::updateMessage()
 {
-	if (m_countDown) {
-		m_message->setText(tr("Get ready! %1").arg(m_countDown));
-		m_countBeep->play();
+	if (_countDown) {
+		_message->setText(tr("Get ready! %1").arg(_countDown));
+		_countBeep->play();
 	} else {
-		m_message->setText(tr("Go!"));
-		m_countBeep->play();
-		m_countBeep->play();
+		_message->setText(tr("Go!"));
+		_countBeep->play();
+		_countBeep->play();
 	}
 }
 
 void StartupSequence::onStartupTimeout()
 {
-	m_countDown--;
+	_countDown--;
 
 	updateMessage();
 
-	if (m_countDown)
+	if (_countDown)
 		return;
 
-	disconnect(m_timer, &QTimer::timeout, this, &StartupSequence::onStartupTimeout);
-	connect(m_timer, &QTimer::timeout, this, &StartupSequence::deleteLater);
+	disconnect(_timer, &QTimer::timeout, this, &StartupSequence::onStartupTimeout);
+	connect(_timer, &QTimer::timeout, this, &StartupSequence::deleteLater);
 
 	emit go();
 }

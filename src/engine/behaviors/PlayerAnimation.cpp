@@ -5,7 +5,7 @@
 
 PlayerAnimation::PlayerAnimation(GameObject *parent) :
 	AbstractTimedBehavior(parent),
-	m_angle{0}
+	_angle{0}
 {
 
 }
@@ -22,10 +22,10 @@ void PlayerAnimation::reset()
 
 void PlayerAnimation::performTimedActions()
 {
-	m_angle += 150*gameTimer()->deltaTime();
+	_angle += 150*gameTimer()->deltaTime();
 
-	if (m_angle >= 45)
-		m_angle = 0;
+	if (_angle >= 45)
+		_angle = 0;
 
-	parent()->setPath(PathBuilder::playerPath(m_angle));
+	parent()->setPath(PathBuilder::playerPath(_angle));
 }

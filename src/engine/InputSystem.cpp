@@ -8,10 +8,10 @@ InputSystem::InputSystem(QObject *parent) :
 
 Vector2 InputSystem::userInput() const
 {
-	return m_userInput;
+	return _userInput;
 }
 
 void InputSystem::setUserInput(const Vector2 &vector)
 {
-	m_userInput = vector;
+	_userInput = vector;
 }

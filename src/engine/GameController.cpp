@@ -3,50 +3,50 @@
 
 GameController::GameController(QObject *parent) :
 	QObject{parent},
-	m_gameTimer{new GameTimer(this)},
-	m_lifesLeft{2},
-	m_score{0}
+	_gameTimer{new GameTimer(this)},
+	_lifesLeft{2},
+	_score{0}
 {
 
 }
 
 GameTimer *GameController::gameTimer() const
 {
-	return m_gameTimer;
+	return _gameTimer;
 }
 
 int GameController::lifesLeft() const
 {
-	return m_lifesLeft;
+	return _lifesLeft;
 }
 
 int GameController::score() const
 {
-	return m_score;
+	return _score;
 }
 
 void GameController::increaseScore(int amount)
 {
-	m_score += amount;
+	_score += amount;
 
-	emit scoreChanged(m_score);
+	emit scoreChanged(_score);
 }
 
 void GameController::addLife()
 {
-	m_lifesLeft++;
+	_lifesLeft++;
 
-	emit lifesLeftChanged(m_lifesLeft);
+	emit lifesLeftChanged(_lifesLeft);
 }
 
 void GameController::removeLife()
 {
-	m_lifesLeft--;
+	_lifesLeft--;
 
-	emit lifesLeftChanged(m_lifesLeft);
+	emit lifesLeftChanged(_lifesLeft);
 }
 
 void GameController::start()
 {
-	m_gameTimer->start();
+	_gameTimer->start();
 }

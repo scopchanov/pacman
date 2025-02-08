@@ -1,62 +1,62 @@
 #include "GameTimer.h"
-#include "Scene.h"
+#include "GameScene.h"
 #include <QElapsedTimer>
 #include <QTimer>
 
 GameTimer::GameTimer(QObject *parent) :
 	QObject{parent},
-	m_scene{nullptr},
-	m_time{new QElapsedTimer()},
-	m_timer{new QTimer(this)}
+	_scene{nullptr},
+	_time{new QElapsedTimer()},
+	_timer{new QTimer(this)}
 {
-	connect(m_timer, &QTimer::timeout, this, &GameTimer::onTimeout);
+	connect(_timer, &QTimer::timeout, this, &GameTimer::onTimeout);
 }
 
 GameTimer::~GameTimer()
 {
-	delete m_time;
+	delete _time;
 }
 
 qreal GameTimer::deltaTime() const
 {
-	return m_time->elapsed()/1000.0;
+	return _time->elapsed()/1000.0;
 }
 
-void GameTimer::setScene(Scene *scene)
+void GameTimer::setScene(GameScene *scene)
 {
-	m_scene = scene;
+	_scene = scene;
 
-	connect(m_scene, &Scene::pauseGame, this, &GameTimer::stop);
-	connect(m_scene, &Scene::resumeGame, this, &GameTimer::start);
+	connect(_scene, &GameScene::pauseGame, this, &GameTimer::stop);
+	connect(_scene, &GameScene::resumeGame, this, &GameTimer::start);
 }
 
 void GameTimer::start()
 {
-	if (m_timer->isActive())
+	if (_timer->isActive())
 		return;
 
-	m_timer->start(30);
-	m_time->start();
+	_timer->start(30);
+	_time->start();
 }
 
 void GameTimer::pause()
 {
-	m_timer->stop();
+	_timer->stop();
 }
 
 void GameTimer::stop()
 {
-	m_timer->stop();
+	_timer->stop();
 }
 
 void GameTimer::onTimeout()
 {
-	if (!m_scene || !m_timer->isActive())
+	if (!_scene || !_timer->isActive())
 		return;
 
-	m_scene->advance();
+	_scene->advance();
 
 	emit gameAdvanced();
 
-	m_time->restart();	
+	_time->restart();
 }

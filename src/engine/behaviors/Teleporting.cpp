@@ -10,12 +10,12 @@ Teleporting::Teleporting(GameObject *parent) :
 
 QPointF Teleporting::destination() const
 {
-	return m_destination;
+	return _destination;
 }
 
 void Teleporting::setDestination(const QPointF &destination)
 {
-	m_destination = destination;
+	_destination = destination;
 }
 
 int Teleporting::type() const
@@ -44,6 +44,6 @@ void Teleporting::performActions()
 
 		auto *movement{static_cast<CharacterMovement *>(behavior)};
 
-		movement->relocateCharacter(m_destination);
+		movement->relocateCharacter(_destination);
 	}
 }

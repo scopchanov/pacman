@@ -22,7 +22,7 @@ public:
 private:
 	QSoundEffect *createEffect(const QString &name, qreal volume);
 
-	QList<QSoundEffect *> m_effects;
+	QList<QSoundEffect *> _effects;
 };
 
 #endif // SOUNDENGINE_H

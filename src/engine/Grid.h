@@ -1,15 +1,16 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include <QPointF>
+#include <QObject>
 #include <QSizeF>
 
 class Vector2;
 
-class Grid
+class Grid : public QObject
 {
+	Q_OBJECT
 public:
-	explicit Grid();
+	explicit Grid(QObject *parent = nullptr);
 
 	int rowCount() const;
 	int columnCount() const;
@@ -17,14 +18,14 @@ public:
 	QSizeF cellSize() const;
 	void setCellSize(const QSizeF &sz);
 
-	QPoint posToCell(QPointF position) const;
+	QPoint posToCell(const QPointF &position) const;
 	Vector2 cellPosition(int row, int col);
 	Vector2 cellPosition(const Vector2 &cell);
 
 private:
-	int m_rowCount;
-	int m_columnCount;
-	QSizeF m_cellSize;
+	int _rowCount;
+	int _columnCount;
+	QSizeF _cellSize;
 };
 
 #endif // GRID_H

@@ -60,5 +60,5 @@ void AiStateMachine::onGameAdvanced()
 
 	changeEnemyState();
 
-	// m_characterMovement->reverse();
+	// _characterMovement->reverse();
 }

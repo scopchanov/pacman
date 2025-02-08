@@ -3,14 +3,14 @@
 
 #include "GameObject.h"
 
-class Game;
+class GameEngine;
 
 class Character : public GameObject
 {
 public:
 	explicit Character(GameObject *parent = nullptr);
 
-	virtual void setup(Game *game) = 0;
+	virtual void setup(GameEngine *game) = 0;
 };
 
 #endif // CHARACTER_H

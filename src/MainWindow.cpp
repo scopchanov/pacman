@@ -1,9 +1,9 @@
 #include "MainWindow.h"
-#include "Game.h"
-#include "GameController.h"
 #include "ScoreDisplay.h"
 #include "LifesDisplay.h"
-#include "engine/Scene.h"
+#include "engine/GameEngine.h"
+#include "engine/GameController.h"
+#include "engine/GameScene.h"
 #include "engine/GameView.h"
 #include "FileHandler.h"
 #include <QJsonObject>
@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	auto *gameView{new GameView(this)};
 	auto *scoreDisplay{new ScoreDisplay(this)};
 	auto *lifesDisplay{new LifesDisplay(this)};
-	auto *game{new Game(this)};
+	auto *game{new GameEngine(this)};
 
 	gameView->setScene(game->scene());
 

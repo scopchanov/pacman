@@ -2,24 +2,24 @@
 
 AbstractTimedBehavior::AbstractTimedBehavior(GameObject *parent) :
 	AbstractBehavior(parent),
-	m_gameTimer{nullptr}
+	_gameTimer{nullptr}
 {
 
 }
 
 GameTimer *AbstractTimedBehavior::gameTimer() const
 {
-	return m_gameTimer;
+	return _gameTimer;
 }
 
 void AbstractTimedBehavior::setGameTimer(GameTimer *gameTimer)
 {
-	m_gameTimer = gameTimer;
+	_gameTimer = gameTimer;
 }
 
 void AbstractTimedBehavior::performActions()
 {
-	if (!m_gameTimer)
+	if (!_gameTimer)
 		return;
 
 	performTimedActions();

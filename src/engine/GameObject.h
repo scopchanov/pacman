@@ -21,7 +21,7 @@ public:
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *) override;
 
 private:
-    QList<AbstractBehavior *> m_behaviors;
+	QList<AbstractBehavior *> _behaviors;
 };
 
 #endif // GAMEOBJECT_H

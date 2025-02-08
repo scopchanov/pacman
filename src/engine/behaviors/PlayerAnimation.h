@@ -16,7 +16,7 @@ public:
 private:
 	void performTimedActions() override;
 
-	qreal m_angle;
+	qreal _angle;
 };
 
 #endif // PLAYERANIMATION_H

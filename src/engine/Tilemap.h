@@ -24,9 +24,9 @@ private:
 	void deleteTile(Tile *tile);
 	void addTile(int row, int col, Tile *tile);
 
-	Grid *m_grid;
-    QList<QList<Tile *>> m_tiles;
-	int m_tileCount;
+	Grid *_grid;
+	QList<QList<Tile *>> _tiles;
+	int _tileCount;
 };
 
 #endif // TILEMAP_H

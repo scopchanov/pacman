@@ -9,10 +9,9 @@ Pacman::Pacman(GameObject *parent) :
 	setPath(PathBuilder::playerPath(45));
 	setPen(QPen(Qt::transparent));
 	setBrush(Qt::white);
-	setPos(360, 588);
 }
 
-void Pacman::setup(Game *game)
+void Pacman::setup(GameEngine *game)
 {
 	Player::setup(game);
 

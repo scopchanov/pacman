@@ -20,8 +20,8 @@ public:
 private:
 	void performTimedActions() override;
 
-	GameObject *m_player;
-	GameEvent *m_eventPlayerDies;
+	GameObject *_player;
+	GameEvent *_eventPlayerDies;
 };
 
 #endif // KILLPLAYER_H

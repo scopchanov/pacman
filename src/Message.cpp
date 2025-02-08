@@ -10,17 +10,17 @@ Message::Message(QGraphicsItem *parent) :
 
 QPointF Message::basePosition() const
 {
-	return m_basePosition;
+	return _basePosition;
 }
 
 void Message::setBasePosition(qreal x, qreal y)
 {
-	m_basePosition = QPointF(x, y);
+	_basePosition = QPointF(x, y);
 }
 
 void Message::setText(const QString &str)
 {
 	setPlainText(str);
-	setPos(m_basePosition.x() - boundingRect().width()/2.0,
-		   m_basePosition.y() - boundingRect().height()/2.0);
+	setPos(_basePosition.x() - boundingRect().width()/2.0,
+		   _basePosition.y() - boundingRect().height()/2.0);
 }

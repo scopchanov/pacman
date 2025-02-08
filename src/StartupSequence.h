@@ -21,10 +21,10 @@ public slots:
 private:
 	void updateMessage();
 
-	Message *m_message;
-	QTimer *m_timer;
-	int m_countDown;
-	QSoundEffect *m_countBeep;
+	Message *_message;
+	QTimer *_timer;
+	int _countDown;
+	QSoundEffect *_countBeep;
 
 private slots:
 	void onStartupTimeout();

@@ -5,43 +5,43 @@
 
 Tilemap::Tilemap(GameObject *parent) :
 	GameObject(parent),
-	m_grid{nullptr},
-	m_tileCount{0}
+	_grid{nullptr},
+	_tileCount{0}
 {
 
 }
 
 Grid *Tilemap::grid() const
 {
-	return m_grid;
+	return _grid;
 }
 
 void Tilemap::setGrid(Grid *grid)
 {
-	m_grid = grid;
+	_grid = grid;
 
-	if (!m_grid)
+	if (!_grid)
 		return;
 
 	QList<Tile *> row;
 
-	row.fill(nullptr, m_grid->columnCount());
+	row.fill(nullptr, _grid->columnCount());
 
-	m_tiles.fill(row, m_grid->rowCount());
+	_tiles.fill(row, _grid->rowCount());
 }
 
 int Tilemap::tileCount() const
 {
-	return m_tileCount;
+	return _tileCount;
 }
 
 bool Tilemap::setTile(int row, int col, Tile *tile)
 {
-	if (!m_grid || row < 0 || row >= m_grid->rowCount()
-		|| col < 0 || col >= m_grid->columnCount())
+	if (!_grid || row < 0 || row >= _grid->rowCount()
+		|| col < 0 || col >= _grid->columnCount())
 		return false;
 
-	auto *oldTile = m_tiles.at(row).at(col);
+	auto *oldTile = _tiles.at(row).at(col);
 
 	if (oldTile) {
 		deleteTile(oldTile);
@@ -50,7 +50,7 @@ bool Tilemap::setTile(int row, int col, Tile *tile)
 		addTile(row, col, tile);
 	}
 
-	m_tiles[row][col] = tile;
+	_tiles[row][col] = tile;
 
 	return true;
 }
@@ -62,7 +62,7 @@ bool Tilemap::resetTile(int row, int col)
 
 bool Tilemap::hasTile(int row, int col) const
 {
-	return m_tiles.at(row).at(col);
+	return _tiles.at(row).at(col);
 }
 
 bool Tilemap::hasTile(const Vector2 &cell) const
@@ -74,18 +74,18 @@ void Tilemap::deleteTile(Tile *tile)
 {
 	delete tile;
 
-	m_tileCount--;
+	_tileCount--;
 }
 
 void Tilemap::addTile(int row, int col, Tile *tile)
 {
-	if (!m_grid || !tile)
+	if (!_grid || !tile)
 		return;
 
-	const QSizeF &cellSize{m_grid->cellSize()};
+	const QSizeF &cellSize{_grid->cellSize()};
 
 	tile->setParentItem(this);
 	tile->setPos(col*cellSize.width(), row*cellSize.height());
 
-	m_tileCount++;
+	_tileCount++;
 }

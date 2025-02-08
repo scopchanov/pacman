@@ -14,7 +14,7 @@ public:
     void setUserInput(const Vector2 &vector);
 
 private:
-    Vector2 m_userInput;
+	Vector2 _userInput;
 };
 
 #endif // INPUTSYSTEM_H

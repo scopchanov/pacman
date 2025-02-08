@@ -9,8 +9,8 @@ Vector2::Vector2() :
 }
 
 Vector2::Vector2(qreal x, qreal y) :
-	m_x{x},
-	m_y{y}
+	_x{x},
+	_y{y}
 {
 
 }
@@ -29,17 +29,17 @@ Vector2::Vector2(const QPointF &p) :
 
 qreal Vector2::x() const
 {
-	return m_x;
+	return _x;
 }
 
 qreal Vector2::y() const
 {
-	return m_y;
+	return _y;
 }
 
 qreal Vector2::magnitude() const
 {
-	return sqrt(pow(m_x, 2) + pow(m_y, 2));
+	return sqrt(pow(_x, 2) + pow(_y, 2));
 }
 
 Vector2 Vector2::normalized() const
@@ -63,20 +63,20 @@ Vector2 Vector2::reflected() const
 
 Vector2 Vector2::perpendicular() const
 {
-	return Vector2(-m_y, m_x);
+	return Vector2(-_y, _x);
 }
 
 Vector2 Vector2::reversed() const
 {
-	return Vector2(-m_x, -m_y);
+	return Vector2(-_x, -_y);
 }
 
 Vector2 Vector2::rotated(qreal angle) const
 {
 	qreal cosAngle{cos(angle)};
 	qreal sinAngle{sin(angle)};
-	qreal x{m_x*cosAngle - m_y*sinAngle};
-	qreal y{m_x*sinAngle + m_y*cosAngle};
+	qreal x{_x*cosAngle - _y*sinAngle};
+	qreal y{_x*sinAngle + _y*cosAngle};
 
 	return Vector2(x, y);
 }
@@ -128,7 +128,7 @@ qreal Vector2::angleTo(const Vector2 &vector) const
 
 qreal Vector2::distanceTo(const Vector2 &vector) const
 {
-	return sqrt(pow(vector.x() - m_x, 2) + pow(vector.y() - m_y, 2));
+	return sqrt(pow(vector.x() - _x, 2) + pow(vector.y() - _y, 2));
 }
 
 qreal Vector2::distanceTo(const QPointF &point) const
@@ -173,12 +173,12 @@ QPoint Vector2::toPoint() const
 
 QPointF Vector2::toPointF() const
 {
-	return QPointF(m_x, m_y);
+	return QPointF(_x, _y);
 }
 
 QString Vector2::toString() const
 {
-	return QString("Vector2(%1, %2)").arg(m_x).arg(m_y);
+	return QString("Vector2(%1, %2)").arg(_x).arg(_y);
 }
 
 qreal Vector2::angle(const Vector2 &vectorFrom, const Vector2 &vectorTo)
@@ -232,44 +232,44 @@ Vector2 Vector2::movedTowards(const Vector2 &source, const Vector2 &target, qrea
 
 Vector2 Vector2::operator =(const QPoint &point)
 {
-	m_x = point.x();
-	m_y = point.y();
+	_x = point.x();
+	_y = point.y();
 
 	return *this;
 }
 
 Vector2 Vector2::operator=(const QPointF &point)
 {
-	m_x = point.x();
-	m_y = point.y();
+	_x = point.x();
+	_y = point.y();
 
 	return *this;
 }
 
 bool Vector2::operator==(const Vector2 &other) const
 {
-	return m_x == other.x() && m_y == other.y();
+	return _x == other.x() && _y == other.y();
 }
 
 Vector2 Vector2::operator+(const Vector2 &other) const
 {
-	return Vector2(m_x + other.x(), m_y + other.y());
+	return Vector2(_x + other.x(), _y + other.y());
 }
 
 Vector2 Vector2::operator-(const Vector2 &other) const
 {
-	return Vector2(m_x - other.x(), m_y - other.y());
+	return Vector2(_x - other.x(), _y - other.y());
 }
 
 Vector2 Vector2::operator*(const Vector2 &other) const
 {
-	return Vector2(m_x*other.x(), m_y*other.y());
+	return Vector2(_x*other.x(), _y*other.y());
 }
 
 Vector2 Vector2::operator/(const Vector2 &other) const
 {
 	try {
-		return Vector2(m_x/other.x(), m_y/other.y());
+		return Vector2(_x/other.x(), _y/other.y());
 	} catch (...) {
 		qCritical() << "Division by zero!";
 	}
@@ -279,23 +279,23 @@ Vector2 Vector2::operator/(const Vector2 &other) const
 
 Vector2 Vector2::operator+(const QPointF &other) const
 {
-	return Vector2(m_x + other.x(), m_y + other.y());
+	return Vector2(_x + other.x(), _y + other.y());
 }
 
 Vector2 Vector2::operator-(const QPointF &other) const
 {
-	return Vector2(m_x - other.x(), m_y - other.y());
+	return Vector2(_x - other.x(), _y - other.y());
 }
 
 Vector2 Vector2::operator*(const QPointF &other) const
 {
-	return Vector2(m_x*other.x(), m_y*other.y());
+	return Vector2(_x*other.x(), _y*other.y());
 }
 
 Vector2 Vector2::operator/(const QPointF &other) const
 {
 	try {
-		return Vector2(m_x/other.x(), m_y/other.y());
+		return Vector2(_x/other.x(), _y/other.y());
 	} catch (...) {
 		qCritical() << "Division by zero!";
 	}
@@ -305,23 +305,23 @@ Vector2 Vector2::operator/(const QPointF &other) const
 
 Vector2 Vector2::operator+(qreal k) const
 {
-	return Vector2(m_x + k, m_y + k);
+	return Vector2(_x + k, _y + k);
 }
 
 Vector2 Vector2::operator-(qreal k) const
 {
-	return Vector2(m_x - k, m_y - k);
+	return Vector2(_x - k, _y - k);
 }
 
 Vector2 Vector2::operator*(qreal k) const
 {
-	return Vector2(m_x*k, m_y*k);
+	return Vector2(_x*k, _y*k);
 }
 
 Vector2 Vector2::operator/(qreal k) const
 {
 	try {
-		return Vector2(m_x/k, m_y/k);
+		return Vector2(_x/k, _y/k);
 	} catch (...) {
 		qCritical() << "Division by zero!";
 	}
@@ -386,8 +386,8 @@ Vector2::operator QPointF() const
 
 void Vector2::set(const Vector2 &other)
 {
-	m_x = other.x();
-	m_y = other.y();
+	_x = other.x();
+	_y = other.y();
 }
 
 qreal Vector2::moveNumberTowards(qreal source, qreal target, qreal maxDistanceDelta)

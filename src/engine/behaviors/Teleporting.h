@@ -20,7 +20,7 @@ public:
 private:
 	void performActions() override;
 
-	QPointF m_destination;
+	QPointF _destination;
 };
 
 #endif // TELEPORTING_H

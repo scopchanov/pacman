@@ -20,8 +20,8 @@ public:
 private:
 	void performActions() override;
 
-	InputSystem *m_inputSystem;
-	CharacterMovement *m_characterMovement;
+	InputSystem *_inputSystem;
+	CharacterMovement *_characterMovement;
 };
 
 #endif // PLAYERCONTROLLER_H

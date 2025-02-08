@@ -7,12 +7,12 @@ DotsEating::DotsEating(GameObject *parent) :
 	AbstractSpatialBehavior(parent)
 {
 	for (int n{0}; n < 2; n++)
-		m_gameEvents.append(nullptr);
+		_gameEvents.append(nullptr);
 }
 
 void DotsEating::setEvent(EventType type, GameEvent *event)
 {
-	m_gameEvents[type] = event;
+	_gameEvents[type] = event;
 }
 
 int DotsEating::type() const
@@ -45,7 +45,7 @@ void DotsEating::performSpatialActions()
 
 void DotsEating::triggerGameEvent(EventType type)
 {
-	auto *gameEvent{m_gameEvents.at(type)};
+	auto *gameEvent{_gameEvents.at(type)};
 
 	if (!gameEvent)
 		return;

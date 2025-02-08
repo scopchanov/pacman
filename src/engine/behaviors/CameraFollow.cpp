@@ -11,12 +11,12 @@ CameraFollow::CameraFollow(GameObject *parent) :
 
 QGraphicsView *CameraFollow::view() const
 {
-	return m_view;
+	return _view;
 }
 
 void CameraFollow::setView(QGraphicsView *view)
 {
-	m_view = view;
+	_view = view;
 }
 
 int CameraFollow::type() const
@@ -31,8 +31,8 @@ void CameraFollow::reset()
 
 void CameraFollow::performActions()
 {
-	if (!m_view)
+	if (!_view)
 		return;
 
-	m_view->centerOn(parent()->pos());
+	_view->centerOn(parent()->pos());
 }

@@ -14,7 +14,7 @@ public:
 	void setText(const QString &str);
 
 private:
-	QPointF m_basePosition;
+	QPointF _basePosition;
 };
 
 #endif // MESSAGE_H

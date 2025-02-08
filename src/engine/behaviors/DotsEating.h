@@ -25,7 +25,7 @@ private:
 	void performSpatialActions() override;
 	void triggerGameEvent(EventType type);
 
-	QList<GameEvent *> m_gameEvents;
+	QList<GameEvent *> _gameEvents;
 };
 
 #endif // DOTSEATING_H

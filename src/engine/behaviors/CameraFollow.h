@@ -19,7 +19,7 @@ public:
 private:
 	void performActions() override;
 
-	QGraphicsView *m_view;
+	QGraphicsView *_view;
 
 };
 

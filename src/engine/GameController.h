@@ -26,9 +26,9 @@ public slots:
 	void start();
 
 private:
-	GameTimer *m_gameTimer;
-	int m_lifesLeft;
-	int m_score;
+	GameTimer *_gameTimer;
+	int _lifesLeft;
+	int _score;
 
 signals:
 	void lifesLeftChanged(int value);

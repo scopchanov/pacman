@@ -14,28 +14,28 @@ GameObject::GameObject(GameObject *parent) :
 
 GameObject::~GameObject()
 {
-	while (!m_behaviors.isEmpty())
-		delete m_behaviors.takeFirst();
+	while (!_behaviors.isEmpty())
+		delete _behaviors.takeFirst();
 }
 
 void GameObject::addBehavior(AbstractBehavior *behavior)
 {
-	m_behaviors.append(behavior);
+	_behaviors.append(behavior);
 }
 
 int GameObject::behaviorCount() const
 {
-	return m_behaviors.count();
+	return _behaviors.count();
 }
 
 AbstractBehavior *GameObject::behavior(int n) const
 {
-	return m_behaviors.at(n);
+	return _behaviors.at(n);
 }
 
 AbstractBehavior *GameObject::findBehavior(int type) const
 {
-	for (auto *behavior : std::as_const(m_behaviors))
+	for (auto *behavior : std::as_const(_behaviors))
 		if (behavior->type() == type)
 			return behavior;
 
@@ -52,7 +52,7 @@ void GameObject::advance(int phase)
 	if (!phase)
 		return;
 
-	for (auto *behavior : std::as_const(m_behaviors))
+	for (auto *behavior : std::as_const(_behaviors))
 		behavior->execute();
 }
 

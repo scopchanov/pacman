@@ -102,7 +102,7 @@ void EnemyController::performActions()
 	// ranadom movement
 	// int cnt{static_cast<int>(directions.count())};
 	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
-	// m_characterMovement->setNextMove(directions.at(ind));
+	// _characterMovement->setNextMove(directions.at(ind));
 
 
 

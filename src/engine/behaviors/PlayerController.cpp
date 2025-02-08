@@ -4,20 +4,20 @@
 
 PlayerController::PlayerController(GameObject *parent) :
 	AbstractBehavior(parent),
-	m_inputSystem{nullptr},
-	m_characterMovement{nullptr}
+	_inputSystem{nullptr},
+	_characterMovement{nullptr}
 {
 
 }
 
 void PlayerController::setInputSystem(InputSystem *inputSystem)
 {
-	m_inputSystem = inputSystem;
+	_inputSystem = inputSystem;
 }
 
 void PlayerController::setCharacterMovement(CharacterMovement *characterMovement)
 {
-	m_characterMovement = characterMovement;
+	_characterMovement = characterMovement;
 }
 
 int PlayerController::type() const
@@ -32,11 +32,11 @@ void PlayerController::reset()
 
 void PlayerController::performActions()
 {
-	if (!m_inputSystem || !m_characterMovement)
+	if (!_inputSystem || !_characterMovement)
 		return;
 
-	Vector2 userInput{m_inputSystem->userInput()};
+	Vector2 userInput{_inputSystem->userInput()};
 
 	if (userInput.x() || userInput.y())
-		m_characterMovement->setNextDirection(userInput);
+		_characterMovement->setNextDirection(userInput);
 }

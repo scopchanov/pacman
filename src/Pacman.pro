@@ -4,24 +4,25 @@ CONFIG += c++23
 
 SOURCES += \
     FileHandler.cpp \
-    Game.cpp \
-    GameController.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
     PathBuilder.cpp \
     ScoreDisplay.cpp \
-    SoundEngine.cpp \
     StartupSequence.cpp \
     engine/AiStateMachine.cpp \
     engine/Character.cpp \
     engine/Enemy.cpp \
+    engine/GameController.cpp \
+    engine/GameEngine.cpp \
     engine/GameEvent.cpp \
+    engine/GameScene.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
     engine/Grid.cpp \
     engine/Pacman.cpp \
     engine/Player.cpp \
+    engine/SoundEngine.cpp \
     engine/Teleporter.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractOrientationBehavior.cpp \
@@ -43,7 +44,6 @@ SOURCES += \
     engine/personalities/Speeding.cpp \
     engine/GameObject.cpp \
     engine/InputSystem.cpp \
-    engine/Scene.cpp \
     engine/Tile.cpp \
     engine/Tilemap.cpp \
     engine/Vector2.cpp \
@@ -53,24 +53,25 @@ SOURCES += \
 
 HEADERS += \
     FileHandler.h \
-    Game.h \
-    GameController.h \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
     PathBuilder.h \
     ScoreDisplay.h \
-    SoundEngine.h \
     StartupSequence.h \
     engine/AiStateMachine.h \
     engine/Character.h \
     engine/Enemy.h \
+    engine/GameController.h \
+    engine/GameEngine.h \
     engine/GameEvent.h \
+    engine/GameScene.h \
     engine/GameTimer.h \
     engine/GameView.h \
     engine/Grid.h \
     engine/Pacman.h \
     engine/Player.h \
+    engine/SoundEngine.h \
     engine/Teleporter.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractOrientationBehavior.h \
@@ -92,7 +93,6 @@ HEADERS += \
     engine/personalities/Speeding.h \
     engine/GameObject.h \
     engine/InputSystem.h \
-    engine/Scene.h \
     engine/Tile.h \
     engine/Tilemap.h \
     engine/Vector2.h \

@@ -4,14 +4,14 @@
 SoundEngine::SoundEngine(QObject *parent) :
 	QObject{parent}
 {
-	m_effects.append(createEffect("notification", 0.25));
-	m_effects.append(createEffect("win", 0.5));
-	m_effects.append(createEffect("died", 1));
+	_effects.append(createEffect("notification", 0.25));
+	_effects.append(createEffect("win", 0.5));
+	_effects.append(createEffect("died", 1));
 }
 
 void SoundEngine::playEffect(EffectType type)
 {
-	m_effects.at(type)->play();
+	_effects.at(type)->play();
 }
 
 QSoundEffect *SoundEngine::createEffect(const QString &name, qreal volume)
