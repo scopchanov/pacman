@@ -54,9 +54,9 @@ QPainterPath PathBuilder::playerPath(qreal angle)
 	return pacman(angle);
 }
 
-QPainterPath PathBuilder::enemyPath()
+QPainterPath PathBuilder::enemyPath(qreal value)
 {
-	return ghost();
+	return ghost(value);
 }
 
 QPainterPath PathBuilder::teleporterPath()
@@ -248,7 +248,7 @@ QPainterPath PathBuilder::pacman(qreal angle)
 	return p;
 }
 
-QPainterPath PathBuilder::ghost()
+QPainterPath PathBuilder::ghost(qreal a)
 {
 	QPainterPath p;
 
@@ -258,10 +258,10 @@ QPainterPath PathBuilder::ghost()
 	p.cubicTo(3, -20, 6, -18, 8, -16);
 	p.quadTo(17, -7, 20, 20);
 	p.quadTo(16, 16, 14, 16);
-	p.cubicTo(12, 16, 10, 19, 8, 19);
-	p.cubicTo(5, 19, 3, 16, 0, 16);
-	p.cubicTo(-3, 16, -5, 19, -8, 19);
-	p.cubicTo(-10, 19, -12, 16, -14, 16);
+	p.cubicTo(12, 16, 10 + a, 19, 8 + a, 19);
+	p.cubicTo(5 + a, 19, 3, 16, 0, 16);
+	p.cubicTo(-3, 16, -5, 19, -8 + a, 19);
+	p.cubicTo(-10 + a, 19, -12 + a, 16, -14, 16);
 	p.quadTo(-16, 16, -20, 20);
 
 	return p;

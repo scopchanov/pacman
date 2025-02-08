@@ -7,7 +7,7 @@ class AbstractBehavior
 {
 public:
 	enum BehaviorType : int {
-		BT_Animation = 0,
+		BT_EnemyAnimation = 0,
 		BT_CameraFollow,
 		BT_CharacterMovement,
 		BT_DotsEating,

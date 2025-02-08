@@ -1,4 +1,4 @@
-QT += widgets svgwidgets multimedia
+QT += widgets multimedia
 
 CONFIG += c++23
 
@@ -25,10 +25,10 @@ SOURCES += \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
     engine/behaviors/AbstractTimedBehavior.cpp \
-    engine/behaviors/Animation.cpp \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
     engine/behaviors/DotsEating.cpp \
+    engine/behaviors/EnemyAnimation.cpp \
     engine/behaviors/EnemyController.cpp \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
@@ -71,10 +71,10 @@ HEADERS += \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \
     engine/behaviors/AbstractTimedBehavior.h \
-    engine/behaviors/Animation.h \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
     engine/behaviors/DotsEating.h \
+    engine/behaviors/EnemyAnimation.h \
     engine/behaviors/EnemyController.h \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \

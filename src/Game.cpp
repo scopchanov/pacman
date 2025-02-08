@@ -17,6 +17,7 @@
 #include "engine/behaviors/PlayerOrientation.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
+#include "engine/behaviors/EnemyAnimation.h"
 #include "engine/behaviors/EnemyController.h"
 #include "engine/behaviors/KillPlayer.h"
 #include "engine/behaviors/PlayerAnimation.h"
@@ -28,7 +29,6 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
-#include <QGraphicsSvgItem>
 
 Game::Game(QObject *parent) :
 	QObject(parent),
@@ -203,7 +203,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 	auto *movement{new CharacterMovement(enemy)};
 	// auto *orientation{new PlayerOrientation(enemy)};
 	auto *enemyController{new EnemyController(enemy)};
-	// auto *animation{new PlayerAnimation(enemy)};
+	auto *animation{new EnemyAnimation(enemy)};
 	auto *killPlayer{new KillPlayer(enemy)};
 	auto *eventPlayerDies{new GameEvent(this)};
 
@@ -219,7 +219,7 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 
 	// orientation->setMovement(movement);
 
-	// animation->setGameTimer(m_gameTimer);
+	animation->setGameTimer(m_gameController->gameTimer());
 
 	killPlayer->setGameTimer(m_gameController->gameTimer());
 	killPlayer->setPlayer(player);
@@ -228,10 +228,10 @@ GameObject *Game::createEnemy(Tilemap *tmLayout, GameObject *player, const QPoin
 	enemy->addBehavior(enemyController);
 	enemy->addBehavior(movement);
 	// enemy->addBehavior(orientation);
-	// enemy->addBehavior(animation);
+	enemy->addBehavior(animation);
 	enemy->addBehavior(killPlayer);
 
-	enemy->setPath(PathBuilder::enemyPath());
+	enemy->setPath(PathBuilder::enemyPath(0));
 	enemy->setPen(QPen(Qt::transparent));
 	enemy->setBrush(color);
 
