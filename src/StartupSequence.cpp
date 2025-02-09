@@ -18,11 +18,6 @@ StartupSequence::StartupSequence(QObject *parent) :
 	updateMessage();
 }
 
-StartupSequence::~StartupSequence()
-{
-	delete _message;
-}
-
 Message *StartupSequence::message() const
 {
 	return _message;

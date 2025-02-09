@@ -11,7 +11,6 @@ class StartupSequence : public QObject
 	Q_OBJECT
 public:
 	explicit StartupSequence(QObject *parent = nullptr);
-	~StartupSequence();
 
 	Message *message() const;
 
