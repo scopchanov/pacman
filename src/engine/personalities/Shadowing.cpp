@@ -1,5 +1,6 @@
 #include "Shadowing.h"
 #include "engine/GameObject.h"
+#include "engine/Grid.h"
 #include "engine/Vector2.h"
 
 Shadowing::Shadowing(GameObject *parent) :
@@ -15,5 +16,5 @@ int Shadowing::type() const
 
 Vector2 Shadowing::calculateTarget() const
 {
-	return Vector2(player()->pos());
+	return Vector2(grid()->cellPosition(playerCell()));
 }

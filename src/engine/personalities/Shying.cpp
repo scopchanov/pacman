@@ -28,12 +28,9 @@ int Shying::type() const
 
 Vector2 Shying::calculateTarget() const
 {
-	// TODO: Improve me
-
 	if (!_partner)
 		return Vector2();
 
-	Vector2 playerCell(grid()->posToCell(player()->pos()));
 	auto *behavior{player()->findBehavior(AbstractBehavior::BT_CharacterMovement)};
 
 	if (!behavior)
@@ -41,7 +38,8 @@ Vector2 Shying::calculateTarget() const
 
 	auto *movement{static_cast<CharacterMovement *>(behavior)};
 	const Vector2 &playerDirection(movement->currentDirection());
-	const Vector2 &tcbp{playerCell + playerDirection*2};
+	const Vector2 &referenceCell{playerCell() + playerDirection*2};
+	const Vector2 &reference{grid()->cellPosition(referenceCell)};
 
-	return Vector2(_partner->pos() - grid()->cellPosition(tcbp)).reversed() + Vector2(grid()->cellPosition(tcbp));
+	return Vector2(_partner->pos() - reference).reversed() + reference;
 }

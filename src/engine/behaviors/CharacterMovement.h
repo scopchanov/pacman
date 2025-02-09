@@ -12,6 +12,8 @@ public:
 
 	qreal movingSpeed() const;
 	void setMovingSpeed(qreal value);
+	Vector2 initialDirection() const;
+	void setInitialDirection(const Vector2 &direction);
 	Vector2 currentDirection() const;
 	Vector2 nextDirection() const;
 	void setNextDirection(const Vector2 &direction);
@@ -22,6 +24,7 @@ public:
 	void relocateCharacter(const QPointF &destination);
 	void reverse();
 	void reset() override;
+
 
 private:
 	void performSpatialActions() override;
@@ -40,6 +43,7 @@ private:
 	Vector2 currentCellPosition() const;
 
 	qreal _movingSpeed;
+	Vector2 _initialDirection;
 	Vector2 _currentDirection;
 	Vector2 _nextDirection;
 	Vector2 _targetCellPosition;

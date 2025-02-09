@@ -32,6 +32,9 @@ public:
 
 	virtual Vector2 calculateTarget() const = 0;
 
+protected:
+	Vector2 playerCell() const;
+
 private:
 	GameObject *_parent;
 	GameObject *_player;

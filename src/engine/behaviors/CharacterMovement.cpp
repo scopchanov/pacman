@@ -7,6 +7,7 @@
 CharacterMovement::CharacterMovement(GameObject *parent) :
 	AbstractSpatialBehavior(parent),
 	_movingSpeed{0.0},
+	_initialDirection{Vector2(-1, 0)},
 	_currentDirection{Vector2(-1, 0)}
 {
 	targetParentPosition();
@@ -20,6 +21,17 @@ qreal CharacterMovement::movingSpeed() const
 void CharacterMovement::setMovingSpeed(qreal value)
 {
 	_movingSpeed = value;
+}
+
+Vector2 CharacterMovement::initialDirection() const
+{
+	return _initialDirection;
+}
+
+void CharacterMovement::setInitialDirection(const Vector2 &direction)
+{
+	_initialDirection = direction;
+	_currentDirection = _initialDirection;
 }
 
 Vector2 CharacterMovement::currentDirection() const
@@ -81,7 +93,7 @@ void CharacterMovement::reverse()
 
 void CharacterMovement::reset()
 {
-	_currentDirection = Vector2(-1, 0);
+	_currentDirection = _initialDirection;
 	_nextDirection = Vector2(0, 0);
 
 	targetParentPosition();

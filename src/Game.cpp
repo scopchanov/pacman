@@ -26,6 +26,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
+#include <QHash>
 
 Game::Game(QObject *parent) :
 	QObject(parent),
@@ -40,7 +41,7 @@ Game::Game(QObject *parent) :
 {
 	_gameController->gameTimer()->setScene(_scene);
 
-	connect(_soundEngine, &SoundEngine::funeralMarchPlayed, this, &Game::onFuneralMarchPlayed);
+	connect(_soundEngine, &SoundEngine::funeralTunePlayed, this, &Game::onFuneralTunePlayed);
 }
 
 GameController *Game::gameController() const
@@ -121,7 +122,7 @@ void Game::start()
 }
 
 void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
-							  const QPen &pen, const QBrush &brush)
+						const QPen &pen, const QBrush &brush)
 {
 	int m{0};
 
@@ -158,14 +159,15 @@ void Game::createEnemies(const QJsonArray &enemies)
 {
 	for (const auto &record : enemies) {
 		const QJsonObject &json{record.toObject()};
+		const QString &color{json.value("color").toString()};
 		const QJsonObject &position{json.value("position").toObject()};
 		qreal posX{position.value("x").toDouble()};
 		qreal posY{position.value("y").toDouble()};
-		const QString &color{json.value("color").toString()};
+		int direction{json.value("direction").toInt()};
 		const QJsonObject &cell{json.value("scatterTargetCell").toObject()};
 		int row{cell.value("row").toInt()};
 		int column{cell.value("column").toInt()};
-		auto *enemy{createEnemy({posX, posY}, color)};
+		auto *enemy{createEnemy({posX, posY}, color, direction)};
 		auto *behavior{enemy->findBehavior(AbstractBehavior::BT_EnemyController)};
 		auto *controller{static_cast<EnemyController *>(behavior)};
 		auto *personality{createPersonality(json.value("personality").toInt())};
@@ -183,7 +185,7 @@ void Game::createEnemies(const QJsonArray &enemies)
 	}
 }
 
-Ghost *Game::createEnemy(const QPointF &position, const QColor &color)
+Ghost *Game::createEnemy(const QPointF &position, const QColor &color, int direction)
 {
 	auto *ghost{new Ghost()};
 
@@ -203,7 +205,7 @@ Ghost *Game::createEnemy(const QPointF &position, const QColor &color)
 	movement->setGameTimer(_gameController->gameTimer());
 	movement->setTilemap(_walls);
 	movement->setMovingSpeed(150);
-	movement->setNextDirection(Vector2(-1, 0));
+	movement->setInitialDirection(dir2vec(direction));
 
 	orientation->setMovement(movement);
 
@@ -255,6 +257,12 @@ AbstractPersonality *Game::createPersonality(int type)
 	}
 }
 
+Vector2 Game::dir2vec(int direction)
+{
+	return QHash<int, Vector2>{{0, V2_LEFT}, {1, V2_UP}, {2, V2_RIGHT},
+							   {3, V2_DOWN}}.value(direction);
+}
+
 void Game::reset()
 {
 	_stateMachine->reset();
@@ -285,7 +293,7 @@ void Game::onPlayerDies()
 	_soundEngine->playEffect(SoundEngine::SND_PlayerDies);
 }
 
-void Game::onFuneralMarchPlayed()
+void Game::onFuneralTunePlayed()
 {
 	if (_gameController->lifesLeft()) {
 		_gameController->removeLife();

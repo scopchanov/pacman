@@ -1,6 +1,11 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
+#define V2_LEFT Vector2(-1, 0)
+#define V2_RIGHT Vector2(1, 0)
+#define V2_UP Vector2(0, -1)
+#define V2_DOWN Vector2(0, 1)
+
 #include <QtGlobal>
 
 class QPoint;

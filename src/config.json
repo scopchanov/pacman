@@ -19,6 +19,7 @@
     {
       "name": "Blinky",
       "color": "#F44336",
+      "direction": 0,
       "personality": 0,
       "position": {
 	"x": 360,
@@ -32,6 +33,7 @@
     {
       "name": "Inky",
       "color": "#82B1FF",
+      "direction": 1,
       "personality": 2,
       "position": {
 	"x": 312,
@@ -45,6 +47,7 @@
     {
       "name": "Pinky",
       "color": "#FF80AB",
+      "direction": 3,
       "personality": 1,
       "position": {
 	"x": 360,
@@ -58,6 +61,7 @@
     {
       "name": "Clyde",
       "color": "#FFC107",
+      "direction": 1,
       "personality": 3,
       "position": {
 	"x": 408,

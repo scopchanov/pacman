@@ -28,7 +28,7 @@ private slots:
 	void onPlayingChanged();
 
 signals:
-	void funeralMarchPlayed();
+	void funeralTunePlayed();
 };
 
 #endif // SOUNDENGINE_H

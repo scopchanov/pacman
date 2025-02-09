@@ -17,7 +17,6 @@ int Speeding::type() const
 
 Vector2 Speeding::calculateTarget() const
 {
-	Vector2 playerCell(grid()->posToCell(player()->pos()));
 	auto *behavior{player()->findBehavior(AbstractBehavior::BT_CharacterMovement)};
 
 	if (!behavior)
@@ -25,7 +24,7 @@ Vector2 Speeding::calculateTarget() const
 
 	auto *movement{static_cast<CharacterMovement *>(behavior)};
 	const Vector2 &playerDirection(movement->currentDirection());
-	const Vector2 &fcbp{playerCell + playerDirection*4};
+	const Vector2 &targetCell{playerCell() + playerDirection*4};
 
-	return grid()->cellPosition(fcbp);
+	return grid()->cellPosition(targetCell);
 }

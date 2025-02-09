@@ -1,4 +1,7 @@
 #include "AbstractPersonality.h"
+#include "engine/GameObject.h"
+#include "engine/Grid.h"
+#include "engine/Vector2.h"
 
 AbstractPersonality::AbstractPersonality(GameObject *parent) :
 	_parent{parent},
@@ -46,4 +49,9 @@ QPointF AbstractPersonality::scatterTarget() const
 void AbstractPersonality::setScatterTarget(const QPointF &point)
 {
 	_scatterTarget = point;
+}
+
+Vector2 AbstractPersonality::playerCell() const
+{
+	return Vector2(grid()->posToCell(player()->pos()));
 }

@@ -37,9 +37,10 @@ private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	void createEnemies(const QJsonArray &enemies);
-	Ghost *createEnemy(const QPointF &position, const QColor &color);
+	Ghost *createEnemy(const QPointF &position, const QColor &color, int direction);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 	AbstractPersonality *createPersonality(int type);
+	Vector2 dir2vec(int direction);
 	void reset();
 	void gameOver();
 
@@ -57,7 +58,7 @@ private slots:
 	void onDotEaten();
 	void onPlayerWins();
 	void onPlayerDies();
-	void onFuneralMarchPlayed();
+	void onFuneralTunePlayed();
 
 	friend class Player;
 };

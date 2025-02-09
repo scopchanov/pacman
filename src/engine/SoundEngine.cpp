@@ -34,5 +34,5 @@ void SoundEngine::onPlayingChanged()
 	if (effect->isPlaying() || effect != _effects.at(SND_PlayerDies))
 		return;
 
-	emit funeralMarchPlayed();
+	emit funeralTunePlayed();
 }
