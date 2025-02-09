@@ -14,6 +14,8 @@ public:
 	void setMovement(CharacterMovement *movement);
 	int type() const override;
 
+	void reset() override final;
+
 private:
 	void performActions() override final;
 	virtual void performOrientationActions() = 0;

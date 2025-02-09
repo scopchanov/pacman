@@ -22,6 +22,11 @@ int AbstractOrientationBehavior::type() const
 	return BT_Orientation;
 }
 
+void AbstractOrientationBehavior::reset()
+{
+	performActions();
+}
+
 void AbstractOrientationBehavior::performActions()
 {
 	if (!_movement)
