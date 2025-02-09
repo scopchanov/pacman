@@ -8,7 +8,7 @@ class Pacman : public Player
 public:
 	explicit Pacman(GameObject *parent = nullptr);
 
-	void setup(GameEngine *game) override;
+	void setup(Game *game) override;
 };
 
 #endif // PACMAN_H

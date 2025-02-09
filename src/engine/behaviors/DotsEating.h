@@ -19,8 +19,6 @@ public:
 	void setEvent(EventType type, GameEvent *event);
 	int type() const override;
 
-	void reset() override;
-
 private:
 	void performSpatialActions() override;
 	void triggerGameEvent(EventType type);

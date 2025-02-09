@@ -23,6 +23,12 @@ private:
 	QSoundEffect *createEffect(const QString &name, qreal volume);
 
 	QList<QSoundEffect *> _effects;
+
+private slots:
+	void onPlayingChanged();
+
+signals:
+	void funeralMarchPlayed();
 };
 
 #endif // SOUNDENGINE_H

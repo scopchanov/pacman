@@ -13,17 +13,20 @@ SOURCES += \
     engine/AiStateMachine.cpp \
     engine/Character.cpp \
     engine/Enemy.cpp \
+    engine/Game.cpp \
     engine/GameController.cpp \
-    engine/GameEngine.cpp \
     engine/GameEvent.cpp \
     engine/GameScene.cpp \
     engine/GameTimer.cpp \
     engine/GameView.cpp \
+    engine/Ghost.cpp \
+    engine/GhostEye.cpp \
     engine/Grid.cpp \
     engine/Pacman.cpp \
     engine/Player.cpp \
     engine/SoundEngine.cpp \
     engine/Teleporter.cpp \
+    engine/behaviors/AbstractAnimationBehavior.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractOrientationBehavior.cpp \
     engine/behaviors/AbstractSpatialBehavior.cpp \
@@ -62,17 +65,20 @@ HEADERS += \
     engine/AiStateMachine.h \
     engine/Character.h \
     engine/Enemy.h \
+    engine/Game.h \
     engine/GameController.h \
-    engine/GameEngine.h \
     engine/GameEvent.h \
     engine/GameScene.h \
     engine/GameTimer.h \
     engine/GameView.h \
+    engine/Ghost.h \
+    engine/GhostEye.h \
     engine/Grid.h \
     engine/Pacman.h \
     engine/Player.h \
     engine/SoundEngine.h \
     engine/Teleporter.h \
+    engine/behaviors/AbstractAnimationBehavior.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractOrientationBehavior.h \
     engine/behaviors/AbstractSpatialBehavior.h \

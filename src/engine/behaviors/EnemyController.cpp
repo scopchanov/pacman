@@ -80,12 +80,13 @@ int EnemyController::type() const
 
 void EnemyController::reset()
 {
-
+	_state = ST_Exit;
+	_targetPosition = QPointF(360, 300);
 }
 
 void EnemyController::performActions()
 {
-	// TODO - Imporve me
+	// TODO: Improve me
 
 	if (!_characterMovement || !_player || !_grid)
 		return;
@@ -131,7 +132,7 @@ void EnemyController::performActions()
 
 qreal EnemyController::distanceToTarget(Vector2 direction) const
 {
-	// TODO - Improve me
+	// TODO: Improve me
 
 	return _characterMovement->nextCellPositionIn(direction).distanceTo(Vector2(_targetPosition));
 }

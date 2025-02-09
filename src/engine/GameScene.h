@@ -13,6 +13,8 @@ public:
 
     InputSystem *inputSystem() const;
 
+	void reset();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 

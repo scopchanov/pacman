@@ -1,6 +1,7 @@
 #include "Pacman.h"
 #include "PathBuilder.h"
 #include "engine/behaviors/CharacterMovement.h"
+#include "engine/behaviors/PlayerAnimation.h"
 #include <QPen>
 
 Pacman::Pacman(GameObject *parent) :
@@ -11,7 +12,7 @@ Pacman::Pacman(GameObject *parent) :
 	setBrush(Qt::white);
 }
 
-void Pacman::setup(GameEngine *game)
+void Pacman::setup(Game *game)
 {
 	Player::setup(game);
 
@@ -20,4 +21,9 @@ void Pacman::setup(GameEngine *game)
 
 	movement->setMovingSpeed(200);
 	movement->setNextDirection(Vector2(-1, 0));
+
+	behavior = findBehavior(AbstractBehavior::BT_Animation);
+	auto *animation{static_cast<PlayerAnimation *>(behavior)};
+
+	animation->setFrameTime(150);
 }

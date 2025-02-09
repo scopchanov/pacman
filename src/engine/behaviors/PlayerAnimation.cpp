@@ -1,31 +1,28 @@
 #include "PlayerAnimation.h"
 #include "PathBuilder.h"
 #include "engine/GameObject.h"
-#include "engine/GameTimer.h"
 
 PlayerAnimation::PlayerAnimation(GameObject *parent) :
-	AbstractTimedBehavior(parent),
-	_angle{0}
+	AbstractAnimationBehavior(parent)
 {
 
-}
-
-int PlayerAnimation::type() const
-{
-	return BT_PlayerAnimation;
 }
 
 void PlayerAnimation::reset()
 {
-
+	setValue(45);
+	setDirection(DIR_Forwards);
+	updateParent();
 }
 
-void PlayerAnimation::performTimedActions()
+void PlayerAnimation::foo()
 {
-	_angle += 150*gameTimer()->deltaTime();
+	if (value() >= 45)
+		setValue(0);
+}
 
-	if (_angle >= 45)
-		_angle = 0;
-
-	parent()->setPath(PathBuilder::playerPath(_angle));
+void PlayerAnimation::updateParent()
+{
+	parent()->setPath(PathBuilder::playerPath(value()));
+	parent()->update();
 }

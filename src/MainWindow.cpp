@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "ScoreDisplay.h"
 #include "LifesDisplay.h"
-#include "engine/GameEngine.h"
+#include "engine/Game.h"
 #include "engine/GameController.h"
 #include "engine/GameScene.h"
 #include "engine/GameView.h"
@@ -19,13 +19,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	auto *gameView{new GameView(this)};
 	auto *scoreDisplay{new ScoreDisplay(this)};
 	auto *lifesDisplay{new LifesDisplay(this)};
-	auto *game{new GameEngine(this)};
+	auto *game{new Game(this)};
 
 	gameView->setScene(game->scene());
 
 	layoutPanel->addWidget(scoreDisplay);
 	layoutPanel->addWidget(lifesDisplay);
-	layoutPanel->setContentsMargins(0, 0, 0, 0);
+	layoutPanel->setContentsMargins(36, 0, 36, 0);
 	layoutPanel->setSpacing(0);
 
 	layoutMiddle->addStretch();

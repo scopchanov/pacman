@@ -5,3 +5,8 @@ Enemy::Enemy(GameObject *parent) :
 {
 
 }
+
+void Enemy::setup(Game *game)
+{
+
+}

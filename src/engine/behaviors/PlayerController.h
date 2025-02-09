@@ -15,8 +15,6 @@ public:
 	void setCharacterMovement(CharacterMovement *characterMovement);
 	int type() const override;
 
-	void reset() override;
-
 private:
 	void performActions() override;
 

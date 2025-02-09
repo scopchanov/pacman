@@ -1,6 +1,8 @@
 #include "EnemyOrientation.h"
 #include "CharacterMovement.h"
 #include "engine/GameObject.h"
+#include "engine/Ghost.h"
+#include "engine/GhostEye.h"
 
 EnemyOrientation::EnemyOrientation(GameObject *parent) :
 	AbstractOrientationBehavior(parent)
@@ -8,26 +10,10 @@ EnemyOrientation::EnemyOrientation(GameObject *parent) :
 
 }
 
-void EnemyOrientation::reset()
-{
-
-}
-
 void EnemyOrientation::performOrientationActions()
 {
-	//TODO - Improve me
+	const Vector2 &direction{movement()->currentDirection()};
 
-	if (movement()->currentDirection() == Vector2(-1, 0)) {
-		parent()->childItems().at(2)->setPos(-2, -3);
-		parent()->childItems().at(3)->setPos(-2, -3);
-	} else if (movement()->currentDirection() == Vector2(1, 0)) {
-		parent()->childItems().at(2)->setPos(2, -3);
-		parent()->childItems().at(3)->setPos(2, -3);
-	} else if (movement()->currentDirection() == Vector2(0, -1)) {
-		parent()->childItems().at(2)->setPos(0, -6);
-		parent()->childItems().at(3)->setPos(0, -6);
-	} else {
-		parent()->childItems().at(2)->setPos(0, 0);
-		parent()->childItems().at(3)->setPos(0, 0);
-	}
+	static_cast<Ghost *>(parent())->leftEye()->orient(direction);
+	static_cast<Ghost *>(parent())->rightEye()->orient(direction);
 }

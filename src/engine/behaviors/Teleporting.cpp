@@ -23,11 +23,6 @@ int Teleporting::type() const
 	return BT_Teleporting;
 }
 
-void Teleporting::reset()
-{
-
-}
-
 void Teleporting::performActions()
 {
 	const QList<QGraphicsItem *> &collidingItems{parent()->collidingItems()};

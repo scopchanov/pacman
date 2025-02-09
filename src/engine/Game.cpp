@@ -1,4 +1,4 @@
-#include "GameEngine.h"
+#include "Game.h"
 #include "GameController.h"
 #include "SoundEngine.h"
 #include "Message.h"
@@ -7,6 +7,7 @@
 #include "engine/AiStateMachine.h"
 #include "engine/GameTimer.h"
 #include "engine/GameEvent.h"
+#include "engine/Ghost.h"
 #include "engine/Grid.h"
 #include "engine/Pacman.h"
 #include "engine/GameScene.h"
@@ -26,7 +27,7 @@
 #include <QJsonArray>
 #include <QJsonValue>
 
-GameEngine::GameEngine(QObject *parent) :
+Game::Game(QObject *parent) :
 	QObject(parent),
 	_gameController{new GameController(this)},
 	_soundEngine{new SoundEngine(this)},
@@ -34,37 +35,40 @@ GameEngine::GameEngine(QObject *parent) :
 	_grid{new Grid()},
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
+	_stateMachine{new AiStateMachine(this)},
 	_pacman{new Pacman()}
 {
 	_gameController->gameTimer()->setScene(_scene);
+
+	connect(_soundEngine, &SoundEngine::funeralMarchPlayed, this, &Game::onFuneralMarchPlayed);
 }
 
-GameController *GameEngine::gameController() const
+GameController *Game::gameController() const
 {
 	return _gameController;
 }
 
-GameScene *GameEngine::scene() const
+GameScene *Game::scene() const
 {
 	return _scene;
 }
 
-Grid *GameEngine::grid() const
+Grid *Game::grid() const
 {
 	return _grid;
 }
 
-Tilemap *GameEngine::walls() const
+Tilemap *Game::walls() const
 {
 	return _walls;
 }
 
-Tilemap *GameEngine::dots() const
+Tilemap *Game::dots() const
 {
 	return _dots;
 }
 
-void GameEngine::configure(const QJsonObject &json)
+void Game::configure(const QJsonObject &json)
 {
 	const QJsonArray &wallMatrix{json.value("walls").toArray()};
 	const QJsonArray &dotMatrix{json.value("dots").toArray()};
@@ -77,7 +81,7 @@ void GameEngine::configure(const QJsonObject &json)
 	qreal height{cellSize.value("height").toDouble()};
 	qreal playerX{player.value("posX").toDouble()};
 	qreal playerY{player.value("posY").toDouble()};
-	auto *stateMachine{new AiStateMachine(this)};
+
 
 	_grid->setGridSize(rows, columns);
 	_grid->setCellSize(QSizeF(width, height));
@@ -91,13 +95,13 @@ void GameEngine::configure(const QJsonObject &json)
 	_walls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 	_walls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 
-	_pacman->setPos(playerX, playerY);
+	_pacman->setSpawnPosition({playerX, playerY});
 	_pacman->setup(this);
 
-	auto *blinky{createEnemy(QPointF(360, 300), 0xF44336, Vector2(28, 0))};
-	auto *inky{createEnemy(QPointF(312, 372), 0x82B1FF,  Vector2(28, 32))};
-	auto *pinky{createEnemy(QPointF(360, 372), 0xFF80AB,  Vector2(1, 0))};
-	auto *clyde{createEnemy(QPointF(408, 372), 0xFFC107,  Vector2(1, 32))};
+	auto *blinky{createEnemy({360, 300}, 0xF44336, Vector2(28, 0))};
+	auto *inky{createEnemy({312, 372}, 0x82B1FF,  Vector2(28, 32))};
+	auto *pinky{createEnemy({360, 372}, 0xFF80AB,  Vector2(1, 0))};
+	auto *clyde{createEnemy({408, 372}, 0xFFC107,  Vector2(1, 32))};
 
 	auto *shadowing{new Shadowing(this)};
 	auto *speeding{new Speeding(this)};
@@ -107,9 +111,11 @@ void GameEngine::configure(const QJsonObject &json)
 	shadowing->setPlayer(_pacman);
 	speeding->setPlayer(_pacman);
 	speeding->setGrid(_grid);
+
 	shying->setPlayer(_pacman);
 	shying->setGrid(_grid);
 	shying->setEnemy(blinky);
+
 	poking->setPlayer(_pacman);
 	poking->setEnemy(clyde);
 	poking->setGrid(_grid);
@@ -124,11 +130,11 @@ void GameEngine::configure(const QJsonObject &json)
 	iec->setPersonality(shying);
 	cec->setPersonality(poking);
 
-	stateMachine->setGameTimer(gameController()->gameTimer());
-	stateMachine->addEnemyController(bec);
-	stateMachine->addEnemyController(pec);
-	stateMachine->addEnemyController(iec);
-	stateMachine->addEnemyController(cec);
+	_stateMachine->setGameTimer(gameController()->gameTimer());
+	_stateMachine->addEnemyController(bec);
+	_stateMachine->addEnemyController(pec);
+	_stateMachine->addEnemyController(iec);
+	_stateMachine->addEnemyController(cec);
 
 	_scene->addItem(_pacman);
 	_scene->addItem(_walls);
@@ -141,7 +147,7 @@ void GameEngine::configure(const QJsonObject &json)
 	_scene->addItem(createTeleporter(_grid->cellPosition(15, 29), _grid->cellPosition(15, 2)));
 }
 
-void GameEngine::start()
+void Game::start()
 {
 	auto *sequence{new StartupSequence(this)};
 
@@ -152,8 +158,8 @@ void GameEngine::start()
 	sequence->start();
 }
 
-void GameEngine::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
-						const QPen &pen, const QBrush &brush)
+void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
+							  const QPen &pen, const QBrush &brush)
 {
 	int m{0};
 
@@ -175,7 +181,7 @@ void GameEngine::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 	}
 }
 
-Tile *GameEngine::createTile(int index, const QPen &pen, const QBrush &brush)
+Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 {
 	auto *tile{new Tile()};
 
@@ -186,17 +192,17 @@ Tile *GameEngine::createTile(int index, const QPen &pen, const QBrush &brush)
 	return tile;
 }
 
-GameObject *GameEngine::createEnemy(const QPointF &position, const QColor &color, const Vector2 &scatterTargetCell)
+Ghost *Game::createEnemy(const QPointF &position, const QColor &color, const Vector2 &scatterTargetCell)
 {
-	auto *enemy{new GameObject()};
+	auto *ghost{new Ghost()};
 
-	enemy->setPos(position);
+	ghost->setSpawnPosition(position);
 
-	auto *movement{new CharacterMovement(enemy)};
-	auto *orientation{new EnemyOrientation(enemy)};
-	auto *enemyController{new EnemyController(enemy)};
-	auto *animation{new EnemyAnimation(enemy)};
-	auto *killPlayer{new KillPlayer(enemy)};
+	auto *movement{new CharacterMovement(ghost)};
+	auto *orientation{new EnemyOrientation(ghost)};
+	auto *enemyController{new EnemyController(ghost)};
+	auto *animation{new EnemyAnimation(ghost)};
+	auto *killPlayer{new KillPlayer(ghost)};
 	auto *eventPlayerDies{new GameEvent(this)};
 
 	enemyController->setCharacterMovement(movement);
@@ -212,44 +218,30 @@ GameObject *GameEngine::createEnemy(const QPointF &position, const QColor &color
 	orientation->setMovement(movement);
 
 	animation->setGameTimer(_gameController->gameTimer());
+	animation->setFrameTime(20);
 
 	killPlayer->setGameTimer(_gameController->gameTimer());
 	killPlayer->setPlayer(_pacman);
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
-	enemy->addBehavior(enemyController);
-	enemy->addBehavior(movement);
-	enemy->addBehavior(orientation);
-	enemy->addBehavior(animation);
-	enemy->addBehavior(killPlayer);
+	ghost->addBehavior(enemyController);
+	ghost->addBehavior(movement);
+	ghost->addBehavior(orientation);
+	ghost->addBehavior(animation);
+	ghost->addBehavior(killPlayer);
 
-	enemy->setPath(PathBuilder::enemyPath(0));
-	enemy->setPen(QPen(Qt::transparent));
-	enemy->setBrush(color);
+	ghost->setPath(PathBuilder::enemyPath(0));
+	ghost->setPen(QPen(Qt::transparent));
+	ghost->setBrush(color);
 
-	auto *leftEye{new QGraphicsEllipseItem(QRectF(-10, -11, 8, 10), enemy)};
-	auto *rightEye{new QGraphicsEllipseItem(QRectF(2, -11, 8, 10), enemy)};
-	auto *leftEyeBall{new QGraphicsEllipseItem(QRectF(-9, -6, 6, 6), enemy)};
-	auto *rightEyeBall{new QGraphicsEllipseItem(QRectF(3, -6, 6, 6), enemy)};
+	connect(eventPlayerDies, &GameEvent::triggered, this, &Game::onPlayerDies);
 
-	leftEye->setPen(QPen(Qt::transparent));
-	leftEye->setBrush(Qt::white);
+	_ghosts.append(ghost);
 
-	leftEyeBall->setPen(QPen(Qt::transparent));
-	leftEyeBall->setBrush(Qt::black);
-
-	rightEye->setPen(QPen(Qt::transparent));
-	rightEye->setBrush(Qt::white);
-
-	rightEyeBall->setPen(QPen(Qt::transparent));
-	rightEyeBall->setBrush(Qt::black);
-
-	connect(eventPlayerDies, &GameEvent::triggered, this, &GameEngine::onPlayerDies);
-
-	return enemy;
+	return ghost;
 }
 
-GameObject *GameEngine::createTeleporter(const QPointF &src, const QPointF &dst)
+GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 {
 	auto *teleporter{new Teleporter()};
 
@@ -258,21 +250,42 @@ GameObject *GameEngine::createTeleporter(const QPointF &src, const QPointF &dst)
 	return teleporter;
 }
 
-void GameEngine::onDotEaten()
+void Game::reset()
+{
+	_stateMachine->reset();
+	_scene->reset();
+	start();
+}
+
+void Game::gameOver()
+{
+	qDebug() << "Game Over!";
+}
+
+void Game::onDotEaten()
 {
 	_gameController->increaseScore(1);
 	_soundEngine->playEffect(SoundEngine::SND_DotEaten);
 }
 
-void GameEngine::onPlayerWins()
+void Game::onPlayerWins()
 {
 	_gameController->gameTimer()->stop();
 	_soundEngine->playEffect(SoundEngine::SND_PlayerWins);
 }
 
-void GameEngine::onPlayerDies()
+void Game::onPlayerDies()
 {
 	_gameController->gameTimer()->stop();
 	_soundEngine->playEffect(SoundEngine::SND_PlayerDies);
-	_gameController->removeLife();
+}
+
+void Game::onFuneralMarchPlayed()
+{
+	if (_gameController->lifesLeft()) {
+		_gameController->removeLife();
+		reset();
+	} else {
+		gameOver();
+	}
 }

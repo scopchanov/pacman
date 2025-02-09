@@ -8,8 +8,6 @@ class EnemyOrientation : public AbstractOrientationBehavior
 public:
 	explicit EnemyOrientation(GameObject *parent = nullptr);
 
-	void reset() override;
-
 private:
 	void performOrientationActions() override;
 };

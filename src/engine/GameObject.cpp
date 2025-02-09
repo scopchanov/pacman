@@ -47,6 +47,12 @@ int GameObject::type() const
 	return QGraphicsItem::UserType;
 }
 
+void GameObject::reset()
+{
+	for (auto *behavior : std::as_const(_behaviors))
+		behavior->reset();
+}
+
 void GameObject::advance(int phase)
 {
 	if (!phase)

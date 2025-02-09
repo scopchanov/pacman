@@ -15,8 +15,6 @@ public:
 	void setEventPlayerDies(GameEvent *gameEvent);
 	int type() const override;
 
-	void reset() override;
-
 private:
 	void performTimedActions() override;
 

@@ -22,5 +22,17 @@ QSoundEffect *SoundEngine::createEffect(const QString &name, qreal volume)
 	effect->setSource(QUrl::fromLocalFile(path));
 	effect->setVolume(volume);
 
+	connect(effect, &QSoundEffect::playingChanged, this, &SoundEngine::onPlayingChanged);
+
 	return effect;
+}
+
+void SoundEngine::onPlayingChanged()
+{
+	auto *effect{static_cast<QSoundEffect *>(sender())};
+
+	if (effect->isPlaying() || effect != _effects.at(SND_PlayerDies))
+		return;
+
+	emit funeralMarchPlayed();
 }

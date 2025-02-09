@@ -1,22 +1,18 @@
 #ifndef PLAYERANIMATION_H
 #define PLAYERANIMATION_H
 
-#include "AbstractTimedBehavior.h"
-#include <QtGlobal>
+#include "AbstractAnimationBehavior.h"
 
-class PlayerAnimation : public AbstractTimedBehavior
+class PlayerAnimation : public AbstractAnimationBehavior
 {
 public:
 	explicit PlayerAnimation(GameObject *parent = nullptr);
 
-	int type() const override;
-
 	void reset() override;
 
 private:
-	void performTimedActions() override;
-
-	qreal _angle;
+	void foo() override;
+	void updateParent() override;
 };
 
 #endif // PLAYERANIMATION_H

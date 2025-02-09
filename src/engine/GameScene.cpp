@@ -1,6 +1,9 @@
 #include "GameScene.h"
 #include "InputSystem.h"
+#include "GameObject.h"
+#include <QGraphicsItem>
 #include <QKeyEvent>
+#include <QDebug>
 
 GameScene::GameScene(QObject *parent) :
 	QGraphicsScene{parent},
@@ -12,6 +15,15 @@ GameScene::GameScene(QObject *parent) :
 InputSystem *GameScene::inputSystem() const
 {
 	return _inputSystem;
+}
+
+void GameScene::reset()
+{
+	const QList<QGraphicsItem *> &childItems{items()};
+
+	for (auto *item : childItems)
+		if (item->type() == GameObject::IT_GameObject)
+			static_cast<GameObject *>(item)->reset();
 }
 
 void GameScene::keyPressEvent(QKeyEvent *event)

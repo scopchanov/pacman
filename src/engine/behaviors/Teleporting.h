@@ -15,8 +15,6 @@ public:
 	void setDestination(const QPointF &destination);
 	int type() const override;
 
-	void reset() override;
-
 private:
 	void performActions() override;
 

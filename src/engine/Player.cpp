@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "GameEngine.h"
+#include "Game.h"
 #include "GameController.h"
 #include "engine/GameScene.h"
 #include "engine/GameEvent.h"
@@ -15,7 +15,7 @@ Player::Player(GameObject *parent) :
 
 }
 
-void Player::setup(GameEngine *game)
+void Player::setup(Game *game)
 {
 	auto *gameTimer{game->gameController()->gameTimer()};
 	auto *eventDotEaten{new GameEvent(game)};
@@ -47,6 +47,6 @@ void Player::setup(GameEngine *game)
 	addBehavior(dotsEating);
 	addBehavior(animation);
 
-	QObject::connect(eventDotEaten, &GameEvent::triggered, game, &GameEngine::onDotEaten);
-	QObject::connect(eventPlayerWins, &GameEvent::triggered, game, &GameEngine::onPlayerWins);
+	QObject::connect(eventDotEaten, &GameEvent::triggered, game, &Game::onDotEaten);
+	QObject::connect(eventPlayerWins, &GameEvent::triggered, game, &Game::onPlayerWins);
 }

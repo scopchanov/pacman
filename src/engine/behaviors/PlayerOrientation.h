@@ -11,8 +11,6 @@ class PlayerOrientation : public AbstractOrientationBehavior
 public:
 	explicit PlayerOrientation(GameObject *parent = nullptr);
 
-	void reset() override;
-
 private:
 	void performOrientationActions() override;
 	qreal directionToAngle(const Vector2 &direction) const;

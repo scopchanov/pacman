@@ -30,6 +30,12 @@ void AiStateMachine::addEnemyController(EnemyController *controller)
 	_enemyControllers.append(controller);
 }
 
+void AiStateMachine::reset()
+{
+	_state = 0;
+	_time = 0.0;
+}
+
 void AiStateMachine::changeEnemyState()
 {
 	EnemyController::StateType state{_state % 2 ? EnemyController::ST_Chase

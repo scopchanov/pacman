@@ -16,6 +16,8 @@ public:
 	void setGameTimer(GameTimer *gameTimer);
 	void addEnemyController(EnemyController *controller);
 
+	void reset();
+
 private:
 	void changeEnemyState();
 	qreal maxTime() const;

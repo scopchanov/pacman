@@ -9,11 +9,6 @@ PlayerOrientation::PlayerOrientation(GameObject *parent) :
 
 }
 
-void PlayerOrientation::reset()
-{
-
-}
-
 void PlayerOrientation::performOrientationActions()
 {
 	parent()->setRotation(directionToAngle(movement()->currentDirection()));
@@ -21,7 +16,7 @@ void PlayerOrientation::performOrientationActions()
 
 qreal PlayerOrientation::directionToAngle(const Vector2 &direction) const
 {
-	//TODO - Improve me
+	// TODO: Improve me
 
 	if (direction == Vector2(-1, 0))
 		return 0;

@@ -7,14 +7,13 @@ class AbstractBehavior
 {
 public:
 	enum BehaviorType : int {
-		BT_EnemyAnimation = 0,
+		BT_Animation = 0,
 		BT_CameraFollow,
 		BT_CharacterMovement,
 		BT_DotsEating,
 		BT_EnemyController,
 		BT_KillPlayer,
 		BT_Orientation,
-		BT_PlayerAnimation,
 		BT_PlayerController,
 		BT_Teleporting
 	};
@@ -25,7 +24,7 @@ public:
 	GameObject *parent() const;
 	void setParent(GameObject *parent);
 
-	virtual void reset() = 0;
+	virtual void reset();
 	void execute();
 
 	virtual int type() const = 0;

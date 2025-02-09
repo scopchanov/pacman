@@ -30,11 +30,6 @@ int KillPlayer::type() const
 	return BT_KillPlayer;
 }
 
-void KillPlayer::reset()
-{
-
-}
-
 void KillPlayer::performTimedActions()
 {
 	if (!_player)

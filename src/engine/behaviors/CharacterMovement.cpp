@@ -81,6 +81,9 @@ void CharacterMovement::reverse()
 
 void CharacterMovement::reset()
 {
+	_currentDirection = Vector2(-1, 0);
+	_nextDirection = Vector2(0, 0);
+
 	targetParentPosition();
 }
 

@@ -1,23 +1,18 @@
 #ifndef ENEMYANIMATION_H
 #define ENEMYANIMATION_H
 
-#include "AbstractTimedBehavior.h"
-#include <QtGlobal>
+#include "AbstractAnimationBehavior.h"
 
-class EnemyAnimation : public AbstractTimedBehavior
+class EnemyAnimation : public AbstractAnimationBehavior
 {
 public:
 	explicit EnemyAnimation(GameObject *parent = nullptr);
 
-	int type() const override;
-
 	void reset() override;
 
 private:
-	void performTimedActions() override;
-
-	qreal _value;
-	int _n;
+	void foo() override;
+	void updateParent() override;
 };
 
 #endif // ENEMYANIMATION_H

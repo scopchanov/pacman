@@ -14,8 +14,6 @@ public:
 	void setView(QGraphicsView *view);
 	int type() const override;
 
-	void reset() override;
-
 private:
 	void performActions() override;
 
