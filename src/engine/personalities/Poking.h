@@ -3,24 +3,14 @@
 
 #include "AbstractPersonality.h"
 
-class Grid;
-
 class Poking : public AbstractPersonality
 {
-	Q_OBJECT
 public:
-	explicit Poking(QObject *parent = nullptr);
+	explicit Poking(GameObject *parent = nullptr);
 
-	GameObject *enemy() const;
-	void setEnemy(GameObject *enemy);
-	Grid *grid() const;
-	void setGrid(Grid *grid);
+	int type() const override;
 
-	Vector2 calculateTargetPosition() const override;
-
-private:
-	GameObject *_enemy;
-	Grid *_grid;
+	Vector2 calculateTarget() const override;
 };
 
 #endif // POKING_H

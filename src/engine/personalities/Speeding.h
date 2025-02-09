@@ -3,21 +3,14 @@
 
 #include "AbstractPersonality.h"
 
-class Grid;
-
 class Speeding : public AbstractPersonality
 {
-	Q_OBJECT
 public:
-	explicit Speeding(QObject *parent = nullptr);
+	explicit Speeding(GameObject *parent = nullptr);
 
-	Grid *grid() const;
-	void setGrid(Grid *grid);
+	int type() const override;
 
-	Vector2 calculateTargetPosition() const override;
-
-private:
-	Grid *_grid;
+	Vector2 calculateTarget() const override;
 };
 
 #endif // SPEEDING_H

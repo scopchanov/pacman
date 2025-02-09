@@ -1,21 +1,24 @@
 #include "EnemyController.h"
 #include "engine/Vector2.h"
 #include "engine/behaviors/CharacterMovement.h"
-#include "engine/GameObject.h"
+#include "engine/Enemy.h"
 #include "engine/Tilemap.h"
 #include "engine/Grid.h"
 #include "engine/personalities/AbstractPersonality.h"
+#include <QGraphicsScene>
+#include <QGraphicsRectItem>
 #include <QRandomGenerator>
+#include <QPen>
 
-EnemyController::EnemyController(GameObject *parent) :
+EnemyController::EnemyController(Enemy *parent) :
 	AbstractBehavior(parent),
 	_state{ST_Exit},
-	_personality{nullptr},
 	_characterMovement{nullptr},
 	_player{nullptr},
-	_grid{nullptr}
+	_grid{nullptr},
+	_targetMark{new QGraphicsRectItem(-10, -10, 20, 20)}
 {
-
+	_targetMark->setPen(QPen(Qt::transparent));
 }
 
 EnemyController::StateType EnemyController::state() const
@@ -26,16 +29,6 @@ EnemyController::StateType EnemyController::state() const
 void EnemyController::setState(StateType state)
 {
 	_state = state;
-}
-
-AbstractPersonality *EnemyController::personality() const
-{
-	return _personality;
-}
-
-void EnemyController::setPersonality(AbstractPersonality *personality)
-{
-	_personality = personality;
 }
 
 void EnemyController::setCharacterMovement(CharacterMovement *characterMovement)
@@ -61,16 +54,6 @@ Grid *EnemyController::grid() const
 void EnemyController::setGrid(Grid *grid)
 {
 	_grid = grid;
-}
-
-QPointF EnemyController::scatterTarget() const
-{
-	return _scatterTargetPosition;
-}
-
-void EnemyController::setScatterTarget(const QPointF &point)
-{
-	_scatterTargetPosition = point;
 }
 
 int EnemyController::type() const
@@ -105,8 +88,6 @@ void EnemyController::performActions()
 	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
 	// _characterMovement->setNextMove(directions.at(ind));
 
-
-
 	qreal dt{distanceToTarget(directions.first())};
 
 	int ind{0};
@@ -127,7 +108,12 @@ void EnemyController::performActions()
 
 	_characterMovement->setNextDirection(directions.at(ind));
 
-	// _targetMark->setPos(_currentTargetPosition);
+	if (!_targetMark->scene())
+		parent()->scene()->addItem(_targetMark);
+
+	_targetMark->setPos(_targetPosition);
+	_targetMark->setBrush(parent()->brush());
+	_targetMark->update();
 }
 
 qreal EnemyController::distanceToTarget(Vector2 direction) const
@@ -139,29 +125,30 @@ qreal EnemyController::distanceToTarget(Vector2 direction) const
 
 void EnemyController::updateTargetPosition()
 {
-	if (!_personality)
-		return;
+	auto *personality{static_cast<Enemy *>(parent())->personality()};
 
 	switch (_state) {
 	case ST_Exit:
 		_targetPosition = QPointF(360, 300);
-		foo();
+
+		if (hasLeftTheHouse())
+			_state = ST_Scatter;
 		break;
 	case ST_Scatter:
-		_targetPosition = _scatterTargetPosition;
+		_targetPosition = personality->scatterTarget();
 		break;
 	case ST_Chase:
-		_targetPosition = _personality->calculateTargetPosition();
+		_targetPosition = personality->calculateTarget();
 		break;
 	default:
 		break;
 	}
 }
 
-void EnemyController::foo()
+bool EnemyController::hasLeftTheHouse()
 {
-	if (_grid->posToCell(parent()->pos()) == _grid->posToCell(_targetPosition))
-		_state = ST_Scatter;
+	const QPoint &parentCell{_grid->posToCell(parent()->pos())};
+	const QPoint &targetCell{_grid->posToCell(_targetPosition)};
 
-	// if (Vector2(parent()->pos()).distanceTo(_targetPosition) < 1 )
+	return parentCell == targetCell;
 }

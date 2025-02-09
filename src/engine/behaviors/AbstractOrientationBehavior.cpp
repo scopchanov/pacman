@@ -15,6 +15,8 @@ CharacterMovement *AbstractOrientationBehavior::movement() const
 void AbstractOrientationBehavior::setMovement(CharacterMovement *movement)
 {
 	_movement = movement;
+
+	performOrientationActions();
 }
 
 int AbstractOrientationBehavior::type() const

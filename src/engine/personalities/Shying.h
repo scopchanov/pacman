@@ -3,24 +3,19 @@
 
 #include "AbstractPersonality.h"
 
-class Grid;
-
 class Shying : public AbstractPersonality
 {
-	Q_OBJECT
 public:
-	explicit Shying(QObject *parent = nullptr);
+	explicit Shying(GameObject *parent = nullptr);
 
-	Grid *grid() const;
-	void setGrid(Grid *grid);
-	GameObject *enemy() const;
-	void setEnemy(GameObject *enemy);
+	GameObject *partner() const;
+	void setPartner(GameObject *partner);
+	int type() const override;
 
-	Vector2 calculateTargetPosition() const override;
+	Vector2 calculateTarget() const override;
 
 private:
-	Grid *_grid;
-	GameObject *_enemy;
+	GameObject *_partner;
 };
 
 #endif // SHYING_H

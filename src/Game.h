@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSize>
 
+class AbstractPersonality;
 class GameController;
 class SoundEngine;
 class GameObject;
@@ -35,8 +36,10 @@ public:
 private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
-	Ghost *createEnemy(const QPointF &position, const QColor &color, const Vector2 &scatterTargetCell);
+	void createEnemies(const QJsonArray &enemies);
+	Ghost *createEnemy(const QPointF &position, const QColor &color);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
+	AbstractPersonality *createPersonality(int type);
 	void reset();
 	void gameOver();
 

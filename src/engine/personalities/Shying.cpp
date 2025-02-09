@@ -4,35 +4,36 @@
 #include "engine/Vector2.h"
 #include "engine/behaviors/CharacterMovement.h"
 
-Shying::Shying(QObject *parent) :
-	AbstractPersonality(parent)
+Shying::Shying(GameObject *parent) :
+	AbstractPersonality(parent),
+	_partner{nullptr}
 {
 
 }
 
-Grid *Shying::grid() const
+GameObject *Shying::partner() const
 {
-	return _grid;
+	return _partner;
 }
 
-void Shying::setGrid(Grid *grid)
+void Shying::setPartner(GameObject *partner)
 {
-	_grid = grid;
+	_partner = partner;
 }
 
-GameObject *Shying::enemy() const
+int Shying::type() const
 {
-	return _enemy;
+	return PT_Shying;
 }
 
-void Shying::setEnemy(GameObject *enemy)
+Vector2 Shying::calculateTarget() const
 {
-	_enemy = enemy;
-}
+	// TODO: Improve me
 
-Vector2 Shying::calculateTargetPosition() const
-{
-	Vector2 playerCell(_grid->posToCell(player()->pos()));
+	if (!_partner)
+		return Vector2();
+
+	Vector2 playerCell(grid()->posToCell(player()->pos()));
 	auto *behavior{player()->findBehavior(AbstractBehavior::BT_CharacterMovement)};
 
 	if (!behavior)
@@ -42,5 +43,5 @@ Vector2 Shying::calculateTargetPosition() const
 	const Vector2 &playerDirection(movement->currentDirection());
 	const Vector2 &tcbp{playerCell + playerDirection*2};
 
-	return Vector2(_enemy->pos() - _grid->cellPosition(tcbp)).reversed() + Vector2(_grid->cellPosition(tcbp));
+	return Vector2(_partner->pos() - grid()->cellPosition(tcbp)).reversed() + Vector2(grid()->cellPosition(tcbp));
 }

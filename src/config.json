@@ -9,7 +9,7 @@
   },
   "player": {
     "name": "Pacman",
-    "color": "0xFFFFFF",
+    "color": "#FFFFFF",
     "position": {
       "x": 360,
       "y": 588
@@ -18,7 +18,8 @@
   "enemies": [
     {
       "name": "Blinky",
-      "color": "0xF44336",
+      "color": "#F44336",
+      "personality": 0,
       "position": {
 	"x": 360,
 	"y": 300
@@ -30,7 +31,8 @@
     },
     {
       "name": "Inky",
-      "color": "0x82B1FF",
+      "color": "#82B1FF",
+      "personality": 2,
       "position": {
 	"x": 312,
 	"y": 372
@@ -42,7 +44,8 @@
     },
     {
       "name": "Pinky",
-      "color": "0xFF80AB",
+      "color": "#FF80AB",
+      "personality": 1,
       "position": {
 	"x": 360,
 	"y": 372
@@ -54,7 +57,8 @@
     },
     {
       "name": "Clyde",
-      "color": "0xFFC107",
+      "color": "#FFC107",
+      "personality": 3,
       "position": {
 	"x": 408,
 	"y": 372

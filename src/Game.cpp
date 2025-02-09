@@ -75,6 +75,7 @@ void Game::configure(const QJsonObject &json)
 	const QJsonObject &gridSize{json.value("gridSize").toObject()};
 	const QJsonObject &cellSize{json.value("cellSize").toObject()};
 	const QJsonObject &player{json.value("player").toObject()};
+	const QJsonArray &enemies{json.value("enemies").toArray()};
 	int rows{gridSize.value("rows").toInt()};
 	int columns{gridSize.value("columns").toInt()};
 	qreal width{cellSize.value("width").toDouble()};
@@ -97,51 +98,13 @@ void Game::configure(const QJsonObject &json)
 	_pacman->setSpawnPosition({playerX, playerY});
 	_pacman->setup(this);
 
-	auto *blinky{createEnemy({360, 300}, 0xF44336, Vector2(28, 0))};
-	auto *inky{createEnemy({312, 372}, 0x82B1FF,  Vector2(28, 32))};
-	auto *pinky{createEnemy({360, 372}, 0xFF80AB,  Vector2(1, 0))};
-	auto *clyde{createEnemy({408, 372}, 0xFFC107,  Vector2(1, 32))};
-
-	auto *shadowing{new Shadowing(this)};
-	auto *speeding{new Speeding(this)};
-	auto *shying{new Shying(this)};
-	auto *poking{new Poking(this)};
-
-	shadowing->setPlayer(_pacman);
-	speeding->setPlayer(_pacman);
-	speeding->setGrid(_grid);
-
-	shying->setPlayer(_pacman);
-	shying->setGrid(_grid);
-	shying->setEnemy(blinky);
-
-	poking->setPlayer(_pacman);
-	poking->setEnemy(clyde);
-	poking->setGrid(_grid);
-
-	auto *bec{static_cast<EnemyController *>(blinky->findBehavior(AbstractBehavior::BT_EnemyController))};
-	auto *pec{static_cast<EnemyController *>(pinky->findBehavior(AbstractBehavior::BT_EnemyController))};
-	auto *iec{static_cast<EnemyController *>(inky->findBehavior(AbstractBehavior::BT_EnemyController))};
-	auto *cec{static_cast<EnemyController *>(clyde->findBehavior(AbstractBehavior::BT_EnemyController))};
-
-	bec->setPersonality(shadowing);
-	pec->setPersonality(speeding);
-	iec->setPersonality(shying);
-	cec->setPersonality(poking);
-
-	_stateMachine->setGameTimer(gameController()->gameTimer());
-	_stateMachine->addEnemyController(bec);
-	_stateMachine->addEnemyController(pec);
-	_stateMachine->addEnemyController(iec);
-	_stateMachine->addEnemyController(cec);
-
 	_scene->addItem(_pacman);
 	_scene->addItem(_walls);
 	_scene->addItem(_dots);
-	_scene->addItem(blinky);
-	_scene->addItem(pinky);
-	_scene->addItem(inky);
-	_scene->addItem(clyde);
+
+	createEnemies(enemies);
+
+	_stateMachine->setGameTimer(gameController()->gameTimer());
 	_scene->addItem(createTeleporter(_grid->cellPosition(15, 0), _grid->cellPosition(15, 28)));
 	_scene->addItem(createTeleporter(_grid->cellPosition(15, 29), _grid->cellPosition(15, 2)));
 }
@@ -191,7 +154,36 @@ Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 	return tile;
 }
 
-Ghost *Game::createEnemy(const QPointF &position, const QColor &color, const Vector2 &scatterTargetCell)
+void Game::createEnemies(const QJsonArray &enemies)
+{
+	for (const auto &record : enemies) {
+		const QJsonObject &json{record.toObject()};
+		const QJsonObject &position{json.value("position").toObject()};
+		qreal posX{position.value("x").toDouble()};
+		qreal posY{position.value("y").toDouble()};
+		const QString &color{json.value("color").toString()};
+		const QJsonObject &cell{json.value("scatterTargetCell").toObject()};
+		int row{cell.value("row").toInt()};
+		int column{cell.value("column").toInt()};
+		auto *enemy{createEnemy({posX, posY}, color)};
+		auto *behavior{enemy->findBehavior(AbstractBehavior::BT_EnemyController)};
+		auto *controller{static_cast<EnemyController *>(behavior)};
+		auto *personality{createPersonality(json.value("personality").toInt())};
+
+		personality->setScatterTarget(_grid->cellPosition(Vector2(column, row)));
+		personality->setPlayer(_pacman);
+		personality->setGrid(_grid);
+
+		if (personality->type() == AbstractPersonality::PT_Shying)
+			static_cast<Shying *>(personality)->setPartner(_ghosts.at(0));
+
+		enemy->setPersonality(personality);
+
+		_stateMachine->addEnemyController(controller);
+	}
+}
+
+Ghost *Game::createEnemy(const QPointF &position, const QColor &color)
 {
 	auto *ghost{new Ghost()};
 
@@ -205,8 +197,7 @@ Ghost *Game::createEnemy(const QPointF &position, const QColor &color, const Vec
 	auto *eventPlayerDies{new GameEvent(this)};
 
 	enemyController->setCharacterMovement(movement);
-	enemyController->setPlayer(_pacman);
-	enemyController->setScatterTarget(_grid->cellPosition(scatterTargetCell));
+	enemyController->setPlayer(_pacman);	
 	enemyController->setGrid(_grid);
 
 	movement->setGameTimer(_gameController->gameTimer());
@@ -229,13 +220,12 @@ Ghost *Game::createEnemy(const QPointF &position, const QColor &color, const Vec
 	ghost->addBehavior(animation);
 	ghost->addBehavior(killPlayer);
 
-	ghost->setPath(PathBuilder::enemyPath(0));
-	ghost->setPen(QPen(Qt::transparent));
 	ghost->setBrush(color);
 
 	connect(eventPlayerDies, &GameEvent::triggered, this, &Game::onPlayerDies);
 
 	_ghosts.append(ghost);
+	_scene->addItem(ghost);
 
 	return ghost;
 }
@@ -247,6 +237,22 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 	teleporter->setup(src, dst);
 
 	return teleporter;
+}
+
+AbstractPersonality *Game::createPersonality(int type)
+{
+	switch (type) {
+	case AbstractPersonality::PT_Shadowing:
+		return new Shadowing();
+	case AbstractPersonality::PT_Speeding:
+		return new Speeding();
+	case AbstractPersonality::PT_Shying:
+		return new Shying();
+	case AbstractPersonality::PT_Poking:
+		return new Poking();
+	default:
+		return nullptr;
+	}
 }
 
 void Game::reset()

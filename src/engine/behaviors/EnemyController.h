@@ -6,8 +6,8 @@
 #include <QPointF>
 
 class QGraphicsRectItem;
-class AbstractPersonality;
 class CharacterMovement;
+class Enemy;
 class Grid;
 
 class EnemyController : public AbstractBehavior
@@ -21,19 +21,15 @@ public:
 		ST_Eaten
 	};
 
-	explicit EnemyController(GameObject *parent = nullptr);
+	explicit EnemyController(Enemy *parent = nullptr);
 
 	StateType state() const;
-	void setState(StateType state);
-	AbstractPersonality *personality() const;
-	void setPersonality(AbstractPersonality *personality);
+	void setState(StateType state);	
 	void setCharacterMovement(CharacterMovement *characterMovement);
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
 	Grid *grid() const;
 	void setGrid(Grid *grid);
-	QPointF scatterTarget() const;
-	void setScatterTarget(const QPointF &point);
 	int type() const override;
 
 	void reset() override;
@@ -42,15 +38,14 @@ private:
 	void performActions() override;
 	qreal distanceToTarget(Vector2 direction) const;
 	void updateTargetPosition();
-	void foo();
+	bool hasLeftTheHouse();
 
 	StateType _state;
-	AbstractPersonality *_personality;
 	CharacterMovement *_characterMovement;
 	GameObject *_player;
 	Grid *_grid;
-	QPointF _scatterTargetPosition;
 	QPointF _targetPosition;
+	QGraphicsRectItem *_targetMark;
 };
 
 #endif // ENEMYCONTROLLER_H

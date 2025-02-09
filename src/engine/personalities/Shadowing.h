@@ -5,11 +5,12 @@
 
 class Shadowing : public AbstractPersonality
 {
-	Q_OBJECT
 public:
-	explicit Shadowing(QObject *parent = nullptr);
+	explicit Shadowing(GameObject *parent = nullptr);
 
-	Vector2 calculateTargetPosition() const override;
+	int type() const override;
+
+	Vector2 calculateTarget() const override;
 };
 
 #endif // SHADOWING_H

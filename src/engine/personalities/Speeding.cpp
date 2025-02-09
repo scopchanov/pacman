@@ -4,26 +4,20 @@
 #include "engine/Vector2.h"
 #include "engine/behaviors/CharacterMovement.h"
 
-Speeding::Speeding(QObject *parent) :
-	AbstractPersonality(parent),
-	_grid{nullptr}
+Speeding::Speeding(GameObject *parent) :
+	AbstractPersonality(parent)
 {
 
 }
 
-Grid *Speeding::grid() const
+int Speeding::type() const
 {
-	return _grid;
+	return PT_Speeding;
 }
 
-void Speeding::setGrid(Grid *grid)
+Vector2 Speeding::calculateTarget() const
 {
-	_grid = grid;
-}
-
-Vector2 Speeding::calculateTargetPosition() const
-{
-	Vector2 playerCell(_grid->posToCell(player()->pos()));
+	Vector2 playerCell(grid()->posToCell(player()->pos()));
 	auto *behavior{player()->findBehavior(AbstractBehavior::BT_CharacterMovement)};
 
 	if (!behavior)
@@ -33,5 +27,5 @@ Vector2 Speeding::calculateTargetPosition() const
 	const Vector2 &playerDirection(movement->currentDirection());
 	const Vector2 &fcbp{playerCell + playerDirection*4};
 
-	return _grid->cellPosition(fcbp);
+	return grid()->cellPosition(fcbp);
 }
