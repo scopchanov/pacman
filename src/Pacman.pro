@@ -1,5 +1,7 @@
 QT += widgets multimedia
 
+win32:RC_ICONS += pacman-logo.ico
+
 CONFIG += c++23
 
 SOURCES += \
