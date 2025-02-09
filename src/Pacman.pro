@@ -6,6 +6,7 @@ CONFIG += c++23
 
 SOURCES += \
     FileHandler.cpp \
+    Game.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
@@ -15,7 +16,6 @@ SOURCES += \
     engine/AiStateMachine.cpp \
     engine/Character.cpp \
     engine/Enemy.cpp \
-    engine/Game.cpp \
     engine/GameController.cpp \
     engine/GameEvent.cpp \
     engine/GameScene.cpp \
@@ -58,6 +58,7 @@ SOURCES += \
 
 HEADERS += \
     FileHandler.h \
+    Game.h \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
@@ -67,7 +68,6 @@ HEADERS += \
     engine/AiStateMachine.h \
     engine/Character.h \
     engine/Enemy.h \
-    engine/Game.h \
     engine/GameController.h \
     engine/GameEvent.h \
     engine/GameScene.h \

@@ -1,14 +1,13 @@
 #include "MainWindow.h"
 #include "ScoreDisplay.h"
 #include "LifesDisplay.h"
-#include "engine/Game.h"
+#include "Game.h"
 #include "engine/GameController.h"
 #include "engine/GameScene.h"
 #include "engine/GameView.h"
 #include "FileHandler.h"
 #include <QJsonObject>
 #include <QBoxLayout>
-#include <QGraphicsView>
 
 MainWindow::MainWindow(QWidget *parent) :
 	QWidget(parent)
