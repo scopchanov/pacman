@@ -79,9 +79,8 @@ void Game::configure(const QJsonObject &json)
 	int columns{gridSize.value("columns").toInt()};
 	qreal width{cellSize.value("width").toDouble()};
 	qreal height{cellSize.value("height").toDouble()};
-	qreal playerX{player.value("posX").toDouble()};
-	qreal playerY{player.value("posY").toDouble()};
-
+	qreal playerX{player.value("position").toObject().value("x").toDouble()};
+	qreal playerY{player.value("position").toObject().value("y").toDouble()};
 
 	_grid->setGridSize(rows, columns);
 	_grid->setCellSize(QSizeF(width, height));

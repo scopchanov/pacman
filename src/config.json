@@ -8,11 +8,63 @@
     "height": 24
   },
   "player": {
-      "posX": 360,
-      "posY": 588,
-      "color": "0xFFFFFF"
+    "name": "Pacman",
+    "color": "0xFFFFFF",
+    "position": {
+      "x": 360,
+      "y": 588
+    }
   },
-  "enemies": [],
+  "enemies": [
+    {
+      "name": "Blinky",
+      "color": "0xF44336",
+      "position": {
+	"x": 360,
+	"y": 300
+      },
+      "scatterTargetCell": {
+	"row": 0,
+	"column": 28
+      }
+    },
+    {
+      "name": "Inky",
+      "color": "0x82B1FF",
+      "position": {
+	"x": 312,
+	"y": 372
+      },
+      "scatterTargetCell": {
+	"row": 32,
+	"column": 28
+      }
+    },
+    {
+      "name": "Pinky",
+      "color": "0xFF80AB",
+      "position": {
+	"x": 360,
+	"y": 372
+      },
+      "scatterTargetCell": {
+	"row": 0,
+	"column": 1
+      }
+    },
+    {
+      "name": "Clyde",
+      "color": "0xFFC107",
+      "position": {
+	"x": 408,
+	"y": 372
+      },
+      "scatterTargetCell": {
+	"row": 32,
+	"column": 1
+      }
+    }
+  ],
   "walls": [
     [
       {},
