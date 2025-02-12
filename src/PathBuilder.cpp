@@ -49,14 +49,18 @@ QPainterPath PathBuilder::tilePath(TileType type)
 	}
 }
 
-QPainterPath PathBuilder::playerPath(qreal angle)
+QPainterPath PathBuilder::animatedObjectPath(GameObjectType type, qreal value)
 {
-	return pacman(angle);
-}
-
-QPainterPath PathBuilder::enemyPath(qreal value)
-{
-	return ghost(value);
+	switch (type) {
+	case GO_Player:
+		return pacman(value);
+	case GO_Enemy:
+		return ghost(value);
+	case GO_PowerUp:
+		return powerUp(value);
+	default:
+		return QPainterPath();
+	}
 }
 
 QPainterPath PathBuilder::teleporterPath()
@@ -237,9 +241,9 @@ QPainterPath PathBuilder::dot()
 	return p;
 }
 
-QPainterPath PathBuilder::pacman(qreal angle)
+QPainterPath PathBuilder::pacman(qreal d)
 {
-	qreal startAngle{180 - angle};
+	qreal startAngle{180 - d};
 	qreal sweepLength{-2*startAngle};
 	QPainterPath p;
 
@@ -248,7 +252,7 @@ QPainterPath PathBuilder::pacman(qreal angle)
 	return p;
 }
 
-QPainterPath PathBuilder::ghost(qreal a)
+QPainterPath PathBuilder::ghost(qreal d)
 {
 	QPainterPath p;
 
@@ -258,11 +262,20 @@ QPainterPath PathBuilder::ghost(qreal a)
 	p.cubicTo(3, -20, 6, -18, 8, -16);
 	p.quadTo(17, -7, 20, 20);
 	p.quadTo(16, 16, 14, 16);
-	p.cubicTo(12, 16, 10 + a, 19, 8 + a, 19);
-	p.cubicTo(5 + a, 19, 3, 16, 0, 16);
-	p.cubicTo(-3, 16, -5, 19, -8 + a, 19);
-	p.cubicTo(-10 + a, 19, -12 + a, 16, -14, 16);
+	p.cubicTo(12, 16, 10 + d, 19, 8 + d, 19);
+	p.cubicTo(5 + d, 19, 3, 16, 0, 16);
+	p.cubicTo(-3, 16, -5, 19, -8 + d, 19);
+	p.cubicTo(-10 + d, 19, -12 + d, 16, -14, 16);
 	p.quadTo(-16, 16, -20, 20);
+
+	return p;
+}
+
+QPainterPath PathBuilder::powerUp(qreal d)
+{
+	QPainterPath p;
+
+	p.addEllipse(-0.5*d, -0.5*d, d, d);
 
 	return p;
 }

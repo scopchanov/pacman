@@ -19,6 +19,8 @@
 #include "engine/behaviors/EnemyController.h"
 #include "engine/behaviors/EnemyOrientation.h"
 #include "engine/behaviors/KillPlayer.h"
+#include "engine/behaviors/PoweringUp.h"
+#include "engine/behaviors/PowerUpAnimation.h"
 #include "engine/personalities/Shadowing.h"
 #include "engine/personalities/Speeding.h"
 #include "engine/personalities/Shying.h"
@@ -41,6 +43,7 @@ Game::Game(QObject *parent) :
 {
 	_gameController->gameTimer()->setScene(_scene);
 
+	connect(_soundEngine, &SoundEngine::victoryTunePlayed, this, &Game::playerWins);
 	connect(_soundEngine, &SoundEngine::funeralTunePlayed, this, &Game::onFuneralTunePlayed);
 }
 
@@ -72,7 +75,6 @@ Tilemap *Game::dots() const
 void Game::configure(const QJsonObject &json)
 {
 	const QJsonArray &wallMatrix{json.value("walls").toArray()};
-	const QJsonArray &dotMatrix{json.value("dots").toArray()};
 	const QJsonObject &gridSize{json.value("gridSize").toObject()};
 	const QJsonObject &cellSize{json.value("cellSize").toObject()};
 	const QJsonObject &player{json.value("player").toObject()};
@@ -84,6 +86,8 @@ void Game::configure(const QJsonObject &json)
 	qreal playerX{player.value("position").toObject().value("x").toDouble()};
 	qreal playerY{player.value("position").toObject().value("y").toDouble()};
 
+	_dotMatrix = json.value("dots").toArray();
+
 	_grid->setGridSize(rows, columns);
 	_grid->setCellSize(QSizeF(width, height));
 
@@ -91,7 +95,7 @@ void Game::configure(const QJsonObject &json)
 	_dots->setGrid(_grid);
 
 	buildTilemap(_walls, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
-	buildTilemap(_dots, dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
+	buildTilemap(_dots, _dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
 	_walls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 	_walls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
@@ -104,6 +108,10 @@ void Game::configure(const QJsonObject &json)
 	_scene->addItem(_dots);
 
 	createEnemies(enemies);
+	scene()->addItem(createPowerUp({2, 4}));
+	scene()->addItem(createPowerUp({27, 4}));
+	scene()->addItem(createPowerUp({2, 24}));
+	scene()->addItem(createPowerUp({27, 24}));
 
 	_stateMachine->setGameTimer(gameController()->gameTimer());
 	_scene->addItem(createTeleporter(_grid->cellPosition(15, 0), _grid->cellPosition(15, 28)));
@@ -119,6 +127,27 @@ void Game::start()
 	connect(sequence, &StartupSequence::go, _gameController, &GameController::start);
 
 	sequence->start();
+}
+
+void Game::stop()
+{
+	_gameController->gameTimer()->stop();
+}
+
+void Game::resume()
+{
+	_gameController->start();
+}
+
+void Game::restart()
+{
+	_gameController->reset();
+	_stateMachine->reset();
+	_scene->reset();
+	_dots->clear();
+
+	buildTilemap(_dots, _dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
+	start();
 }
 
 void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
@@ -210,7 +239,6 @@ Ghost *Game::createEnemy(const QPointF &position, const QColor &color, int direc
 	orientation->setMovement(movement);
 
 	animation->setGameTimer(_gameController->gameTimer());
-	animation->setFrameTime(20);
 
 	killPlayer->setGameTimer(_gameController->gameTimer());
 	killPlayer->setPlayer(_pacman);
@@ -230,6 +258,30 @@ Ghost *Game::createEnemy(const QPointF &position, const QColor &color, int direc
 	_scene->addItem(ghost);
 
 	return ghost;
+}
+
+GameObject *Game::createPowerUp(const QPoint &cell)
+{
+	auto *powerUp{new GameObject()};
+	auto *powering{new PoweringUp(powerUp)};
+	auto *animation{new PowerUpAnimation(powerUp)};
+
+	powering->setPlayer(_pacman);
+
+	for (auto *ghost : std::as_const(_ghosts))
+		powering->addEnemy(ghost);
+
+	animation->setGameTimer(_gameController->gameTimer());
+
+	powerUp->setPos(_grid->cellPosition(cell.y(), cell.x()));
+	powerUp->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_PowerUp, 16));
+	powerUp->setPen(QPen(Qt::transparent));
+	powerUp->setBrush(Qt::white);
+
+	powerUp->addBehavior(powering);
+	powerUp->addBehavior(animation);
+
+	return powerUp;
 }
 
 GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
@@ -270,11 +322,6 @@ void Game::reset()
 	start();
 }
 
-void Game::gameOver()
-{
-	qDebug() << "Game Over!";
-}
-
 void Game::onDotEaten()
 {
 	_gameController->increaseScore(1);
@@ -299,6 +346,6 @@ void Game::onFuneralTunePlayed()
 		_gameController->removeLife();
 		reset();
 	} else {
-		gameOver();
+		emit playerLoses();
 	}
 }

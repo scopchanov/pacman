@@ -70,6 +70,13 @@ bool Tilemap::hasTile(const Vector2 &cell) const
 	return hasTile(cell.y(), cell.x());
 }
 
+void Tilemap::clear()
+{
+	for (int m{0}; m < _grid->rowCount(); m++)
+		for (int n{0}; n < _grid->columnCount(); n++)
+			setTile(m, n, nullptr);
+}
+
 void Tilemap::deleteTile(Tile *tile)
 {
 	delete tile;

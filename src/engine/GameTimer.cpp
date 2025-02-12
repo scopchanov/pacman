@@ -25,9 +25,6 @@ qreal GameTimer::deltaTime() const
 void GameTimer::setScene(GameScene *scene)
 {
 	_scene = scene;
-
-	connect(_scene, &GameScene::pauseGame, this, &GameTimer::stop);
-	connect(_scene, &GameScene::resumeGame, this, &GameTimer::start);
 }
 
 void GameTimer::start()

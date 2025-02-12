@@ -1,10 +1,7 @@
 #include "GameObject.h"
 #include "behaviors/AbstractBehavior.h"
-#include "Vector2.h"
 #include <QStyleOptionGraphicsItem>
 #include <QPainter>
-
-// #define DEBUG
 
 GameObject::GameObject(GameObject *parent) :
 	QGraphicsPathItem(parent)

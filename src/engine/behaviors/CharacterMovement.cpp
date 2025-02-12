@@ -8,7 +8,7 @@ CharacterMovement::CharacterMovement(GameObject *parent) :
 	AbstractSpatialBehavior(parent),
 	_movingSpeed{0.0},
 	_initialDirection{Vector2(-1, 0)},
-	_currentDirection{Vector2(-1, 0)}
+	_currentDirection{_initialDirection}
 {
 	targetParentPosition();
 }
@@ -18,9 +18,9 @@ qreal CharacterMovement::movingSpeed() const
 	return _movingSpeed;
 }
 
-void CharacterMovement::setMovingSpeed(qreal value)
+void CharacterMovement::setMovingSpeed(qreal speed)
 {
-	_movingSpeed = value;
+	_movingSpeed = speed;
 }
 
 Vector2 CharacterMovement::initialDirection() const
@@ -51,9 +51,7 @@ void CharacterMovement::setNextDirection(const Vector2 &direction)
 
 Vector2 CharacterMovement::nextCellPositionIn(const Vector2 &direction) const
 {
-	Vector2 sourceCell{tilemap()->grid()->posToCell(parent()->pos())};
-
-	return tilemap()->grid()->cellPosition(sourceCell + direction);
+	return cellPosition(currentCell() + direction);
 }
 
 QList<Vector2> CharacterMovement::possibleMoves() const
@@ -82,7 +80,7 @@ int CharacterMovement::type() const
 
 void CharacterMovement::relocateCharacter(const QPointF &destination)
 {
-	parent()->setPos(destination);
+	setParentPosition(destination);
 	targetNextCell();
 }
 
@@ -94,7 +92,7 @@ void CharacterMovement::reverse()
 void CharacterMovement::reset()
 {
 	_currentDirection = _initialDirection;
-	_nextDirection = Vector2(0, 0);
+	_nextDirection = V2_ZERO;
 
 	targetParentPosition();
 }
@@ -107,10 +105,9 @@ void CharacterMovement::performSpatialActions()
 
 void CharacterMovement::moveCharacter()
 {
-	qreal rate{_movingSpeed*gameTimer()->deltaTime()};
-	Vector2 characterPosition{parent()->pos()};
+	qreal step{_movingSpeed*gameTimer()->deltaTime()};
 
-	parent()->setPos(characterPosition.movedTowards(_targetCellPosition, rate));
+	setParentPosition(parentPosition().movedTowards(_targetPosition, step));
 }
 
 void CharacterMovement::chooseHeading()
@@ -142,27 +139,22 @@ void CharacterMovement::targetParentPosition()
 	if (!parent())
 		return;
 
-	_targetCellPosition = parent()->pos();
+	_targetPosition = parentPosition();
 }
 
 void CharacterMovement::targetCurrentCell()
 {
-	_targetCellPosition = currentCellPosition();
+	_targetPosition = cellPosition(currentCell());
 }
 
 void CharacterMovement::targetNextCell()
 {
-	_targetCellPosition = nextCellPositionIn(_currentDirection);
+	_targetPosition = nextCellPositionIn(_currentDirection);
 }
 
 bool CharacterMovement::alignedWithTargetCellCenter() const
 {
-	return distanceToTargetCell() < 0.001;
-}
-
-qreal CharacterMovement::distanceToTargetCell() const
-{
-	return Vector2(parent()->pos()).distanceTo(_targetCellPosition);
+	return parentPosition().distanceTo(_targetPosition) < 0.001;
 }
 
 bool CharacterMovement::canMoveIn(const Vector2 &direction) const
@@ -180,7 +172,17 @@ bool CharacterMovement::isWayClear(const Vector2 &direction) const
 	return !tilemap()->hasTile(currentCell() + direction);
 }
 
-Vector2 CharacterMovement::currentCellPosition() const
+Vector2 CharacterMovement::cellPosition(const Vector2 &cell) const
 {
-	return tilemap()->grid()->cellPosition(currentCell());
+	return tilemap()->grid()->cellPosition(cell);
+}
+
+Vector2 CharacterMovement::parentPosition() const
+{
+	return Vector2(parent()->pos());
+}
+
+void CharacterMovement::setParentPosition(const QPointF &position)
+{
+	parent()->setPos(position);
 }

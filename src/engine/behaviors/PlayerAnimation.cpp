@@ -1,11 +1,11 @@
 #include "PlayerAnimation.h"
 #include "PathBuilder.h"
-#include "engine/GameObject.h"
 
 PlayerAnimation::PlayerAnimation(GameObject *parent) :
 	AbstractAnimationBehavior(parent)
 {
-
+	setGameObjectType(PathBuilder::GO_Player);
+	setFrameRate(150);
 }
 
 void PlayerAnimation::reset()
@@ -15,14 +15,8 @@ void PlayerAnimation::reset()
 	updateParent();
 }
 
-void PlayerAnimation::foo()
+void PlayerAnimation::update()
 {
-	if (value() >= 45)
+	if (value() > 45)
 		setValue(0);
-}
-
-void PlayerAnimation::updateParent()
-{
-	parent()->setPath(PathBuilder::playerPath(value()));
-	parent()->update();
 }

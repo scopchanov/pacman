@@ -14,22 +14,29 @@ public:
 
 	explicit AbstractAnimationBehavior(GameObject *parent = nullptr);
 
-	qreal frameTime() const;
-	void setFrameTime(qreal frameTime);
+	qreal frameRate() const;
+	void setFrameRate(qreal frameRate);
 	qreal value() const;
 	void setValue(qreal value);
 	DirectionType direction() const;
 	void setDirection(DirectionType direction);
+	int gameObjectType() const;
+	void setGameObjectType(int type);
 	int type() const override;
+
+	void reset() override;
+
+protected:
+	void updateParent();
 
 private:
 	void performTimedActions() override final;
-	virtual void foo() = 0;
-	virtual void updateParent() = 0;
+	virtual void update() = 0;
 
-	qreal _frameTime;
-	qreal _value;
+	int _gameObjectType;
+	qreal _frameRate;
 	DirectionType _direction;
+	qreal _value;
 };
 
 #endif // ABSTRACTANIMATIONBEHAVIOR_H

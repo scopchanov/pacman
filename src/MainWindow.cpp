@@ -1,52 +1,55 @@
 #include "MainWindow.h"
-#include "ScoreDisplay.h"
-#include "LifesDisplay.h"
-#include "Game.h"
-#include "engine/GameController.h"
-#include "engine/GameScene.h"
-#include "engine/GameView.h"
 #include "FileHandler.h"
+#include "GameWidget.h"
+#include "GameMenu.h"
+#include "Game.h"
 #include <QJsonObject>
-#include <QBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
-	QWidget(parent)
+	QStackedWidget(parent),
+	_gameMenu{new GameMenu(this)},
+	_gameWidget{new GameWidget(this)}
 {
-	auto *layoutMain{new QHBoxLayout(this)};
-	auto *layoutMiddle{new QVBoxLayout()};
-	auto *layoutPanel{new QHBoxLayout()};
-	auto *gameView{new GameView(this)};
-	auto *scoreDisplay{new ScoreDisplay(this)};
-	auto *lifesDisplay{new LifesDisplay(this)};
-	auto *game{new Game(this)};
+	_gameWidget->game()->configure(FileHandler::readFile(":/txt/config.json"));
 
-	gameView->setScene(game->scene());
-
-	layoutPanel->addWidget(scoreDisplay);
-	layoutPanel->addWidget(lifesDisplay);
-	layoutPanel->setContentsMargins(36, 0, 36, 0);
-	layoutPanel->setSpacing(0);
-
-	layoutMiddle->addStretch();
-	layoutMiddle->addLayout(layoutPanel);
-	layoutMiddle->addWidget(gameView);
-	layoutMiddle->addStretch();
-	layoutMiddle->setContentsMargins(0, 0, 0, 0);
-	layoutMiddle->setSpacing(0);
-
-	layoutMain->addStretch();
-	layoutMain->addLayout(layoutMiddle);
-	layoutMain->addStretch();
-	layoutMain->setContentsMargins(0, 0, 0, 0);
-	layoutMain->setSpacing(0);
-
-	connect(game->gameController(), &GameController::lifesLeftChanged,
-			lifesDisplay, &LifesDisplay::setLifeCount);
-	connect(game->gameController(), &GameController::scoreChanged,
-			scoreDisplay, &ScoreDisplay::setScore);
-
+	addWidget(_gameMenu);
+	addWidget(_gameWidget);
+	setCurrentWidget(_gameMenu);
 	showFullScreen();
 
-	game->configure(FileHandler::readFile(":/txt/config.json"));
-	game->start();
+	connect(_gameMenu, &GameMenu::newGame, this, &MainWindow::onNewGame);
+	connect(_gameWidget, &GameWidget::gameOver, this, &MainWindow::onGameOver);
+}
+
+void MainWindow::onNewGame()
+{
+	setCurrentWidget(_gameWidget);
+	_gameWidget->game()->start();
+}
+
+void MainWindow::onGameOver()
+{
+	setCurrentWidget(_gameMenu);
+	// _gameWidget->startGame();
+}
+
+void MainWindow::openGameMenu()
+{
+	// GameDialog dlg(this);
+
+	// dlg.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+
+	// _game->stop();
+	// _gameView->setForegroundBrush(QBrush("#80000000"));
+
+	// if (dlg.exec() == QDialog::Rejected) {
+	// 	_gameView->setForegroundBrush(QBrush());
+	// 	_game->resume();
+	// 	return;
+	// }
+
+	// _gameView->setForegroundBrush(QBrush());
+	// _game->start();
+
+	// _game->restart();
 }

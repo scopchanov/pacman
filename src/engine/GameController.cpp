@@ -32,6 +32,15 @@ void GameController::increaseScore(int amount)
 	emit scoreChanged(_score);
 }
 
+void GameController::reset()
+{
+	_score = 0;
+	_lifesLeft = 2;
+
+	emit scoreChanged(_score);
+	emit lifesLeftChanged(_lifesLeft);
+}
+
 void GameController::addLife()
 {
 	_lifesLeft++;

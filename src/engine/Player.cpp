@@ -5,6 +5,7 @@
 #include "engine/GameEvent.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
+#include "engine/behaviors/EnemyEating.h"
 #include "engine/behaviors/PlayerAnimation.h"
 #include "engine/behaviors/PlayerController.h"
 #include "engine/behaviors/PlayerOrientation.h"
@@ -24,6 +25,7 @@ void Player::setup(Game *game)
 	auto *movement{new CharacterMovement(this)};
 	auto *orientation{new PlayerOrientation(this)};
 	auto *dotsEating{new DotsEating(this)};
+	auto *enemyEating{new EnemyEating(this)};
 	auto *animation{new PlayerAnimation(this)};
 
 	playerController->setCharacterMovement(movement);
@@ -39,12 +41,15 @@ void Player::setup(Game *game)
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
+	enemyEating->setDisabled(true);
+
 	animation->setGameTimer(gameTimer);
 
 	addBehavior(playerController);
 	addBehavior(movement);
 	addBehavior(orientation);
 	addBehavior(dotsEating);
+	addBehavior(enemyEating);
 	addBehavior(animation);
 
 	QObject::connect(eventDotEaten, &GameEvent::triggered, game, &Game::onDotEaten);

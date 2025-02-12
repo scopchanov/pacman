@@ -4,9 +4,15 @@ win32:RC_ICONS += pacman-logo.ico
 
 CONFIG += c++23
 
+#DEFINES += DEBUG
+
 SOURCES += \
+    DialogGame.cpp \
+    DialogSettings.cpp \
     FileHandler.cpp \
     Game.cpp \
+    GameMenu.cpp \
+    GameWidget.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
@@ -26,6 +32,7 @@ SOURCES += \
     engine/Grid.cpp \
     engine/Pacman.cpp \
     engine/Player.cpp \
+    engine/PowerUp.cpp \
     engine/SoundEngine.cpp \
     engine/Teleporter.cpp \
     engine/behaviors/AbstractAnimationBehavior.cpp \
@@ -38,10 +45,13 @@ SOURCES += \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/EnemyAnimation.cpp \
     engine/behaviors/EnemyController.cpp \
+    engine/behaviors/EnemyEating.cpp \
     engine/behaviors/EnemyOrientation.cpp \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
+    engine/behaviors/PowerUpAnimation.cpp \
+    engine/behaviors/PoweringUp.cpp \
     engine/personalities/AbstractPersonality.cpp \
     engine/personalities/Poking.cpp \
     engine/personalities/Shadowing.cpp \
@@ -57,8 +67,12 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    DialogGame.h \
+    DialogSettings.h \
     FileHandler.h \
     Game.h \
+    GameMenu.h \
+    GameWidget.h \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
@@ -78,6 +92,7 @@ HEADERS += \
     engine/Grid.h \
     engine/Pacman.h \
     engine/Player.h \
+    engine/PowerUp.h \
     engine/SoundEngine.h \
     engine/Teleporter.h \
     engine/behaviors/AbstractAnimationBehavior.h \
@@ -90,10 +105,13 @@ HEADERS += \
     engine/behaviors/DotsEating.h \
     engine/behaviors/EnemyAnimation.h \
     engine/behaviors/EnemyController.h \
+    engine/behaviors/EnemyEating.h \
     engine/behaviors/EnemyOrientation.h \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
+    engine/behaviors/PowerUpAnimation.h \
+    engine/behaviors/PoweringUp.h \
     engine/personalities/AbstractPersonality.h \
     engine/personalities/Poking.h \
     engine/personalities/Shadowing.h \
@@ -114,3 +132,5 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+FORMS +=

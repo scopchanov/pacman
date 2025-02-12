@@ -8,11 +8,8 @@ class EnemyAnimation : public AbstractAnimationBehavior
 public:
 	explicit EnemyAnimation(GameObject *parent = nullptr);
 
-	void reset() override;
-
 private:
-	void foo() override;
-	void updateParent() override;
+	void update() override;
 };
 
 #endif // ENEMYANIMATION_H

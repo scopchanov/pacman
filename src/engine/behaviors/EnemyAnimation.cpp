@@ -5,17 +5,11 @@
 EnemyAnimation::EnemyAnimation(GameObject *parent) :
 	AbstractAnimationBehavior(parent)
 {
-
+	setGameObjectType(PathBuilder::GO_Enemy);
+	setFrameRate(20);
 }
 
-void EnemyAnimation::reset()
-{
-	setValue(0);
-	setDirection(DIR_Forwards);
-	updateParent();
-}
-
-void EnemyAnimation::foo()
+void EnemyAnimation::update()
 {
 	// TODO: Improve the method's name
 
@@ -28,10 +22,4 @@ void EnemyAnimation::foo()
 		setValue(-2);
 		setDirection(DIR_Forwards);
 	}
-}
-
-void EnemyAnimation::updateParent()
-{
-	parent()->setPath(PathBuilder::enemyPath(value()));
-	parent()->update();
 }

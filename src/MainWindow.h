@@ -1,12 +1,24 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QWidget>
+#include <QStackedWidget>
 
-class MainWindow : public QWidget
+class GameMenu;
+class GameWidget;
+
+class MainWindow : public QStackedWidget
 {
     Q_OBJECT
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
+
+private:
+	GameMenu *_gameMenu;
+	GameWidget *_gameWidget;
+
+private slots:
+	void onNewGame();
+	void onGameOver();
+	void openGameMenu();
 };
 #endif // MAINWINDOW_H

@@ -19,6 +19,7 @@ public:
 	int score() const;
 	void increaseScore(int amount);
 
+	void reset();
 
 public slots:
 	void addLife();

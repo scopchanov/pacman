@@ -1,24 +1,26 @@
 #include "AbstractAnimationBehavior.h"
+#include "PathBuilder.h"
 #include "engine/GameObject.h"
 #include "engine/GameTimer.h"
 
 AbstractAnimationBehavior::AbstractAnimationBehavior(GameObject *parent) :
 	AbstractTimedBehavior(parent),
-	_frameTime{100},
-	_value{0},
-	_direction{DIR_Forwards}
+	_gameObjectType{0},
+	_frameRate{100},
+	_direction{DIR_Forwards},
+	_value{0}
 {
 
 }
 
-qreal AbstractAnimationBehavior::frameTime() const
+qreal AbstractAnimationBehavior::frameRate() const
 {
-	return _frameTime;
+	return _frameRate;
 }
 
-void AbstractAnimationBehavior::setFrameTime(qreal frameTime)
+void AbstractAnimationBehavior::setFrameRate(qreal frameRate)
 {
-	_frameTime = frameTime;
+	_frameRate = frameRate;
 }
 
 qreal AbstractAnimationBehavior::value() const
@@ -41,15 +43,40 @@ void AbstractAnimationBehavior::setDirection(DirectionType direction)
 	_direction = direction;
 }
 
+int AbstractAnimationBehavior::gameObjectType() const
+{
+	return _gameObjectType;
+}
+
+void AbstractAnimationBehavior::setGameObjectType(int type)
+{
+	_gameObjectType = type;
+}
+
 int AbstractAnimationBehavior::type() const
 {
 	return BT_Animation;
 }
 
+void AbstractAnimationBehavior::reset()
+{
+	setValue(0);
+	setDirection(DIR_Forwards);
+	updateParent();
+}
+
+void AbstractAnimationBehavior::updateParent()
+{
+	auto type{static_cast<PathBuilder::GameObjectType>(_gameObjectType)};
+
+	parent()->setPath(PathBuilder::animatedObjectPath(type, _value));
+	parent()->update();
+}
+
 void AbstractAnimationBehavior::performTimedActions()
 {
-	_value += _direction*_frameTime*gameTimer()->deltaTime();
+	_value += _direction*_frameRate*gameTimer()->deltaTime();
 
-	foo();
+	update();
 	updateParent();
 }

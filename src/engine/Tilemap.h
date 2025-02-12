@@ -20,6 +20,8 @@ public:
     bool hasTile(int row, int col) const;
 	bool hasTile(const Vector2 &cell) const;
 
+	void clear();
+
 private:
 	void deleteTile(Tile *tile);
 	void addTile(int row, int col, Tile *tile);

@@ -11,7 +11,7 @@ Ghost::Ghost(GameObject *parent) :
 	_leftEye->setPos(-6, -6);
 	_rightEye->setPos(6, -6);
 
-	setPath(PathBuilder::enemyPath(0));
+	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Enemy, 0));
 	setPen(QPen(Qt::transparent));
 }
 

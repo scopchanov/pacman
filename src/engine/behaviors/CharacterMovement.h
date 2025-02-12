@@ -11,7 +11,7 @@ public:
 	explicit CharacterMovement(GameObject *parent = nullptr);
 
 	qreal movingSpeed() const;
-	void setMovingSpeed(qreal value);
+	void setMovingSpeed(qreal speed);
 	Vector2 initialDirection() const;
 	void setInitialDirection(const Vector2 &direction);
 	Vector2 currentDirection() const;
@@ -25,7 +25,6 @@ public:
 	void reverse();
 	void reset() override;
 
-
 private:
 	void performSpatialActions() override;
 	void moveCharacter();
@@ -36,17 +35,18 @@ private:
 	void targetCurrentCell();
 	void targetNextCell();
 	bool alignedWithTargetCellCenter() const;
-	qreal distanceToTargetCell() const;
 	bool canMoveIn(const Vector2 &direction) const;
 	bool isUnderDoor() const;
 	bool isWayClear(const Vector2 &direction) const;
-	Vector2 currentCellPosition() const;
+	Vector2 cellPosition(const Vector2 &cell) const;
+	Vector2 parentPosition() const;
+	void setParentPosition(const QPointF &position);
 
 	qreal _movingSpeed;
 	Vector2 _initialDirection;
 	Vector2 _currentDirection;
 	Vector2 _nextDirection;
-	Vector2 _targetCellPosition;
+	Vector2 _targetPosition;
 };
 
 #endif // CHARACTERMOVEMENT_H

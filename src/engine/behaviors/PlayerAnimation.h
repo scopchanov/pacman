@@ -11,8 +11,7 @@ public:
 	void reset() override;
 
 private:
-	void foo() override;
-	void updateParent() override;
+	void update() override;
 };
 
 #endif // PLAYERANIMATION_H

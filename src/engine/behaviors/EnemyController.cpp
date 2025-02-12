@@ -1,9 +1,9 @@
 #include "EnemyController.h"
 #include "engine/Vector2.h"
-#include "engine/behaviors/CharacterMovement.h"
+#include "engine/Grid.h"
 #include "engine/Enemy.h"
 #include "engine/Tilemap.h"
-#include "engine/Grid.h"
+#include "engine/behaviors/CharacterMovement.h"
 #include "engine/personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
@@ -29,6 +29,7 @@ EnemyController::StateType EnemyController::state() const
 void EnemyController::setState(StateType state)
 {
 	_state = state;
+	_characterMovement->reverse();
 }
 
 void EnemyController::setCharacterMovement(CharacterMovement *characterMovement)
@@ -108,12 +109,14 @@ void EnemyController::performActions()
 
 	_characterMovement->setNextDirection(directions.at(ind));
 
+#ifdef DEBUG
 	if (!_targetMark->scene())
 		parent()->scene()->addItem(_targetMark);
 
 	_targetMark->setPos(_targetPosition);
 	_targetMark->setBrush(parent()->brush());
 	_targetMark->update();
+#endif
 }
 
 qreal EnemyController::distanceToTarget(Vector2 direction) const

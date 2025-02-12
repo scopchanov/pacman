@@ -28,6 +28,7 @@ private slots:
 	void onPlayingChanged();
 
 signals:
+	void victoryTunePlayed();
 	void funeralTunePlayed();
 };
 

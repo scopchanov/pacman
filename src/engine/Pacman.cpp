@@ -7,7 +7,7 @@
 Pacman::Pacman(GameObject *parent) :
 	Player(parent)
 {
-	setPath(PathBuilder::playerPath(45));
+	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Player, 45));
 	setPen(QPen(Qt::transparent));
 	setBrush(Qt::white);
 }
@@ -21,9 +21,4 @@ void Pacman::setup(Game *game)
 
 	movement->setMovingSpeed(200);
 	movement->setNextDirection(Vector2(-1, 0));
-
-	behavior = findBehavior(AbstractBehavior::BT_Animation);
-	auto *animation{static_cast<PlayerAnimation *>(behavior)};
-
-	animation->setFrameTime(150);
 }

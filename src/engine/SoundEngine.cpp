@@ -31,8 +31,17 @@ void SoundEngine::onPlayingChanged()
 {
 	auto *effect{static_cast<QSoundEffect *>(sender())};
 
-	if (effect->isPlaying() || effect != _effects.at(SND_PlayerDies))
+	if (effect->isPlaying())
 		return;
 
-	emit funeralTunePlayed();
+	switch (_effects.indexOf(effect)) {
+	case SND_PlayerWins:
+		emit victoryTunePlayed();
+		break;
+	case SND_PlayerDies:
+		emit funeralTunePlayed();
+		break;
+	default:
+		break;
+	}
 }
