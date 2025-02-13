@@ -1,28 +1,28 @@
 #include "AiStateMachine.h"
-#include "GameTimer.h"
+#include "GameClock.h"
 #include "engine/behaviors/EnemyController.h"
 #include <QHash>
 #include <QDebug>
 
 AiStateMachine::AiStateMachine(QObject *parent) :
 	QObject{parent},
-	_gameTimer{nullptr},
+	_gameClock{nullptr},
 	_state{0},
 	_time{0.0}
 {
 
 }
 
-GameTimer *AiStateMachine::gameTimer() const
+GameClock *AiStateMachine::gameClock() const
 {
-	return _gameTimer;
+	return _gameClock;
 }
 
-void AiStateMachine::setGameTimer(GameTimer *gameTimer)
+void AiStateMachine::setGameClock(GameClock *clock)
 {
-	_gameTimer = gameTimer;
+	_gameClock = clock;
 
-	connect(gameTimer, &GameTimer::gameAdvanced, this, &AiStateMachine::onGameAdvanced);
+	connect(clock, &GameClock::tick, this, &AiStateMachine::onGameAdvanced);
 }
 
 void AiStateMachine::addEnemyController(EnemyController *controller)
@@ -56,7 +56,7 @@ void AiStateMachine::onGameAdvanced()
 	if (_state > 6)
 		return;
 
-	_time += _gameTimer->deltaTime();
+	_time += _gameClock->deltaTime();
 
 	if (_time < maxTime())
 		return;

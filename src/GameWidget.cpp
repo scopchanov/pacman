@@ -1,10 +1,12 @@
 #include "GameWidget.h"
-#include "Game.h"
 #include "LifesDisplay.h"
 #include "ScoreDisplay.h"
-#include "engine/GameController.h"
+#include "engine/Game.h"
 #include "engine/GameScene.h"
+#include "engine/GameStatus.h"
 #include "engine/GameView.h"
+#include "Configurator.h"
+#include "FileHandler.h"
 #include <QJsonObject>
 #include <QBoxLayout>
 
@@ -18,6 +20,11 @@ GameWidget::GameWidget(QWidget *parent) :
 	auto *layoutPanel{new QHBoxLayout()};
 	auto *scoreDisplay{new ScoreDisplay(this)};
 	auto *lifesDisplay{new LifesDisplay(this)};
+
+	Configurator configurator;
+
+	configurator.setGame(_game);
+	configurator.configure(FileHandler::readFile(":/txt/config.json"));
 
 	_gameView->setScene(_game->scene());
 
@@ -39,17 +46,16 @@ GameWidget::GameWidget(QWidget *parent) :
 	layoutMain->setContentsMargins(0, 0, 0, 0);
 	layoutMain->setSpacing(0);
 
-	connect(_game->gameController(), &GameController::lifesLeftChanged,
+	connect(_game->status(), &GameStatus::lifesLeftChanged,
 			lifesDisplay, &LifesDisplay::setLifeCount);
-	connect(_game->gameController(), &GameController::scoreChanged,
+	connect(_game->status(), &GameStatus::scoreChanged,
 			scoreDisplay, &ScoreDisplay::setScore);
 
-	connect(_game, &Game::playerWins, this, &GameWidget::gameOver);
-	connect(_game, &Game::playerLoses, this, &GameWidget::gameOver);
-	// connect(_game->scene(), &GameScene::pauseGame, this, &MainWindow::openGameMenu);
+	connect(_game, &Game::playerWins, this, &GameWidget::exitGame);
+	connect(_game, &Game::gameOver, this, &GameWidget::exitGame);
 }
 
-Game *GameWidget::game() const
+void GameWidget::startGame()
 {
-	return _game;
+	_game->start();
 }

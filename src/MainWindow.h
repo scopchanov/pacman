@@ -19,6 +19,5 @@ private:
 private slots:
 	void onNewGame();
 	void onGameOver();
-	void openGameMenu();
 };
 #endif // MAINWINDOW_H

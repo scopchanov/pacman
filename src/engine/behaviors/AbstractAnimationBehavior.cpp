@@ -1,7 +1,7 @@
 #include "AbstractAnimationBehavior.h"
 #include "PathBuilder.h"
 #include "engine/GameObject.h"
-#include "engine/GameTimer.h"
+#include "engine/GameClock.h"
 
 AbstractAnimationBehavior::AbstractAnimationBehavior(GameObject *parent) :
 	AbstractTimedBehavior(parent),
@@ -75,7 +75,7 @@ void AbstractAnimationBehavior::updateParent()
 
 void AbstractAnimationBehavior::performTimedActions()
 {
-	_value += _direction*_frameRate*gameTimer()->deltaTime();
+	_value += _direction*_frameRate*gameClock()->deltaTime();
 
 	update();
 	updateParent();

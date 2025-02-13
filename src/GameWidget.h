@@ -12,14 +12,14 @@ class GameWidget : public QWidget
 public:
 	explicit GameWidget(QWidget *parent = nullptr);
 
-	Game *game() const;
+	void startGame();
 
 private:
 	Game *_game;
 	GameView *_gameView;
 
 signals:
-	void gameOver();
+	void exitGame();
 };
 
 #endif // GAMEWIDGET_H

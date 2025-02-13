@@ -3,21 +3,21 @@
 
 #include "AbstractBehavior.h"
 
-class GameTimer;
+class GameClock;
 
 class AbstractTimedBehavior : public AbstractBehavior
 {
 public:
 	explicit AbstractTimedBehavior(GameObject *parent = nullptr);
 
-	GameTimer *gameTimer() const;
-	virtual void setGameTimer(GameTimer *gameTimer);
+	GameClock *gameClock() const;
+	virtual void setGameClock(GameClock *gameTimer);
 
 private:
 	void performActions() override final;
 	virtual void performTimedActions() = 0;
 
-	GameTimer *_gameTimer;
+	GameClock *_gameTimer;
 };
 
 #endif // ABSTRACTTIMEDBEHAVIOR_H

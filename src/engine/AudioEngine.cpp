@@ -1,7 +1,7 @@
-#include "SoundEngine.h"
+#include "AudioEngine.h"
 #include <QSoundEffect>
 
-SoundEngine::SoundEngine(QObject *parent) :
+AudioEngine::AudioEngine(QObject *parent) :
 	QObject{parent}
 {
 	_effects.append(createEffect("notification", 0.25));
@@ -9,12 +9,12 @@ SoundEngine::SoundEngine(QObject *parent) :
 	_effects.append(createEffect("died", 1));
 }
 
-void SoundEngine::playEffect(EffectType type)
+void AudioEngine::playEffect(EffectType type)
 {
 	_effects.at(type)->play();
 }
 
-QSoundEffect *SoundEngine::createEffect(const QString &name, qreal volume)
+QSoundEffect *AudioEngine::createEffect(const QString &name, qreal volume)
 {
 	auto *effect{new QSoundEffect(this)};
 	const QString &path{":/snd/audio/effects/" + name + ".wav"};
@@ -22,12 +22,12 @@ QSoundEffect *SoundEngine::createEffect(const QString &name, qreal volume)
 	effect->setSource(QUrl::fromLocalFile(path));
 	effect->setVolume(volume);
 
-	connect(effect, &QSoundEffect::playingChanged, this, &SoundEngine::onPlayingChanged);
+	connect(effect, &QSoundEffect::playingChanged, this, &AudioEngine::onPlayingChanged);
 
 	return effect;
 }
 
-void SoundEngine::onPlayingChanged()
+void AudioEngine::onPlayingChanged()
 {
 	auto *effect{static_cast<QSoundEffect *>(sender())};
 

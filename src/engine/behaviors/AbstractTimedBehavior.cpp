@@ -7,12 +7,12 @@ AbstractTimedBehavior::AbstractTimedBehavior(GameObject *parent) :
 
 }
 
-GameTimer *AbstractTimedBehavior::gameTimer() const
+GameClock *AbstractTimedBehavior::gameClock() const
 {
 	return _gameTimer;
 }
 
-void AbstractTimedBehavior::setGameTimer(GameTimer *gameTimer)
+void AbstractTimedBehavior::setGameClock(GameClock *gameTimer)
 {
 	_gameTimer = gameTimer;
 }

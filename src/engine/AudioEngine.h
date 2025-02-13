@@ -1,11 +1,11 @@
-#ifndef SOUNDENGINE_H
-#define SOUNDENGINE_H
+#ifndef AUDIOENGINE_H
+#define AUDIOENGINE_H
 
 #include <QObject>
 
 class QSoundEffect;
 
-class SoundEngine : public QObject
+class AudioEngine : public QObject
 {
 	Q_OBJECT
 public:
@@ -15,7 +15,7 @@ public:
 		SND_PlayerDies
 	};
 
-	explicit SoundEngine(QObject *parent = nullptr);
+	explicit AudioEngine(QObject *parent = nullptr);
 
 	void playEffect(EffectType type);
 
@@ -32,4 +32,4 @@ signals:
 	void funeralTunePlayed();
 };
 
-#endif // SOUNDENGINE_H
+#endif // AUDIOENGINE_H

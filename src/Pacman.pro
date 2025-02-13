@@ -7,10 +7,10 @@ CONFIG += c++23
 #DEFINES += DEBUG
 
 SOURCES += \
+    Configurator.cpp \
     DialogGame.cpp \
     DialogSettings.cpp \
     FileHandler.cpp \
-    Game.cpp \
     GameMenu.cpp \
     GameWidget.cpp \
     LifesDisplay.cpp \
@@ -20,12 +20,14 @@ SOURCES += \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
     engine/AiStateMachine.cpp \
+    engine/AudioEngine.cpp \
     engine/Character.cpp \
     engine/Enemy.cpp \
-    engine/GameController.cpp \
+    engine/Game.cpp \
+    engine/GameClock.cpp \
     engine/GameEvent.cpp \
     engine/GameScene.cpp \
-    engine/GameTimer.cpp \
+    engine/GameStatus.cpp \
     engine/GameView.cpp \
     engine/Ghost.cpp \
     engine/GhostEye.cpp \
@@ -33,7 +35,6 @@ SOURCES += \
     engine/Pacman.cpp \
     engine/Player.cpp \
     engine/PowerUp.cpp \
-    engine/SoundEngine.cpp \
     engine/Teleporter.cpp \
     engine/behaviors/AbstractAnimationBehavior.cpp \
     engine/behaviors/AbstractBehavior.cpp \
@@ -67,10 +68,10 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    Configurator.h \
     DialogGame.h \
     DialogSettings.h \
     FileHandler.h \
-    Game.h \
     GameMenu.h \
     GameWidget.h \
     LifesDisplay.h \
@@ -80,12 +81,14 @@ HEADERS += \
     ScoreDisplay.h \
     StartupSequence.h \
     engine/AiStateMachine.h \
+    engine/AudioEngine.h \
     engine/Character.h \
     engine/Enemy.h \
-    engine/GameController.h \
+    engine/Game.h \
+    engine/GameClock.h \
     engine/GameEvent.h \
     engine/GameScene.h \
-    engine/GameTimer.h \
+    engine/GameStatus.h \
     engine/GameView.h \
     engine/Ghost.h \
     engine/GhostEye.h \
@@ -93,7 +96,6 @@ HEADERS += \
     engine/Pacman.h \
     engine/Player.h \
     engine/PowerUp.h \
-    engine/SoundEngine.h \
     engine/Teleporter.h \
     engine/behaviors/AbstractAnimationBehavior.h \
     engine/behaviors/AbstractBehavior.h \

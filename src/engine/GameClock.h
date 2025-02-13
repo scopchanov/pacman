@@ -1,24 +1,22 @@
-#ifndef GAMETIMER_H
-#define GAMETIMER_H
+#ifndef GAMECLOCK_H
+#define GAMECLOCK_H
 
 #include <QObject>
 
 class QElapsedTimer;
 class GameScene;
 
-class GameTimer : public QObject
+class GameClock : public QObject
 {
     Q_OBJECT
 public:
-	explicit GameTimer(QObject *parent = nullptr);
-	~GameTimer();
+	explicit GameClock(QObject *parent = nullptr);
+	~GameClock();
 
     qreal deltaTime() const;
-	void setScene(GameScene *scene);
 
 public slots:
     void start();
-	void pause();
     void stop();
 
 private:
@@ -30,7 +28,7 @@ private slots:
     void onTimeout();
 
 signals:
-	void gameAdvanced();
+	void tick();
 };
 
-#endif // GAMETIMER_H
+#endif // GAMECLOCK_H

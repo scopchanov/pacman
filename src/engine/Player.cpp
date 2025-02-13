@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Game.h"
-#include "GameController.h"
 #include "engine/GameScene.h"
 #include "engine/GameEvent.h"
 #include "engine/behaviors/CharacterMovement.h"
@@ -18,7 +17,7 @@ Player::Player(GameObject *parent) :
 
 void Player::setup(Game *game)
 {
-	auto *gameTimer{game->gameController()->gameTimer()};
+	auto *gameClock{game->clock()};
 	auto *eventDotEaten{new GameEvent(game)};
 	auto *eventPlayerWins{new GameEvent(game)};
 	auto *playerController{new PlayerController(this)};
@@ -31,19 +30,19 @@ void Player::setup(Game *game)
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(game->scene()->inputSystem());
 
-	movement->setGameTimer(gameTimer);
+	movement->setGameClock(gameClock);
 	movement->setTilemap(game->walls());
 
 	orientation->setMovement(movement);
 
-	dotsEating->setGameTimer(gameTimer);
+	dotsEating->setGameClock(gameClock);
 	dotsEating->setTilemap(game->dots());
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
 	enemyEating->setDisabled(true);
 
-	animation->setGameTimer(gameTimer);
+	animation->setGameClock(gameClock);
 
 	addBehavior(playerController);
 	addBehavior(movement);

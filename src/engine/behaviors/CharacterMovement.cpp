@@ -1,6 +1,6 @@
 #include "CharacterMovement.h"
 #include "engine/GameObject.h"
-#include "engine/GameTimer.h"
+#include "engine/GameClock.h"
 #include "engine/Grid.h"
 #include "engine/Tilemap.h"
 
@@ -105,7 +105,7 @@ void CharacterMovement::performSpatialActions()
 
 void CharacterMovement::moveCharacter()
 {
-	qreal step{_movingSpeed*gameTimer()->deltaTime()};
+	qreal step{_movingSpeed*gameClock()->deltaTime()};
 
 	setParentPosition(parentPosition().movedTowards(_targetPosition, step));
 }

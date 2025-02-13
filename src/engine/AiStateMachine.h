@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class GameTimer;
+class GameClock;
 class EnemyController;
 
 class AiStateMachine : public QObject
@@ -12,8 +12,8 @@ class AiStateMachine : public QObject
 public:
 	explicit AiStateMachine(QObject *parent = nullptr);
 
-	GameTimer *gameTimer() const;
-	void setGameTimer(GameTimer *gameTimer);
+	GameClock *gameClock() const;
+	void setGameClock(GameClock *clock);
 	void addEnemyController(EnemyController *controller);
 
 	void reset();
@@ -23,7 +23,7 @@ private:
 	qreal maxTime() const;
 	int enemyState() const;
 
-	GameTimer *_gameTimer;
+	GameClock *_gameClock;
 	QList<EnemyController *> _enemyControllers;
 	int _state;
 	qreal _time;

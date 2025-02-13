@@ -6,8 +6,8 @@
 #include <QSize>
 
 class AbstractPersonality;
-class GameController;
-class SoundEngine;
+class GameStatus;
+class AudioEngine;
 class GameObject;
 class GameScene;
 class InputSystem;
@@ -18,6 +18,8 @@ class Grid;
 class Pacman;
 class Ghost;
 class PowerUp;
+
+class GameClock;
 class Vector2;
 
 class Game : public QObject
@@ -26,32 +28,27 @@ class Game : public QObject
 public:
 	explicit Game(QObject *parent = nullptr);
 
-	GameController *gameController() const;
+	GameClock *clock() const;
+	GameStatus *status() const;
 	GameScene *scene() const;
+	AiStateMachine *stateMachine() const;
 	Grid *grid() const;
 	Tilemap *walls() const;
 	Tilemap *dots() const;
 
-	void configure(const QJsonObject &json);
 	void start();
 	void stop();
 	void resume();
 	void restart();
 
 private:
-	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
-	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
-	void createEnemies(const QJsonArray &enemies);
-	Ghost *createEnemy(const QPointF &position, const QColor &color, int direction);
-	GameObject *createPowerUp(const QPoint &cell);
-	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
-	AbstractPersonality *createPersonality(int type);
-	Vector2 dir2vec(int direction);
+
 	void reset();
 
-	GameController *_gameController;
-	SoundEngine *_soundEngine;
+	GameClock *_clock;
+	GameStatus *_status;
 	GameScene *_scene;
+	AudioEngine *_audioEngine;
 	Grid *_grid;
 	Tilemap *_walls;
 	Tilemap *_dots;
@@ -68,9 +65,10 @@ private slots:
 
 signals:
 	void playerWins();
-	void playerLoses();
+	void gameOver();
 
 	friend class Player;
+	friend class Configurator;
 };
 
 #endif // GAME_H
