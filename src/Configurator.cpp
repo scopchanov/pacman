@@ -1,16 +1,13 @@
-#include "Game.h"
-#include "Message.h"
+#include "Configurator.h"
 #include "PathBuilder.h"
-#include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
-#include "engine/GameController.h"
+#include "engine/Game.h"
 #include "engine/GameEvent.h"
 #include "engine/GameScene.h"
-#include "engine/GameTimer.h"
+#include "engine/GameClock.h"
 #include "engine/Ghost.h"
 #include "engine/Grid.h"
 #include "engine/Pacman.h"
-#include "engine/SoundEngine.h"
 #include "engine/Teleporter.h"
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
@@ -30,50 +27,28 @@
 #include <QJsonValue>
 #include <QHash>
 
-Game::Game(QObject *parent) :
-	QObject(parent),
-	_gameController{new GameController(this)},
-	_soundEngine{new SoundEngine(this)},
-	_scene{new GameScene(this)},
-	_grid{new Grid()},
-	_walls{new Tilemap()},
-	_dots{new Tilemap()},
-	_stateMachine{new AiStateMachine(this)},
-	_pacman{new Pacman()}
+Configurator::Configurator(QObject *parent) :
+	QObject{parent},
+	_game{nullptr}
 {
-	_gameController->gameTimer()->setScene(_scene);
 
-	connect(_soundEngine, &SoundEngine::victoryTunePlayed, this, &Game::playerWins);
-	connect(_soundEngine, &SoundEngine::funeralTunePlayed, this, &Game::onFuneralTunePlayed);
 }
 
-GameController *Game::gameController() const
+Game *Configurator::game() const
 {
-	return _gameController;
+	return _game;
 }
 
-GameScene *Game::scene() const
+void Configurator::setGame(Game *game)
 {
-	return _scene;
+	_game = game;
 }
 
-Grid *Game::grid() const
+void Configurator::configure(const QJsonObject &json)
 {
-	return _grid;
-}
+	if (!_game || json.isEmpty())
+		return;
 
-Tilemap *Game::walls() const
-{
-	return _walls;
-}
-
-Tilemap *Game::dots() const
-{
-	return _dots;
-}
-
-void Game::configure(const QJsonObject &json)
-{
 	const QJsonArray &wallMatrix{json.value("walls").toArray()};
 	const QJsonObject &gridSize{json.value("gridSize").toObject()};
 	const QJsonObject &cellSize{json.value("cellSize").toObject()};
@@ -86,71 +61,39 @@ void Game::configure(const QJsonObject &json)
 	qreal playerX{player.value("position").toObject().value("x").toDouble()};
 	qreal playerY{player.value("position").toObject().value("y").toDouble()};
 
-	_dotMatrix = json.value("dots").toArray();
+	_game->_dotMatrix = json.value("dots").toArray();
 
-	_grid->setGridSize(rows, columns);
-	_grid->setCellSize(QSizeF(width, height));
+	_game->_grid->setGridSize(rows, columns);
+	_game->_grid->setCellSize(QSizeF(width, height));
 
-	_walls->setGrid(_grid);
-	_dots->setGrid(_grid);
+	_game->walls()->setGrid(_game->_grid);
+	_game->dots()->setGrid(_game->_grid);
 
-	buildTilemap(_walls, wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
-	buildTilemap(_dots, _dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
+	buildTilemap(_game->walls(), wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
+	buildTilemap(_game->dots(), _game->_dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	_walls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
-	_walls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
+	_game->walls()->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
+	_game->walls()->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
 
-	_pacman->setSpawnPosition({playerX, playerY});
-	_pacman->setup(this);
+	_game->_pacman->setSpawnPosition({playerX, playerY});
+	_game->_pacman->setup(_game);
 
-	_scene->addItem(_pacman);
-	_scene->addItem(_walls);
-	_scene->addItem(_dots);
+	_game->_scene->addItem(_game->_pacman);
+	_game->_scene->addItem(_game->_walls);
+	_game->_scene->addItem(_game->_dots);
 
 	createEnemies(enemies);
-	scene()->addItem(createPowerUp({2, 4}));
-	scene()->addItem(createPowerUp({27, 4}));
-	scene()->addItem(createPowerUp({2, 24}));
-	scene()->addItem(createPowerUp({27, 24}));
+	_game->_scene->addItem(createPowerUp({2, 4}));
+	_game->_scene->addItem(createPowerUp({27, 4}));
+	_game->_scene->addItem(createPowerUp({2, 24}));
+	_game->_scene->addItem(createPowerUp({27, 24}));
 
-	_stateMachine->setGameTimer(gameController()->gameTimer());
-	_scene->addItem(createTeleporter(_grid->cellPosition(15, 0), _grid->cellPosition(15, 28)));
-	_scene->addItem(createTeleporter(_grid->cellPosition(15, 29), _grid->cellPosition(15, 2)));
+	_game->stateMachine()->setGameClock(_game->_clock);
+	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 0), _game->_grid->cellPosition(15, 28)));
+	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 29), _game->_grid->cellPosition(15, 2)));
 }
 
-void Game::start()
-{
-	auto *sequence{new StartupSequence(this)};
-
-	_scene->addItem(sequence->message());
-
-	connect(sequence, &StartupSequence::go, _gameController, &GameController::start);
-
-	sequence->start();
-}
-
-void Game::stop()
-{
-	_gameController->gameTimer()->stop();
-}
-
-void Game::resume()
-{
-	_gameController->start();
-}
-
-void Game::restart()
-{
-	_gameController->reset();
-	_stateMachine->reset();
-	_scene->reset();
-	_dots->clear();
-
-	buildTilemap(_dots, _dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
-	start();
-}
-
-void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
+void Configurator::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 						const QPen &pen, const QBrush &brush)
 {
 	int m{0};
@@ -173,7 +116,7 @@ void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 	}
 }
 
-Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
+Tile *Configurator::createTile(int index, const QPen &pen, const QBrush &brush)
 {
 	auto *tile{new Tile()};
 
@@ -184,7 +127,7 @@ Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 	return tile;
 }
 
-void Game::createEnemies(const QJsonArray &enemies)
+void Configurator::createEnemies(const QJsonArray &enemies)
 {
 	for (const auto &record : enemies) {
 		const QJsonObject &json{record.toObject()};
@@ -201,20 +144,20 @@ void Game::createEnemies(const QJsonArray &enemies)
 		auto *controller{static_cast<EnemyController *>(behavior)};
 		auto *personality{createPersonality(json.value("personality").toInt())};
 
-		personality->setScatterTarget(_grid->cellPosition(Vector2(column, row)));
-		personality->setPlayer(_pacman);
-		personality->setGrid(_grid);
+		personality->setScatterTarget(_game->_grid->cellPosition(Vector2(column, row)));
+		personality->setPlayer(_game->_pacman);
+		personality->setGrid(_game->_grid);
 
 		if (personality->type() == AbstractPersonality::PT_Shying)
-			static_cast<Shying *>(personality)->setPartner(_ghosts.at(0));
+			static_cast<Shying *>(personality)->setPartner(_game->_ghosts.at(0));
 
 		enemy->setPersonality(personality);
 
-		_stateMachine->addEnemyController(controller);
+		_game->stateMachine()->addEnemyController(controller);
 	}
 }
 
-Ghost *Game::createEnemy(const QPointF &position, const QColor &color, int direction)
+Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, int direction)
 {
 	auto *ghost{new Ghost()};
 
@@ -225,23 +168,23 @@ Ghost *Game::createEnemy(const QPointF &position, const QColor &color, int direc
 	auto *enemyController{new EnemyController(ghost)};
 	auto *animation{new EnemyAnimation(ghost)};
 	auto *killPlayer{new KillPlayer(ghost)};
-	auto *eventPlayerDies{new GameEvent(this)};
+	auto *eventPlayerDies{new GameEvent(_game)};
 
 	enemyController->setCharacterMovement(movement);
-	enemyController->setPlayer(_pacman);	
-	enemyController->setGrid(_grid);
+	enemyController->setPlayer(_game->_pacman);
+	enemyController->setGrid(_game->_grid);
 
-	movement->setGameTimer(_gameController->gameTimer());
-	movement->setTilemap(_walls);
+	movement->setGameClock(_game->_clock);
+	movement->setTilemap(_game->_walls);
 	movement->setMovingSpeed(150);
 	movement->setInitialDirection(dir2vec(direction));
 
 	orientation->setMovement(movement);
 
-	animation->setGameTimer(_gameController->gameTimer());
+	animation->setGameClock(_game->_clock);
 
-	killPlayer->setGameTimer(_gameController->gameTimer());
-	killPlayer->setPlayer(_pacman);
+	killPlayer->setGameClock(_game->_clock);
+	killPlayer->setPlayer(_game->_pacman);
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
 	ghost->addBehavior(enemyController);
@@ -252,28 +195,28 @@ Ghost *Game::createEnemy(const QPointF &position, const QColor &color, int direc
 
 	ghost->setBrush(color);
 
-	connect(eventPlayerDies, &GameEvent::triggered, this, &Game::onPlayerDies);
+	connect(eventPlayerDies, &GameEvent::triggered, _game, &Game::onPlayerDies);
 
-	_ghosts.append(ghost);
-	_scene->addItem(ghost);
+	_game->_ghosts.append(ghost);
+	_game->_scene->addItem(ghost);
 
 	return ghost;
 }
 
-GameObject *Game::createPowerUp(const QPoint &cell)
+GameObject *Configurator::createPowerUp(const QPoint &cell)
 {
 	auto *powerUp{new GameObject()};
 	auto *powering{new PoweringUp(powerUp)};
 	auto *animation{new PowerUpAnimation(powerUp)};
 
-	powering->setPlayer(_pacman);
+	powering->setPlayer(_game->_pacman);
 
-	for (auto *ghost : std::as_const(_ghosts))
+	for (auto *ghost : std::as_const(_game->_ghosts))
 		powering->addEnemy(ghost);
 
-	animation->setGameTimer(_gameController->gameTimer());
+	animation->setGameClock(_game->_clock);
 
-	powerUp->setPos(_grid->cellPosition(cell.y(), cell.x()));
+	powerUp->setPos(_game->_grid->cellPosition(cell.y(), cell.x()));
 	powerUp->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_PowerUp, 16));
 	powerUp->setPen(QPen(Qt::transparent));
 	powerUp->setBrush(Qt::white);
@@ -284,7 +227,7 @@ GameObject *Game::createPowerUp(const QPoint &cell)
 	return powerUp;
 }
 
-GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
+GameObject *Configurator::createTeleporter(const QPointF &src, const QPointF &dst)
 {
 	auto *teleporter{new Teleporter()};
 
@@ -293,7 +236,7 @@ GameObject *Game::createTeleporter(const QPointF &src, const QPointF &dst)
 	return teleporter;
 }
 
-AbstractPersonality *Game::createPersonality(int type)
+AbstractPersonality *Configurator::createPersonality(int type)
 {
 	switch (type) {
 	case AbstractPersonality::PT_Shadowing:
@@ -309,43 +252,8 @@ AbstractPersonality *Game::createPersonality(int type)
 	}
 }
 
-Vector2 Game::dir2vec(int direction)
+Vector2 Configurator::dir2vec(int direction)
 {
 	return QHash<int, Vector2>{{0, V2_LEFT}, {1, V2_UP}, {2, V2_RIGHT},
 							   {3, V2_DOWN}}.value(direction);
-}
-
-void Game::reset()
-{
-	_stateMachine->reset();
-	_scene->reset();
-	start();
-}
-
-void Game::onDotEaten()
-{
-	_gameController->increaseScore(1);
-	_soundEngine->playEffect(SoundEngine::SND_DotEaten);
-}
-
-void Game::onPlayerWins()
-{
-	_gameController->gameTimer()->stop();
-	_soundEngine->playEffect(SoundEngine::SND_PlayerWins);
-}
-
-void Game::onPlayerDies()
-{
-	_gameController->gameTimer()->stop();
-	_soundEngine->playEffect(SoundEngine::SND_PlayerDies);
-}
-
-void Game::onFuneralTunePlayed()
-{
-	if (_gameController->lifesLeft()) {
-		_gameController->removeLife();
-		reset();
-	} else {
-		emit playerLoses();
-	}
 }
