@@ -1,5 +1,6 @@
 #include "PoweringUp.h"
 #include "engine/GameObject.h"
+#include "engine/behaviors/EnemyController.h"
 #include <QBrush>
 
 PoweringUp::PoweringUp(GameObject *parent) :
@@ -41,12 +42,19 @@ void PoweringUp::performActions()
 		return;
 
 	_player->setBrush(Qt::yellow);
-	_player->findBehavior(BT_EnemyEating)->setDisabled(false);
+	_player->findBehavior(BT_EnemyEating)->setEnabled(true);
 
 	for (auto *enemy : std::as_const(_enemies)) {
+		auto *behaviour{enemy->findBehavior(BT_EnemyController)};
+		auto *controller{static_cast<EnemyController *>(behaviour)};
+
+		if (controller->state() == EnemyController::ST_Eaten)
+			continue;
+
+		controller->setState(EnemyController::ST_Frightened);
 		enemy->setBrush(QBrush(0x2962FF));
-		enemy->findBehavior(BT_KillPlayer)->setDisabled(true);
+		enemy->findBehavior(BT_KillPlayer)->setEnabled(false);
 	}
 
-	// delete this;
+	delete parent();
 }

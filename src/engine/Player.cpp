@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "engine/GameScene.h"
 #include "engine/GameEvent.h"
+#include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/DotsEating.h"
 #include "engine/behaviors/EnemyEating.h"
@@ -20,12 +21,15 @@ void Player::setup(Game *game)
 	auto *gameClock{game->clock()};
 	auto *eventDotEaten{new GameEvent(game)};
 	auto *eventPlayerWins{new GameEvent(game)};
+	auto *coloring{new Coloring(this)};
 	auto *playerController{new PlayerController(this)};
 	auto *movement{new CharacterMovement(this)};
 	auto *orientation{new PlayerOrientation(this)};
 	auto *dotsEating{new DotsEating(this)};
 	auto *enemyEating{new EnemyEating(this)};
 	auto *animation{new PlayerAnimation(this)};
+
+	coloring->setColor(Qt::white);
 
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(game->scene()->inputSystem());
@@ -40,10 +44,11 @@ void Player::setup(Game *game)
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
-	enemyEating->setDisabled(true);
+	enemyEating->setEnabled(false);
 
 	animation->setGameClock(gameClock);
 
+	addBehavior(coloring);
 	addBehavior(playerController);
 	addBehavior(movement);
 	addBehavior(orientation);

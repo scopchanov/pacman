@@ -34,7 +34,6 @@ SOURCES += \
     engine/Grid.cpp \
     engine/Pacman.cpp \
     engine/Player.cpp \
-    engine/PowerUp.cpp \
     engine/Teleporter.cpp \
     engine/behaviors/AbstractAnimationBehavior.cpp \
     engine/behaviors/AbstractBehavior.cpp \
@@ -43,6 +42,7 @@ SOURCES += \
     engine/behaviors/AbstractTimedBehavior.cpp \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
+    engine/behaviors/Coloring.cpp \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/EnemyAnimation.cpp \
     engine/behaviors/EnemyController.cpp \
@@ -95,7 +95,6 @@ HEADERS += \
     engine/Grid.h \
     engine/Pacman.h \
     engine/Player.h \
-    engine/PowerUp.h \
     engine/Teleporter.h \
     engine/behaviors/AbstractAnimationBehavior.h \
     engine/behaviors/AbstractBehavior.h \
@@ -104,6 +103,7 @@ HEADERS += \
     engine/behaviors/AbstractTimedBehavior.h \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
+    engine/behaviors/Coloring.h \
     engine/behaviors/DotsEating.h \
     engine/behaviors/EnemyAnimation.h \
     engine/behaviors/EnemyController.h \

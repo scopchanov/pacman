@@ -25,7 +25,7 @@ private:
 
 	GameClock *_gameClock;
 	QList<EnemyController *> _enemyControllers;
-	int _state;
+	int _step;
 	qreal _time;
 
 private slots:

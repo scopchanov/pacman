@@ -12,6 +12,7 @@
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
 #include "engine/behaviors/CharacterMovement.h"
+#include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/EnemyAnimation.h"
 #include "engine/behaviors/EnemyController.h"
 #include "engine/behaviors/EnemyOrientation.h"
@@ -72,8 +73,8 @@ void Configurator::configure(const QJsonObject &json)
 	buildTilemap(_game->walls(), wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
 	buildTilemap(_game->dots(), _game->_dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	_game->walls()->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
-	_game->walls()->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), QBrush(Qt::transparent)));
+	_game->walls()->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	_game->walls()->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
 
 	_game->_pacman->setSpawnPosition({playerX, playerY});
 	_game->_pacman->setup(_game);
@@ -89,8 +90,10 @@ void Configurator::configure(const QJsonObject &json)
 	_game->_scene->addItem(createPowerUp({27, 24}));
 
 	_game->stateMachine()->setGameClock(_game->_clock);
-	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 0), _game->_grid->cellPosition(15, 28)));
-	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 29), _game->_grid->cellPosition(15, 2)));
+	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 0),
+											_game->_grid->cellPosition(15, 28)));
+	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 29),
+											_game->_grid->cellPosition(15, 2)));
 }
 
 void Configurator::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
@@ -163,12 +166,15 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 
 	ghost->setSpawnPosition(position);
 
+	auto *coloring{new Coloring(ghost)};
 	auto *movement{new CharacterMovement(ghost)};
 	auto *orientation{new EnemyOrientation(ghost)};
 	auto *enemyController{new EnemyController(ghost)};
 	auto *animation{new EnemyAnimation(ghost)};
 	auto *killPlayer{new KillPlayer(ghost)};
 	auto *eventPlayerDies{new GameEvent(_game)};
+
+	coloring->setColor(color);
 
 	enemyController->setCharacterMovement(movement);
 	enemyController->setPlayer(_game->_pacman);
@@ -187,6 +193,7 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	killPlayer->setPlayer(_game->_pacman);
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
+	ghost->addBehavior(coloring);
 	ghost->addBehavior(enemyController);
 	ghost->addBehavior(movement);
 	ghost->addBehavior(orientation);

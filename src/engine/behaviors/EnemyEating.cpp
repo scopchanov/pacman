@@ -29,10 +29,13 @@ void EnemyEating::performActions()
 		if (!behavior)
 			continue;
 
-		auto *movement{static_cast<EnemyController *>(behavior)};
+		auto *controller{static_cast<EnemyController *>(behavior)};
 
 		// movement->setDisabled(true);
-		movement->setState(EnemyController::ST_Exit);
+		if (controller->state() != EnemyController::ST_Frightened)
+			return;
+
+		controller->setState(EnemyController::ST_Eaten);
 		gameObject->setBrush(QBrush(Qt::transparent));
 
 		static_cast<CharacterMovement *>(gameObject->findBehavior(BT_CharacterMovement))->setMovingSpeed(300);

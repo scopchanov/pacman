@@ -2,7 +2,7 @@
 
 AbstractBehavior::AbstractBehavior(GameObject *parent) :
 	_parent{parent},
-	_disabled{false}
+	_enabled{true}
 {
 
 }
@@ -17,14 +17,14 @@ void AbstractBehavior::setParent(GameObject *parent)
 	_parent = parent;
 }
 
-bool AbstractBehavior::isDisabled() const
+bool AbstractBehavior::isEnabled() const
 {
-	return _disabled;
+	return _enabled;
 }
 
-void AbstractBehavior::setDisabled(bool value)
+void AbstractBehavior::setEnabled(bool enabled)
 {
-	_disabled = value;
+	_enabled = enabled;
 }
 
 void AbstractBehavior::reset()
@@ -34,8 +34,13 @@ void AbstractBehavior::reset()
 
 void AbstractBehavior::execute()
 {
-	if (!_parent || _disabled)
+	if (!_parent || !_enabled)
 		return;
 
 	performActions();
+}
+
+void AbstractBehavior::performActions()
+{
+
 }

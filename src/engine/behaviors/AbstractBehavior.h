@@ -9,6 +9,7 @@ public:
 	enum BehaviorType : int {
 		BT_Animation = 0,
 		BT_CameraFollow,
+		BT_Coloring,
 		BT_CharacterMovement,
 		BT_DotsEating,
 		BT_EnemyController,
@@ -25,8 +26,8 @@ public:
 
 	GameObject *parent() const;
 	void setParent(GameObject *parent);
-	bool isDisabled() const;
-	void setDisabled(bool value);
+	bool isEnabled() const;
+	void setEnabled(bool enabled);
 
 	virtual void reset();
 	void execute();
@@ -34,10 +35,10 @@ public:
 	virtual int type() const = 0;
 
 private:
-	virtual void performActions() = 0;
+	virtual void performActions();
 
 	GameObject *_parent;
-	bool _disabled;
+	bool _enabled;
 };
 
 #endif // ABSTRACTBEHAVIOR_H

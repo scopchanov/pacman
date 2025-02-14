@@ -1,8 +1,10 @@
 #include "EnemyController.h"
-#include "engine/Vector2.h"
-#include "engine/Grid.h"
+#include "engine/AiStateMachine.h"
 #include "engine/Enemy.h"
+#include "engine/Grid.h"
 #include "engine/Tilemap.h"
+#include "engine/Vector2.h"
+#include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
@@ -13,9 +15,10 @@
 EnemyController::EnemyController(Enemy *parent) :
 	AbstractBehavior(parent),
 	_state{ST_Exit},
-	_characterMovement{nullptr},
-	_player{nullptr},
+	_globalState{GS_Scatter},
 	_grid{nullptr},
+	_player{nullptr},
+	_characterMovement{nullptr},
 	_targetMark{new QGraphicsRectItem(-10, -10, 20, 20)}
 {
 	_targetMark->setPen(QPen(Qt::transparent));
@@ -30,6 +33,11 @@ void EnemyController::setState(StateType state)
 {
 	_state = state;
 	_characterMovement->reverse();
+}
+
+void EnemyController::setGlobalState(GlobalState state)
+{
+	_globalState = state;
 }
 
 void EnemyController::setCharacterMovement(CharacterMovement *characterMovement)
@@ -70,8 +78,6 @@ void EnemyController::reset()
 
 void EnemyController::performActions()
 {
-	// TODO: Improve me
-
 	if (!_characterMovement || !_player || !_grid)
 		return;
 
@@ -84,30 +90,24 @@ void EnemyController::performActions()
 		return;
 	}
 
-	// ranadom movement
-	// int cnt{static_cast<int>(directions.count())};
-	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
-	// _characterMovement->setNextMove(directions.at(ind));
-
-	qreal dt{distanceToTarget(directions.first())};
-
-	int ind{0};
+	qreal minimalDistence{distanceToTarget(directions.first())};
+	int index{0};
 	int n{1};
 
-	auto lastDirections{directions.last(directions.count() - 1)};
+	const QList<Vector2> &lastDirections{directions.last(directions.count() - 1)};
 
 	for (const auto &direction : lastDirections) {
-		qreal d{distanceToTarget(direction)};
+		qreal distance{distanceToTarget(direction)};
 
-		if (d < dt) {
-			dt = d;
-			ind = n;
+		if (distance < minimalDistence) {
+			minimalDistence = distance;
+			index = n;
 		}
 
 		n++;
 	}
 
-	_characterMovement->setNextDirection(directions.at(ind));
+	_characterMovement->setNextDirection(directions.at(index));
 
 #ifdef DEBUG
 	if (!_targetMark->scene())
@@ -128,30 +128,75 @@ qreal EnemyController::distanceToTarget(Vector2 direction) const
 
 void EnemyController::updateTargetPosition()
 {
-	auto *personality{static_cast<Enemy *>(parent())->personality()};
-
 	switch (_state) {
 	case ST_Exit:
+	case ST_Eaten:
 		_targetPosition = QPointF(360, 300);
 
-		if (hasLeftTheHouse())
-			_state = ST_Scatter;
+		if (isTargetReached())
+			restoreState();
 		break;
-	case ST_Scatter:
-		_targetPosition = personality->scatterTarget();
+	case ST_Frightened:
+		actFrightened();
 		break;
-	case ST_Chase:
-		_targetPosition = personality->calculateTarget();
+	case ST_Global:
+		processGlobalState();
 		break;
 	default:
 		break;
 	}
 }
 
-bool EnemyController::hasLeftTheHouse()
+bool EnemyController::isTargetReached()
 {
 	const QPoint &parentCell{_grid->posToCell(parent()->pos())};
 	const QPoint &targetCell{_grid->posToCell(_targetPosition)};
 
 	return parentCell == targetCell;
+}
+
+void EnemyController::processGlobalState()
+{
+	auto *personality{static_cast<Enemy *>(parent())->personality()};
+
+	switch (_globalState) {
+	case GS_Scatter:
+		_targetPosition = personality->scatterTarget();
+		break;
+	case GS_Chase:
+		_targetPosition = personality->calculateTarget();
+		break;
+	}
+}
+
+void EnemyController::restoreState()
+{
+	_state = ST_Global;
+
+	parent()->findBehavior(BT_KillPlayer)->setEnabled(true);
+
+	restoreSpeed();
+	restoreColor();
+}
+
+void EnemyController::restoreSpeed()
+{
+	auto *behavior{parent()->findBehavior(BT_CharacterMovement)};
+
+	static_cast<CharacterMovement *>(behavior)->setMovingSpeed(150);
+}
+
+void EnemyController::restoreColor()
+{
+	auto *behavior{parent()->findBehavior(BT_Coloring)};
+
+	parent()->setBrush(static_cast<Coloring *>(behavior)->color());
+}
+
+void EnemyController::actFrightened()
+{
+	// ranadom movement
+	// int cnt{static_cast<int>(directions.count())};
+	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
+	// _characterMovement->setNextMove(directions.at(ind));
 }

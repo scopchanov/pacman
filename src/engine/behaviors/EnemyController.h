@@ -15,16 +15,21 @@ class EnemyController : public AbstractBehavior
 public:
 	enum StateType : int {
 		ST_Exit = 0,
-		ST_Scatter,
-		ST_Chase,
 		ST_Frightened,
-		ST_Eaten
+		ST_Eaten,
+		ST_Global
+	};
+
+	enum GlobalState : int {
+		GS_Scatter,
+		GS_Chase
 	};
 
 	explicit EnemyController(Enemy *parent = nullptr);
 
 	StateType state() const;
-	void setState(StateType state);	
+	void setState(StateType state);
+	void setGlobalState(GlobalState state);
 	void setCharacterMovement(CharacterMovement *characterMovement);
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
@@ -38,14 +43,20 @@ private:
 	void performActions() override;
 	qreal distanceToTarget(Vector2 direction) const;
 	void updateTargetPosition();
-	bool hasLeftTheHouse();
+	bool isTargetReached();
+	void processGlobalState();
+	void restoreState();
+	void restoreSpeed();
+	void restoreColor();
+	void actFrightened();
 
 	StateType _state;
-	CharacterMovement *_characterMovement;
-	GameObject *_player;
+	GlobalState _globalState;
 	Grid *_grid;
-	QPointF _targetPosition;
+	GameObject *_player;
+	CharacterMovement *_characterMovement;
 	QGraphicsRectItem *_targetMark;
+	QPointF _targetPosition;
 };
 
 #endif // ENEMYCONTROLLER_H
