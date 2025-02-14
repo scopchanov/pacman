@@ -1,15 +1,15 @@
-#ifndef POWERINGUP_H
-#define POWERINGUP_H
+#ifndef ENERGIZING_H
+#define ENERGIZING_H
 
 #include "AbstractBehavior.h"
 #include <QList>
 
 class GameObject;
 
-class PoweringUp : public AbstractBehavior
+class Energizing : public AbstractBehavior
 {
 public:
-	explicit PoweringUp(GameObject *parent = nullptr);
+	explicit Energizing(GameObject *parent = nullptr);
 
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
@@ -23,4 +23,4 @@ private:
 	QList<GameObject *> _enemies;
 };
 
-#endif // POWERINGUP_H
+#endif // ENERGIZING_H

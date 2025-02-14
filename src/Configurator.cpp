@@ -17,8 +17,8 @@
 #include "engine/behaviors/EnemyController.h"
 #include "engine/behaviors/EnemyOrientation.h"
 #include "engine/behaviors/KillPlayer.h"
-#include "engine/behaviors/PoweringUp.h"
-#include "engine/behaviors/PowerUpAnimation.h"
+#include "engine/behaviors/Energizing.h"
+#include "engine/behaviors/EnergizerAnimation.h"
 #include "engine/personalities/Shadowing.h"
 #include "engine/personalities/Speeding.h"
 #include "engine/personalities/Shying.h"
@@ -84,6 +84,7 @@ void Configurator::configure(const QJsonObject &json)
 	_game->_scene->addItem(_game->_dots);
 
 	createEnemies(enemies);
+
 	_game->_scene->addItem(createPowerUp({2, 4}));
 	_game->_scene->addItem(createPowerUp({27, 4}));
 	_game->_scene->addItem(createPowerUp({2, 24}));
@@ -182,7 +183,7 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 
 	movement->setGameClock(_game->_clock);
 	movement->setTilemap(_game->_walls);
-	movement->setMovingSpeed(150);
+	movement->setMovingSpeed(170.4545465625);
 	movement->setInitialDirection(dir2vec(direction));
 
 	orientation->setMovement(movement);
@@ -213,8 +214,8 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 GameObject *Configurator::createPowerUp(const QPoint &cell)
 {
 	auto *powerUp{new GameObject()};
-	auto *powering{new PoweringUp(powerUp)};
-	auto *animation{new PowerUpAnimation(powerUp)};
+	auto *powering{new Energizing(powerUp)};
+	auto *animation{new EnergizerAnimation(powerUp)};
 
 	powering->setPlayer(_game->_pacman);
 

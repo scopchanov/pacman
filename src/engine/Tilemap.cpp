@@ -2,6 +2,7 @@
 #include "Grid.h"
 #include "Tile.h"
 #include "Vector2.h"
+#include <QGraphicsScene>
 
 Tilemap::Tilemap(GameObject *parent) :
 	GameObject(parent),
@@ -79,6 +80,9 @@ void Tilemap::clear()
 
 void Tilemap::deleteTile(Tile *tile)
 {
+	if (tile->scene())
+		tile->scene()->removeItem(tile);
+
 	delete tile;
 
 	_tileCount--;

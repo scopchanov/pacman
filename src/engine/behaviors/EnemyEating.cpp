@@ -3,9 +3,11 @@
 #include "engine/behaviors/EnemyController.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include <QBrush>
+#include <QHash>
 
 EnemyEating::EnemyEating(GameObject *parent) :
-	AbstractBehavior(parent)
+	AbstractBehavior(parent),
+	_enemiesEaten{0}
 {
 
 }
@@ -13,6 +15,11 @@ EnemyEating::EnemyEating(GameObject *parent) :
 int EnemyEating::type() const
 {
 	return BT_EnemyEating;
+}
+
+void EnemyEating::reset()
+{
+	_enemiesEaten = 0;
 }
 
 void EnemyEating::performActions()
@@ -31,7 +38,6 @@ void EnemyEating::performActions()
 
 		auto *controller{static_cast<EnemyController *>(behavior)};
 
-		// movement->setDisabled(true);
 		if (controller->state() != EnemyController::ST_Frightened)
 			return;
 
@@ -40,4 +46,9 @@ void EnemyEating::performActions()
 
 		static_cast<CharacterMovement *>(gameObject->findBehavior(BT_CharacterMovement))->setMovingSpeed(300);
 	}
+}
+
+int EnemyEating::points() const
+{
+	return QHash<int, int>{{0, 20}, {1, 40}, {2, 80}, {3, 160}}.value(_enemiesEaten);
 }

@@ -1,7 +1,7 @@
-#include "PowerUpAnimation.h"
+#include "EnergizerAnimation.h"
 #include "PathBuilder.h"
 
-PowerUpAnimation::PowerUpAnimation(GameObject *parent) :
+EnergizerAnimation::EnergizerAnimation(GameObject *parent) :
 	AbstractAnimationBehavior(parent)
 {
 	setValue(8);
@@ -9,7 +9,7 @@ PowerUpAnimation::PowerUpAnimation(GameObject *parent) :
 	setGameObjectType(PathBuilder::GO_PowerUp);
 }
 
-void PowerUpAnimation::update()
+void EnergizerAnimation::update()
 {
 	if (value() > 16)
 		setValue(8);

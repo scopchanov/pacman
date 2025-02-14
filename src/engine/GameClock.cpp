@@ -25,7 +25,7 @@ void GameClock::start()
 	if (_timer->isActive())
 		return;
 
-	_timer->start(30);
+	_timer->start(16); // 30
 	_time->start();
 }
 

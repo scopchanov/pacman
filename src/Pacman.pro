@@ -48,11 +48,11 @@ SOURCES += \
     engine/behaviors/EnemyController.cpp \
     engine/behaviors/EnemyEating.cpp \
     engine/behaviors/EnemyOrientation.cpp \
+    engine/behaviors/EnergizerAnimation.cpp \
+    engine/behaviors/Energizing.cpp \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
-    engine/behaviors/PowerUpAnimation.cpp \
-    engine/behaviors/PoweringUp.cpp \
     engine/personalities/AbstractPersonality.cpp \
     engine/personalities/Poking.cpp \
     engine/personalities/Shadowing.cpp \
@@ -109,11 +109,11 @@ HEADERS += \
     engine/behaviors/EnemyController.h \
     engine/behaviors/EnemyEating.h \
     engine/behaviors/EnemyOrientation.h \
+    engine/behaviors/EnergizerAnimation.h \
+    engine/behaviors/Energizing.h \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
-    engine/behaviors/PowerUpAnimation.h \
-    engine/behaviors/PoweringUp.h \
     engine/personalities/AbstractPersonality.h \
     engine/personalities/Poking.h \
     engine/personalities/Shadowing.h \

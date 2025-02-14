@@ -183,7 +183,7 @@ void EnemyController::restoreSpeed()
 {
 	auto *behavior{parent()->findBehavior(BT_CharacterMovement)};
 
-	static_cast<CharacterMovement *>(behavior)->setMovingSpeed(150);
+	static_cast<CharacterMovement *>(behavior)->setMovingSpeed(170.4545465625);
 }
 
 void EnemyController::restoreColor()
