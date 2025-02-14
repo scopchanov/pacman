@@ -56,8 +56,8 @@ QPainterPath PathBuilder::animatedObjectPath(GameObjectType type, qreal value)
 		return pacman(value);
 	case GO_Enemy:
 		return ghost(value);
-	case GO_PowerUp:
-		return powerUp(value);
+	case GO_Energizer:
+		return energizer(value);
 	default:
 		return QPainterPath();
 	}
@@ -271,7 +271,7 @@ QPainterPath PathBuilder::ghost(qreal d)
 	return p;
 }
 
-QPainterPath PathBuilder::powerUp(qreal d)
+QPainterPath PathBuilder::energizer(qreal d)
 {
 	QPainterPath p;
 

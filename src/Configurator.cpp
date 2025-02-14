@@ -85,10 +85,10 @@ void Configurator::configure(const QJsonObject &json)
 
 	createEnemies(enemies);
 
-	_game->_scene->addItem(createPowerUp({2, 4}));
-	_game->_scene->addItem(createPowerUp({27, 4}));
-	_game->_scene->addItem(createPowerUp({2, 24}));
-	_game->_scene->addItem(createPowerUp({27, 24}));
+	_game->_scene->addItem(createEnergizer({2, 4}));
+	_game->_scene->addItem(createEnergizer({27, 4}));
+	_game->_scene->addItem(createEnergizer({2, 24}));
+	_game->_scene->addItem(createEnergizer({27, 24}));
 
 	_game->stateMachine()->setGameClock(_game->_clock);
 	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 0),
@@ -98,7 +98,7 @@ void Configurator::configure(const QJsonObject &json)
 }
 
 void Configurator::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
-						const QPen &pen, const QBrush &brush)
+								const QPen &pen, const QBrush &brush)
 {
 	int m{0};
 
@@ -211,28 +211,34 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	return ghost;
 }
 
-GameObject *Configurator::createPowerUp(const QPoint &cell)
+GameObject *Configurator::createEnergizer(const QPoint &cell)
 {
-	auto *powerUp{new GameObject()};
-	auto *powering{new Energizing(powerUp)};
-	auto *animation{new EnergizerAnimation(powerUp)};
+	auto *energizer{new GameObject()};
+	auto *energizing{new Energizing(energizer)};
+	auto *animation{new EnergizerAnimation(energizer)};
+	auto *eventPlayerEnergized{new GameEvent(_game)};
 
-	powering->setPlayer(_game->_pacman);
+	energizing->setPlayer(_game->_pacman);
 
 	for (auto *ghost : std::as_const(_game->_ghosts))
-		powering->addEnemy(ghost);
+		energizing->addEnemy(ghost);
+
+	energizing->setEvent(eventPlayerEnergized);
 
 	animation->setGameClock(_game->_clock);
 
-	powerUp->setPos(_game->_grid->cellPosition(cell.y(), cell.x()));
-	powerUp->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_PowerUp, 16));
-	powerUp->setPen(QPen(Qt::transparent));
-	powerUp->setBrush(Qt::white);
+	energizer->setPos(_game->_grid->cellPosition(cell.y(), cell.x()));
+	energizer->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 16));
+	energizer->setPen(QPen(Qt::transparent));
+	energizer->setBrush(Qt::white);
 
-	powerUp->addBehavior(powering);
-	powerUp->addBehavior(animation);
+	energizer->addBehavior(energizing);
+	energizer->addBehavior(animation);
 
-	return powerUp;
+	connect(eventPlayerEnergized, &GameEvent::triggered,
+			_game, &Game::onPlayerEnergized);
+
+	return energizer;
 }
 
 GameObject *Configurator::createTeleporter(const QPointF &src, const QPointF &dst)

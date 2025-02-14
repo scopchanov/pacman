@@ -32,7 +32,7 @@ public:
 	enum GameObjectType : int {
 		GO_Player = 0,
 		GO_Enemy,
-		GO_PowerUp
+		GO_Energizer
 	};
 
 	explicit PathBuilder(QObject *parent = nullptr);
@@ -61,7 +61,7 @@ private:
 	static QPainterPath dot();
 	static QPainterPath pacman(qreal d);
 	static QPainterPath ghost(qreal d);
-	static QPainterPath powerUp(qreal d);
+	static QPainterPath energizer(qreal d);
 	static QPainterPath teleporter();
 };
 

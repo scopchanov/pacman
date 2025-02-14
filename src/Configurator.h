@@ -27,7 +27,7 @@ private:
 	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	void createEnemies(const QJsonArray &enemies);
 	Ghost *createEnemy(const QPointF &position, const QColor &color, int direction);
-	GameObject *createPowerUp(const QPoint &cell);
+	GameObject *createEnergizer(const QPoint &cell);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 	AbstractPersonality *createPersonality(int type);
 	Vector2 dir2vec(int direction);

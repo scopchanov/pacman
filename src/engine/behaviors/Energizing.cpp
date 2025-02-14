@@ -1,4 +1,5 @@
 #include "Energizing.h"
+#include "engine/GameEvent.h"
 #include "engine/GameObject.h"
 #include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/EnemyController.h"
@@ -9,7 +10,8 @@
 
 Energizing::Energizing(GameObject *parent) :
 	AbstractBehavior(parent),
-	_player{nullptr}
+	_player{nullptr},
+	_eventPlayerEnergized{nullptr}
 {
 
 }
@@ -32,14 +34,21 @@ void Energizing::addEnemy(GameObject *enemy)
 	_enemies.append(enemy);
 }
 
+void Energizing::setEvent(GameEvent *event)
+{
+	_eventPlayerEnergized = event;
+}
+
 int Energizing::type() const
 {
-	return BT_PoweringUp;
+	return BT_Energizing;
 }
 
 void Energizing::performActions()
 {
-	if (!_player || _enemies.isEmpty())
+	// TODO: Improve me
+
+	if (!_player || _enemies.isEmpty() || !_eventPlayerEnergized)
 		return;
 
 	if (!parent()->collidesWithItem(_player))
@@ -47,6 +56,7 @@ void Energizing::performActions()
 
 	_player->setBrush(QBrush(0xE040FB));
 	_player->findBehavior(BT_EnemyEating)->setEnabled(true);
+	_eventPlayerEnergized->trigger();
 
 	auto *timer{new QTimer()};
 

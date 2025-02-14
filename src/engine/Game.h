@@ -17,8 +17,6 @@ class Tile;
 class Grid;
 class Pacman;
 class Ghost;
-class PowerUp;
-
 class GameClock;
 class Vector2;
 
@@ -59,6 +57,7 @@ private:
 
 private slots:
 	void onDotEaten();
+	void onPlayerEnergized();
 	void onPlayerWins();
 	void onPlayerDies();
 	void onFuneralTunePlayed();

@@ -18,7 +18,7 @@ public:
 		BT_Orientation,
 		BT_PlayerController,
 		BT_Teleporting,
-		BT_PoweringUp
+		BT_Energizing
 	};
 
 	explicit AbstractBehavior(GameObject *parent = nullptr);
@@ -28,11 +28,10 @@ public:
 	void setParent(GameObject *parent);
 	bool isEnabled() const;
 	void setEnabled(bool enabled);
+	virtual int type() const = 0;
 
 	virtual void reset();
 	void execute();
-
-	virtual int type() const = 0;
 
 private:
 	virtual void performActions();
