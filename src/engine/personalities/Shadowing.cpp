@@ -16,5 +16,5 @@ int Shadowing::type() const
 
 Vector2 Shadowing::calculateTarget() const
 {
-	return Vector2(grid()->cellPosition(playerCell()));
+	return Vector2(grid()->mapFromGrid(playerCell()));
 }

@@ -20,5 +20,5 @@ Vector2 Poking::calculateTarget() const
 	qreal maxDistance{8*grid()->cellSize().width()};
 	bool isClose{distance <= maxDistance};
 
-	return Vector2(isClose ? scatterTarget() : grid()->cellPosition(playerCell()));
+	return Vector2(isClose ? scatterTarget() : grid()->mapFromGrid(playerCell()));
 }

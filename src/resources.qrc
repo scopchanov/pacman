@@ -9,11 +9,6 @@
         <file>audio/effects/notification.wav</file>
         <file>audio/effects/win.wav</file>
         <file>audio/effects/died.wav</file>
-    </qresource>
-    <qresource prefix="/pix">
-        <file>svg/enemy-blinky.svg</file>
-        <file>svg/enemy-inky.svg</file>
-        <file>svg/enemy-pinky.svg</file>
-        <file>svg/enemy-clyde.svg</file>
+        <file>audio/effects/enemy-eaten.wav</file>
     </qresource>
 </RCC>

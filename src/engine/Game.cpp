@@ -3,6 +3,8 @@
 #include "PathBuilder.h"
 #include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
+#include "engine/BonusText.h"
+#include "engine/GameClock.h"
 #include "engine/GameStatus.h"
 #include "engine/GameScene.h"
 #include "engine/GameClock.h"
@@ -12,7 +14,6 @@
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
 #include "engine/behaviors/EnemyController.h"
-#include "engine/GameClock.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -151,10 +152,15 @@ void Game::onDotEaten()
 
 void Game::onEnemyEaten()
 {
-	qDebug() << sender()->property("points").toInt();
+	int points{sender()->property("points").toInt()};
+	auto *text{new BonusText()};
 
-	_status->increaseScore(sender()->property("points").toInt());
-	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
+	text->setText(QString::number(points));
+	text->setPos(_pacman->pos());
+
+	_scene->addItem(text);
+	_status->increaseScore(points);
+	_audioEngine->playEffect(AudioEngine::SND_EnemyEaten);
 }
 
 void Game::onPlayerEnergized()

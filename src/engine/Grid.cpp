@@ -36,7 +36,7 @@ void Grid::setCellSize(const QSizeF &sz)
 	_cellSize = sz;
 }
 
-QPoint Grid::posToCell(const QPointF &position) const
+QPoint Grid::mapToGrid(const QPointF &position) const
 {
 	qreal row{floor(position.y()/_cellSize.height())};
 	qreal col{floor(position.x()/_cellSize.width())};
@@ -44,7 +44,7 @@ QPoint Grid::posToCell(const QPointF &position) const
 	return QPoint(col, row);
 }
 
-Vector2 Grid::cellPosition(int row, int col)
+Vector2 Grid::mapFromGrid(int row, int col)
 {
 	qreal x{_cellSize.width()*(col + 0.5)};
 	qreal y{_cellSize.height()*(row + 0.5)};
@@ -52,7 +52,7 @@ Vector2 Grid::cellPosition(int row, int col)
 	return Vector2(x, y);
 }
 
-Vector2 Grid::cellPosition(const Vector2 &cell)
+Vector2 Grid::mapFromGrid(const Vector2 &cell)
 {
-	return cellPosition(cell.y(), cell.x());
+	return mapFromGrid(cell.y(), cell.x());
 }

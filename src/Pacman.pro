@@ -21,6 +21,7 @@ SOURCES += \
     StartupSequence.cpp \
     engine/AiStateMachine.cpp \
     engine/AudioEngine.cpp \
+    engine/BonusText.cpp \
     engine/Character.cpp \
     engine/Enemy.cpp \
     engine/Game.cpp \
@@ -53,6 +54,8 @@ SOURCES += \
     engine/behaviors/KillPlayer.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
+    engine/behaviors/PlayerOrientation.cpp \
+    engine/behaviors/Teleporting.cpp \
     engine/personalities/AbstractPersonality.cpp \
     engine/personalities/Poking.cpp \
     engine/personalities/Shadowing.cpp \
@@ -63,8 +66,6 @@ SOURCES += \
     engine/Tile.cpp \
     engine/Tilemap.cpp \
     engine/Vector2.cpp \
-    engine/behaviors/PlayerOrientation.cpp \
-    engine/behaviors/Teleporting.cpp \
     main.cpp
 
 HEADERS += \
@@ -82,6 +83,7 @@ HEADERS += \
     StartupSequence.h \
     engine/AiStateMachine.h \
     engine/AudioEngine.h \
+    engine/BonusText.h \
     engine/Character.h \
     engine/Enemy.h \
     engine/Game.h \
@@ -114,6 +116,8 @@ HEADERS += \
     engine/behaviors/KillPlayer.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
+    engine/behaviors/PlayerOrientation.h \
+    engine/behaviors/Teleporting.h \
     engine/personalities/AbstractPersonality.h \
     engine/personalities/Poking.h \
     engine/personalities/Shadowing.h \
@@ -123,9 +127,7 @@ HEADERS += \
     engine/InputSystem.h \
     engine/Tile.h \
     engine/Tilemap.h \
-    engine/Vector2.h \
-    engine/behaviors/PlayerOrientation.h \
-    engine/behaviors/Teleporting.h
+    engine/Vector2.h
 
 RESOURCES += \
     resources.qrc
@@ -134,5 +136,3 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-FORMS +=

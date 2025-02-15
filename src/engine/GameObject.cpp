@@ -6,7 +6,12 @@
 GameObject::GameObject(GameObject *parent) :
 	QGraphicsPathItem(parent)
 {
+#ifdef DEBUG
+	auto *item{new QGraphicsRectItem(-12, -12, 24, 24, this)};
 
+	item->setBrush(Qt::green);
+	item->setFlag(ItemStacksBehindParent);
+#endif
 }
 
 GameObject::~GameObject()
@@ -72,7 +77,8 @@ void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 #ifdef DEBUG
 	painter->setPen(QPen(Qt::red, 1));
 	painter->setBrush(Qt::transparent);
-	painter->drawRect(boundingRect());
+	painter->drawRect(boundingRect().adjusted(0, 0, -1, -1));
 #endif
+
 	painter->restore();
 }

@@ -29,5 +29,5 @@ void AbstractSpatialBehavior::performTimedActions()
 
 Vector2 AbstractSpatialBehavior::currentCell() const
 {
-	return Vector2(_tilemap->grid()->posToCell(parent()->pos()));
+	return Vector2(_tilemap->grid()->mapToGrid(parent()->pos()));
 }

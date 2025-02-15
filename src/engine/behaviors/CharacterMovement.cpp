@@ -174,7 +174,7 @@ bool CharacterMovement::isWayClear(const Vector2 &direction) const
 
 Vector2 CharacterMovement::cellPosition(const Vector2 &cell) const
 {
-	return tilemap()->grid()->cellPosition(cell);
+	return tilemap()->grid()->mapFromGrid(cell);
 }
 
 Vector2 CharacterMovement::parentPosition() const

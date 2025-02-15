@@ -5,6 +5,7 @@ AudioEngine::AudioEngine(QObject *parent) :
 	QObject{parent}
 {
 	_effects.append(createEffect("notification", 0.25));
+	_effects.append(createEffect("enemy-eaten", 0.5));
 	_effects.append(createEffect("win", 0.5));
 	_effects.append(createEffect("died", 1));
 }

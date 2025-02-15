@@ -90,13 +90,11 @@ void Configurator::configure(const QJsonObject &json)
 	_game->_scene->addItem(createEnergizer({27, 24}));
 
 	_game->stateMachine()->setGameClock(_game->_clock);
-	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 0),
-											_game->_grid->cellPosition(15, 28)));
-	_game->_scene->addItem(createTeleporter(_game->_grid->cellPosition(15, 29),
-											_game->_grid->cellPosition(15, 2)));
+	_game->_scene->addItem(createTeleporter(_game->_grid->mapFromGrid(15, 0),
+											_game->_grid->mapFromGrid(15, 28)));
+	_game->_scene->addItem(createTeleporter(_game->_grid->mapFromGrid(15, 29),
+											_game->_grid->mapFromGrid(15, 2)));
 }
-
-
 
 void Configurator::createEnemies(const QJsonArray &enemies)
 {
@@ -115,7 +113,7 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 		auto *controller{static_cast<EnemyController *>(behavior)};
 		auto *personality{createPersonality(json.value("personality").toInt())};
 
-		personality->setScatterTarget(_game->_grid->cellPosition(Vector2(column, row)));
+		personality->setScatterTarget(_game->_grid->mapFromGrid(Vector2(column, row)));
 		personality->setPlayer(_game->_pacman);
 		personality->setGrid(_game->_grid);
 
@@ -194,7 +192,7 @@ GameObject *Configurator::createEnergizer(const QPoint &cell)
 
 	animation->setGameClock(_game->_clock);
 
-	energizer->setPos(_game->_grid->cellPosition(cell.y(), cell.x()));
+	energizer->setPos(_game->_grid->mapFromGrid(cell.y(), cell.x()));
 	energizer->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 16));
 	energizer->setPen(QPen(Qt::transparent));
 	energizer->setBrush(Qt::white);

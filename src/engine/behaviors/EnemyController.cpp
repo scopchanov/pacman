@@ -149,8 +149,8 @@ void EnemyController::updateTargetPosition()
 
 bool EnemyController::isTargetReached()
 {
-	const QPoint &parentCell{_grid->posToCell(parent()->pos())};
-	const QPoint &targetCell{_grid->posToCell(_targetPosition)};
+	const QPoint &parentCell{_grid->mapToGrid(parent()->pos())};
+	const QPoint &targetCell{_grid->mapToGrid(_targetPosition)};
 
 	return parentCell == targetCell;
 }

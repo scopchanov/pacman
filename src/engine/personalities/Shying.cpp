@@ -39,7 +39,7 @@ Vector2 Shying::calculateTarget() const
 	auto *movement{static_cast<CharacterMovement *>(behavior)};
 	const Vector2 &playerDirection(movement->currentDirection());
 	const Vector2 &referenceCell{playerCell() + playerDirection*2};
-	const Vector2 &reference{grid()->cellPosition(referenceCell)};
+	const Vector2 &reference{grid()->mapFromGrid(referenceCell)};
 
 	return Vector2(_partner->pos() - reference).reversed() + reference;
 }

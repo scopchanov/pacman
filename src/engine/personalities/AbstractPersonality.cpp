@@ -53,5 +53,5 @@ void AbstractPersonality::setScatterTarget(const QPointF &point)
 
 Vector2 AbstractPersonality::playerCell() const
 {
-	return Vector2(grid()->posToCell(player()->pos()));
+	return Vector2(grid()->mapToGrid(player()->pos()));
 }

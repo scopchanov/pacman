@@ -18,9 +18,9 @@ public:
 	QSizeF cellSize() const;
 	void setCellSize(const QSizeF &sz);
 
-	QPoint posToCell(const QPointF &position) const;
-	Vector2 cellPosition(int row, int col);
-	Vector2 cellPosition(const Vector2 &cell);
+	QPoint mapToGrid(const QPointF &position) const;
+	Vector2 mapFromGrid(int row, int col);
+	Vector2 mapFromGrid(const Vector2 &cell);
 
 private:
 	int _rowCount;

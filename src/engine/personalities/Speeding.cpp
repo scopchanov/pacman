@@ -26,5 +26,5 @@ Vector2 Speeding::calculateTarget() const
 	const Vector2 &playerDirection(movement->currentDirection());
 	const Vector2 &targetCell{playerCell() + playerDirection*4};
 
-	return grid()->cellPosition(targetCell);
+	return grid()->mapFromGrid(targetCell);
 }

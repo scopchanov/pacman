@@ -11,6 +11,7 @@ class AudioEngine : public QObject
 public:
 	enum EffectType : int {
 		SND_DotEaten = 0,
+		SND_EnemyEaten,
 		SND_PlayerWins,
 		SND_PlayerDies
 	};

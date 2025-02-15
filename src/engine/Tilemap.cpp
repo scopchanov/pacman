@@ -93,10 +93,8 @@ void Tilemap::addTile(int row, int col, Tile *tile)
 	if (!_grid || !tile)
 		return;
 
-	const QSizeF &cellSize{_grid->cellSize()};
-
 	tile->setParentItem(this);
-	tile->setPos((col + 0.5)*cellSize.width(), (row + 0.5)*cellSize.height());
+	tile->setPos(_grid->mapFromGrid(row, col));
 
 	_tileCount++;
 }
