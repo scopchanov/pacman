@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Message.h"
+#include "PathBuilder.h"
 #include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
 #include "engine/GameStatus.h"
@@ -8,6 +9,7 @@
 #include "engine/Grid.h"
 #include "engine/Pacman.h"
 #include "engine/AudioEngine.h"
+#include "engine/Tile.h"
 #include "engine/Tilemap.h"
 #include "engine/behaviors/EnemyController.h"
 #include "engine/GameClock.h"
@@ -96,8 +98,42 @@ void Game::restart()
 	_scene->reset();
 	_dots->clear();
 
-	// buildTilemap(_dots, _dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
+	buildTilemap(_dots, _dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 	start();
+}
+
+void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
+						const QPen &pen, const QBrush &brush)
+{
+	int m{0};
+
+	for (const auto &row : matrix) {
+		const QJsonArray &columns{row.toArray()};
+		int n{0};
+
+		for (const auto &column : columns) {
+			const QJsonObject &element{column.toObject()};
+			Tile *tile{element.isEmpty() ? nullptr
+										 : createTile(element["index"].toInt(),
+													  pen, brush)};
+
+			tilemap->setTile(m, n, tile);
+			n++;
+		}
+
+		m++;
+	}
+}
+
+Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
+{
+	auto *tile{new Tile()};
+
+	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
+	tile->setPen(pen);
+	tile->setBrush(brush);
+
+	return tile;
 }
 
 void Game::reset()
@@ -110,6 +146,14 @@ void Game::reset()
 void Game::onDotEaten()
 {
 	_status->increaseScore(1);
+	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
+}
+
+void Game::onEnemyEaten()
+{
+	qDebug() << sender()->property("points").toInt();
+
+	_status->increaseScore(sender()->property("points").toInt());
 	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
 }
 

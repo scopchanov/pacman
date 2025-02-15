@@ -20,6 +20,7 @@ void Player::setup(Game *game)
 {
 	auto *gameClock{game->clock()};
 	auto *eventDotEaten{new GameEvent(game)};
+	auto *eventEnemyEaten{new GameEvent(game)};
 	auto *eventPlayerWins{new GameEvent(game)};
 	auto *coloring{new Coloring(this)};
 	auto *playerController{new PlayerController(this)};
@@ -45,6 +46,7 @@ void Player::setup(Game *game)
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
+	enemyEating->setEvent(eventEnemyEaten);
 	enemyEating->setEnabled(false);
 
 	animation->setGameClock(gameClock);
@@ -58,5 +60,6 @@ void Player::setup(Game *game)
 	addBehavior(animation);
 
 	QObject::connect(eventDotEaten, &GameEvent::triggered, game, &Game::onDotEaten);
+	QObject::connect(eventEnemyEaten, &GameEvent::triggered, game, &Game::onEnemyEaten);
 	QObject::connect(eventPlayerWins, &GameEvent::triggered, game, &Game::onPlayerWins);
 }

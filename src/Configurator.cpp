@@ -9,7 +9,6 @@
 #include "engine/Grid.h"
 #include "engine/Pacman.h"
 #include "engine/Teleporter.h"
-#include "engine/Tile.h"
 #include "engine/Tilemap.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/Coloring.h"
@@ -70,11 +69,11 @@ void Configurator::configure(const QJsonObject &json)
 	_game->walls()->setGrid(_game->_grid);
 	_game->dots()->setGrid(_game->_grid);
 
-	buildTilemap(_game->walls(), wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
-	buildTilemap(_game->dots(), _game->_dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
+	_game->buildTilemap(_game->walls(), wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
+	_game->buildTilemap(_game->dots(), _game->_dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	_game->walls()->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
-	_game->walls()->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	_game->walls()->setTile(13, 14, _game->createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	_game->walls()->setTile(13, 15, _game->createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
 
 	_game->_pacman->setSpawnPosition({playerX, playerY});
 	_game->_pacman->setup(_game);
@@ -97,39 +96,7 @@ void Configurator::configure(const QJsonObject &json)
 											_game->_grid->cellPosition(15, 2)));
 }
 
-void Configurator::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
-								const QPen &pen, const QBrush &brush)
-{
-	int m{0};
 
-	for (const auto &row : matrix) {
-		const QJsonArray &columns{row.toArray()};
-		int n{0};
-
-		for (const auto &column : columns) {
-			const QJsonObject &element{column.toObject()};
-			Tile *tile{element.isEmpty() ? nullptr
-										 : createTile(element["index"].toInt(),
-													  pen, brush)};
-
-			tilemap->setTile(m, n, tile);
-			n++;
-		}
-
-		m++;
-	}
-}
-
-Tile *Configurator::createTile(int index, const QPen &pen, const QBrush &brush)
-{
-	auto *tile{new Tile()};
-
-	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
-	tile->setPen(pen);
-	tile->setBrush(brush);
-
-	return tile;
-}
 
 void Configurator::createEnemies(const QJsonArray &enemies)
 {

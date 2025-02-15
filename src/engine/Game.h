@@ -40,7 +40,8 @@ public:
 	void restart();
 
 private:
-
+	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
+	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	void reset();
 
 	GameClock *_clock;
@@ -57,6 +58,7 @@ private:
 
 private slots:
 	void onDotEaten();
+	void onEnemyEaten();
 	void onPlayerEnergized();
 	void onPlayerWins();
 	void onPlayerDies();

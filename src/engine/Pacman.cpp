@@ -1,7 +1,6 @@
 #include "Pacman.h"
 #include "PathBuilder.h"
 #include "engine/behaviors/CharacterMovement.h"
-#include "engine/behaviors/PlayerAnimation.h"
 #include <QPen>
 
 Pacman::Pacman(GameObject *parent) :

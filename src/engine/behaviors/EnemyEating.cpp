@@ -1,4 +1,5 @@
 #include "EnemyEating.h"
+#include "engine/GameEvent.h"
 #include "engine/GameObject.h"
 #include "engine/behaviors/EnemyController.h"
 #include "engine/behaviors/CharacterMovement.h"
@@ -7,9 +8,15 @@
 
 EnemyEating::EnemyEating(GameObject *parent) :
 	AbstractBehavior(parent),
-	_enemiesEaten{0}
+	_enemiesEaten{0},
+	_eventEnemyEaten{nullptr}
 {
 
+}
+
+void EnemyEating::setEvent(GameEvent *event)
+{
+	_eventEnemyEaten = event;
 }
 
 int EnemyEating::type() const
@@ -24,14 +31,17 @@ void EnemyEating::reset()
 
 void EnemyEating::performActions()
 {
+	if (!_eventEnemyEaten)
+		return;
+
 	const QList<QGraphicsItem *> &collidingItems{parent()->collidingItems()};
 
 	for (auto *item : collidingItems) {
 		if (item->type() != GameObject::IT_GameObject)
 			continue;
 
-		auto *gameObject{static_cast<GameObject *>(item)};
-		auto *behavior{gameObject->findBehavior(BT_EnemyController)};
+		auto *enemy{static_cast<GameObject *>(item)};
+		auto *behavior{enemy->findBehavior(BT_EnemyController)};
 
 		if (!behavior)
 			continue;
@@ -41,11 +51,34 @@ void EnemyEating::performActions()
 		if (controller->state() != EnemyController::ST_Frightened)
 			return;
 
-		controller->setState(EnemyController::ST_Eaten);
-		gameObject->setBrush(QBrush(Qt::transparent));
-
-		static_cast<CharacterMovement *>(gameObject->findBehavior(BT_CharacterMovement))->setMovingSpeed(300);
+		eatEnemy(enemy);
 	}
+}
+
+void EnemyEating::eatEnemy(GameObject *enemy)
+{
+	auto *behavior{enemy->findBehavior(BT_EnemyController)};
+	auto *controller{static_cast<EnemyController *>(behavior)};
+
+	controller->setState(EnemyController::ST_Eaten);
+	enemy->setBrush(QBrush(Qt::transparent));
+
+	speedUpMovement(enemy);
+
+	_eventEnemyEaten->setProperty("points", points());
+	_eventEnemyEaten->trigger();
+
+	_enemiesEaten++;
+
+	if (_enemiesEaten >= 4)
+		_enemiesEaten = 0;
+}
+
+void EnemyEating::speedUpMovement(GameObject *enemy)
+{
+	auto *behavior{enemy->findBehavior(BT_CharacterMovement)};
+
+	static_cast<CharacterMovement *>(behavior)->setMovingSpeed(300);
 }
 
 int EnemyEating::points() const

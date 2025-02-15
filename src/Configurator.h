@@ -23,8 +23,6 @@ public:
 	void setGame(Game *game);
 
 private:
-	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
-	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
 	void createEnemies(const QJsonArray &enemies);
 	Ghost *createEnemy(const QPointF &position, const QColor &color, int direction);
 	GameObject *createEnergizer(const QPoint &cell);
