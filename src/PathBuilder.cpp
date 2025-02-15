@@ -72,8 +72,8 @@ QPainterPath PathBuilder::shortLineLowLeft()
 {
 	QPainterPath p;
 
-	p.moveTo(12, 14);
-	p.lineTo(22, 14);
+	p.moveTo(0, 2);
+	p.lineTo(10, 2);
 
 	return p;
 }
@@ -82,8 +82,8 @@ QPainterPath PathBuilder::shortLineLowRight()
 {
 	QPainterPath p;
 
-	p.moveTo(2, 14);
-	p.lineTo(12, 14);
+	p.moveTo(-10, 2);
+	p.lineTo(0, 2);
 
 	return p;
 }
@@ -92,8 +92,8 @@ QPainterPath PathBuilder::shortLineHighLeft()
 {
 	QPainterPath p;
 
-	p.moveTo(12, 10);
-	p.lineTo(22, 10);
+	p.moveTo(0, -2);
+	p.lineTo(10, -2);
 
 	return p;
 }
@@ -102,8 +102,8 @@ QPainterPath PathBuilder::shortLineHighRight()
 {
 	QPainterPath p;
 
-	p.moveTo(2, 10);
-	p.lineTo(12, 10);
+	p.moveTo(-10, -2);
+	p.lineTo(0, -2);
 
 	return p;
 }
@@ -112,8 +112,8 @@ QPainterPath PathBuilder::hLineLow()
 {
 	QPainterPath p;
 
-	p.moveTo(2, 14);
-	p.lineTo(22, 14);
+	p.moveTo(-10, 2);
+	p.lineTo(10, 2);
 
 	return p;
 }
@@ -122,8 +122,8 @@ QPainterPath PathBuilder::hLineHigh()
 {
 	QPainterPath p;
 
-	p.moveTo(2, 10);
-	p.lineTo(22, 10);
+	p.moveTo(-10, -2);
+	p.lineTo(10, -2);
 
 	return p;
 }
@@ -132,8 +132,8 @@ QPainterPath PathBuilder::vLineLeft()
 {
 	QPainterPath p;
 
-	p.moveTo(10, 2);
-	p.lineTo(10, 22);
+	p.moveTo(-2, -10);
+	p.lineTo(-2, 10);
 
 	return p;
 }
@@ -142,8 +142,8 @@ QPainterPath PathBuilder::vLineRight()
 {
 	QPainterPath p;
 
-	p.moveTo(14, 2);
-	p.lineTo(14, 22);
+	p.moveTo(2, -10);
+	p.lineTo(2, 10);
 
 	return p;
 }
@@ -152,9 +152,9 @@ QPainterPath PathBuilder::bigCircleUpLeft()
 {
 	QPainterPath p;
 
-	p.moveTo(22, 10);
-	p.arcTo(10, 10, 18, 18, 90, 90);
-	p.lineTo(10, 22);
+	p.moveTo(10, -2);
+	p.arcTo(-2, -2, 18, 18, 90, 90);
+	p.lineTo(-2, 10);
 
 	return p;
 }
@@ -163,9 +163,9 @@ QPainterPath PathBuilder::bigCircleUpRight()
 {
 	QPainterPath p;
 
-	p.moveTo(14, 22);
-	p.arcTo(-4, 10, 18, 18, 0, 90);
-	p.lineTo(2, 10);
+	p.moveTo(2, 10);
+	p.arcTo(-16, -2, 18, 18, 0, 90);
+	p.lineTo(-10, -2);
 
 	return p;
 }
@@ -174,9 +174,9 @@ QPainterPath PathBuilder::bigCircleDownLeft()
 {
 	QPainterPath p;
 
-	p.moveTo(10, 2);
-	p.arcTo(10, -4, 18, 18, 180, 90);
-	p.lineTo(22, 14);
+	p.moveTo(-2, -10);
+	p.arcTo(-2, -16, 18, 18, 180, 90);
+	p.lineTo(10, 2);
 
 	return p;
 }
@@ -185,9 +185,9 @@ QPainterPath PathBuilder::bigCircleDownRight()
 {
 	QPainterPath p;
 
-	p.moveTo(2, 14);
-	p.arcTo(-4, -4, 18, 18, 270, 90);
-	p.lineTo(14, 2);
+	p.moveTo(-10, 2);
+	p.arcTo(-16, -16, 18, 18, 270, 90);
+	p.lineTo(2, -10);
 
 	return p;
 }
@@ -196,8 +196,8 @@ QPainterPath PathBuilder::smallCircleUpLeft()
 {
 	QPainterPath p;
 
-	p.moveTo(22, 14);
-	p.arcTo(14, 14, 16, 16, 90, 90);
+	p.moveTo(10, 2);
+	p.arcTo(2, 2, 16, 16, 90, 90);
 
 	return p;
 }
@@ -206,8 +206,8 @@ QPainterPath PathBuilder::smallCircleUpRight()
 {
 	QPainterPath p;
 
-	p.moveTo(10, 22);
-	p.arcTo(-6, 14, 16, 16, 0, 90);
+	p.moveTo(-2, 10);
+	p.arcTo(-18, 2, 16, 16, 0, 90);
 
 	return p;
 }
@@ -216,8 +216,8 @@ QPainterPath PathBuilder::smallCircleDownLeft()
 {
 	QPainterPath p;
 
-	p.moveTo(14, 2);
-	p.arcTo(14, -6, 16, 16, 180, 90);
+	p.moveTo(2, -10);
+	p.arcTo(2, -18, 16, 16, 180, 90);
 
 	return p;
 }
@@ -226,8 +226,8 @@ QPainterPath PathBuilder::smallCircleDownRight()
 {
 	QPainterPath p;
 
-	p.moveTo(2, 10);
-	p.arcTo(-6, -6, 16, 16, 270, 90);
+	p.moveTo(-10, -2);
+	p.arcTo(-18, -18, 16, 16, 270, 90);
 
 	return p;
 }
@@ -236,7 +236,7 @@ QPainterPath PathBuilder::dot()
 {
 	QPainterPath p;
 
-	p.addEllipse(7, 7, 10, 10);
+	p.addEllipse(-5, -5, 10, 10);
 
 	return p;
 }
