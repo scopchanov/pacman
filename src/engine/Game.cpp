@@ -4,6 +4,7 @@
 #include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
 #include "engine/BonusText.h"
+#include "engine/DeleteGameObject.h"
 #include "engine/GameClock.h"
 #include "engine/GameStatus.h"
 #include "engine/GameScene.h"
@@ -13,8 +14,8 @@
 #include "engine/AudioEngine.h"
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
+#include "engine/behaviors/Delaying.h"
 #include "engine/behaviors/EnemyController.h"
-#include "engine/behaviors/LifetimeLimiting.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -165,9 +166,14 @@ void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
 	auto *text{new BonusText()};
-	auto *lifetimeLimiting{new LifetimeLimiting(text)};
+	auto *lifetimeLimiting{new Delaying(text)};
+	auto *actDeleteGameObject{new DeleteGameObject(lifetimeLimiting)};
 
-	lifetimeLimiting->setGameClock(_clock);
+	actDeleteGameObject->setGame(this);
+	actDeleteGameObject->setGameObject(text);
+
+	lifetimeLimiting->addAction(actDeleteGameObject);
+	lifetimeLimiting->setClock(_clock);
 	lifetimeLimiting->setDuration(2);
 
 	text->addBehavior(lifetimeLimiting);

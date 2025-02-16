@@ -147,16 +147,16 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	enemyController->setPlayer(_game->_pacman);
 	enemyController->setGrid(_game->_grid);
 
-	movement->setGameClock(_game->_clock);
+	movement->setClock(_game->_clock);
 	movement->setTilemap(_game->_walls);
 	movement->setSpeed(170.4545465625);
 	movement->setInitialDirection(dir2vec(direction));
 
 	orientation->setMovement(movement);
 
-	animation->setGameClock(_game->_clock);
+	animation->setClock(_game->_clock);
 
-	killPlayer->setGameClock(_game->_clock);
+	killPlayer->setClock(_game->_clock);
 	killPlayer->setPlayer(_game->_pacman);
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
@@ -198,7 +198,7 @@ GameObject *Configurator::createEnergizer(const QPoint &cell)
 	energizing->addAction(actFrightenGhosts);
 	energizing->setEvent(eventPlayerEnergized);
 
-	animation->setGameClock(_game->_clock);
+	animation->setClock(_game->_clock);
 
 	energizer->setPos(_game->_grid->mapFromGrid(cell.y(), cell.x()));
 	energizer->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 16));

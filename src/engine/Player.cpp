@@ -36,12 +36,12 @@ void Player::setup(Game *game)
 	playerController->setInputSystem(game->scene()->inputSystem());
 
 	movement->setSpeed(181.818183);
-	movement->setGameClock(gameClock);
+	movement->setClock(gameClock);
 	movement->setTilemap(game->walls());
 
 	orientation->setMovement(movement);
 
-	dotsEating->setGameClock(gameClock);
+	dotsEating->setClock(gameClock);
 	dotsEating->setTilemap(game->dots());
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
@@ -49,7 +49,7 @@ void Player::setup(Game *game)
 	enemyEating->setEvent(eventEnemyEaten);
 	enemyEating->setEnabled(false);
 
-	animation->setGameClock(gameClock);
+	animation->setClock(gameClock);
 
 	addBehavior(coloring);
 	addBehavior(playerController);

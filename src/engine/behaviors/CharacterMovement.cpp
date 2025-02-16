@@ -105,7 +105,7 @@ void CharacterMovement::performSpatialActions()
 
 void CharacterMovement::moveCharacter()
 {
-	qreal step{_speed*gameClock()->deltaTime()};
+	qreal step{_speed*clock()->deltaTime()};
 
 	setParentPosition(parentPosition().movedTowards(_targetPosition, step));
 }

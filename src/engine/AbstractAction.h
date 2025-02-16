@@ -8,7 +8,8 @@ class AbstractAction
 {
 public:
 	enum ActionType : int {
-		ACT_EnergizePlayer = 0,
+		ACT_DeleteGameObject = 0,
+		ACT_EnergizePlayer,
 		ACT_FrightenEnemies
 	};
 

@@ -24,6 +24,7 @@ SOURCES += \
     engine/AudioEngine.cpp \
     engine/BonusText.cpp \
     engine/Character.cpp \
+    engine/DeleteGameObject.cpp \
     engine/Enemy.cpp \
     engine/EnergizePlayer.cpp \
     engine/FrightenEnemies.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
     engine/behaviors/Coloring.cpp \
+    engine/behaviors/Delaying.cpp \
     engine/behaviors/DotsEating.cpp \
     engine/behaviors/EnemyAnimation.cpp \
     engine/behaviors/EnemyController.cpp \
@@ -55,7 +57,6 @@ SOURCES += \
     engine/behaviors/EnergizerAnimation.cpp \
     engine/behaviors/Energizing.cpp \
     engine/behaviors/KillPlayer.cpp \
-    engine/behaviors/LifetimeLimiting.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
     engine/behaviors/PlayerOrientation.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     engine/AudioEngine.h \
     engine/BonusText.h \
     engine/Character.h \
+    engine/DeleteGameObject.h \
     engine/Enemy.h \
     engine/EnergizePlayer.h \
     engine/FrightenEnemies.h \
@@ -113,6 +115,7 @@ HEADERS += \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
     engine/behaviors/Coloring.h \
+    engine/behaviors/Delaying.h \
     engine/behaviors/DotsEating.h \
     engine/behaviors/EnemyAnimation.h \
     engine/behaviors/EnemyController.h \
@@ -121,7 +124,6 @@ HEADERS += \
     engine/behaviors/EnergizerAnimation.h \
     engine/behaviors/Energizing.h \
     engine/behaviors/KillPlayer.h \
-    engine/behaviors/LifetimeLimiting.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
     engine/behaviors/PlayerOrientation.h \

@@ -75,7 +75,7 @@ void AbstractAnimationBehavior::updateParent()
 
 void AbstractAnimationBehavior::performTimedActions()
 {
-	_value += _direction*_frameRate*gameClock()->deltaTime();
+	_value += _direction*_frameRate*clock()->deltaTime();
 
 	update();
 	updateParent();

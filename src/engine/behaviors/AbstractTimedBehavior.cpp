@@ -2,24 +2,24 @@
 
 AbstractTimedBehavior::AbstractTimedBehavior(GameObject *parent) :
 	AbstractBehavior(parent),
-	_gameTimer{nullptr}
+	_clock{nullptr}
 {
 
 }
 
-GameClock *AbstractTimedBehavior::gameClock() const
+GameClock *AbstractTimedBehavior::clock() const
 {
-	return _gameTimer;
+	return _clock;
 }
 
-void AbstractTimedBehavior::setGameClock(GameClock *gameTimer)
+void AbstractTimedBehavior::setClock(GameClock *clock)
 {
-	_gameTimer = gameTimer;
+	_clock = clock;
 }
 
 void AbstractTimedBehavior::performActions()
 {
-	if (!_gameTimer)
+	if (!_clock)
 		return;
 
 	performTimedActions();

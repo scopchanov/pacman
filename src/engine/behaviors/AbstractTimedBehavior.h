@@ -10,14 +10,14 @@ class AbstractTimedBehavior : public AbstractBehavior
 public:
 	explicit AbstractTimedBehavior(GameObject *parent = nullptr);
 
-	GameClock *gameClock() const;
-	virtual void setGameClock(GameClock *gameTimer);
+	GameClock *clock() const;
+	virtual void setClock(GameClock *clock);
 
 private:
 	void performActions() override final;
 	virtual void performTimedActions() = 0;
 
-	GameClock *_gameTimer;
+	GameClock *_clock;
 };
 
 #endif // ABSTRACTTIMEDBEHAVIOR_H
