@@ -11,6 +11,8 @@ public:
 	void setText(const QString &text);
 
 private:
+	void reposition();
+
 	QGraphicsTextItem *_textItem;
 };
 
