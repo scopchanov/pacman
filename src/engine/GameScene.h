@@ -13,6 +13,9 @@ public:
 
     InputSystem *inputSystem() const;
 
+	void scheduleDelete(QGraphicsItem *item);
+	void makeTurn();
+
 	void reset();
 
 protected:
@@ -20,6 +23,7 @@ protected:
 
 private:
 	InputSystem *_inputSystem;
+	QList<QGraphicsItem *> _scheduledItems;
 
 signals:
 	void pauseGame();

@@ -84,7 +84,7 @@ void Tilemap::clear()
 
 void Tilemap::deleteTile(Tile *tile)
 {
-	tile->deleteSelf();
+	tile->deleteLater();
 
 	_tileCount--;
 }

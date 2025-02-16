@@ -41,22 +41,12 @@ int Energizing::type() const
 
 void Energizing::performActions()
 {
-	// TODO: Execute once
-
 	if (!parent()->collidesWithItem(_player))
 		return;
 
 	findAction(AbstractAction::ACT_EnergizePlayer)->trigger();
 	findAction(AbstractAction::ACT_FrightenEnemies)->trigger();
+	parent()->deleteLater();
 
 	_eventPlayerEnergized->trigger();
-
-	// TODO: Safely delete the game object instead of disabling it
-
-	setEnabled(false);
-
-	parent()->findBehavior(AbstractBehavior::BT_Animation)->setEnabled(false);
-	parent()->setFlag(QGraphicsItem::ItemHasNoContents);
-
-	// parent()->deleteSelf();
 }

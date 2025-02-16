@@ -1,6 +1,6 @@
 #include "GameObject.h"
+#include "engine/GameScene.h"
 #include "behaviors/AbstractBehavior.h"
-#include <QGraphicsScene>
 #include <QStyleOptionGraphicsItem>
 #include <QPainter>
 
@@ -84,10 +84,10 @@ void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 	painter->restore();
 }
 
-void GameObject::deleteSelf()
+void GameObject::deleteLater()
 {
 	if (scene())
-		scene()->removeItem(this);
-
-	delete this;
+		static_cast<GameScene *>(scene())->scheduleDelete(this);
+	else
+		delete this;
 }

@@ -25,7 +25,7 @@ public:
 	void advance(int phase) override;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *) override;
 
-	void deleteSelf();
+	void deleteLater();
 
 private:
 	QList<AbstractBehavior *> _behaviors;

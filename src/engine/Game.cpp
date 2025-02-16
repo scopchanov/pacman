@@ -31,7 +31,7 @@ Game::Game(QObject *parent) :
 	_stateMachine{new AiStateMachine(this)},
 	_pacman{new Pacman()}
 {
-	connect(_clock, &GameClock::tick, _scene, &GameScene::advance);
+	connect(_clock, &GameClock::tick, _scene, &GameScene::makeTurn);
 	connect(_audioEngine, &AudioEngine::victoryTunePlayed, this, &Game::playerWins);
 	connect(_audioEngine, &AudioEngine::funeralTunePlayed, this, &Game::onFuneralTunePlayed);
 }

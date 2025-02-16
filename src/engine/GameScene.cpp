@@ -16,6 +16,26 @@ InputSystem *GameScene::inputSystem() const
 	return _inputSystem;
 }
 
+void GameScene::scheduleDelete(QGraphicsItem *item)
+{
+	if (_scheduledItems.contains(item))
+		return;
+
+	_scheduledItems.append(item);
+}
+
+void GameScene::makeTurn()
+{
+	advance();
+
+	while (!_scheduledItems.isEmpty()) {
+		auto *item{_scheduledItems.takeFirst()};
+
+		removeItem(item);
+		delete item;
+	}
+}
+
 void GameScene::reset()
 {
 	const QList<QGraphicsItem *> &childItems{items()};
