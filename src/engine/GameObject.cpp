@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "behaviors/AbstractBehavior.h"
+#include <QGraphicsScene>
 #include <QStyleOptionGraphicsItem>
 #include <QPainter>
 
@@ -81,4 +82,12 @@ void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 #endif
 
 	painter->restore();
+}
+
+void GameObject::deleteSelf()
+{
+	if (scene())
+		scene()->removeItem(this);
+
+	delete this;
 }

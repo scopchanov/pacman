@@ -1,7 +1,10 @@
 #ifndef ABSTRACTBEHAVIOR_H
 #define ABSTRACTBEHAVIOR_H
 
+#include <QList>
+
 class GameObject;
+class AbstractAction;
 
 class AbstractBehavior
 {
@@ -30,6 +33,8 @@ public:
 	void setEnabled(bool enabled);
 	virtual int type() const = 0;
 
+	void addAction(AbstractAction *action);
+	AbstractAction *findAction(int type) const;
 	virtual void reset();
 	void execute();
 
@@ -38,6 +43,7 @@ private:
 
 	GameObject *_parent;
 	bool _enabled;
+	QList<AbstractAction *> _actions;
 };
 
 #endif // ABSTRACTBEHAVIOR_H

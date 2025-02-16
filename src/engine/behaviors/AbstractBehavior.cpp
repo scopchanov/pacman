@@ -1,4 +1,5 @@
 #include "AbstractBehavior.h"
+#include "engine/AbstractAction.h"
 
 AbstractBehavior::AbstractBehavior(GameObject *parent) :
 	_parent{parent},
@@ -25,6 +26,23 @@ bool AbstractBehavior::isEnabled() const
 void AbstractBehavior::setEnabled(bool enabled)
 {
 	_enabled = enabled;
+}
+
+void AbstractBehavior::addAction(AbstractAction *action)
+{
+	if (_actions.contains(action))
+		return;
+
+	_actions.append(action);
+}
+
+AbstractAction *AbstractBehavior::findAction(int type) const
+{
+	for (auto *action : std::as_const(_actions))
+		if (action->type() == type)
+			return action;
+
+	return nullptr;
 }
 
 void AbstractBehavior::reset()

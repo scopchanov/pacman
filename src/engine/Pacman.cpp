@@ -18,6 +18,6 @@ void Pacman::setup(Game *game)
 	auto *behavior{findBehavior(AbstractBehavior::BT_CharacterMovement)};
 	auto *movement{static_cast<CharacterMovement *>(behavior)};
 
-	movement->setMovingSpeed(200);
+	movement->setSpeed(200);
 	movement->setNextDirection(Vector2(-1, 0));
 }

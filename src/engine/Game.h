@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "engine/Player.h"
 #include <QObject>
 #include <QJsonArray>
 #include <QSize>
@@ -16,7 +17,7 @@ class Tilemap;
 class Tile;
 class Grid;
 class Pacman;
-class Ghost;
+class Enemy;
 class GameClock;
 class Vector2;
 
@@ -33,6 +34,8 @@ public:
 	Grid *grid() const;
 	Tilemap *walls() const;
 	Tilemap *dots() const;
+	Player *player() const;
+	QList<Enemy *> enemies() const;
 
 	void start();
 	void stop();
@@ -53,7 +56,7 @@ private:
 	Tilemap *_dots;
 	AiStateMachine *_stateMachine;
 	Pacman *_pacman;
-	QList<Ghost *> _ghosts;
+	QList<Enemy *> _enemies;
 	QJsonArray _dotMatrix;
 
 private slots:

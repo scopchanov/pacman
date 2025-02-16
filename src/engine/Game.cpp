@@ -71,6 +71,16 @@ Tilemap *Game::dots() const
 	return _dots;
 }
 
+Player *Game::player() const
+{
+	return _pacman;
+}
+
+QList<Enemy *> Game::enemies() const
+{
+	return _enemies;
+}
+
 void Game::start()
 {
 	auto *sequence{new StartupSequence(this)};

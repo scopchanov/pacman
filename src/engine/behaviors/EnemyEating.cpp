@@ -78,7 +78,7 @@ void EnemyEating::speedUpMovement(GameObject *enemy)
 {
 	auto *behavior{enemy->findBehavior(BT_CharacterMovement)};
 
-	static_cast<CharacterMovement *>(behavior)->setMovingSpeed(300);
+	static_cast<CharacterMovement *>(behavior)->setSpeed(300);
 }
 
 int EnemyEating::points() const

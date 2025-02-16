@@ -3,7 +3,6 @@
 #include "GameObject.h"
 #include <QGraphicsItem>
 #include <QKeyEvent>
-#include <QDebug>
 
 GameScene::GameScene(QObject *parent) :
 	QGraphicsScene{parent},

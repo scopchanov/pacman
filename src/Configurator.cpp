@@ -10,6 +10,8 @@
 #include "engine/Pacman.h"
 #include "engine/Teleporter.h"
 #include "engine/Tilemap.h"
+#include "engine/EnergizePlayer.h"
+#include "engine/FrightenEnemies.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/EnemyAnimation.h"
@@ -61,6 +63,8 @@ void Configurator::configure(const QJsonObject &json)
 	qreal playerX{player.value("position").toObject().value("x").toDouble()};
 	qreal playerY{player.value("position").toObject().value("y").toDouble()};
 
+	_game->stateMachine()->setGameClock(_game->_clock);
+
 	_game->_dotMatrix = json.value("dots").toArray();
 
 	_game->_grid->setGridSize(rows, columns);
@@ -78,22 +82,19 @@ void Configurator::configure(const QJsonObject &json)
 	_game->_pacman->setSpawnPosition({playerX, playerY});
 	_game->_pacman->setup(_game);
 
-	_game->_scene->addItem(_game->_pacman);
-	_game->_scene->addItem(_game->_walls);
-	_game->_scene->addItem(_game->_dots);
-
-	createEnemies(enemies);
-
 	_game->_scene->addItem(createEnergizer({2, 4}));
 	_game->_scene->addItem(createEnergizer({27, 4}));
 	_game->_scene->addItem(createEnergizer({2, 24}));
 	_game->_scene->addItem(createEnergizer({27, 24}));
-
-	_game->stateMachine()->setGameClock(_game->_clock);
+	_game->_scene->addItem(_game->_pacman);
+	_game->_scene->addItem(_game->_walls);
+	_game->_scene->addItem(_game->_dots);
 	_game->_scene->addItem(createTeleporter(_game->_grid->mapFromGrid(15, 0),
 											_game->_grid->mapFromGrid(15, 28)));
 	_game->_scene->addItem(createTeleporter(_game->_grid->mapFromGrid(15, 29),
 											_game->_grid->mapFromGrid(15, 2)));
+
+	createEnemies(enemies);	
 }
 
 void Configurator::createEnemies(const QJsonArray &enemies)
@@ -118,7 +119,7 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 		personality->setGrid(_game->_grid);
 
 		if (personality->type() == AbstractPersonality::PT_Shying)
-			static_cast<Shying *>(personality)->setPartner(_game->_ghosts.at(0));
+			static_cast<Shying *>(personality)->setPartner(_game->_enemies.at(0));
 
 		enemy->setPersonality(personality);
 
@@ -148,7 +149,7 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 
 	movement->setGameClock(_game->_clock);
 	movement->setTilemap(_game->_walls);
-	movement->setMovingSpeed(170.4545465625);
+	movement->setSpeed(170.4545465625);
 	movement->setInitialDirection(dir2vec(direction));
 
 	orientation->setMovement(movement);
@@ -170,7 +171,7 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 
 	connect(eventPlayerDies, &GameEvent::triggered, _game, &Game::onPlayerDies);
 
-	_game->_ghosts.append(ghost);
+	_game->_enemies.append(ghost);
 	_game->_scene->addItem(ghost);
 
 	return ghost;
@@ -181,13 +182,20 @@ GameObject *Configurator::createEnergizer(const QPoint &cell)
 	auto *energizer{new GameObject()};
 	auto *energizing{new Energizing(energizer)};
 	auto *animation{new EnergizerAnimation(energizer)};
+	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
+	auto *actFrightenGhosts{new FrightenEnemies(energizing)};
 	auto *eventPlayerEnergized{new GameEvent(_game)};
 
 	energizing->setPlayer(_game->_pacman);
 
-	for (auto *ghost : std::as_const(_game->_ghosts))
+	for (auto *ghost : std::as_const(_game->_enemies))
 		energizing->addEnemy(ghost);
 
+	actEnergizePlayer->setGame(_game);
+	actFrightenGhosts->setGame(_game);
+
+	energizing->addAction(actEnergizePlayer);
+	energizing->addAction(actFrightenGhosts);
 	energizing->setEvent(eventPlayerEnergized);
 
 	animation->setGameClock(_game->_clock);

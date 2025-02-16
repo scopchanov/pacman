@@ -10,8 +10,8 @@ class CharacterMovement : public AbstractSpatialBehavior
 public:
 	explicit CharacterMovement(GameObject *parent = nullptr);
 
-	qreal movingSpeed() const;
-	void setMovingSpeed(qreal speed);
+	qreal speed() const;
+	void setSpeed(qreal speed);
 	Vector2 initialDirection() const;
 	void setInitialDirection(const Vector2 &direction);
 	Vector2 currentDirection() const;
@@ -42,7 +42,7 @@ private:
 	Vector2 parentPosition() const;
 	void setParentPosition(const QPointF &position);
 
-	qreal _movingSpeed;
+	qreal _speed;
 	Vector2 _initialDirection;
 	Vector2 _currentDirection;
 	Vector2 _nextDirection;

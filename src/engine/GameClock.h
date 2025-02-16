@@ -18,6 +18,7 @@ public:
 public slots:
     void start();
     void stop();
+	void onTimeout();
 
 private:
 	GameScene *_scene;
@@ -25,7 +26,6 @@ private:
 	QTimer *_timer;
 
 private slots:
-    void onTimeout();
 
 signals:
 	void tick();

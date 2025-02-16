@@ -63,6 +63,10 @@ bool Tilemap::resetTile(int row, int col)
 
 bool Tilemap::hasTile(int row, int col) const
 {
+	if (row < 0 || row >= _grid->rowCount()
+		|| col < 0 || col >= _grid->columnCount())
+		return false;
+
 	return _tiles.at(row).at(col);
 }
 
@@ -80,10 +84,7 @@ void Tilemap::clear()
 
 void Tilemap::deleteTile(Tile *tile)
 {
-	if (tile->scene())
-		tile->scene()->removeItem(tile);
-
-	delete tile;
+	tile->deleteSelf();
 
 	_tileCount--;
 }

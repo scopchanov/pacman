@@ -19,11 +19,14 @@ SOURCES += \
     PathBuilder.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
+    engine/AbstractAction.cpp \
     engine/AiStateMachine.cpp \
     engine/AudioEngine.cpp \
     engine/BonusText.cpp \
     engine/Character.cpp \
     engine/Enemy.cpp \
+    engine/EnergizePlayer.cpp \
+    engine/FrightenEnemies.cpp \
     engine/Game.cpp \
     engine/GameClock.cpp \
     engine/GameEvent.cpp \
@@ -81,11 +84,14 @@ HEADERS += \
     PathBuilder.h \
     ScoreDisplay.h \
     StartupSequence.h \
+    engine/AbstractAction.h \
     engine/AiStateMachine.h \
     engine/AudioEngine.h \
     engine/BonusText.h \
     engine/Character.h \
     engine/Enemy.h \
+    engine/EnergizePlayer.h \
+    engine/FrightenEnemies.h \
     engine/Game.h \
     engine/GameClock.h \
     engine/GameEvent.h \
