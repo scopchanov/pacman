@@ -43,16 +43,16 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 {
 	switch (event->key()) {
 	case Qt::Key_Left:
-		_inputSystem->setUserInput(Vector2(-1, 0));
+		_inputSystem->setUserInput(V2_LEFT);
 		break;
 	case Qt::Key_Right:
-		_inputSystem->setUserInput(Vector2(1, 0));
+		_inputSystem->setUserInput(V2_RIGHT);
 		break;
 	case Qt::Key_Up:
-		_inputSystem->setUserInput(Vector2(0, -1));
+		_inputSystem->setUserInput(V2_UP);
 		break;
 	case Qt::Key_Down:
-		_inputSystem->setUserInput(Vector2(0, 1));
+		_inputSystem->setUserInput(V2_DOWN);
 		break;
 	case Qt::Key_Escape:
 		emit pauseGame();
@@ -63,7 +63,6 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 	default:
 		break;
 	}
-
 }
 
 void GameScene::deleteScheduledItems()

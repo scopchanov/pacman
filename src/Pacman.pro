@@ -55,6 +55,7 @@ SOURCES += \
     engine/behaviors/EnergizerAnimation.cpp \
     engine/behaviors/Energizing.cpp \
     engine/behaviors/KillPlayer.cpp \
+    engine/behaviors/LifetimeLimiting.cpp \
     engine/behaviors/PlayerAnimation.cpp \
     engine/behaviors/PlayerController.cpp \
     engine/behaviors/PlayerOrientation.cpp \
@@ -120,6 +121,7 @@ HEADERS += \
     engine/behaviors/EnergizerAnimation.h \
     engine/behaviors/Energizing.h \
     engine/behaviors/KillPlayer.h \
+    engine/behaviors/LifetimeLimiting.h \
     engine/behaviors/PlayerAnimation.h \
     engine/behaviors/PlayerController.h \
     engine/behaviors/PlayerOrientation.h \

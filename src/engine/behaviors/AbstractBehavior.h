@@ -18,6 +18,7 @@ public:
 		BT_EnemyController,
 		BT_EnemyEating,
 		BT_KillPlayer,
+		BT_LifetimeLimiting,
 		BT_Orientation,
 		BT_PlayerController,
 		BT_Teleporting,

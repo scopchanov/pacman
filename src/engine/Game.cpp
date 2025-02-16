@@ -14,6 +14,7 @@
 #include "engine/Tile.h"
 #include "engine/Tilemap.h"
 #include "engine/behaviors/EnemyController.h"
+#include "engine/behaviors/LifetimeLimiting.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -164,7 +165,12 @@ void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
 	auto *text{new BonusText()};
+	auto *lifetimeLimiting{new LifetimeLimiting(text)};
 
+	lifetimeLimiting->setGameClock(_clock);
+	lifetimeLimiting->setDuration(2);
+
+	text->addBehavior(lifetimeLimiting);
 	text->setText(QString::number(points));
 	text->setPos(_pacman->pos());
 
