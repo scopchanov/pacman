@@ -4,6 +4,7 @@
 #include <QGraphicsPathItem>
 
 class AbstractBehavior;
+class GameScene;
 
 class GameObject : public QGraphicsPathItem
 {
@@ -19,12 +20,12 @@ public:
     int behaviorCount() const;
 	AbstractBehavior *behavior(int n) const;
 	AbstractBehavior *findBehavior(int type) const;
+	GameScene *gameScene() const;
 	int type() const override;
 
 	virtual void reset();
 	void advance(int phase) override;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *) override;
-
 	void deleteLater();
 
 private:

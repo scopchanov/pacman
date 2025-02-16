@@ -45,6 +45,11 @@ AbstractBehavior *GameObject::findBehavior(int type) const
 	return nullptr;
 }
 
+GameScene *GameObject::gameScene() const
+{
+	return scene() ? static_cast<GameScene *>(scene()) : nullptr;
+}
+
 int GameObject::type() const
 {
 	return QGraphicsItem::UserType;
@@ -86,8 +91,8 @@ void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 void GameObject::deleteLater()
 {
-	if (scene())
-		static_cast<GameScene *>(scene())->scheduleDelete(this);
+	if (gameScene())
+		gameScene()->scheduleDelete(this);
 	else
 		delete this;
 }

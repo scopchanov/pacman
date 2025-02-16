@@ -22,6 +22,8 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 private:
+	void deleteScheduledItems();
+
 	InputSystem *_inputSystem;
 	QList<QGraphicsItem *> _scheduledItems;
 

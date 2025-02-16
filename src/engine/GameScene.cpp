@@ -27,13 +27,7 @@ void GameScene::scheduleDelete(QGraphicsItem *item)
 void GameScene::makeTurn()
 {
 	advance();
-
-	while (!_scheduledItems.isEmpty()) {
-		auto *item{_scheduledItems.takeFirst()};
-
-		removeItem(item);
-		delete item;
-	}
+	deleteScheduledItems();
 }
 
 void GameScene::reset()
@@ -70,4 +64,14 @@ void GameScene::keyPressEvent(QKeyEvent *event)
 		break;
 	}
 
+}
+
+void GameScene::deleteScheduledItems()
+{
+	while (!_scheduledItems.isEmpty()) {
+		auto *item{_scheduledItems.takeFirst()};
+
+		removeItem(item);
+		delete item;
+	}
 }
