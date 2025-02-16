@@ -1,7 +1,7 @@
 #include "Energizing.h"
 #include "engine/GameEvent.h"
 #include "engine/GameObject.h"
-#include "engine/AbstractAction.h"
+#include "engine/actions/AbstractAction.h"
 
 Energizing::Energizing(GameObject *parent) :
 	AbstractBehavior(parent),

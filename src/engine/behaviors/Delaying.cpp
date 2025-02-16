@@ -1,6 +1,6 @@
 #include "Delaying.h"
 #include "engine/GameClock.h"
-#include "engine/AbstractAction.h"
+#include "engine/actions/AbstractAction.h"
 
 Delaying::Delaying(GameObject *parent) :
 	AbstractTimedBehavior(parent),

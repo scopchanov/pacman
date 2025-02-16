@@ -19,15 +19,11 @@ SOURCES += \
     PathBuilder.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
-    engine/AbstractAction.cpp \
     engine/AiStateMachine.cpp \
     engine/AudioEngine.cpp \
     engine/BonusText.cpp \
     engine/Character.cpp \
-    engine/DeleteGameObject.cpp \
     engine/Enemy.cpp \
-    engine/EnergizePlayer.cpp \
-    engine/FrightenEnemies.cpp \
     engine/Game.cpp \
     engine/GameClock.cpp \
     engine/GameEvent.cpp \
@@ -40,6 +36,10 @@ SOURCES += \
     engine/Pacman.cpp \
     engine/Player.cpp \
     engine/Teleporter.cpp \
+    engine/actions/AbstractAction.cpp \
+    engine/actions/DeleteGameObject.cpp \
+    engine/actions/EnergizePlayer.cpp \
+    engine/actions/FrightenEnemies.cpp \
     engine/behaviors/AbstractAnimationBehavior.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractOrientationBehavior.cpp \
@@ -86,15 +86,11 @@ HEADERS += \
     PathBuilder.h \
     ScoreDisplay.h \
     StartupSequence.h \
-    engine/AbstractAction.h \
     engine/AiStateMachine.h \
     engine/AudioEngine.h \
     engine/BonusText.h \
     engine/Character.h \
-    engine/DeleteGameObject.h \
     engine/Enemy.h \
-    engine/EnergizePlayer.h \
-    engine/FrightenEnemies.h \
     engine/Game.h \
     engine/GameClock.h \
     engine/GameEvent.h \
@@ -107,6 +103,10 @@ HEADERS += \
     engine/Pacman.h \
     engine/Player.h \
     engine/Teleporter.h \
+    engine/actions/AbstractAction.h \
+    engine/actions/DeleteGameObject.h \
+    engine/actions/EnergizePlayer.h \
+    engine/actions/FrightenEnemies.h \
     engine/behaviors/AbstractAnimationBehavior.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractOrientationBehavior.h \

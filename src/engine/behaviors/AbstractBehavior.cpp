@@ -1,5 +1,5 @@
 #include "AbstractBehavior.h"
-#include "engine/AbstractAction.h"
+#include "engine/actions/AbstractAction.h"
 
 AbstractBehavior::AbstractBehavior(GameObject *parent) :
 	_parent{parent},

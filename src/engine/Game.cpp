@@ -4,7 +4,7 @@
 #include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
 #include "engine/BonusText.h"
-#include "engine/DeleteGameObject.h"
+#include "engine/actions/DeleteGameObject.h"
 #include "engine/GameClock.h"
 #include "engine/GameStatus.h"
 #include "engine/GameScene.h"
