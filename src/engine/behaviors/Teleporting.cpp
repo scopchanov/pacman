@@ -1,5 +1,5 @@
 #include "Teleporting.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include "engine/behaviors/CharacterMovement.h"
 
 Teleporting::Teleporting(GameObject *parent) :

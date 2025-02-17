@@ -1,5 +1,5 @@
 #include "Coloring.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include <QBrush>
 
 Coloring::Coloring(GameObject *parent) :

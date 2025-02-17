@@ -1,6 +1,6 @@
 #include "AbstractAnimationBehavior.h"
 #include "PathBuilder.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include "engine/GameClock.h"
 
 AbstractAnimationBehavior::AbstractAnimationBehavior(GameObject *parent) :

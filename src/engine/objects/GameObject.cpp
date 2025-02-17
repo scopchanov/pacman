@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "engine/GameScene.h"
-#include "behaviors/AbstractBehavior.h"
+#include "engine/behaviors/AbstractBehavior.h"
 #include <QStyleOptionGraphicsItem>
 #include <QPainter>
 

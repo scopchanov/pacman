@@ -1,5 +1,5 @@
 #include "Shying.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include "engine/Grid.h"
 #include "engine/Vector2.h"
 #include "engine/behaviors/CharacterMovement.h"

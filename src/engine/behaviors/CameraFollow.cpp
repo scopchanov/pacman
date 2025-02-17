@@ -1,5 +1,5 @@
 #include "CameraFollow.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include <QGraphicsView>
 #include <QScrollBar>
 

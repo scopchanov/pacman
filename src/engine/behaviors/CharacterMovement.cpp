@@ -1,5 +1,5 @@
 #include "CharacterMovement.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include "engine/GameClock.h"
 #include "engine/Grid.h"
 #include "engine/Tilemap.h"
@@ -7,7 +7,7 @@
 CharacterMovement::CharacterMovement(GameObject *parent) :
 	AbstractSpatialBehavior(parent),
 	_speed{0.0},
-	_initialDirection{Vector2(-1, 0)},
+	_initialDirection{V2_LEFT},
 	_currentDirection{_initialDirection}
 {
 	targetParentPosition();

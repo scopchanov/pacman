@@ -64,7 +64,7 @@ SOURCES += \
     engine/behaviors/PlayerOrientation.cpp \
     engine/behaviors/Teleporting.cpp \
     engine/objects/Deenergizer.cpp \
-    engine/objects/GameObject.h \
+    engine/objects/GameObject.cpp \
     engine/personalities/AbstractPersonality.cpp \
     engine/personalities/Poking.cpp \
     engine/personalities/Shadowing.cpp \

@@ -1,6 +1,6 @@
 #include "Energizing.h"
 #include "engine/GameEvent.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include "engine/actions/AbstractAction.h"
 
 Energizing::Energizing(GameObject *parent) :

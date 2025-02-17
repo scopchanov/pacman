@@ -1,6 +1,6 @@
 #include "KillPlayer.h"
 #include "engine/GameEvent.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 
 KillPlayer::KillPlayer(GameObject *parent) :
 	AbstractTimedBehavior(parent),

@@ -1,6 +1,6 @@
 #include "PlayerOrientation.h"
 #include "CharacterMovement.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include <QHash>
 
 PlayerOrientation::PlayerOrientation(GameObject *parent) :

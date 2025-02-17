@@ -1,6 +1,6 @@
 #include "EnemyOrientation.h"
 #include "CharacterMovement.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 #include "engine/Ghost.h"
 #include "engine/GhostEye.h"
 

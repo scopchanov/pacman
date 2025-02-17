@@ -1,6 +1,6 @@
 #include "EnemyAnimation.h"
 #include "PathBuilder.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 
 EnemyAnimation::EnemyAnimation(GameObject *parent) :
 	AbstractAnimationBehavior(parent)
