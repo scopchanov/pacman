@@ -34,7 +34,6 @@ void Player::setup()
 	playerController->setCharacterMovement(movement);
 	playerController->setInputSystem(static_cast<GameScene *>(Game::ref().scene())->inputSystem());
 
-	movement->setSpeed(181.818183);
 	movement->setTilemap(Game::ref().walls());
 
 	orientation->setMovement(movement);
