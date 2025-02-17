@@ -8,9 +8,11 @@ class AbstractAction
 {
 public:
 	enum ActionType : int {
-		ACT_DeleteGameObject = 0,
+		ACT_CalmDownEnemies = 0,
+		ACT_DeleteGameObject,
+		ACT_DeenergizePlayer,
 		ACT_EnergizePlayer,
-		ACT_FrightenEnemies
+		ACT_ScareEnemies
 	};
 
 	explicit AbstractAction(AbstractBehavior *parent = nullptr);

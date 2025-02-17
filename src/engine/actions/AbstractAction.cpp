@@ -29,7 +29,7 @@ void AbstractAction::setGame(Game *game)
 
 void AbstractAction::trigger()
 {
-	if (!_game)
+	if (!_parent || !_game)
 		return;
 
 	performTask();

@@ -13,13 +13,6 @@ class Grid;
 class EnemyController : public AbstractBehavior
 {
 public:
-	enum StateType : int {
-		ST_Exit = 0,
-		ST_Frightened,
-		ST_Eaten,
-		ST_Global
-	};
-
 	enum GlobalState : int {
 		GS_Scatter,
 		GS_Chase
@@ -27,8 +20,6 @@ public:
 
 	explicit EnemyController(Enemy *parent = nullptr);
 
-	StateType state() const;
-	void setState(StateType state);
 	void setGlobalState(GlobalState state);
 	void setCharacterMovement(CharacterMovement *characterMovement);
 	GameObject *player() const;
@@ -45,12 +36,9 @@ private:
 	void updateTargetPosition();
 	bool isTargetReached();
 	void processGlobalState();
-	void restoreState();
-	void restoreSpeed();
-	void restoreColor();
 	void actFrightened();
+	Enemy *parentEnemy();
 
-	StateType _state;
 	GlobalState _globalState;
 	Grid *_grid;
 	GameObject *_player;

@@ -3,6 +3,7 @@
 
 #include "AbstractBehavior.h"
 
+class Enemy;
 class GameEvent;
 class GameObject;
 
@@ -18,8 +19,7 @@ public:
 
 private:
 	void performActions() override;
-	void eatEnemy(GameObject *enemy);
-	void speedUpMovement(GameObject *enemy);
+	void eatEnemy(Enemy *enemy);
 	int points() const;
 
 	int _enemiesEaten;

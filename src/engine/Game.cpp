@@ -4,6 +4,8 @@
 #include "StartupSequence.h"
 #include "engine/AiStateMachine.h"
 #include "engine/BonusText.h"
+#include "engine/actions/CalmDownEnemies.h"
+#include "engine/actions/DeenergizePlayer.h"
 #include "engine/actions/DeleteGameObject.h"
 #include "engine/GameClock.h"
 #include "engine/GameStatus.h"
@@ -187,6 +189,27 @@ void Game::onEnemyEaten()
 
 void Game::onPlayerEnergized()
 {
+	auto *deenergizer{new GameObject()};
+	auto *deenergizing{new Delaying(deenergizer)};
+	auto *actDeenergizePlayer{new DeenergizePlayer(deenergizing)};
+	auto *actCalmDownEnemies{new CalmDownEnemies(deenergizing)};
+	auto *actDeleteDeenergizer{new DeleteGameObject(deenergizing)};
+
+	actDeenergizePlayer->setGame(this);
+	actCalmDownEnemies->setGame(this);
+	actDeleteDeenergizer->setGame(this);
+	actDeleteDeenergizer->setGameObject(deenergizer);
+
+	deenergizing->setDuration(6);
+	deenergizing->setClock(_clock);
+	deenergizing->addAction(actDeenergizePlayer);
+	deenergizing->addAction(actCalmDownEnemies);
+	deenergizing->addAction(actDeleteDeenergizer);
+
+	deenergizer->addBehavior(deenergizing);
+	deenergizer->setFlag(QGraphicsItem::ItemHasNoContents);
+
+	_scene->addItem(deenergizer);
 	_status->increaseScore(5);
 	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
 }

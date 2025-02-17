@@ -4,7 +4,6 @@
 #include "engine/Grid.h"
 #include "engine/Tilemap.h"
 #include "engine/Vector2.h"
-#include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
@@ -14,7 +13,6 @@
 
 EnemyController::EnemyController(Enemy *parent) :
 	AbstractBehavior(parent),
-	_state{ST_Exit},
 	_globalState{GS_Scatter},
 	_grid{nullptr},
 	_player{nullptr},
@@ -22,17 +20,6 @@ EnemyController::EnemyController(Enemy *parent) :
 	_targetMark{new QGraphicsRectItem(-10, -10, 20, 20)}
 {
 	_targetMark->setPen(QPen(Qt::transparent));
-}
-
-EnemyController::StateType EnemyController::state() const
-{
-	return _state;
-}
-
-void EnemyController::setState(StateType state)
-{
-	_state = state;
-	_characterMovement->reverse();
 }
 
 void EnemyController::setGlobalState(GlobalState state)
@@ -72,7 +59,7 @@ int EnemyController::type() const
 
 void EnemyController::reset()
 {
-	_state = ST_Exit;
+	parentEnemy()->setState(Enemy::ST_Exit);
 	_targetPosition = QPointF(360, 300);
 }
 
@@ -128,18 +115,18 @@ qreal EnemyController::distanceToTarget(Vector2 direction) const
 
 void EnemyController::updateTargetPosition()
 {
-	switch (_state) {
-	case ST_Exit:
-	case ST_Eaten:
+	switch (parentEnemy()->state()) {
+	case Enemy::ST_Exit:
+	case Enemy::ST_Eaten:
 		_targetPosition = QPointF(360, 300);
 
 		if (isTargetReached())
-			restoreState();
+			parentEnemy()->calmDown();
 		break;
-	case ST_Frightened:
+	case Enemy::ST_Frightened:
 		actFrightened();
 		break;
-	case ST_Global:
+	case Enemy::ST_Global:
 		processGlobalState();
 		break;
 	default:
@@ -157,7 +144,7 @@ bool EnemyController::isTargetReached()
 
 void EnemyController::processGlobalState()
 {
-	auto *personality{static_cast<Enemy *>(parent())->personality()};
+	auto *personality{parentEnemy()->personality()};
 
 	switch (_globalState) {
 	case GS_Scatter:
@@ -169,34 +156,15 @@ void EnemyController::processGlobalState()
 	}
 }
 
-void EnemyController::restoreState()
-{
-	_state = ST_Global;
-
-	parent()->findBehavior(BT_KillPlayer)->setEnabled(true);
-
-	restoreSpeed();
-	restoreColor();
-}
-
-void EnemyController::restoreSpeed()
-{
-	auto *behavior{parent()->findBehavior(BT_CharacterMovement)};
-
-	static_cast<CharacterMovement *>(behavior)->setSpeed(170.4545465625);
-}
-
-void EnemyController::restoreColor()
-{
-	auto *behavior{parent()->findBehavior(BT_Coloring)};
-
-	parent()->setBrush(static_cast<Coloring *>(behavior)->color());
-}
-
 void EnemyController::actFrightened()
 {
 	// ranadom movement
 	// int cnt{static_cast<int>(directions.count())};
 	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
 	// _characterMovement->setNextMove(directions.at(ind));
+}
+
+Enemy *EnemyController::parentEnemy()
+{
+	return static_cast<Enemy *>(parent());
 }

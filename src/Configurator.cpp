@@ -10,8 +10,9 @@
 #include "engine/Pacman.h"
 #include "engine/Teleporter.h"
 #include "engine/Tilemap.h"
+#include "engine/actions/DeleteGameObject.h"
 #include "engine/actions/EnergizePlayer.h"
-#include "engine/actions/FrightenEnemies.h"
+#include "engine/actions/ScareEnemies.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/EnemyAnimation.h"
@@ -183,13 +184,10 @@ GameObject *Configurator::createEnergizer(const QPoint &cell)
 	auto *energizing{new Energizing(energizer)};
 	auto *animation{new EnergizerAnimation(energizer)};
 	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
-	auto *actFrightenGhosts{new FrightenEnemies(energizing)};
+	auto *actFrightenGhosts{new ScareEnemies(energizing)};
 	auto *eventPlayerEnergized{new GameEvent(_game)};
 
 	energizing->setPlayer(_game->_pacman);
-
-	for (auto *ghost : std::as_const(_game->_enemies))
-		energizing->addEnemy(ghost);
 
 	actEnergizePlayer->setGame(_game);
 	actFrightenGhosts->setGame(_game);

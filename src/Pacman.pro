@@ -37,9 +37,11 @@ SOURCES += \
     engine/Player.cpp \
     engine/Teleporter.cpp \
     engine/actions/AbstractAction.cpp \
+    engine/actions/CalmDownEnemies.cpp \
+    engine/actions/DeenergizePlayer.cpp \
     engine/actions/DeleteGameObject.cpp \
     engine/actions/EnergizePlayer.cpp \
-    engine/actions/FrightenEnemies.cpp \
+    engine/actions/ScareEnemies.cpp \
     engine/behaviors/AbstractAnimationBehavior.cpp \
     engine/behaviors/AbstractBehavior.cpp \
     engine/behaviors/AbstractOrientationBehavior.cpp \
@@ -104,9 +106,11 @@ HEADERS += \
     engine/Player.h \
     engine/Teleporter.h \
     engine/actions/AbstractAction.h \
+    engine/actions/CalmDownEnemies.h \
+    engine/actions/DeenergizePlayer.h \
     engine/actions/DeleteGameObject.h \
     engine/actions/EnergizePlayer.h \
-    engine/actions/FrightenEnemies.h \
+    engine/actions/ScareEnemies.h \
     engine/behaviors/AbstractAnimationBehavior.h \
     engine/behaviors/AbstractBehavior.h \
     engine/behaviors/AbstractOrientationBehavior.h \

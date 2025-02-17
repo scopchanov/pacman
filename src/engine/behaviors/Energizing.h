@@ -14,7 +14,6 @@ public:
 
 	GameObject *player() const;
 	void setPlayer(GameObject *player);
-	void addEnemy(GameObject *enemy);
 	void setEvent(GameEvent *event);
 	int type() const override;
 
@@ -22,7 +21,6 @@ private:
 	void performActions() override;
 
 	GameObject *_player;
-	QList<GameObject *> _enemies;
 	GameEvent *_eventPlayerEnergized;
 };
 

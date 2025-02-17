@@ -21,14 +21,6 @@ void Energizing::setPlayer(GameObject *player)
 	_player = player;
 }
 
-void Energizing::addEnemy(GameObject *enemy)
-{
-	if (_enemies.contains(enemy))
-		return;
-
-	_enemies.append(enemy);
-}
-
 void Energizing::setEvent(GameEvent *event)
 {
 	_eventPlayerEnergized = event;
@@ -45,7 +37,7 @@ void Energizing::performActions()
 		return;
 
 	findAction(AbstractAction::ACT_EnergizePlayer)->trigger();
-	findAction(AbstractAction::ACT_FrightenEnemies)->trigger();
+	findAction(AbstractAction::ACT_ScareEnemies)->trigger();
 	parent()->deleteLater();
 
 	_eventPlayerEnergized->trigger();
