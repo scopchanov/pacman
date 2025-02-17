@@ -10,15 +10,12 @@ class KillPlayer : public AbstractTimedBehavior
 public:
 	explicit KillPlayer(GameObject *parent = nullptr);
 
-	GameObject *player() const;
-	void setPlayer(GameObject *player);
 	void setEventPlayerDies(GameEvent *gameEvent);
 	int type() const override;
 
 private:
-	void performTimedActions() override;
+	void performActions() override;
 
-	GameObject *_player;
 	GameEvent *_eventPlayerDies;
 };
 

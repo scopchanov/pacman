@@ -24,12 +24,13 @@ class Vector2;
 class Game : public QObject
 {
     Q_OBJECT
-public:
+
 	explicit Game(QObject *parent = nullptr);
 
+public:
 	GameClock *clock() const;
 	GameStatus *status() const;
-	GameScene *scene() const;
+	QGraphicsScene *scene() const;
 	AiStateMachine *stateMachine() const;
 	Grid *grid() const;
 	Tilemap *walls() const;
@@ -41,6 +42,8 @@ public:
 	void stop();
 	void resume();
 	void restart();
+
+	static Game &ref();
 
 private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
@@ -59,11 +62,13 @@ private:
 	QList<Enemy *> _enemies;
 	QJsonArray _dotMatrix;
 
-private slots:
+public slots:
 	void onDotEaten();
 	void onEnemyEaten();
-	void onPlayerEnergized();
 	void onPlayerWins();
+
+private slots:
+	void onPlayerEnergized();
 	void onPlayerDies();
 	void onFuneralTunePlayed();
 
@@ -71,7 +76,6 @@ signals:
 	void playerWins();
 	void gameOver();
 
-	friend class Player;
 	friend class Configurator;
 };
 

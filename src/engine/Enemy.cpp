@@ -40,7 +40,7 @@ void Enemy::setState(StateType state)
 	// _characterMovement->reverse();
 }
 
-void Enemy::setup(Game *game)
+void Enemy::setup()
 {
 
 }

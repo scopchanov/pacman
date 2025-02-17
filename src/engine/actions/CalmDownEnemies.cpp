@@ -15,7 +15,7 @@ int CalmDownEnemies::type() const
 
 void CalmDownEnemies::performTask()
 {
-	const QList<Enemy *> enemies{game()->enemies()};
+	const QList<Enemy *> enemies{Game::ref().enemies()};
 
 	for (auto *enemy : enemies)
 		if (enemy->state() != Enemy::ST_Eaten)

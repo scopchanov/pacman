@@ -30,7 +30,7 @@ protected:
 	void updateParent();
 
 private:
-	void performTimedActions() override final;
+	void performActions() override final;
 	virtual void update() = 0;
 
 	int _gameObjectType;

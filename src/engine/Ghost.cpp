@@ -25,7 +25,7 @@ GhostEye *Ghost::rightEye() const
 	return _rightEye;
 }
 
-void Ghost::setup(Game *game)
+void Ghost::setup()
 {
-	Enemy::setup(game);
+	Enemy::setup();
 }

@@ -1,8 +1,7 @@
 #include "AbstractAction.h"
 
 AbstractAction::AbstractAction(AbstractBehavior *parent) :
-	_parent{parent},
-	_game{nullptr}
+	_parent{parent}
 {
 
 }
@@ -17,19 +16,9 @@ void AbstractAction::setParent(AbstractBehavior *parent)
 	_parent = parent;
 }
 
-Game *AbstractAction::game() const
-{
-	return _game;
-}
-
-void AbstractAction::setGame(Game *game)
-{
-	_game = game;
-}
-
 void AbstractAction::trigger()
 {
-	if (!_parent || !_game)
+	if (!_parent)
 		return;
 
 	performTask();

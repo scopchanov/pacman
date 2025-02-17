@@ -10,7 +10,7 @@ public:
 	explicit GameView(QWidget *parent = nullptr);
 
 protected:
-	void wheelEvent(QWheelEvent *event) override;
+	void wheelEvent(QWheelEvent *) override;
 };
 
 #endif // GAMEVIEW_H

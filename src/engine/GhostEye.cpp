@@ -2,6 +2,8 @@
 #include "Vector2.h"
 #include <QPen>
 
+using Pair = QPair<int, int>;
+
 GhostEye::GhostEye(QGraphicsItem *parent) :
 	QGraphicsEllipseItem{parent},
 	_iris{new QGraphicsEllipseItem(this)}
@@ -17,24 +19,9 @@ GhostEye::GhostEye(QGraphicsItem *parent) :
 
 void GhostEye::orient(const Vector2 &direction)
 {
-	// QRectF(-9, -6, 6, 6)
-	// QRectF(3, -6, 6, 6)
+	const QHash<Pair, Pair> &hash{{{-1, 0}, {-2, 0}}, {{1, 0}, {2, 0}},
+								  {{0, -1}, {0, -3}}, {{0, 1}, {0, 3}}};
+	const Pair &pair{hash.value({direction.x(), direction.y()})};
 
-	if (direction == Vector2(-1, 0)) {
-		_iris->setPos(-2, 0);
-		// parent()->childItems().at(2)->setPos(-2, -3);
-		// parent()->childItems().at(3)->setPos(-2, -3);
-	} else if (direction == Vector2(1, 0)) {
-		_iris->setPos(2, 0);
-		// parent()->childItems().at(2)->setPos(2, -3);
-		// parent()->childItems().at(3)->setPos(2, -3);
-	} else if (direction == Vector2(0, -1)) {
-		_iris->setPos(0, -3);
-		// parent()->childItems().at(2)->setPos(0, -6);
-		// parent()->childItems().at(3)->setPos(0, -6);
-	} else {
-		_iris->setPos(0, 3);
-		// parent()->childItems().at(2)->setPos(0, 0);
-		// parent()->childItems().at(3)->setPos(0, 0);
-	}
+	_iris->setPos(pair.first, pair.second);
 }

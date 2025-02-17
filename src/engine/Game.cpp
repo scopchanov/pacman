@@ -17,6 +17,7 @@
 #include "engine/actions/DeleteGameObject.h"
 #include "engine/behaviors/Delaying.h"
 #include "engine/behaviors/EnemyController.h"
+#include "engine/objects/Deenergizer.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -49,7 +50,7 @@ GameStatus *Game::status() const
 	return _status;
 }
 
-GameScene *Game::scene() const
+QGraphicsScene *Game::scene() const
 {
 	return _scene;
 }
@@ -116,6 +117,13 @@ void Game::restart()
 	start();
 }
 
+Game &Game::ref()
+{
+	static Game game;
+
+	return game;
+}
+
 void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 						const QPen &pen, const QBrush &brush)
 {
@@ -171,11 +179,9 @@ void Game::onEnemyEaten()
 	auto *delayedDeleting{new Delaying(text)};
 	auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
 
-	actDeleteGameObject->setGame(this);
 	actDeleteGameObject->setGameObject(text);
 
 	delayedDeleting->addAction(actDeleteGameObject);
-	delayedDeleting->setClock(_clock);
 	delayedDeleting->setDuration(2);
 
 	text->addBehavior(delayedDeleting);
@@ -187,37 +193,17 @@ void Game::onEnemyEaten()
 	_audioEngine->playEffect(AudioEngine::SND_EnemyEaten);
 }
 
-void Game::onPlayerEnergized()
-{
-	auto *deenergizer{new GameObject()};
-	auto *deenergizing{new Delaying(deenergizer)};
-	auto *actDeenergizePlayer{new DeenergizePlayer(deenergizing)};
-	auto *actCalmDownEnemies{new CalmDownEnemies(deenergizing)};
-	auto *actDeleteDeenergizer{new DeleteGameObject(deenergizing)};
-
-	actDeenergizePlayer->setGame(this);
-	actCalmDownEnemies->setGame(this);
-	actDeleteDeenergizer->setGame(this);
-	actDeleteDeenergizer->setGameObject(deenergizer);
-
-	deenergizing->setDuration(6);
-	deenergizing->setClock(_clock);
-	deenergizing->addAction(actDeenergizePlayer);
-	deenergizing->addAction(actCalmDownEnemies);
-	deenergizing->addAction(actDeleteDeenergizer);
-
-	deenergizer->addBehavior(deenergizing);
-	deenergizer->setFlag(QGraphicsItem::ItemHasNoContents);
-
-	_scene->addItem(deenergizer);
-	_status->increaseScore(5);
-	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
-}
-
 void Game::onPlayerWins()
 {
 	_clock->stop();
 	_audioEngine->playEffect(AudioEngine::SND_PlayerWins);
+}
+
+void Game::onPlayerEnergized()
+{
+	_scene->addItem(new Deenergizer());
+	_status->increaseScore(5);
+	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
 }
 
 void Game::onPlayerDies()

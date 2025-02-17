@@ -17,7 +17,7 @@ int EnergizePlayer::type() const
 
 void EnergizePlayer::performTask()
 {
-	auto *player{game()->player()};
+	auto *player{Game::ref().player()};
 
 	player->setBrush(QBrush(0xE040FB));
 	player->findBehavior(AbstractBehavior::BT_EnemyEating)->setEnabled(true);

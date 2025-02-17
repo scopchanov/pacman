@@ -1,26 +1,13 @@
 #include "AbstractTimedBehavior.h"
+#include "engine/Game.h"
 
 AbstractTimedBehavior::AbstractTimedBehavior(GameObject *parent) :
-	AbstractBehavior(parent),
-	_clock{nullptr}
+	AbstractBehavior(parent)
 {
 
 }
 
 GameClock *AbstractTimedBehavior::clock() const
 {
-	return _clock;
-}
-
-void AbstractTimedBehavior::setClock(GameClock *clock)
-{
-	_clock = clock;
-}
-
-void AbstractTimedBehavior::performActions()
-{
-	if (!_clock)
-		return;
-
-	performTimedActions();
+	return Game::ref().clock();
 }

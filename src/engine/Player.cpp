@@ -16,12 +16,11 @@ Player::Player(GameObject *parent) :
 
 }
 
-void Player::setup(Game *game)
+void Player::setup()
 {
-	auto *gameClock{game->clock()};
-	auto *eventDotEaten{new GameEvent(game)};
-	auto *eventEnemyEaten{new GameEvent(game)};
-	auto *eventPlayerWins{new GameEvent(game)};
+	auto *eventDotEaten{new GameEvent()};
+	auto *eventEnemyEaten{new GameEvent()};
+	auto *eventPlayerWins{new GameEvent()};
 	auto *coloring{new Coloring(this)};
 	auto *playerController{new PlayerController(this)};
 	auto *movement{new CharacterMovement(this)};
@@ -33,23 +32,19 @@ void Player::setup(Game *game)
 	coloring->setColor(Qt::white);
 
 	playerController->setCharacterMovement(movement);
-	playerController->setInputSystem(game->scene()->inputSystem());
+	playerController->setInputSystem(static_cast<GameScene *>(Game::ref().scene())->inputSystem());
 
 	movement->setSpeed(181.818183);
-	movement->setClock(gameClock);
-	movement->setTilemap(game->walls());
+	movement->setTilemap(Game::ref().walls());
 
 	orientation->setMovement(movement);
 
-	dotsEating->setClock(gameClock);
-	dotsEating->setTilemap(game->dots());
+	dotsEating->setTilemap(Game::ref().dots());
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
 	enemyEating->setEvent(eventEnemyEaten);
 	enemyEating->setEnabled(false);
-
-	animation->setClock(gameClock);
 
 	addBehavior(coloring);
 	addBehavior(playerController);
@@ -59,7 +54,7 @@ void Player::setup(Game *game)
 	addBehavior(enemyEating);
 	addBehavior(animation);
 
-	QObject::connect(eventDotEaten, &GameEvent::triggered, game, &Game::onDotEaten);
-	QObject::connect(eventEnemyEaten, &GameEvent::triggered, game, &Game::onEnemyEaten);
-	QObject::connect(eventPlayerWins, &GameEvent::triggered, game, &Game::onPlayerWins);
+	QObject::connect(eventDotEaten, &GameEvent::triggered, &Game::ref(), &Game::onDotEaten);
+	QObject::connect(eventEnemyEaten, &GameEvent::triggered, &Game::ref(), &Game::onEnemyEaten);
+	QObject::connect(eventPlayerWins, &GameEvent::triggered, &Game::ref(), &Game::onPlayerWins);
 }

@@ -11,13 +11,6 @@ public:
 	explicit AbstractTimedBehavior(GameObject *parent = nullptr);
 
 	GameClock *clock() const;
-	virtual void setClock(GameClock *clock);
-
-private:
-	void performActions() override final;
-	virtual void performTimedActions() = 0;
-
-	GameClock *_clock;
 };
 
 #endif // ABSTRACTTIMEDBEHAVIOR_H

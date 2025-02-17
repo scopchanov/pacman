@@ -11,13 +11,13 @@ Pacman::Pacman(GameObject *parent) :
 	setBrush(Qt::white);
 }
 
-void Pacman::setup(Game *game)
+void Pacman::setup()
 {
-	Player::setup(game);
+	Player::setup();
 
 	auto *behavior{findBehavior(AbstractBehavior::BT_CharacterMovement)};
 	auto *movement{static_cast<CharacterMovement *>(behavior)};
 
 	movement->setSpeed(200);
-	movement->setNextDirection(Vector2(-1, 0));
+	movement->setNextDirection(V2_LEFT);
 }

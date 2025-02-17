@@ -2,7 +2,6 @@
 #include "GameClock.h"
 #include "engine/behaviors/EnemyController.h"
 #include <QHash>
-#include <QDebug>
 
 AiStateMachine::AiStateMachine(QObject *parent) :
 	QObject{parent},

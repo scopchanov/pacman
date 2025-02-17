@@ -13,7 +13,7 @@ public:
 	GhostEye *leftEye() const;
 	GhostEye *rightEye() const;
 
-	void setup(Game *game) override;
+	void setup() override;
 
 private:
 	GhostEye *_leftEye;

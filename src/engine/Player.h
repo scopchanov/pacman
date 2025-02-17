@@ -7,8 +7,8 @@ class Player : public Character
 {
 public:
 	explicit Player(GameObject *parent = nullptr);
-
-	void setup(Game *game) override;
+	
+	void setup() override;
 };
 
 #endif // PLAYER_H

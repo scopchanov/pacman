@@ -23,7 +23,7 @@ public:
 	StateType state() const;
 	void setState(StateType state);
 
-	void setup(Game *game) override;
+	void setup() override;
 	void scare();
 	void calmDown();
 	void eat();

@@ -2,20 +2,15 @@
 #include "engine/AiStateMachine.h"
 #include "engine/Enemy.h"
 #include "engine/Grid.h"
-#include "engine/Tilemap.h"
-#include "engine/Vector2.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
-#include <QGraphicsRectItem>
 #include <QRandomGenerator>
-#include <QPen>
 
 EnemyController::EnemyController(Enemy *parent) :
 	AbstractBehavior(parent),
 	_globalState{GS_Scatter},
 	_grid{nullptr},
-	_player{nullptr},
 	_characterMovement{nullptr},
 	_targetMark{new QGraphicsRectItem(-10, -10, 20, 20)}
 {
@@ -30,16 +25,6 @@ void EnemyController::setGlobalState(GlobalState state)
 void EnemyController::setCharacterMovement(CharacterMovement *characterMovement)
 {
 	_characterMovement = characterMovement;
-}
-
-GameObject *EnemyController::player() const
-{
-	return _player;
-}
-
-void EnemyController::setPlayer(GameObject *player)
-{
-	_player = player;
 }
 
 Grid *EnemyController::grid() const
@@ -65,7 +50,7 @@ void EnemyController::reset()
 
 void EnemyController::performActions()
 {
-	if (!_characterMovement || !_player || !_grid)
+	if (!_characterMovement || !_grid)
 		return;
 
 	updateTargetPosition();

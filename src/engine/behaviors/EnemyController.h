@@ -22,8 +22,6 @@ public:
 
 	void setGlobalState(GlobalState state);
 	void setCharacterMovement(CharacterMovement *characterMovement);
-	GameObject *player() const;
-	void setPlayer(GameObject *player);
 	Grid *grid() const;
 	void setGrid(Grid *grid);
 	int type() const override;
@@ -41,7 +39,6 @@ private:
 
 	GlobalState _globalState;
 	Grid *_grid;
-	GameObject *_player;
 	CharacterMovement *_characterMovement;
 	QGraphicsRectItem *_targetMark;
 	QPointF _targetPosition;

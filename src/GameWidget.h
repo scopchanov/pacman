@@ -15,7 +15,6 @@ public:
 	void startGame();
 
 private:
-	Game *_game;
 	GameView *_gameView;
 
 signals:

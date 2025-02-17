@@ -19,9 +19,6 @@ public:
 
 	void configure(const QJsonObject &json);
 
-	Game *game() const;
-	void setGame(Game *game);
-
 private:
 	void createEnemies(const QJsonArray &enemies);
 	Ghost *createEnemy(const QPointF &position, const QColor &color, int direction);
@@ -29,8 +26,6 @@ private:
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 	AbstractPersonality *createPersonality(int type);
 	Vector2 dir2vec(int direction);
-
-	Game *_game;
 };
 
 #endif // CONFIGURATOR_H

@@ -73,7 +73,7 @@ void AbstractAnimationBehavior::updateParent()
 	parent()->update();
 }
 
-void AbstractAnimationBehavior::performTimedActions()
+void AbstractAnimationBehavior::performActions()
 {
 	_value += _direction*_frameRate*clock()->deltaTime();
 

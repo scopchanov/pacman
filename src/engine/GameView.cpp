@@ -13,7 +13,7 @@ GameView::GameView(QWidget *parent) :
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }
 
-void GameView::wheelEvent(QWheelEvent *event)
+void GameView::wheelEvent(QWheelEvent *)
 {
 
 }

@@ -31,25 +31,14 @@
 #include <QHash>
 
 Configurator::Configurator(QObject *parent) :
-	QObject{parent},
-	_game{nullptr}
+	QObject{parent}
 {
 
-}
-
-Game *Configurator::game() const
-{
-	return _game;
-}
-
-void Configurator::setGame(Game *game)
-{
-	_game = game;
 }
 
 void Configurator::configure(const QJsonObject &json)
 {
-	if (!_game || json.isEmpty())
+	if (json.isEmpty())
 		return;
 
 	const QJsonArray &wallMatrix{json.value("walls").toArray()};
@@ -63,37 +52,38 @@ void Configurator::configure(const QJsonObject &json)
 	qreal height{cellSize.value("height").toDouble()};
 	qreal playerX{player.value("position").toObject().value("x").toDouble()};
 	qreal playerY{player.value("position").toObject().value("y").toDouble()};
+	const Game &game{Game::ref()};
 
-	_game->stateMachine()->setGameClock(_game->_clock);
+	game.stateMachine()->setGameClock(game._clock);
 
-	_game->_dotMatrix = json.value("dots").toArray();
+	Game::ref()._dotMatrix = json.value("dots").toArray();
 
-	_game->_grid->setGridSize(rows, columns);
-	_game->_grid->setCellSize(QSizeF(width, height));
+	game._grid->setGridSize(rows, columns);
+	game._grid->setCellSize(QSizeF(width, height));
 
-	_game->walls()->setGrid(_game->_grid);
-	_game->dots()->setGrid(_game->_grid);
+	game.walls()->setGrid(game._grid);
+	game.dots()->setGrid(game._grid);
 
-	_game->buildTilemap(_game->walls(), wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
-	_game->buildTilemap(_game->dots(), _game->_dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
+	Game::ref().buildTilemap(game.walls(), wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
+	Game::ref().buildTilemap(game.dots(), game._dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	_game->walls()->setTile(13, 14, _game->createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
-	_game->walls()->setTile(13, 15, _game->createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	game.walls()->setTile(13, 14, Game::ref().createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	game.walls()->setTile(13, 15, Game::ref().createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
 
-	_game->_player->setSpawnPosition({playerX, playerY});
-	_game->_player->setup(_game);
+	game._player->setSpawnPosition({playerX, playerY});
+	game._player->setup();
 
-	_game->_scene->addItem(createEnergizer({2, 4}));
-	_game->_scene->addItem(createEnergizer({27, 4}));
-	_game->_scene->addItem(createEnergizer({2, 24}));
-	_game->_scene->addItem(createEnergizer({27, 24}));
-	_game->_scene->addItem(_game->_player);
-	_game->_scene->addItem(_game->_walls);
-	_game->_scene->addItem(_game->_dots);
-	_game->_scene->addItem(createTeleporter(_game->_grid->mapFromGrid(15, 0),
-											_game->_grid->mapFromGrid(15, 28)));
-	_game->_scene->addItem(createTeleporter(_game->_grid->mapFromGrid(15, 29),
-											_game->_grid->mapFromGrid(15, 2)));
+	game._scene->addItem(createEnergizer({2, 4}));
+	game._scene->addItem(createEnergizer({27, 4}));
+	game._scene->addItem(createEnergizer({2, 24}));
+	game._scene->addItem(createEnergizer({27, 24}));
+	game._scene->addItem(game._player);
+	game._scene->addItem(game._walls);
+	game._scene->addItem(game._dots);
+	game._scene->addItem(createTeleporter(game._grid->mapFromGrid(15, 0),
+											game._grid->mapFromGrid(15, 28)));
+	game._scene->addItem(createTeleporter(game._grid->mapFromGrid(15, 29),
+											game._grid->mapFromGrid(15, 2)));
 
 	createEnemies(enemies);	
 }
@@ -115,16 +105,16 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 		auto *controller{static_cast<EnemyController *>(behavior)};
 		auto *personality{createPersonality(json.value("personality").toInt())};
 
-		personality->setScatterTarget(_game->_grid->mapFromGrid(Vector2(column, row)));
-		personality->setPlayer(_game->_player);
-		personality->setGrid(_game->_grid);
+		personality->setScatterTarget(Game::ref()._grid->mapFromGrid(Vector2(column, row)));
+		personality->setPlayer(Game::ref()._player);
+		personality->setGrid(Game::ref()._grid);
 
 		if (personality->type() == AbstractPersonality::PT_Shying)
-			static_cast<Shying *>(personality)->setPartner(_game->_enemies.at(0));
+			static_cast<Shying *>(personality)->setPartner(Game::ref()._enemies.at(0));
 
 		enemy->setPersonality(personality);
 
-		_game->stateMachine()->addEnemyController(controller);
+		Game::ref().stateMachine()->addEnemyController(controller);
 	}
 }
 
@@ -140,25 +130,19 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	auto *enemyController{new EnemyController(ghost)};
 	auto *animation{new EnemyAnimation(ghost)};
 	auto *killPlayer{new KillPlayer(ghost)};
-	auto *eventPlayerDies{new GameEvent(_game)};
+	auto *eventPlayerDies{new GameEvent()};
 
 	coloring->setColor(color);
 
 	enemyController->setCharacterMovement(movement);
-	enemyController->setPlayer(_game->_player);
-	enemyController->setGrid(_game->_grid);
+	enemyController->setGrid(Game::ref()._grid);
 
-	movement->setClock(_game->_clock);
-	movement->setTilemap(_game->_walls);
+	movement->setTilemap(Game::ref()._walls);
 	movement->setSpeed(170.4545465625);
 	movement->setInitialDirection(dir2vec(direction));
 
 	orientation->setMovement(movement);
 
-	animation->setClock(_game->_clock);
-
-	killPlayer->setClock(_game->_clock);
-	killPlayer->setPlayer(_game->_player);
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
 	ghost->addBehavior(coloring);
@@ -170,10 +154,10 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 
 	ghost->setBrush(color);
 
-	connect(eventPlayerDies, &GameEvent::triggered, _game, &Game::onPlayerDies);
+	connect(eventPlayerDies, &GameEvent::triggered, &Game::ref(), &Game::onPlayerDies);
 
-	_game->_enemies.append(ghost);
-	_game->_scene->addItem(ghost);
+	Game::ref()._enemies.append(ghost);
+	Game::ref()._scene->addItem(ghost);
 
 	return ghost;
 }
@@ -185,20 +169,14 @@ GameObject *Configurator::createEnergizer(const QPoint &cell)
 	auto *animation{new EnergizerAnimation(energizer)};
 	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
 	auto *actFrightenGhosts{new ScareEnemies(energizing)};
-	auto *eventPlayerEnergized{new GameEvent(_game)};
+	auto *eventPlayerEnergized{new GameEvent()};
 
-	energizing->setPlayer(_game->_player);
-
-	actEnergizePlayer->setGame(_game);
-	actFrightenGhosts->setGame(_game);
-
+	energizing->setEvent(eventPlayerEnergized);
+	energizing->setPlayer(Game().ref()._player);
 	energizing->addAction(actEnergizePlayer);
 	energizing->addAction(actFrightenGhosts);
-	energizing->setEvent(eventPlayerEnergized);
 
-	animation->setClock(_game->_clock);
-
-	energizer->setPos(_game->_grid->mapFromGrid(cell.y(), cell.x()));
+	energizer->setPos(Game().ref()._grid->mapFromGrid(cell.y(), cell.x()));
 	energizer->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 16));
 	energizer->setPen(QPen(Qt::transparent));
 	energizer->setBrush(Qt::white);
@@ -207,7 +185,7 @@ GameObject *Configurator::createEnergizer(const QPoint &cell)
 	energizer->addBehavior(animation);
 
 	connect(eventPlayerEnergized, &GameEvent::triggered,
-			_game, &Game::onPlayerEnergized);
+			&Game::ref(), &Game::onPlayerEnergized);
 
 	return energizer;
 }

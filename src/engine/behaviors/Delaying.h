@@ -14,7 +14,7 @@ public:
 	int type() const override;
 
 private:
-	void performTimedActions() override;
+	void performActions() override;
 	bool increaseTime();
 	bool delayDurationExceeded() const;
 

@@ -2,7 +2,6 @@
 #define ABSTRACTACTION_H
 
 class AbstractBehavior;
-class Game;
 
 class AbstractAction
 {
@@ -20,8 +19,6 @@ public:
 
 	AbstractBehavior *parent() const;
 	void setParent(AbstractBehavior *parent);
-	Game *game() const;
-	void setGame(Game *game);
 	virtual int type() const = 0;
 
 	void trigger();
@@ -30,7 +27,6 @@ private:
 	virtual void performTask() = 0;
 
 	AbstractBehavior *_parent;
-	Game *_game;
 };
 
 #endif // ABSTRACTACTION_H

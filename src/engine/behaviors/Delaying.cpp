@@ -33,7 +33,7 @@ int Delaying::type() const
 	return BT_Delaying;
 }
 
-void Delaying::performTimedActions()
+void Delaying::performActions()
 {
 	if (increaseTime() && delayDurationExceeded())
 		for (auto *action : std::as_const(_actions))

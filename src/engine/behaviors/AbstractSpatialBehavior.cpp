@@ -19,7 +19,7 @@ void AbstractSpatialBehavior::setTilemap(Tilemap *tilemap)
 	_tilemap = tilemap;
 }
 
-void AbstractSpatialBehavior::performTimedActions()
+void AbstractSpatialBehavior::performActions()
 {
 	if (!_tilemap)
 		return;

@@ -19,7 +19,7 @@ protected:
 	Vector2 currentCell() const;
 
 private:
-	void performTimedActions() override final;
+	void performActions() override final;
 	virtual void performSpatialActions() = 0;
 
 	Tilemap *_tilemap;

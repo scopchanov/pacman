@@ -3,6 +3,8 @@
 #include "engine/objects/GameObject.h"
 #include <QHash>
 
+using Pair = QPair<int, int>;
+
 PlayerOrientation::PlayerOrientation(GameObject *parent) :
 	AbstractOrientationBehavior(parent)
 {
@@ -16,19 +18,8 @@ void PlayerOrientation::performOrientationActions()
 
 qreal PlayerOrientation::directionToAngle(const Vector2 &direction) const
 {
-	// TODO: Improve me
+	const QHash<Pair, qreal> &hash{{{-1, 0}, 0.0}, {{1, 0}, 180.0},
+								   {{0, -1}, 90.0}, {{0, 1}, 270.0}};
 
-	if (direction == Vector2(-1, 0))
-		return 0;
-	else if (direction == Vector2(1, 0))
-		return 180;
-	else if (direction == Vector2(0, -1))
-		return 90;
-	else
-		return 270;
-
-	// return QHash<Vector2, int>{{Vector2(-1, 0), 0},
-	// 						   {Vector2(1, 0), 180},
-	// 						   {Vector2(0, -1), 90},
-	// 						   {Vector2(0, 1), 270}}.value(direction);
+	return hash.value({direction.x(), direction.y()});
 }
