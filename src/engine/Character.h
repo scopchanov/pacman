@@ -1,7 +1,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "GameObject.h"
+#include "engine/objects/GameObject.h"
 
 class Game;
 

@@ -1,7 +1,7 @@
 #ifndef TILEMAP_H
 #define TILEMAP_H
 
-#include "GameObject.h"
+#include "engine/objects/GameObject.h"
 
 class Grid;
 class Tile;

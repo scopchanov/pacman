@@ -1,7 +1,7 @@
 #ifndef BONUSTEXT_H
 #define BONUSTEXT_H
 
-#include "GameObject.h"
+#include "engine/objects/GameObject.h"
 
 class BonusText : public GameObject
 {

@@ -1,6 +1,6 @@
 #include "GameScene.h"
 #include "InputSystem.h"
-#include "GameObject.h"
+#include "engine/objects/GameObject.h"
 #include <QGraphicsItem>
 #include <QKeyEvent>
 

@@ -1,7 +1,7 @@
 #ifndef TELEPORTER_H
 #define TELEPORTER_H
 
-#include "GameObject.h"
+#include "engine/objects/GameObject.h"
 
 class Teleporter : public GameObject
 {

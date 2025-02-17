@@ -2,20 +2,19 @@
 #include "Message.h"
 #include "PathBuilder.h"
 #include "StartupSequence.h"
-#include "engine/AiStateMachine.h"
-#include "engine/BonusText.h"
+#include "AiStateMachine.h"
+#include "BonusText.h"
+#include "GameClock.h"
+#include "GameStatus.h"
+#include "GameScene.h"
+#include "Grid.h"
+#include "Pacman.h"
+#include "AudioEngine.h"
+#include "Tile.h"
+#include "Tilemap.h"
 #include "engine/actions/CalmDownEnemies.h"
 #include "engine/actions/DeenergizePlayer.h"
 #include "engine/actions/DeleteGameObject.h"
-#include "engine/GameClock.h"
-#include "engine/GameStatus.h"
-#include "engine/GameScene.h"
-#include "engine/GameClock.h"
-#include "engine/Grid.h"
-#include "engine/Pacman.h"
-#include "engine/AudioEngine.h"
-#include "engine/Tile.h"
-#include "engine/Tilemap.h"
 #include "engine/behaviors/Delaying.h"
 #include "engine/behaviors/EnemyController.h"
 #include <QJsonObject>
@@ -29,11 +28,11 @@ Game::Game(QObject *parent) :
 	_status{new GameStatus(this)},
 	_scene{new GameScene(this)},
 	_audioEngine{new AudioEngine(this)},
-	_grid{new Grid()},
+	_grid{new Grid(this)},
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
 	_stateMachine{new AiStateMachine(this)},
-	_pacman{new Pacman()}
+	_player{new Pacman()}
 {
 	connect(_clock, &GameClock::tick, _scene, &GameScene::makeTurn);
 	connect(_audioEngine, &AudioEngine::victoryTunePlayed, this, &Game::playerWins);
@@ -77,7 +76,7 @@ Tilemap *Game::dots() const
 
 Player *Game::player() const
 {
-	return _pacman;
+	return _player;
 }
 
 QList<Enemy *> Game::enemies() const
@@ -155,6 +154,7 @@ void Game::reset()
 {
 	_stateMachine->reset();
 	_scene->reset();
+
 	start();
 }
 
@@ -168,19 +168,19 @@ void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
 	auto *text{new BonusText()};
-	auto *lifetimeLimiting{new Delaying(text)};
-	auto *actDeleteGameObject{new DeleteGameObject(lifetimeLimiting)};
+	auto *delayedDeleting{new Delaying(text)};
+	auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
 
 	actDeleteGameObject->setGame(this);
 	actDeleteGameObject->setGameObject(text);
 
-	lifetimeLimiting->addAction(actDeleteGameObject);
-	lifetimeLimiting->setClock(_clock);
-	lifetimeLimiting->setDuration(2);
+	delayedDeleting->addAction(actDeleteGameObject);
+	delayedDeleting->setClock(_clock);
+	delayedDeleting->setDuration(2);
 
-	text->addBehavior(lifetimeLimiting);
+	text->addBehavior(delayedDeleting);
 	text->setText(QString::number(points));
-	text->setPos(_pacman->pos());
+	text->setPos(_player->pos());
 
 	_scene->addItem(text);
 	_status->increaseScore(points);

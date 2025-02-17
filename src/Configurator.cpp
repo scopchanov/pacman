@@ -7,7 +7,7 @@
 #include "engine/GameClock.h"
 #include "engine/Ghost.h"
 #include "engine/Grid.h"
-#include "engine/Pacman.h"
+#include "engine/Player.h"
 #include "engine/Teleporter.h"
 #include "engine/Tilemap.h"
 #include "engine/actions/DeleteGameObject.h"
@@ -80,14 +80,14 @@ void Configurator::configure(const QJsonObject &json)
 	_game->walls()->setTile(13, 14, _game->createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
 	_game->walls()->setTile(13, 15, _game->createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
 
-	_game->_pacman->setSpawnPosition({playerX, playerY});
-	_game->_pacman->setup(_game);
+	_game->_player->setSpawnPosition({playerX, playerY});
+	_game->_player->setup(_game);
 
 	_game->_scene->addItem(createEnergizer({2, 4}));
 	_game->_scene->addItem(createEnergizer({27, 4}));
 	_game->_scene->addItem(createEnergizer({2, 24}));
 	_game->_scene->addItem(createEnergizer({27, 24}));
-	_game->_scene->addItem(_game->_pacman);
+	_game->_scene->addItem(_game->_player);
 	_game->_scene->addItem(_game->_walls);
 	_game->_scene->addItem(_game->_dots);
 	_game->_scene->addItem(createTeleporter(_game->_grid->mapFromGrid(15, 0),
@@ -116,7 +116,7 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 		auto *personality{createPersonality(json.value("personality").toInt())};
 
 		personality->setScatterTarget(_game->_grid->mapFromGrid(Vector2(column, row)));
-		personality->setPlayer(_game->_pacman);
+		personality->setPlayer(_game->_player);
 		personality->setGrid(_game->_grid);
 
 		if (personality->type() == AbstractPersonality::PT_Shying)
@@ -145,7 +145,7 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	coloring->setColor(color);
 
 	enemyController->setCharacterMovement(movement);
-	enemyController->setPlayer(_game->_pacman);
+	enemyController->setPlayer(_game->_player);
 	enemyController->setGrid(_game->_grid);
 
 	movement->setClock(_game->_clock);
@@ -158,7 +158,7 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	animation->setClock(_game->_clock);
 
 	killPlayer->setClock(_game->_clock);
-	killPlayer->setPlayer(_game->_pacman);
+	killPlayer->setPlayer(_game->_player);
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
 	ghost->addBehavior(coloring);
@@ -187,7 +187,7 @@ GameObject *Configurator::createEnergizer(const QPoint &cell)
 	auto *actFrightenGhosts{new ScareEnemies(energizing)};
 	auto *eventPlayerEnergized{new GameEvent(_game)};
 
-	energizing->setPlayer(_game->_pacman);
+	energizing->setPlayer(_game->_player);
 
 	actEnergizePlayer->setGame(_game);
 	actFrightenGhosts->setGame(_game);

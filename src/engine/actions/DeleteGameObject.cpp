@@ -1,5 +1,5 @@
 #include "DeleteGameObject.h"
-#include "engine/GameObject.h"
+#include "engine/objects/GameObject.h"
 
 DeleteGameObject::DeleteGameObject(AbstractBehavior *parent) :
 	AbstractAction{parent},

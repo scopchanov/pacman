@@ -63,12 +63,13 @@ SOURCES += \
     engine/behaviors/PlayerController.cpp \
     engine/behaviors/PlayerOrientation.cpp \
     engine/behaviors/Teleporting.cpp \
+    engine/objects/Deenergizer.cpp \
+    engine/objects/GameObject.h \
     engine/personalities/AbstractPersonality.cpp \
     engine/personalities/Poking.cpp \
     engine/personalities/Shadowing.cpp \
     engine/personalities/Shying.cpp \
     engine/personalities/Speeding.cpp \
-    engine/GameObject.cpp \
     engine/InputSystem.cpp \
     engine/Tile.cpp \
     engine/Tilemap.cpp \
@@ -132,12 +133,13 @@ HEADERS += \
     engine/behaviors/PlayerController.h \
     engine/behaviors/PlayerOrientation.h \
     engine/behaviors/Teleporting.h \
+    engine/objects/Deenergizer.h \
+    engine/objects/GameObject.h \
     engine/personalities/AbstractPersonality.h \
     engine/personalities/Poking.h \
     engine/personalities/Shadowing.h \
     engine/personalities/Shying.h \
     engine/personalities/Speeding.h \
-    engine/GameObject.h \
     engine/InputSystem.h \
     engine/Tile.h \
     engine/Tilemap.h \
