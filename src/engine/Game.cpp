@@ -193,17 +193,17 @@ void Game::onEnemyEaten()
 	_audioEngine->playEffect(AudioEngine::SND_EnemyEaten);
 }
 
-void Game::onPlayerWins()
-{
-	_clock->stop();
-	_audioEngine->playEffect(AudioEngine::SND_PlayerWins);
-}
-
 void Game::onPlayerEnergized()
 {
 	_scene->addItem(new Deenergizer());
 	_status->increaseScore(5);
 	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
+}
+
+void Game::onPlayerWins()
+{
+	_clock->stop();
+	_audioEngine->playEffect(AudioEngine::SND_PlayerWins);
 }
 
 void Game::onPlayerDies()

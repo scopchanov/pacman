@@ -65,10 +65,10 @@ private:
 public slots:
 	void onDotEaten();
 	void onEnemyEaten();
+	void onPlayerEnergized();
 	void onPlayerWins();
 
 private slots:
-	void onPlayerEnergized();
 	void onPlayerDies();
 	void onFuneralTunePlayed();
 

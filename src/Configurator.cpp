@@ -11,8 +11,6 @@
 #include "engine/Teleporter.h"
 #include "engine/Tilemap.h"
 #include "engine/actions/DeleteGameObject.h"
-#include "engine/actions/EnergizePlayer.h"
-#include "engine/actions/ScareEnemies.h"
 #include "engine/behaviors/CharacterMovement.h"
 #include "engine/behaviors/Coloring.h"
 #include "engine/behaviors/EnemyAnimation.h"
@@ -20,7 +18,7 @@
 #include "engine/behaviors/EnemyOrientation.h"
 #include "engine/behaviors/KillPlayer.h"
 #include "engine/behaviors/Energizing.h"
-#include "engine/behaviors/EnergizerAnimation.h"
+#include "engine/objects/Energizer.h"
 #include "engine/personalities/Shadowing.h"
 #include "engine/personalities/Speeding.h"
 #include "engine/personalities/Shying.h"
@@ -52,7 +50,7 @@ void Configurator::configure(const QJsonObject &json)
 	qreal height{cellSize.value("height").toDouble()};
 	qreal playerX{player.value("position").toObject().value("x").toDouble()};
 	qreal playerY{player.value("position").toObject().value("y").toDouble()};
-	const Game &game{Game::ref()};
+	Game &game{Game::ref()};
 
 	game.stateMachine()->setGameClock(game._clock);
 
@@ -67,8 +65,8 @@ void Configurator::configure(const QJsonObject &json)
 	Game::ref().buildTilemap(game.walls(), wallMatrix, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
 	Game::ref().buildTilemap(game.dots(), game._dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
 
-	game.walls()->setTile(13, 14, Game::ref().createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
-	game.walls()->setTile(13, 15, Game::ref().createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	game.walls()->setTile(13, 14, game.createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	game.walls()->setTile(13, 15, game.createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
 
 	game._player->setSpawnPosition({playerX, playerY});
 	game._player->setup();
@@ -164,28 +162,9 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 
 GameObject *Configurator::createEnergizer(const QPoint &cell)
 {
-	auto *energizer{new GameObject()};
-	auto *energizing{new Energizing(energizer)};
-	auto *animation{new EnergizerAnimation(energizer)};
-	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
-	auto *actFrightenGhosts{new ScareEnemies(energizing)};
-	auto *eventPlayerEnergized{new GameEvent()};
+	auto *energizer{new Energizer()};
 
-	energizing->setEvent(eventPlayerEnergized);
-	energizing->setPlayer(Game().ref()._player);
-	energizing->addAction(actEnergizePlayer);
-	energizing->addAction(actFrightenGhosts);
-
-	energizer->setPos(Game().ref()._grid->mapFromGrid(cell.y(), cell.x()));
-	energizer->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 16));
-	energizer->setPen(QPen(Qt::transparent));
-	energizer->setBrush(Qt::white);
-
-	energizer->addBehavior(energizing);
-	energizer->addBehavior(animation);
-
-	connect(eventPlayerEnergized, &GameEvent::triggered,
-			&Game::ref(), &Game::onPlayerEnergized);
+	energizer->setPos(Game::ref().grid()->mapFromGrid(cell.y(), cell.x()));
 
 	return energizer;
 }

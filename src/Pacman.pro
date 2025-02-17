@@ -64,6 +64,7 @@ SOURCES += \
     engine/behaviors/PlayerOrientation.cpp \
     engine/behaviors/Teleporting.cpp \
     engine/objects/Deenergizer.cpp \
+    engine/objects/Energizer.cpp \
     engine/objects/GameObject.cpp \
     engine/personalities/AbstractPersonality.cpp \
     engine/personalities/Poking.cpp \
@@ -134,6 +135,7 @@ HEADERS += \
     engine/behaviors/PlayerOrientation.h \
     engine/behaviors/Teleporting.h \
     engine/objects/Deenergizer.h \
+    engine/objects/Energizer.h \
     engine/objects/GameObject.h \
     engine/personalities/AbstractPersonality.h \
     engine/personalities/Poking.h \
