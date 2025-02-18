@@ -30,7 +30,6 @@ public:
 
 private:
 	void restoreColor();
-	void setSpeed(qreal percent);
 
 	AbstractPersonality *_personality;
 	StateType _state;

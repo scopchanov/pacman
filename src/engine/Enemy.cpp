@@ -1,6 +1,6 @@
 #include "Enemy.h"
 #include "engine/behaviors/Coloring.h"
-#include "engine/behaviors/CharacterMovement.h"
+#include "engine/behaviors/AbstractBehavior.h"
 #include "engine/personalities/AbstractPersonality.h"
 #include <QBrush>
 
@@ -51,7 +51,7 @@ void Enemy::scare()
 
 	setBrush(QBrush(0x2962FF));
 	setSpeed(50);
-	findBehavior(AbstractSpatialBehavior::BT_KillPlayer)->setEnabled(false);
+	findBehavior(AbstractBehavior::BT_KillPlayer)->setEnabled(false);
 }
 
 void Enemy::calmDown()
@@ -60,7 +60,7 @@ void Enemy::calmDown()
 
 	restoreColor();
 	setSpeed(75);
-	findBehavior(AbstractSpatialBehavior::BT_KillPlayer)->setEnabled(true);
+	findBehavior(AbstractBehavior::BT_KillPlayer)->setEnabled(true);
 }
 
 void Enemy::eat()
@@ -73,17 +73,7 @@ void Enemy::eat()
 
 void Enemy::restoreColor()
 {
-	auto *behavior{findBehavior(AbstractSpatialBehavior::BT_Coloring)};
+	auto *behavior{findBehavior(AbstractBehavior::BT_Coloring)};
 
 	setBrush(static_cast<Coloring *>(behavior)->color());
-}
-
-void Enemy::setSpeed(qreal percent)
-{
-	auto *behavior{findBehavior(AbstractSpatialBehavior::BT_CharacterMovement)};
-	qreal originalSpeed{75.75757625};
-	qreal nominalSpeed{3*originalSpeed};
-	qreal speed{percent*nominalSpeed*0.01};
-
-	static_cast<CharacterMovement *>(behavior)->setSpeed(speed);
 }

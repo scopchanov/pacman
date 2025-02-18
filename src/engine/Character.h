@@ -12,6 +12,7 @@ public:
 
 	QPointF spawnPosition() const;
 	void setSpawnPosition(const QPointF &point);
+	void setSpeed(qreal percent);
 
 	virtual void setup() = 0;
 	void reset() override;
