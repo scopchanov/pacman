@@ -12,8 +12,6 @@
 #include "AudioEngine.h"
 #include "Tile.h"
 #include "Tilemap.h"
-#include "engine/actions/CalmDownEnemies.h"
-#include "engine/actions/DeenergizePlayer.h"
 #include "engine/actions/DeleteGameObject.h"
 #include "engine/behaviors/Delaying.h"
 #include "engine/behaviors/EnemyController.h"
@@ -33,8 +31,11 @@ Game::Game(QObject *parent) :
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
 	_stateMachine{new AiStateMachine(this)},
-	_player{new Pacman()}
+	_player{new Pacman()},
+	_deenergizer{new Deenergizer()}
 {
+	_scene->addItem(_deenergizer);
+
 	connect(_clock, &GameClock::tick, _scene, &GameScene::makeTurn);
 	connect(_audioEngine, &AudioEngine::victoryTunePlayed, this, &Game::playerWins);
 	connect(_audioEngine, &AudioEngine::funeralTunePlayed, this, &Game::onFuneralTunePlayed);
@@ -195,7 +196,7 @@ void Game::onEnemyEaten()
 
 void Game::onPlayerEnergized()
 {
-	_scene->addItem(new Deenergizer());
+	_deenergizer->reset();
 	_status->increaseScore(5);
 	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
 }

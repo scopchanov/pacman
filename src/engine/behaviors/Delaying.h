@@ -13,6 +13,8 @@ public:
 	void addAction(AbstractAction *action);
 	int type() const override;
 
+	void reset() override;
+
 private:
 	void performActions() override;
 	bool increaseTime();

@@ -33,6 +33,11 @@ int Delaying::type() const
 	return BT_Delaying;
 }
 
+void Delaying::reset()
+{
+	_time = 0.0;
+}
+
 void Delaying::performActions()
 {
 	if (increaseTime() && delayDurationExceeded())

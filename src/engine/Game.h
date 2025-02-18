@@ -20,6 +20,7 @@ class Player;
 class Enemy;
 class GameClock;
 class Vector2;
+class Deenergizer;
 
 class Game : public QObject
 {
@@ -61,6 +62,7 @@ private:
 	Player *_player;
 	QList<Enemy *> _enemies;
 	QJsonArray _dotMatrix;
+	Deenergizer *_deenergizer;
 
 public slots:
 	void onDotEaten();

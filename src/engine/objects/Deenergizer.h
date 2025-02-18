@@ -7,6 +7,8 @@ class Deenergizer : public GameObject
 {
 public:
 	explicit Deenergizer(GameObject *parent = nullptr);
+
+	void reset() override ;
 };
 
 #endif // DEENERGIZER_H
