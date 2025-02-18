@@ -21,6 +21,7 @@ public:
 	AbstractBehavior *behavior(int n) const;
 	AbstractBehavior *findBehavior(int type) const;
 	GameScene *gameScene() const;
+	QList<GameObject *> collidingObjects() const;
 	int type() const override;
 
 	virtual void reset();
@@ -29,6 +30,9 @@ public:
 	void deleteLater();
 
 private:
+	bool isCollidingGameObject(QGraphicsItem *item) const;
+	qreal distanceTo(QGraphicsItem *other) const;
+
 	QList<AbstractBehavior *> _behaviors;
 };
 

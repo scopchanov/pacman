@@ -1,8 +1,8 @@
 #include "CharacterMovement.h"
-#include "engine/objects/GameObject.h"
 #include "engine/GameClock.h"
 #include "engine/Grid.h"
 #include "engine/Tilemap.h"
+#include "engine/objects/GameObject.h"
 
 CharacterMovement::CharacterMovement(GameObject *parent) :
 	AbstractSpatialBehavior(parent),

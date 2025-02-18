@@ -1,10 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Player.h"
 #include <QObject>
 #include <QJsonArray>
 #include <QSize>
+#include "objects/Player.h"
 
 class AbstractPersonality;
 class GameStatus;
@@ -31,7 +31,7 @@ class Game : public QObject
 public:
 	GameClock *clock() const;
 	GameStatus *status() const;
-	QGraphicsScene *scene() const;
+	GameScene *scene() const;
 	AiStateMachine *stateMachine() const;
 	Grid *grid() const;
 	Tilemap *walls() const;
@@ -48,7 +48,7 @@ public:
 
 private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
-	Tile *createTile(int index, const QPen &pen, const QBrush &brush);
+	QGraphicsPathItem *createTile(int index, const QPen &pen, const QBrush &brush);
 	void reset();
 
 	GameClock *_clock;

@@ -22,20 +22,16 @@ SOURCES += \
     engine/AiStateMachine.cpp \
     engine/AudioEngine.cpp \
     engine/BonusText.cpp \
-    engine/Character.cpp \
-    engine/Enemy.cpp \
     engine/Game.cpp \
     engine/GameClock.cpp \
     engine/GameEvent.cpp \
     engine/GameScene.cpp \
     engine/GameStatus.cpp \
     engine/GameView.cpp \
-    engine/Ghost.cpp \
-    engine/GhostEye.cpp \
     engine/Grid.cpp \
-    engine/Pacman.cpp \
-    engine/Player.cpp \
-    engine/Teleporter.cpp \
+    engine/InputSystem.cpp \
+    engine/Tilemap.cpp \
+    engine/Vector2.cpp \
     engine/actions/AbstractAction.cpp \
     engine/actions/CalmDownEnemies.cpp \
     engine/actions/DeenergizePlayer.cpp \
@@ -49,6 +45,7 @@ SOURCES += \
     engine/behaviors/AbstractTimedBehavior.cpp \
     engine/behaviors/CameraFollow.cpp \
     engine/behaviors/CharacterMovement.cpp \
+    engine/behaviors/CollisionChecking.cpp \
     engine/behaviors/Coloring.cpp \
     engine/behaviors/Delaying.cpp \
     engine/behaviors/DotsEating.cpp \
@@ -63,18 +60,21 @@ SOURCES += \
     engine/behaviors/PlayerController.cpp \
     engine/behaviors/PlayerOrientation.cpp \
     engine/behaviors/Teleporting.cpp \
+    engine/objects/Character.cpp \
     engine/objects/Deenergizer.cpp \
+    engine/objects/Enemy.cpp \
     engine/objects/Energizer.cpp \
+    engine/objects/Ghost.cpp \
     engine/objects/GameObject.cpp \
+    engine/objects/GhostEye.cpp \
+    engine/objects/Pacman.cpp \
+    engine/objects/Player.cpp \
+    engine/objects/Teleporter.cpp \
     engine/personalities/AbstractPersonality.cpp \
     engine/personalities/Poking.cpp \
     engine/personalities/Shadowing.cpp \
     engine/personalities/Shying.cpp \
     engine/personalities/Speeding.cpp \
-    engine/InputSystem.cpp \
-    engine/Tile.cpp \
-    engine/Tilemap.cpp \
-    engine/Vector2.cpp \
     main.cpp
 
 HEADERS += \
@@ -93,20 +93,16 @@ HEADERS += \
     engine/AiStateMachine.h \
     engine/AudioEngine.h \
     engine/BonusText.h \
-    engine/Character.h \
-    engine/Enemy.h \
     engine/Game.h \
     engine/GameClock.h \
     engine/GameEvent.h \
     engine/GameScene.h \
     engine/GameStatus.h \
     engine/GameView.h \
-    engine/Ghost.h \
-    engine/GhostEye.h \
     engine/Grid.h \
-    engine/Pacman.h \
-    engine/Player.h \
-    engine/Teleporter.h \
+    engine/InputSystem.h \
+    engine/Tilemap.h \
+    engine/Vector2.h \
     engine/actions/AbstractAction.h \
     engine/actions/CalmDownEnemies.h \
     engine/actions/DeenergizePlayer.h \
@@ -120,6 +116,7 @@ HEADERS += \
     engine/behaviors/AbstractTimedBehavior.h \
     engine/behaviors/CameraFollow.h \
     engine/behaviors/CharacterMovement.h \
+    engine/behaviors/CollisionChecking.h \
     engine/behaviors/Coloring.h \
     engine/behaviors/Delaying.h \
     engine/behaviors/DotsEating.h \
@@ -134,18 +131,21 @@ HEADERS += \
     engine/behaviors/PlayerController.h \
     engine/behaviors/PlayerOrientation.h \
     engine/behaviors/Teleporting.h \
+    engine/objects/Character.h \
     engine/objects/Deenergizer.h \
+    engine/objects/Enemy.h \
     engine/objects/Energizer.h \
     engine/objects/GameObject.h \
+    engine/objects/Ghost.h \
+    engine/objects/GhostEye.h \
+    engine/objects/Pacman.h \
+    engine/objects/Player.h \
+    engine/objects/Teleporter.h \
     engine/personalities/AbstractPersonality.h \
     engine/personalities/Poking.h \
     engine/personalities/Shadowing.h \
     engine/personalities/Shying.h \
-    engine/personalities/Speeding.h \
-    engine/InputSystem.h \
-    engine/Tile.h \
-    engine/Tilemap.h \
-    engine/Vector2.h
+    engine/personalities/Speeding.h
 
 RESOURCES += \
     resources.qrc

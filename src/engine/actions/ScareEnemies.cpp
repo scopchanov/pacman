@@ -1,6 +1,6 @@
 #include "ScareEnemies.h"
 #include "engine/Game.h"
-#include "engine/Enemy.h"
+#include "engine/objects/Enemy.h"
 
 ScareEnemies::ScareEnemies(AbstractBehavior *parent) :
 	AbstractAction{parent}

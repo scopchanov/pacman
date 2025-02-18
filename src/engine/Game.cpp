@@ -8,14 +8,13 @@
 #include "GameStatus.h"
 #include "GameScene.h"
 #include "Grid.h"
-#include "Pacman.h"
+#include "engine/Tilemap.h"
 #include "AudioEngine.h"
-#include "Tile.h"
-#include "Tilemap.h"
 #include "engine/actions/DeleteGameObject.h"
 #include "engine/behaviors/Delaying.h"
 #include "engine/behaviors/EnemyController.h"
 #include "engine/objects/Deenergizer.h"
+#include "engine/objects/Pacman.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -51,7 +50,7 @@ GameStatus *Game::status() const
 	return _status;
 }
 
-QGraphicsScene *Game::scene() const
+GameScene *Game::scene() const
 {
 	return _scene;
 }
@@ -136,7 +135,7 @@ void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 
 		for (const auto &column : columns) {
 			const QJsonObject &element{column.toObject()};
-			Tile *tile{element.isEmpty() ? nullptr
+			auto *tile{element.isEmpty() ? nullptr
 										 : createTile(element["index"].toInt(),
 													  pen, brush)};
 
@@ -148,9 +147,9 @@ void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 	}
 }
 
-Tile *Game::createTile(int index, const QPen &pen, const QBrush &brush)
+QGraphicsPathItem *Game::createTile(int index, const QPen &pen, const QBrush &brush)
 {
-	auto *tile{new Tile()};
+	auto *tile{new QGraphicsPathItem()};
 
 	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
 	tile->setPen(pen);
@@ -176,20 +175,20 @@ void Game::onDotEaten()
 void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
-	auto *text{new BonusText()};
-	auto *delayedDeleting{new Delaying(text)};
-	auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
+	// auto *text{new BonusText()};
+	// auto *delayedDeleting{new Delaying(text)};
+	// auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
 
-	actDeleteGameObject->setGameObject(text);
+	// actDeleteGameObject->setGameObject(text);
 
-	delayedDeleting->addAction(actDeleteGameObject);
-	delayedDeleting->setDuration(2);
+	// delayedDeleting->addAction(actDeleteGameObject);
+	// delayedDeleting->setDuration(2);
 
-	text->addBehavior(delayedDeleting);
-	text->setText(QString::number(points));
-	text->setPos(_player->pos());
+	// text->addBehavior(delayedDeleting);
+	// text->setText(QString::number(points));
+	// text->setPos(_player->pos());
 
-	_scene->addItem(text);
+	// _scene->addItem(text);
 	_status->increaseScore(points);
 	_audioEngine->playEffect(AudioEngine::SND_EnemyEaten);
 }

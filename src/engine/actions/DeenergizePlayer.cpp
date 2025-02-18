@@ -1,6 +1,6 @@
 #include "DeenergizePlayer.h"
 #include "engine/Game.h"
-#include "engine/Player.h"
+#include "engine/objects/Player.h"
 #include "engine/behaviors/AbstractBehavior.h"
 #include <QBrush>
 

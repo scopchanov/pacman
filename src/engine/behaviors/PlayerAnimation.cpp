@@ -4,7 +4,7 @@
 PlayerAnimation::PlayerAnimation(GameObject *parent) :
 	AbstractAnimationBehavior(parent)
 {
-	setGameObjectType(PathBuilder::GO_Player);
+	setPathType(PathBuilder::GO_Player);
 	setFrameRate(150);
 }
 

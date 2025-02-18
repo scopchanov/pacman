@@ -1,6 +1,6 @@
 #include "CalmDownEnemies.h"
 #include "engine/Game.h"
-#include "engine/Enemy.h"
+#include "engine/objects/Enemy.h"
 
 CalmDownEnemies::CalmDownEnemies(AbstractBehavior *parent) :
 	AbstractAction{parent}

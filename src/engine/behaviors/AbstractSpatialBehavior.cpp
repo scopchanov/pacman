@@ -1,6 +1,7 @@
 #include "AbstractSpatialBehavior.h"
-#include "engine/Tilemap.h"
 #include "engine/Grid.h"
+#include "engine/Tilemap.h"
+#include "engine/objects/GameObject.h"
 
 AbstractSpatialBehavior::AbstractSpatialBehavior(GameObject *parent) :
 	AbstractTimedBehavior(parent),

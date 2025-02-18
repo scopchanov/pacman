@@ -1,8 +1,8 @@
 #include "EnemyOrientation.h"
 #include "CharacterMovement.h"
 #include "engine/objects/GameObject.h"
-#include "engine/Ghost.h"
-#include "engine/GhostEye.h"
+#include "engine/objects/Ghost.h"
+#include "engine/objects/GhostEye.h"
 
 EnemyOrientation::EnemyOrientation(GameObject *parent) :
 	AbstractOrientationBehavior(parent)

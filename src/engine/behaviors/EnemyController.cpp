@@ -1,8 +1,8 @@
 #include "EnemyController.h"
 #include "engine/AiStateMachine.h"
-#include "engine/Enemy.h"
 #include "engine/Grid.h"
 #include "engine/behaviors/CharacterMovement.h"
+#include "engine/objects/Enemy.h"
 #include "engine/personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
 #include <QRandomGenerator>

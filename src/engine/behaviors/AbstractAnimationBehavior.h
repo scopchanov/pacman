@@ -21,7 +21,7 @@ public:
 	DirectionType direction() const;
 	void setDirection(DirectionType direction);
 	int gameObjectType() const;
-	void setGameObjectType(int type);
+	void setPathType(int type);
 	int type() const override;
 
 	void reset() override;

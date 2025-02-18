@@ -1,6 +1,6 @@
 #include "EnemyEating.h"
-#include "engine/Enemy.h"
 #include "engine/GameEvent.h"
+#include "engine/objects/Enemy.h"
 #include <QHash>
 
 EnemyEating::EnemyEating(GameObject *parent) :
@@ -31,11 +31,10 @@ void EnemyEating::performActions()
 	if (!_eventEnemyEaten)
 		return;
 
-	const QList<QGraphicsItem *> &collidingItems{parent()->collidingItems()};
+	const auto &collidingObjects{parent()->collidingObjects()};
 
-	for (auto *item : collidingItems)
-		if (item->type() == GameObject::IT_GameObject)
-			eatEnemy(static_cast<Enemy *>(item));
+	for (auto *item : collidingObjects)
+		eatEnemy(static_cast<Enemy *>(item));
 }
 
 void EnemyEating::eatEnemy(Enemy *enemy)

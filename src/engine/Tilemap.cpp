@@ -1,11 +1,11 @@
 #include "Tilemap.h"
-#include "Grid.h"
-#include "Tile.h"
-#include "Vector2.h"
-#include <QGraphicsScene>
+#include "engine/Game.h"
+#include "engine/GameScene.h"
+#include "engine/Grid.h"
+#include "engine/Vector2.h"
 
-Tilemap::Tilemap(GameObject *parent) :
-	GameObject(parent),
+Tilemap::Tilemap(QGraphicsItem *parent) :
+	QGraphicsPathItem(parent),
 	_grid{nullptr},
 	_tileCount{0}
 {
@@ -24,7 +24,7 @@ void Tilemap::setGrid(Grid *grid)
 	if (!_grid)
 		return;
 
-	QList<Tile *> row;
+	QList<QGraphicsPathItem *> row;
 
 	row.fill(nullptr, _grid->columnCount());
 
@@ -36,7 +36,7 @@ int Tilemap::tileCount() const
 	return _tileCount;
 }
 
-bool Tilemap::setTile(int row, int col, Tile *tile)
+bool Tilemap::setTile(int row, int col, QGraphicsPathItem *tile)
 {
 	if (!_grid || row < 0 || row >= _grid->rowCount()
 		|| col < 0 || col >= _grid->columnCount())
@@ -82,14 +82,14 @@ void Tilemap::clear()
 			setTile(m, n, nullptr);
 }
 
-void Tilemap::deleteTile(Tile *tile)
+void Tilemap::deleteTile(QGraphicsPathItem *tile)
 {
-	tile->deleteLater();
+	Game::ref().scene()->scheduleDelete(tile);
 
 	_tileCount--;
 }
 
-void Tilemap::addTile(int row, int col, Tile *tile)
+void Tilemap::addTile(int row, int col, QGraphicsPathItem *tile)
 {
 	if (!_grid || !tile)
 		return;

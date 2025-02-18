@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "engine/Game.h"
 #include "engine/GameScene.h"
 #include "engine/behaviors/AbstractBehavior.h"
 #include <QStyleOptionGraphicsItem>
@@ -50,6 +51,18 @@ GameScene *GameObject::gameScene() const
 	return scene() ? static_cast<GameScene *>(scene()) : nullptr;
 }
 
+QList<GameObject *> GameObject::collidingObjects() const
+{
+	QList<GameObject *> gameObjects;
+	auto items{scene()->items()};
+
+	for (auto item : items)
+		if (isCollidingGameObject(item))
+			gameObjects.append(static_cast<GameObject *>(item));
+
+	return gameObjects;
+}
+
 int GameObject::type() const
 {
 	return QGraphicsItem::UserType;
@@ -91,8 +104,27 @@ void GameObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 void GameObject::deleteLater()
 {
-	if (gameScene())
-		gameScene()->scheduleDelete(this);
-	else
-		delete this;
+	// if (gameScene())
+	// 	gameScene()->scheduleDelete(this);
+	// else
+	// 	delete this;
+
+	Game::ref().scene()->scheduleDelete(this);
+}
+
+bool GameObject::isCollidingGameObject(QGraphicsItem *item) const
+{
+	return item && item != this && item->type() == IT_GameObject
+		   && !item->parentItem() && distanceTo(item) < 20;
+}
+
+qreal GameObject::distanceTo(QGraphicsItem *other) const
+{
+	const QPointF &itemPosition{other->pos()};
+	qreal otherX{itemPosition.x()};
+	qreal otherY{itemPosition.y()};
+	qreal x{pos().x()};
+	qreal y{pos().y()};
+
+	return sqrt(pow(x - otherX, 2) + pow(y - otherY, 2));
 }

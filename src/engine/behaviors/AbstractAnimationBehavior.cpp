@@ -48,7 +48,7 @@ int AbstractAnimationBehavior::gameObjectType() const
 	return _gameObjectType;
 }
 
-void AbstractAnimationBehavior::setGameObjectType(int type)
+void AbstractAnimationBehavior::setPathType(int type)
 {
 	_gameObjectType = type;
 }
@@ -69,8 +69,8 @@ void AbstractAnimationBehavior::updateParent()
 {
 	auto type{static_cast<PathBuilder::GameObjectType>(_gameObjectType)};
 
-	parent()->setPath(PathBuilder::animatedObjectPath(type, _value));
-	parent()->update();
+	// parent()->setPath(PathBuilder::animatedObjectPath(type, _value));
+	// parent()->update();
 }
 
 void AbstractAnimationBehavior::performActions()

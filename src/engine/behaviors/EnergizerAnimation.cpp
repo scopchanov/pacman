@@ -6,7 +6,7 @@ EnergizerAnimation::EnergizerAnimation(GameObject *parent) :
 {
 	setValue(8);
 	setFrameRate(15);
-	setGameObjectType(PathBuilder::GO_Energizer);
+	setPathType(PathBuilder::GO_Energizer);
 }
 
 void EnergizerAnimation::update()

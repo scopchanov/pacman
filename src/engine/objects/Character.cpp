@@ -1,10 +1,17 @@
 #include "Character.h"
 #include "engine/behaviors/CharacterMovement.h"
+#include <QPen>
 
 Character::Character(GameObject *parent) :
 	GameObject(parent)
 {
+	QPainterPath p;
 
+	p.addEllipse(-12, -12, 24, 24);
+
+	setPath(p);
+	setPen(QPen(Qt::transparent));
+	setBrush(Qt::gray);
 }
 
 QPointF Character::spawnPosition() const

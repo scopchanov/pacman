@@ -17,7 +17,14 @@ Deenergizer::Deenergizer(GameObject *parent) :
 	deenergizing->addAction(actCalmDownEnemies);
 
 	addBehavior(deenergizing);
-	setFlag(QGraphicsItem::ItemHasNoContents);
+	// setFlag(QGraphicsItem::ItemHasNoContents);
+
+	QPainterPath p;
+
+	p.addRect(0, 0, 30*24, 24);
+
+	setPath(p);
+	setBrush(Qt::green);
 }
 
 void Deenergizer::reset()

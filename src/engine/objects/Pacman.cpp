@@ -6,9 +6,9 @@
 Pacman::Pacman(GameObject *parent) :
 	Player(parent)
 {
-	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Player, 45));
-	setPen(QPen(Qt::transparent));
-	setBrush(Qt::white);
+	// setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Player, 45));
+	// setPen(QPen(Qt::transparent));
+	// setBrush(Qt::white);
 }
 
 void Pacman::setup()

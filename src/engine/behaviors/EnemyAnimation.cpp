@@ -5,7 +5,7 @@
 EnemyAnimation::EnemyAnimation(GameObject *parent) :
 	AbstractAnimationBehavior(parent)
 {
-	setGameObjectType(PathBuilder::GO_Enemy);
+	setPathType(PathBuilder::GO_Enemy);
 	setFrameRate(20);
 }
 

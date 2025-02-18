@@ -8,11 +8,11 @@ Ghost::Ghost(GameObject *parent) :
 	_leftEye{new GhostEye(this)},
 	_rightEye{new GhostEye(this)}
 {
-	_leftEye->setPos(-6, -6);
-	_rightEye->setPos(6, -6);
+	// _leftEye->setPos(-6, -6);
+	// _rightEye->setPos(6, -6);
 
-	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Enemy, 0));
-	setPen(QPen(Qt::transparent));
+	// setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Enemy, 0));
+	// setPen(QPen(Qt::transparent));
 }
 
 GhostEye *Ghost::leftEye() const

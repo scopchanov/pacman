@@ -2,6 +2,7 @@
 #include "LifesDisplay.h"
 #include "ScoreDisplay.h"
 #include "engine/Game.h"
+#include "engine/GameScene.h"
 #include "engine/GameStatus.h"
 #include "engine/GameView.h"
 #include "Configurator.h"

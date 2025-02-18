@@ -7,7 +7,6 @@ class AbstractPersonality;
 class Game;
 class GameObject;
 class Ghost;
-class Tile;
 class Tilemap;
 class Vector2;
 

@@ -1,5 +1,5 @@
 #include "GhostEye.h"
-#include "Vector2.h"
+#include "engine/Vector2.h"
 #include <QPen>
 
 using Pair = QPair<int, int>;
