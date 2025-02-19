@@ -1,12 +1,12 @@
 #include "GameWidget.h"
-#include "LifesDisplay.h"
-#include "ScoreDisplay.h"
-#include "engine/Game.h"
-#include "engine/GameScene.h"
-#include "engine/GameStatus.h"
-#include "engine/GameView.h"
 #include "Configurator.h"
 #include "FileHandler.h"
+#include "GameScene.h"
+#include "GameView.h"
+#include "LifesDisplay.h"
+#include "ScoreDisplay.h"
+#include "Game.h"
+#include "GameStatus.h"
 #include <QJsonObject>
 #include <QBoxLayout>
 

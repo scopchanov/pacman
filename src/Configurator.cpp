@@ -1,28 +1,29 @@
 #include "Configurator.h"
+#include "GameGlobals.h"
 #include "PathBuilder.h"
-#include "engine/AiStateMachine.h"
-#include "engine/Game.h"
-#include "engine/GameEvent.h"
-#include "engine/GameScene.h"
-#include "engine/GameClock.h"
-#include "engine/Grid.h"
-#include "engine/Tilemap.h"
-#include "engine/actions/DeleteGameObject.h"
-#include "engine/behaviors/CharacterMovement.h"
-#include "engine/behaviors/Coloring.h"
-#include "engine/behaviors/EnemyAnimation.h"
-#include "engine/behaviors/EnemyController.h"
-#include "engine/behaviors/EnemyOrientation.h"
-#include "engine/behaviors/KillPlayer.h"
-#include "engine/behaviors/Energizing.h"
-#include "engine/objects/Energizer.h"
-#include "engine/objects/Ghost.h"
-#include "engine/objects/Player.h"
-#include "engine/objects/Teleporter.h"
-#include "engine/personalities/Shadowing.h"
-#include "engine/personalities/Speeding.h"
-#include "engine/personalities/Shying.h"
-#include "engine/personalities/Poking.h"
+#include "AiStateMachine.h"
+#include "Game.h"
+#include "GameEvent.h"
+#include "GameScene.h"
+#include "GameClock.h"
+#include "Grid.h"
+#include "Tilemap.h"
+#include "actions/DeleteGameObject.h"
+#include "behaviors/CharacterMovement.h"
+#include "behaviors/Coloring.h"
+#include "behaviors/EnemyAnimation.h"
+#include "behaviors/EnemyController.h"
+#include "behaviors/EnemyOrientation.h"
+#include "behaviors/KillPlayer.h"
+#include "behaviors/Energizing.h"
+#include "objects/Energizer.h"
+#include "objects/Ghost.h"
+#include "objects/Player.h"
+#include "objects/Teleporter.h"
+#include "personalities/Shadowing.h"
+#include "personalities/Speeding.h"
+#include "personalities/Shying.h"
+#include "personalities/Poking.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -99,7 +100,7 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 		int row{cell.value("row").toInt()};
 		int column{cell.value("column").toInt()};
 		auto *enemy{createEnemy({posX, posY}, color, direction)};
-		auto *behavior{enemy->findBehavior(AbstractBehavior::BT_EnemyController)};
+		auto *behavior{enemy->findBehavior(BT_EnemyController)};
 		auto *controller{static_cast<EnemyController *>(behavior)};
 		auto *personality{createPersonality(json.value("personality").toInt())};
 

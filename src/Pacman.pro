@@ -19,62 +19,51 @@ SOURCES += \
     PathBuilder.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
-    engine/AiStateMachine.cpp \
-    engine/AudioEngine.cpp \
-    engine/BonusText.cpp \
-    engine/Game.cpp \
-    engine/GameClock.cpp \
-    engine/GameEvent.cpp \
-    engine/GameScene.cpp \
-    engine/GameStatus.cpp \
-    engine/GameView.cpp \
-    engine/Grid.cpp \
-    engine/InputSystem.cpp \
-    engine/Tilemap.cpp \
-    engine/Vector2.cpp \
-    engine/actions/AbstractAction.cpp \
-    engine/actions/CalmDownEnemies.cpp \
-    engine/actions/DeenergizePlayer.cpp \
-    engine/actions/DeleteGameObject.cpp \
-    engine/actions/EnergizePlayer.cpp \
-    engine/actions/ScareEnemies.cpp \
-    engine/behaviors/AbstractAnimationBehavior.cpp \
-    engine/behaviors/AbstractBehavior.cpp \
-    engine/behaviors/AbstractOrientationBehavior.cpp \
-    engine/behaviors/AbstractSpatialBehavior.cpp \
-    engine/behaviors/AbstractTimedBehavior.cpp \
-    engine/behaviors/CameraFollow.cpp \
-    engine/behaviors/CharacterMovement.cpp \
-    engine/behaviors/CollisionChecking.cpp \
-    engine/behaviors/Coloring.cpp \
-    engine/behaviors/Delaying.cpp \
-    engine/behaviors/DotsEating.cpp \
-    engine/behaviors/EnemyAnimation.cpp \
-    engine/behaviors/EnemyController.cpp \
-    engine/behaviors/EnemyEating.cpp \
-    engine/behaviors/EnemyOrientation.cpp \
-    engine/behaviors/EnergizerAnimation.cpp \
-    engine/behaviors/Energizing.cpp \
-    engine/behaviors/KillPlayer.cpp \
-    engine/behaviors/PlayerAnimation.cpp \
-    engine/behaviors/PlayerController.cpp \
-    engine/behaviors/PlayerOrientation.cpp \
-    engine/behaviors/Teleporting.cpp \
-    engine/objects/Character.cpp \
-    engine/objects/Deenergizer.cpp \
-    engine/objects/Enemy.cpp \
-    engine/objects/Energizer.cpp \
-    engine/objects/Ghost.cpp \
-    engine/objects/GameObject.cpp \
-    engine/objects/GhostEye.cpp \
-    engine/objects/Pacman.cpp \
-    engine/objects/Player.cpp \
-    engine/objects/Teleporter.cpp \
-    engine/personalities/AbstractPersonality.cpp \
-    engine/personalities/Poking.cpp \
-    engine/personalities/Shadowing.cpp \
-    engine/personalities/Shying.cpp \
-    engine/personalities/Speeding.cpp \
+    AiStateMachine.cpp \
+    AudioEngine.cpp \
+    BonusText.cpp \
+    Game.cpp \
+    GameStatus.cpp \
+    actions/CalmDownEnemies.cpp \
+    actions/DeenergizePlayer.cpp \
+    actions/DeleteGameObject.cpp \
+    actions/EnergizePlayer.cpp \
+    actions/ScareEnemies.cpp \
+    behaviors/AbstractAnimationBehavior.cpp \
+    behaviors/AbstractOrientationBehavior.cpp \
+    behaviors/AbstractSpatialBehavior.cpp \
+    behaviors/AbstractTimedBehavior.cpp \
+    behaviors/CameraFollow.cpp \
+    behaviors/CharacterMovement.cpp \
+    behaviors/CollisionChecking.cpp \
+    behaviors/Coloring.cpp \
+    behaviors/Delaying.cpp \
+    behaviors/DotsEating.cpp \
+    behaviors/EnemyAnimation.cpp \
+    behaviors/EnemyController.cpp \
+    behaviors/EnemyEating.cpp \
+    behaviors/EnemyOrientation.cpp \
+    behaviors/EnergizerAnimation.cpp \
+    behaviors/Energizing.cpp \
+    behaviors/KillPlayer.cpp \
+    behaviors/PlayerAnimation.cpp \
+    behaviors/PlayerController.cpp \
+    behaviors/PlayerOrientation.cpp \
+    behaviors/Teleporting.cpp \
+    objects/Character.cpp \
+    objects/Deenergizer.cpp \
+    objects/Enemy.cpp \
+    objects/Energizer.cpp \
+    objects/Ghost.cpp \
+    objects/GhostEye.cpp \
+    objects/Pacman.cpp \
+    objects/Player.cpp \
+    objects/Teleporter.cpp \
+    personalities/AbstractPersonality.cpp \
+    personalities/Poking.cpp \
+    personalities/Shadowing.cpp \
+    personalities/Shying.cpp \
+    personalities/Speeding.cpp \
     main.cpp
 
 HEADERS += \
@@ -82,6 +71,7 @@ HEADERS += \
     DialogGame.h \
     DialogSettings.h \
     FileHandler.h \
+    GameGlobals.h \
     GameMenu.h \
     GameWidget.h \
     LifesDisplay.h \
@@ -90,62 +80,51 @@ HEADERS += \
     PathBuilder.h \
     ScoreDisplay.h \
     StartupSequence.h \
-    engine/AiStateMachine.h \
-    engine/AudioEngine.h \
-    engine/BonusText.h \
-    engine/Game.h \
-    engine/GameClock.h \
-    engine/GameEvent.h \
-    engine/GameScene.h \
-    engine/GameStatus.h \
-    engine/GameView.h \
-    engine/Grid.h \
-    engine/InputSystem.h \
-    engine/Tilemap.h \
-    engine/Vector2.h \
-    engine/actions/AbstractAction.h \
-    engine/actions/CalmDownEnemies.h \
-    engine/actions/DeenergizePlayer.h \
-    engine/actions/DeleteGameObject.h \
-    engine/actions/EnergizePlayer.h \
-    engine/actions/ScareEnemies.h \
-    engine/behaviors/AbstractAnimationBehavior.h \
-    engine/behaviors/AbstractBehavior.h \
-    engine/behaviors/AbstractOrientationBehavior.h \
-    engine/behaviors/AbstractSpatialBehavior.h \
-    engine/behaviors/AbstractTimedBehavior.h \
-    engine/behaviors/CameraFollow.h \
-    engine/behaviors/CharacterMovement.h \
-    engine/behaviors/CollisionChecking.h \
-    engine/behaviors/Coloring.h \
-    engine/behaviors/Delaying.h \
-    engine/behaviors/DotsEating.h \
-    engine/behaviors/EnemyAnimation.h \
-    engine/behaviors/EnemyController.h \
-    engine/behaviors/EnemyEating.h \
-    engine/behaviors/EnemyOrientation.h \
-    engine/behaviors/EnergizerAnimation.h \
-    engine/behaviors/Energizing.h \
-    engine/behaviors/KillPlayer.h \
-    engine/behaviors/PlayerAnimation.h \
-    engine/behaviors/PlayerController.h \
-    engine/behaviors/PlayerOrientation.h \
-    engine/behaviors/Teleporting.h \
-    engine/objects/Character.h \
-    engine/objects/Deenergizer.h \
-    engine/objects/Enemy.h \
-    engine/objects/Energizer.h \
-    engine/objects/GameObject.h \
-    engine/objects/Ghost.h \
-    engine/objects/GhostEye.h \
-    engine/objects/Pacman.h \
-    engine/objects/Player.h \
-    engine/objects/Teleporter.h \
-    engine/personalities/AbstractPersonality.h \
-    engine/personalities/Poking.h \
-    engine/personalities/Shadowing.h \
-    engine/personalities/Shying.h \
-    engine/personalities/Speeding.h
+    AiStateMachine.h \
+    AudioEngine.h \
+    BonusText.h \
+    Game.h \
+    GameStatus.h \
+    actions/CalmDownEnemies.h \
+    actions/DeenergizePlayer.h \
+    actions/DeleteGameObject.h \
+    actions/EnergizePlayer.h \
+    actions/ScareEnemies.h \
+    behaviors/AbstractAnimationBehavior.h \
+    behaviors/AbstractOrientationBehavior.h \
+    behaviors/AbstractSpatialBehavior.h \
+    behaviors/AbstractTimedBehavior.h \
+    behaviors/CameraFollow.h \
+    behaviors/CharacterMovement.h \
+    behaviors/CollisionChecking.h \
+    behaviors/Coloring.h \
+    behaviors/Delaying.h \
+    behaviors/DotsEating.h \
+    behaviors/EnemyAnimation.h \
+    behaviors/EnemyController.h \
+    behaviors/EnemyEating.h \
+    behaviors/EnemyOrientation.h \
+    behaviors/EnergizerAnimation.h \
+    behaviors/Energizing.h \
+    behaviors/KillPlayer.h \
+    behaviors/PlayerAnimation.h \
+    behaviors/PlayerController.h \
+    behaviors/PlayerOrientation.h \
+    behaviors/Teleporting.h \
+    objects/Character.h \
+    objects/Deenergizer.h \
+    objects/Enemy.h \
+    objects/Energizer.h \
+    objects/Ghost.h \
+    objects/GhostEye.h \
+    objects/Pacman.h \
+    objects/Player.h \
+    objects/Teleporter.h \
+    personalities/AbstractPersonality.h \
+    personalities/Poking.h \
+    personalities/Shadowing.h \
+    personalities/Shying.h \
+    personalities/Speeding.h
 
 RESOURCES += \
     resources.qrc
@@ -154,3 +133,10 @@ RESOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../Libraries/ArcadeGameEngine/build/release/ -lArcadeGameEngine
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../Libraries/ArcadeGameEngine/build/debug/ -lArcadeGameEngine
+else:unix: LIBS += -L$$PWD/../../../Libraries/ArcadeGameEngine/build/ -lArcadeGameEngine
+
+INCLUDEPATH += $$PWD/../../../Libraries/ArcadeGameEngine/src
+DEPENDPATH += $$PWD/../../../Libraries/ArcadeGameEngine/src
