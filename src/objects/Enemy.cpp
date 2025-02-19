@@ -29,12 +29,12 @@ void Enemy::setPersonality(AbstractPersonality *personality)
 	_personality->setParent(this);
 }
 
-Enemy::StateType Enemy::state() const
+Enemy::EnemyState Enemy::state() const
 {
 	return _state;
 }
 
-void Enemy::setState(StateType state)
+void Enemy::setState(EnemyState state)
 {
 	_state = state;
 	// _characterMovement->reverse();

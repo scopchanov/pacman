@@ -31,7 +31,7 @@ void PlayerController::performActions()
 	if (!_inputSystem || !_characterMovement)
 		return;
 
-	Vector2 userInput{_inputSystem->userInput()};
+	const Vector2 &userInput{_inputSystem->userInput()};
 
 	if (userInput.x() || userInput.y())
 		_characterMovement->setNextDirection(userInput);

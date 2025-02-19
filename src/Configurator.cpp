@@ -134,10 +134,9 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	coloring->setColor(color);
 
 	enemyController->setCharacterMovement(movement);
-	enemyController->setGrid(Game::ref()._grid);
+	enemyController->setGrid(Game::ref().grid());
 
-	movement->setTilemap(Game::ref()._walls);
-	movement->setSpeed(170.4545465625);
+	movement->setTilemap(Game::ref().walls());
 	movement->setInitialDirection(dir2vec(direction));
 
 	orientation->setMovement(movement);
@@ -151,6 +150,7 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 	ghost->addBehavior(animation);
 	ghost->addBehavior(killPlayer);
 
+	ghost->setSpeed(75);
 	ghost->setBrush(color);
 
 	connect(eventPlayerDies, &GameEvent::triggered, &Game::ref(), &Game::onPlayerDies);

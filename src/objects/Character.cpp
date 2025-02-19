@@ -6,13 +6,13 @@
 Character::Character(GameObject *parent) :
 	GameObject(parent)
 {
-	QPainterPath p;
+	// QPainterPath p;
 
-	p.addEllipse(-12, -12, 24, 24);
+	// p.addEllipse(-12, -12, 24, 24);
 
-	setPath(p);
-	setPen(QPen(Qt::transparent));
-	setBrush(Qt::gray);
+	// setPath(p);
+	// setPen(QPen(Qt::transparent));
+	// setBrush(Qt::gray);
 }
 
 QPointF Character::spawnPosition() const
