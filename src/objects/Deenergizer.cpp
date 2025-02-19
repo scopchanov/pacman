@@ -32,3 +32,8 @@ void Deenergizer::reset()
 {
 	findBehavior(BT_Delaying)->reset();
 }
+
+int Deenergizer::objectType() const
+{
+	return OBJ_Npc;
+}

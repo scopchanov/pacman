@@ -1,7 +1,6 @@
 #include "GameWidget.h"
 #include "Configurator.h"
 #include "FileHandler.h"
-#include "GameScene.h"
 #include "GameView.h"
 #include "LifesDisplay.h"
 #include "ScoreDisplay.h"

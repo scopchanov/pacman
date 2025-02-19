@@ -22,6 +22,7 @@ public:
 	void setPersonality(AbstractPersonality *personality);
 	StateType state() const;
 	void setState(StateType state);
+	int objectType() const override final;
 
 	void setup() override;
 	void scare();

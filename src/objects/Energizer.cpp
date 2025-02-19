@@ -1,6 +1,7 @@
 #include "Energizer.h"
 #include "Game.h"
 #include "GameEvent.h"
+#include "GameGlobals.h"
 #include "PathBuilder.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/ScareEnemies.h"
@@ -31,4 +32,9 @@ Energizer::Energizer(GameObject *parent) :
 
 	QObject::connect(eventPlayerEnergized, &GameEvent::triggered,
 					 &Game::ref(), &Game::onPlayerEnergized);
+}
+
+int Energizer::objectType() const
+{
+	return OBJ_Energizer;
 }

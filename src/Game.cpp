@@ -50,7 +50,7 @@ GameStatus *Game::status() const
 	return _status;
 }
 
-GameScene *Game::scene() const
+QGraphicsScene *Game::scene() const
 {
 	return _scene;
 }
@@ -58,6 +58,11 @@ GameScene *Game::scene() const
 AiStateMachine *Game::stateMachine() const
 {
 	return _stateMachine;
+}
+
+InputSystem *Game::inputSystem() const
+{
+	return _scene->inputSystem();
 }
 
 Grid *Game::grid() const
@@ -175,20 +180,20 @@ void Game::onDotEaten()
 void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
-	// auto *text{new BonusText()};
-	// auto *delayedDeleting{new Delaying(text)};
-	// auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
+	auto *text{new BonusText()};
+	auto *delayedDeleting{new Delaying(text)};
+	auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
 
-	// actDeleteGameObject->setGameObject(text);
+	actDeleteGameObject->setGameObject(text);
 
-	// delayedDeleting->addAction(actDeleteGameObject);
-	// delayedDeleting->setDuration(2);
+	delayedDeleting->addAction(actDeleteGameObject);
+	delayedDeleting->setDuration(2);
 
-	// text->addBehavior(delayedDeleting);
-	// text->setText(QString::number(points));
-	// text->setPos(_player->pos());
+	text->addBehavior(delayedDeleting);
+	text->setText(QString::number(points));
+	text->setPos(_player->pos());
 
-	// _scene->addItem(text);
+	_scene->addItem(text);
 	_status->increaseScore(points);
 	_audioEngine->playEffect(AudioEngine::SND_EnemyEaten);
 }

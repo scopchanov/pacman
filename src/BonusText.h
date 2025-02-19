@@ -9,6 +9,7 @@ public:
 	explicit BonusText(GameObject *parent = nullptr);
 
 	void setText(const QString &text);
+	int objectType() const override final;
 
 private:
 	void reposition();

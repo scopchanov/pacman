@@ -25,4 +25,12 @@ enum BehaviorType : int {
 	BT_Energizing
 };
 
+enum ObjectType : int {
+	OBJ_Npc = 0,
+	OBJ_Player,
+	OBJ_Enemy,
+	OBJ_Energizer,
+	OBJ_Teleporter
+};
+
 #endif // GAMEGLOBALS_H

@@ -7,6 +7,8 @@ class Energizer : public GameObject
 {
 public:
 	explicit Energizer(GameObject *parent = nullptr);
+
+	int objectType() const override;
 };
 
 #endif // ENERGIZER_H

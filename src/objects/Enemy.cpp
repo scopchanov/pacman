@@ -40,6 +40,11 @@ void Enemy::setState(StateType state)
 	// _characterMovement->reverse();
 }
 
+int Enemy::objectType() const
+{
+	return OBJ_Enemy;
+}
+
 void Enemy::setup()
 {
 

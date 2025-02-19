@@ -9,6 +9,8 @@ public:
 	explicit Deenergizer(GameObject *parent = nullptr);
 
 	void reset() override ;
+
+	int objectType() const override final;
 };
 
 #endif // DEENERGIZER_H

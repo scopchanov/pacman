@@ -31,8 +31,9 @@ class Game : public QObject
 public:
 	GameClock *clock() const;
 	GameStatus *status() const;
-	GameScene *scene() const;
+	QGraphicsScene *scene() const;
 	AiStateMachine *stateMachine() const;
+	InputSystem *inputSystem() const;
 	Grid *grid() const;
 	Tilemap *walls() const;
 	Tilemap *dots() const;

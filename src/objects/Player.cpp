@@ -1,7 +1,7 @@
 #include "Player.h"
 #include "Game.h"
-#include "GameScene.h"
 #include "GameEvent.h"
+#include "GameGlobals.h"
 #include "behaviors/Coloring.h"
 #include "behaviors/CharacterMovement.h"
 #include "behaviors/DotsEating.h"
@@ -14,6 +14,11 @@ Player::Player(GameObject *parent) :
 	Character(parent)
 {
 
+}
+
+int Player::objectType() const
+{
+	return OBJ_Player;
 }
 
 void Player::setup()
@@ -32,7 +37,7 @@ void Player::setup()
 	coloring->setColor(Qt::white);
 
 	playerController->setCharacterMovement(movement);
-	playerController->setInputSystem(static_cast<GameScene *>(Game::ref().scene())->inputSystem());
+	playerController->setInputSystem(Game::ref().inputSystem());
 
 	movement->setTilemap(Game::ref().walls());
 

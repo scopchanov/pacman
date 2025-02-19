@@ -8,6 +8,8 @@ class Player : public Character
 public:
 	explicit Player(GameObject *parent = nullptr);
 	
+	int objectType() const override final;
+
 	void setup() override;
 };
 

@@ -34,13 +34,14 @@ void EnemyEating::performActions()
 
 	const auto &collidingObjects{parent()->collidingObjects()};
 
-	for (auto *item : collidingObjects)
-		eatEnemy(static_cast<Enemy *>(item));
+	for (auto *gameObject : collidingObjects)
+		if (gameObject->objectType() == OBJ_Enemy)
+			eatEnemy(static_cast<Enemy *>(gameObject));
 }
 
 void EnemyEating::eatEnemy(Enemy *enemy)
 {
-	if (!enemy || enemy->state() != Enemy::ST_Frightened)
+	if (enemy->state() != Enemy::ST_Frightened)
 		return;
 
 	enemy->eat();
