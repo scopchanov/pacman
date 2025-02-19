@@ -15,13 +15,13 @@ Energizer::Energizer(GameObject *parent) :
 	auto *energizing{new Energizing(this)};
 	auto *animation{new EnergizerAnimation(this)};
 	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
-	auto *actFrightenGhosts{new ScareEnemies(energizing)};
+	auto *actFrightenEnemies{new ScareEnemies(energizing)};
 	auto *eventPlayerEnergized{new GameEvent()};
 
 	energizing->setEvent(eventPlayerEnergized);
 	energizing->setPlayer(Game::ref().player());
 	energizing->addAction(actEnergizePlayer);
-	energizing->addAction(actFrightenGhosts);
+	energizing->addAction(actFrightenEnemies);
 
 	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 16));
 	setPen(QPen(Qt::transparent));

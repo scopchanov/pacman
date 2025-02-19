@@ -6,7 +6,7 @@
 class AbstractPersonality;
 class Game;
 class GameObject;
-class Ghost;
+class Enemy;
 class Tilemap;
 class Vector2;
 
@@ -20,7 +20,7 @@ public:
 
 private:
 	void createEnemies(const QJsonArray &enemies);
-	Ghost *createEnemy(const QPointF &position, const QColor &color, int direction);
+	Enemy *createEnemy(const QPointF &position, const QColor &color, int direction);
 	GameObject *createEnergizer(const QPoint &cell);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 	AbstractPersonality *createPersonality(int type);

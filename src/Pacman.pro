@@ -54,7 +54,6 @@ SOURCES += \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
     objects/Energizer.cpp \
-    objects/Ghost.cpp \
     objects/GhostEye.cpp \
     objects/Pacman.cpp \
     objects/Player.cpp \
@@ -115,7 +114,6 @@ HEADERS += \
     objects/Deenergizer.h \
     objects/Enemy.h \
     objects/Energizer.h \
-    objects/Ghost.h \
     objects/GhostEye.h \
     objects/Pacman.h \
     objects/Player.h \

@@ -16,8 +16,9 @@
 #include "behaviors/EnemyOrientation.h"
 #include "behaviors/KillPlayer.h"
 #include "behaviors/Energizing.h"
+#include "objects/Enemy.h"
 #include "objects/Energizer.h"
-#include "objects/Ghost.h"
+#include "objects/GhostEye.h"
 #include "objects/Player.h"
 #include "objects/Teleporter.h"
 #include "personalities/Shadowing.h"
@@ -117,18 +118,25 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 	}
 }
 
-Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, int direction)
+Enemy *Configurator::createEnemy(const QPointF &position, const QColor &color, int direction)
 {
-	auto *ghost{new Ghost()};
+	auto *enemy{new Enemy()};
+	auto *leftEye{new GhostEye(enemy)};
+	auto *rightEye{new GhostEye(enemy)};
 
-	ghost->setSpawnPosition(position);
+	leftEye->setPos(-6, -6);
+	rightEye->setPos(6, -6);
 
-	auto *coloring{new Coloring(ghost)};
-	auto *movement{new CharacterMovement(ghost)};
-	auto *orientation{new EnemyOrientation(ghost)};
-	auto *enemyController{new EnemyController(ghost)};
-	auto *animation{new EnemyAnimation(ghost)};
-	auto *killPlayer{new KillPlayer(ghost)};
+	enemy->setSpawnPosition(position);
+	enemy->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Enemy, 0));
+	enemy->setPen(QPen(Qt::transparent));
+
+	auto *coloring{new Coloring(enemy)};
+	auto *movement{new CharacterMovement(enemy)};
+	auto *orientation{new EnemyOrientation(enemy)};
+	auto *enemyController{new EnemyController(enemy)};
+	auto *animation{new EnemyAnimation(enemy)};
+	auto *killPlayer{new KillPlayer(enemy)};
 	auto *eventPlayerDies{new GameEvent()};
 
 	coloring->setColor(color);
@@ -143,22 +151,22 @@ Ghost *Configurator::createEnemy(const QPointF &position, const QColor &color, i
 
 	killPlayer->setEventPlayerDies(eventPlayerDies);
 
-	ghost->addBehavior(coloring);
-	ghost->addBehavior(enemyController);
-	ghost->addBehavior(movement);
-	ghost->addBehavior(orientation);
-	ghost->addBehavior(animation);
-	ghost->addBehavior(killPlayer);
+	enemy->addBehavior(coloring);
+	enemy->addBehavior(enemyController);
+	enemy->addBehavior(movement);
+	enemy->addBehavior(orientation);
+	enemy->addBehavior(animation);
+	enemy->addBehavior(killPlayer);
 
-	ghost->setSpeed(75);
-	ghost->setBrush(color);
+	enemy->setSpeed(75);
+	enemy->setBrush(color);
 
 	connect(eventPlayerDies, &GameEvent::triggered, &Game::ref(), &Game::onPlayerDies);
 
-	Game::ref()._enemies.append(ghost);
-	Game::ref()._scene->addItem(ghost);
+	Game::ref()._enemies.append(enemy);
+	Game::ref()._scene->addItem(enemy);
 
-	return ghost;
+	return enemy;
 }
 
 GameObject *Configurator::createEnergizer(const QPoint &cell)
