@@ -4,13 +4,13 @@
 EnergizerAnimation::EnergizerAnimation(GameObject *parent) :
 	AbstractAnimationBehavior(parent)
 {
-	setValue(8);
+	setValue(0);
 	setFrameRate(15);
 	setPathType(PathBuilder::GO_Energizer);
 }
 
 void EnergizerAnimation::update()
 {
-	if (value() > 16)
-		setValue(8);
+	if (value() > 8)
+		setValue(0);
 }

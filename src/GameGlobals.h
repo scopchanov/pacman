@@ -18,11 +18,12 @@ enum BehaviorType : int {
 	BT_DotsEating,
 	BT_EnemyController,
 	BT_EnemyEating,
+	BT_Energizing,
 	BT_KillPlayer,
 	BT_Orientation,
 	BT_PlayerController,
-	BT_Teleporting,
-	BT_Energizing
+	BT_Spawning,
+	BT_Teleporting
 };
 
 enum ObjectType : int {

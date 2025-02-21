@@ -3,6 +3,7 @@
 #include "GameEvent.h"
 #include "GameGlobals.h"
 #include "PathBuilder.h"
+#include "Player.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/ScareEnemies.h"
 #include "behaviors/Energizing.h"
@@ -23,7 +24,7 @@ Energizer::Energizer(GameObject *parent) :
 	energizing->addAction(actEnergizePlayer);
 	energizing->addAction(actFrightenEnemies);
 
-	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 16));
+	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 8));
 	setPen(QPen(Qt::transparent));
 	setBrush(Qt::white);
 

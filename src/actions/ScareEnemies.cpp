@@ -1,6 +1,6 @@
 #include "ScareEnemies.h"
-#include "GameGlobals.h"
 #include "Game.h"
+#include "GameGlobals.h"
 #include "objects/Enemy.h"
 
 ScareEnemies::ScareEnemies(AbstractBehavior *parent) :

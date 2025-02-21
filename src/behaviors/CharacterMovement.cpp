@@ -11,7 +11,7 @@ CharacterMovement::CharacterMovement(GameObject *parent) :
 	_initialDirection{V2_LEFT},
 	_currentDirection{_initialDirection}
 {
-	targetParentPosition();
+
 }
 
 qreal CharacterMovement::speed() const

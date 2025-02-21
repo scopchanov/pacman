@@ -1,6 +1,6 @@
 #include "CalmDownEnemies.h"
-#include "GameGlobals.h"
 #include "Game.h"
+#include "GameGlobals.h"
 #include "objects/Enemy.h"
 
 CalmDownEnemies::CalmDownEnemies(AbstractBehavior *parent) :

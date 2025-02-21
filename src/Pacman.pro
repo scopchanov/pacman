@@ -49,13 +49,13 @@ SOURCES += \
     behaviors/PlayerAnimation.cpp \
     behaviors/PlayerController.cpp \
     behaviors/PlayerOrientation.cpp \
+    behaviors/Spawning.cpp \
     behaviors/Teleporting.cpp \
     objects/Character.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
     objects/Energizer.cpp \
     objects/GhostEye.cpp \
-    objects/Pacman.cpp \
     objects/Player.cpp \
     objects/Teleporter.cpp \
     personalities/AbstractPersonality.cpp \
@@ -109,13 +109,13 @@ HEADERS += \
     behaviors/PlayerAnimation.h \
     behaviors/PlayerController.h \
     behaviors/PlayerOrientation.h \
+    behaviors/Spawning.h \
     behaviors/Teleporting.h \
     objects/Character.h \
     objects/Deenergizer.h \
     objects/Enemy.h \
     objects/Energizer.h \
     objects/GhostEye.h \
-    objects/Pacman.h \
     objects/Player.h \
     objects/Teleporter.h \
     personalities/AbstractPersonality.h \

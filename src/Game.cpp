@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "Message.h"
-#include "PathBuilder.h"
 #include "StartupSequence.h"
 #include "AiStateMachine.h"
 #include "BonusText.h"
@@ -13,8 +12,8 @@
 #include "actions/DeleteGameObject.h"
 #include "behaviors/Delaying.h"
 #include "behaviors/EnemyController.h"
+#include "objects/Player.h"
 #include "objects/Deenergizer.h"
-#include "objects/Pacman.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -23,16 +22,19 @@
 Game::Game(QObject *parent) :
 	QObject(parent),
 	_clock{new GameClock(this)},
-	_status{new GameStatus(this)},
 	_scene{new GameScene(this)},
+	_status{new GameStatus(this)},
+	_stateMachine{new AiStateMachine(this)},
 	_audioEngine{new AudioEngine(this)},
 	_grid{new Grid(this)},
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
-	_stateMachine{new AiStateMachine(this)},
-	_player{new Pacman()},
+	_player{new Player()},
 	_deenergizer{new Deenergizer()}
 {
+	_scene->addItem(_walls);
+	_scene->addItem(_dots);
+	_scene->addItem(_player);
 	_scene->addItem(_deenergizer);
 
 	connect(_clock, &GameClock::tick, _scene, &GameScene::makeTurn);
@@ -45,24 +47,24 @@ GameClock *Game::clock() const
 	return _clock;
 }
 
-GameStatus *Game::status() const
-{
-	return _status;
-}
-
 QGraphicsScene *Game::scene() const
 {
 	return _scene;
 }
 
-AiStateMachine *Game::stateMachine() const
-{
-	return _stateMachine;
-}
-
 InputSystem *Game::inputSystem() const
 {
 	return _scene->inputSystem();
+}
+
+GameStatus *Game::status() const
+{
+	return _status;
+}
+
+AiStateMachine *Game::stateMachine() const
+{
+	return _stateMachine;
 }
 
 Grid *Game::grid() const
@@ -85,9 +87,16 @@ Player *Game::player() const
 	return _player;
 }
 
-QList<Enemy *> Game::enemies() const
+QList<Enemy *> &Game::enemies()
 {
 	return _enemies;
+}
+
+Game &Game::ref()
+{
+	static Game game;
+
+	return game;
 }
 
 void Game::start()
@@ -109,58 +118,6 @@ void Game::stop()
 void Game::resume()
 {
 	_clock->start();
-}
-
-void Game::restart()
-{
-	_status->reset();
-	_stateMachine->reset();
-	_scene->reset();
-	_dots->clear();
-
-	buildTilemap(_dots, _dotMatrix, QPen(Qt::transparent), QBrush(0x999999));
-	start();
-}
-
-Game &Game::ref()
-{
-	static Game game;
-
-	return game;
-}
-
-void Game::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
-						const QPen &pen, const QBrush &brush)
-{
-	int m{0};
-
-	for (const auto &row : matrix) {
-		const QJsonArray &columns{row.toArray()};
-		int n{0};
-
-		for (const auto &column : columns) {
-			const QJsonObject &element{column.toObject()};
-			auto *tile{element.isEmpty() ? nullptr
-										 : createTile(element["index"].toInt(),
-													  pen, brush)};
-
-			tilemap->setTile(m, n, tile);
-			n++;
-		}
-
-		m++;
-	}
-}
-
-QGraphicsPathItem *Game::createTile(int index, const QPen &pen, const QBrush &brush)
-{
-	auto *tile{new QGraphicsPathItem()};
-
-	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
-	tile->setPen(pen);
-	tile->setBrush(brush);
-
-	return tile;
 }
 
 void Game::reset()

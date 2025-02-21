@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class QGraphicsItem;
 class AbstractPersonality;
 class Game;
 class GameObject;
@@ -19,11 +20,14 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
-	void createEnemies(const QJsonArray &enemies);
+	void setupPlayer(const QJsonObject &jsonPlayer);
+	void createEnemies(const QJsonObject &json);
 	Enemy *createEnemy(const QPointF &position, const QColor &color, int direction);
 	GameObject *createEnergizer(const QPoint &cell);
 	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
 	AbstractPersonality *createPersonality(int type);
+	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
+	QGraphicsItem *createTile(int index, const QPen &pen, const QBrush &brush);
 	Vector2 dir2vec(int direction);
 };
 

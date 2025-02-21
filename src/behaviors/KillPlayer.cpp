@@ -3,6 +3,7 @@
 #include "GameEvent.h"
 #include "GameGlobals.h"
 #include "GameObject.h"
+#include "objects/Player.h"
 
 KillPlayer::KillPlayer(GameObject *parent) :
 	AbstractTimedBehavior(parent),

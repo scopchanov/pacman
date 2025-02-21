@@ -274,8 +274,9 @@ QPainterPath PathBuilder::ghost(qreal d)
 QPainterPath PathBuilder::energizer(qreal d)
 {
 	QPainterPath p;
+	qreal w{d + 8};
 
-	p.addEllipse(-0.5*d, -0.5*d, d, d);
+	p.addEllipse(-0.5*w, -0.5*w, w, w);
 
 	return p;
 }

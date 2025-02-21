@@ -24,7 +24,6 @@ public:
 	void setState(EnemyState state);
 	int objectType() const override final;
 
-	void setup() override;
 	void scare();
 	void calmDown();
 	void eat();

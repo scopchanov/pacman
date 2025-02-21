@@ -45,11 +45,6 @@ int Enemy::objectType() const
 	return OBJ_Enemy;
 }
 
-void Enemy::setup()
-{
-
-}
-
 void Enemy::scare()
 {
 	_state = ST_Frightened;

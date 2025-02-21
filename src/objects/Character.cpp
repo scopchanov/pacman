@@ -6,25 +6,7 @@
 Character::Character(GameObject *parent) :
 	GameObject(parent)
 {
-	// QPainterPath p;
 
-	// p.addEllipse(-12, -12, 24, 24);
-
-	// setPath(p);
-	// setPen(QPen(Qt::transparent));
-	// setBrush(Qt::gray);
-}
-
-QPointF Character::spawnPosition() const
-{
-	return _spawnPosition;
-}
-
-void Character::setSpawnPosition(const QPointF &point)
-{
-	_spawnPosition = point;
-
-	respawn();
 }
 
 void Character::setSpeed(qreal percent)
@@ -35,16 +17,4 @@ void Character::setSpeed(qreal percent)
 	qreal speed{percent*nominalSpeed*0.01};
 
 	static_cast<CharacterMovement *>(behavior)->setSpeed(speed);
-}
-
-void Character::reset()
-{
-	respawn();
-
-	GameObject::reset();
-}
-
-void Character::respawn()
-{
-	setPos(_spawnPosition);
 }
