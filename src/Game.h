@@ -5,10 +5,11 @@
 
 class QGraphicsScene;
 class AbstractPersonality;
-class GameStatus;
 class AudioEngine;
 class GameObject;
+class GamePalette;
 class GameScene;
+class GameStatus;
 class InputSystem;
 class AiStateMachine;
 class Tilemap;
@@ -31,6 +32,7 @@ public:
 	QGraphicsScene *scene() const;
 	InputSystem *inputSystem() const;
 	GameStatus *status() const;
+	GamePalette *palette() const;
 	AiStateMachine *stateMachine() const;
 	Grid *grid() const;
 	Tilemap *walls() const;
@@ -56,6 +58,7 @@ private:
 	GameClock *_clock;
 	GameScene *_scene;
 	GameStatus *_status;
+	GamePalette *_palette;
 	AiStateMachine *_stateMachine;
 	AudioEngine *_audioEngine;
 	Grid *_grid;

@@ -5,6 +5,7 @@
 #include "AiStateMachine.h"
 #include "Game.h"
 #include "GameEvent.h"
+#include "GamePalette.h"
 #include "Grid.h"
 #include "Tilemap.h"
 #include "actions/DeleteGameObject.h"
@@ -51,6 +52,7 @@ void Configurator::configure(const QJsonObject &json)
 	if (json.isEmpty())
 		return;
 
+	const QJsonObject &jsonPalette{json.value("palette").toObject()};
 	const QJsonArray &jsonWalls{json.value("walls").toArray()};
 	const QJsonArray &jsonDots{json.value("dots").toArray()};
 	const QJsonObject &gridSize{json.value("gridSize").toObject()};
@@ -64,6 +66,9 @@ void Configurator::configure(const QJsonObject &json)
 	Game &game{Game::ref()};
 	auto *scene{game.scene()};
 	auto *grid{game.grid()};
+	auto *palette{game.palette()};
+
+	configurePalette(jsonPalette);
 
 	game.stateMachine()->setGameClock(game.clock());
 
@@ -73,11 +78,11 @@ void Configurator::configure(const QJsonObject &json)
 	game.walls()->setGrid(grid);
 	game.dots()->setGrid(grid);
 
-	buildTilemap(game.walls(), jsonWalls, QPen(QColor(0x1976D2), 4), QBrush(Qt::transparent));
-	buildTilemap(game.dots(), jsonDots, QPen(Qt::transparent), QBrush(0x999999));
+	buildTilemap(game.walls(), jsonWalls, QPen(palette->color(CR_Wall), 4), QBrush(Qt::transparent));
+	buildTilemap(game.dots(), jsonDots, QPen(Qt::transparent), palette->color(CR_Dot));
 
-	game.walls()->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
-	game.walls()->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(QColor(0xBA68C8), 6), Qt::transparent));
+	game.walls()->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(palette->color(CR_Door), 6), Qt::transparent));
+	game.walls()->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(palette->color(CR_Door), 6), Qt::transparent));
 
 	setupPlayer(json.value("player").toObject());
 
@@ -88,8 +93,18 @@ void Configurator::configure(const QJsonObject &json)
 	scene->addItem(createTeleporter(grid->mapFromGrid(15, 0), grid->mapFromGrid(15, 28)));
 	scene->addItem(createTeleporter(grid->mapFromGrid(15, 29), grid->mapFromGrid(15, 2)));
 
-	for (const auto &enemy : enemies) {
+	for (const auto &enemy : enemies)
 		createEnemies(enemy.toObject());
+}
+
+void Configurator::configurePalette(const QJsonObject &jsonPalette)
+{
+	const auto &keys{jsonPalette.keys()};
+
+	for (const auto &key : keys) {
+		const QColor &color{jsonPalette.value(key).toString()};
+
+		Game::ref().palette()->setColor(key2role(key), color);
 	}
 }
 
@@ -110,7 +125,7 @@ void Configurator::setupPlayer(const QJsonObject &jsonPlayer)
 	auto *enemyEating{new EnemyEating(player)};
 	auto *animation{new PlayerAnimation(player)};
 
-	coloring->setColor(Qt::white);
+	coloring->setColor(Game::ref().palette()->color(CR_Player));
 
 	spawning->setPosition({x, y});
 
@@ -150,7 +165,8 @@ void Configurator::setupPlayer(const QJsonObject &jsonPlayer)
 
 void Configurator::createEnemies(const QJsonObject &json)
 {
-	const QString &color{json.value("color").toString()};
+	int role{key2role(json.value("name").toString())};
+	const QColor &color{Game::ref().palette()->color(role)};
 	const QJsonObject &position{json.value("position").toObject()};
 	qreal posX{position.value("x").toDouble()};
 	qreal posY{position.value("y").toDouble()};
@@ -162,8 +178,9 @@ void Configurator::createEnemies(const QJsonObject &json)
 	auto *behavior{enemy->findBehavior(BT_EnemyController)};
 	auto *controller{static_cast<EnemyController *>(behavior)};
 	auto *personality{createPersonality(json.value("personality").toInt())};
+	const auto &target{Game::ref().grid()->mapFromGrid(Vector2(column, row))};
 
-	personality->setScatterTarget(Game::ref().grid()->mapFromGrid(Vector2(column, row)));
+	personality->setScatterTarget(target);
 	personality->setPlayer(Game::ref().player());
 	personality->setGrid(Game::ref().grid());
 
@@ -297,8 +314,23 @@ QGraphicsItem *Configurator::createTile(int index, const QPen &pen, const QBrush
 	return tile;
 }
 
-Vector2 Configurator::dir2vec(int direction)
+Vector2 Configurator::dir2vec(int direction) const
 {
 	return QHash<int, Vector2>{{0, V2_LEFT}, {1, V2_UP}, {2, V2_RIGHT},
 							   {3, V2_DOWN}}.value(direction);
+}
+
+int Configurator::key2role(const QString &key) const
+{
+	return QHash<QString, int>{{"Player", CR_Player},
+							   {"PlayerEnergized", CR_PlayerEnergized},
+							   {"Blinky", CR_Blinky},
+							   {"Inky", CR_Inky},
+							   {"Pinky", CR_Pinky},
+							   {"Clyde", CR_Clyde},
+							   {"EnemyFrightened", CR_EnemyFrightened},
+							   {"Wall", CR_Wall},
+							   {"Door", CR_Door},
+							   {"Dot", CR_Dot},
+							   {"Energizer", CR_Energizer}}.value(key);
 }

@@ -20,6 +20,7 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
+	void configurePalette(const QJsonObject &jsonPalette);
 	void setupPlayer(const QJsonObject &jsonPlayer);
 	void createEnemies(const QJsonObject &json);
 	Enemy *createEnemy(const QPointF &position, const QColor &color, int direction);
@@ -28,7 +29,8 @@ private:
 	AbstractPersonality *createPersonality(int type);
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	QGraphicsItem *createTile(int index, const QPen &pen, const QBrush &brush);
-	Vector2 dir2vec(int direction);
+	Vector2 dir2vec(int direction) const;
+	int key2role(const QString &key) const;
 };
 
 #endif // CONFIGURATOR_H

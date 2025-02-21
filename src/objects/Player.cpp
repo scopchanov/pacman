@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "AbstractBehavior.h"
+#include "Game.h"
 #include "GameGlobals.h"
+#include "GamePalette.h"
 #include <QBrush>
 
 Player::Player(GameObject *parent) :
@@ -12,14 +14,14 @@ Player::Player(GameObject *parent) :
 void Player::energize()
 {
 	setSpeed(90);
-	setBrush(QBrush(0xE040FB));
+	setBrush(Game::ref().palette()->color(CR_PlayerEnergized));
 	findBehavior(BT_EnemyEating)->setEnabled(true);
 }
 
 void Player::deenergize()
 {
 	setSpeed(80);
-	setBrush(QBrush(0xFFFFFF));
+	setBrush(Game::ref().palette()->color(CR_Player));
 	findBehavior(BT_EnemyEating)->setEnabled(false);
 }
 

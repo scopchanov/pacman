@@ -9,6 +9,7 @@
 #include "Grid.h"
 #include "Tilemap.h"
 #include "AudioEngine.h"
+#include "GamePalette.h"
 #include "actions/DeleteGameObject.h"
 #include "behaviors/Delaying.h"
 #include "behaviors/EnemyController.h"
@@ -24,6 +25,7 @@ Game::Game(QObject *parent) :
 	_clock{new GameClock(this)},
 	_scene{new GameScene(this)},
 	_status{new GameStatus(this)},
+	_palette{new GamePalette(this)},
 	_stateMachine{new AiStateMachine(this)},
 	_audioEngine{new AudioEngine(this)},
 	_grid{new Grid(this)},
@@ -60,6 +62,11 @@ InputSystem *Game::inputSystem() const
 GameStatus *Game::status() const
 {
 	return _status;
+}
+
+GamePalette *Game::palette() const
+{
+	return _palette;
 }
 
 AiStateMachine *Game::stateMachine() const

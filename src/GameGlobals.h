@@ -1,6 +1,20 @@
 #ifndef GAMEGLOBALS_H
 #define GAMEGLOBALS_H
 
+enum ColorRole : int {
+	CR_Player = 0,
+	CR_PlayerEnergized,
+	CR_Blinky,
+	CR_Inky,
+	CR_Pinky,
+	CR_Clyde,
+	CR_EnemyFrightened,
+	CR_Wall,
+	CR_Door,
+	CR_Dot,
+	CR_Energizer
+};
+
 enum ActionType : int {
 	ACT_CalmDownEnemies = 0,
 	ACT_DeleteGameObject,

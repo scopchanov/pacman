@@ -1,5 +1,7 @@
 #include "Enemy.h"
+#include "Game.h"
 #include "GameGlobals.h"
+#include "GamePalette.h"
 #include "behaviors/Coloring.h"
 #include "personalities/AbstractPersonality.h"
 #include <QBrush>
@@ -49,7 +51,7 @@ void Enemy::scare()
 {
 	_state = ST_Frightened;
 
-	setBrush(QBrush(0x2962FF));
+	setBrush(Game::ref().palette()->color(CR_EnemyFrightened));
 	setSpeed(50);
 	findBehavior(BT_KillPlayer)->setEnabled(false);
 }

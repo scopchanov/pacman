@@ -12,6 +12,7 @@ SOURCES += \
     DialogSettings.cpp \
     FileHandler.cpp \
     GameMenu.cpp \
+    GamePalette.cpp \
     GameWidget.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     FileHandler.h \
     GameGlobals.h \
     GameMenu.h \
+    GamePalette.h \
     GameWidget.h \
     LifesDisplay.h \
     MainWindow.h \

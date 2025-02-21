@@ -1,4 +1,17 @@
 {
+  "palette": {
+    "Player": "#FFFFFF",
+    "PlayerEnergized": "#FFEA00",
+    "Blinky": "#F44336",
+    "Inky": "#82B1FF",
+    "Pinky": "#FF80AB",
+    "Clyde": "#FFC107",
+    "EnemyFrightened": "#2962FF",
+    "Wall": "#1976D2",
+    "Door": "#BA68C8",
+    "Dot": "#9E9E9E",
+    "Energizer": "#FFFFFF"
+  },
   "gridSize": {
     "rows": 33,
     "columns": 30
@@ -9,7 +22,6 @@
   },
   "player": {
     "name": "Pacman",
-    "color": "#FFFFFF",
     "position": {
       "x": 360,
       "y": 588
@@ -18,7 +30,6 @@
   "enemies": [
     {
       "name": "Blinky",
-      "color": "#F44336",
       "direction": 0,
       "personality": 0,
       "position": {
@@ -32,7 +43,6 @@
     },
     {
       "name": "Inky",
-      "color": "#82B1FF",
       "direction": 1,
       "personality": 2,
       "position": {
@@ -46,7 +56,6 @@
     },
     {
       "name": "Pinky",
-      "color": "#FF80AB",
       "direction": 3,
       "personality": 1,
       "position": {
@@ -60,7 +69,6 @@
     },
     {
       "name": "Clyde",
-      "color": "#FFC107",
       "direction": 1,
       "personality": 3,
       "position": {
