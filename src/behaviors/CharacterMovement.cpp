@@ -93,7 +93,7 @@ void CharacterMovement::reverse()
 void CharacterMovement::reset()
 {
 	_currentDirection = _initialDirection;
-	_nextDirection = V2_ZERO;
+	_nextDirection = _currentDirection;
 
 	targetParentPosition();
 }
