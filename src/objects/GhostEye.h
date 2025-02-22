@@ -3,6 +3,8 @@
 
 #include <QGraphicsEllipseItem>
 
+using Pair = QPair<int, int>;
+
 class Vector2;
 
 class GhostEye : public QGraphicsEllipseItem
@@ -10,9 +12,12 @@ class GhostEye : public QGraphicsEllipseItem
 public:
 	explicit GhostEye(QGraphicsItem *parent = nullptr);
 
-	void orient(const Vector2 &direction);
+	void reset(const Vector2 &direction);
+	void orientate(const Vector2 &direction);
 
 private:
+	Pair coordinates(const Vector2 &direction);
+
 	QGraphicsEllipseItem *_iris;
 };
 

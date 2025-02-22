@@ -1,8 +1,10 @@
 #include "GhostEye.h"
+#include "Game.h"
+#include "GameClock.h"
 #include "Vector2.h"
 #include <QPen>
 
-using Pair = QPair<int, int>;
+
 
 GhostEye::GhostEye(QGraphicsItem *parent) :
 	QGraphicsEllipseItem{parent},
@@ -17,11 +19,26 @@ GhostEye::GhostEye(QGraphicsItem *parent) :
 	_iris->setRect(-3, -3, 6, 6);
 }
 
-void GhostEye::orient(const Vector2 &direction)
+void GhostEye::reset(const Vector2 &direction)
+{
+	const Pair &pair{coordinates(direction)};
+
+	_iris->setPos(pair.first, pair.second);
+}
+
+void GhostEye::orientate(const Vector2 &direction)
+{
+	const Pair &pair{coordinates(direction)};
+	const Vector2 &target{Vector2(pair.first, pair.second)};
+	qreal rate{5*Game::ref().clock()->deltaTime()};
+
+	_iris->setPos(Vector2(_iris->pos()).movedTowards(target, rate));
+}
+
+Pair GhostEye::coordinates(const Vector2 &direction)
 {
 	const QHash<Pair, Pair> &hash{{{-1, 0}, {-2, 0}}, {{1, 0}, {2, 0}},
 								  {{0, -1}, {0, -3}}, {{0, 1}, {0, 3}}};
-	const Pair &pair{hash.value({direction.x(), direction.y()})};
 
-	_iris->setPos(pair.first, pair.second);
+	return hash.value({direction.x(), direction.y()});
 }

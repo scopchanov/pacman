@@ -9,10 +9,23 @@ EnemyOrientation::EnemyOrientation(GameObject *parent) :
 
 }
 
+void EnemyOrientation::reset()
+{
+	const Vector2 &direction{movement()->currentDirection()};
+
+	ghostEye(0)->reset(direction);
+	ghostEye(1)->reset(direction);
+}
+
 void EnemyOrientation::performOrientationActions()
 {
 	const Vector2 &direction{movement()->currentDirection()};
 
-	static_cast<GhostEye *>(parent()->childItems().at(0))->orient(direction);
-	static_cast<GhostEye *>(parent()->childItems().at(1))->orient(direction);
+	ghostEye(0)->orientate(direction);
+	ghostEye(1)->orientate(direction);
+}
+
+GhostEye *EnemyOrientation::ghostEye(int n) const
+{
+	return static_cast<GhostEye *>(parent()->childItems().at(n));
 }
