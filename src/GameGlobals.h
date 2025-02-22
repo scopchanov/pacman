@@ -2,7 +2,8 @@
 #define GAMEGLOBALS_H
 
 enum ColorRole : int {
-	CR_Player = 0,
+	CR_Background = 0,
+	CR_Player,
 	CR_PlayerEnergized,
 	CR_Blinky,
 	CR_Inky,

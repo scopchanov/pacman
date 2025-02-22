@@ -155,7 +155,6 @@ void Configurator::setupPlayer(const QJsonObject &jsonPlayer)
 	player->setSpeed(80);
 	player->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Player, 45));
 	player->setPen(QPen(Qt::transparent));
-	player->setBrush(Qt::white);
 	player->reset();
 
 	QObject::connect(eventDotEaten, &GameEvent::triggered, &Game::ref(), &Game::onDotEaten);
@@ -322,7 +321,8 @@ Vector2 Configurator::dir2vec(int direction) const
 
 int Configurator::key2role(const QString &key) const
 {
-	return QHash<QString, int>{{"Player", CR_Player},
+	return QHash<QString, int>{{"Background", CR_Background},
+							   {"Player", CR_Player},
 							   {"PlayerEnergized", CR_PlayerEnergized},
 							   {"Blinky", CR_Blinky},
 							   {"Inky", CR_Inky},

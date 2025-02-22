@@ -13,7 +13,7 @@ public:
 	void setColor(int role, const QColor &color);
 
 private:
-	bool isFoo(int role) const;
+	bool isInvalidRole(int role) const;
 
 	QList<QColor> _colors;
 };

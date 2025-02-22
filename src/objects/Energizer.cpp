@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "GameEvent.h"
 #include "GameGlobals.h"
+#include "GamePalette.h"
 #include "PathBuilder.h"
 #include "Player.h"
 #include "actions/EnergizePlayer.h"
@@ -26,7 +27,7 @@ Energizer::Energizer(GameObject *parent) :
 
 	setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 8));
 	setPen(QPen(Qt::transparent));
-	setBrush(Qt::white);
+	setBrush(Game::ref().palette()->color(CR_Energizer));
 
 	addBehavior(energizing);
 	addBehavior(animation);

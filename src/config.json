@@ -1,5 +1,6 @@
 {
   "palette": {
+    "Background": "#388E3C",
     "Player": "#FFFFFF",
     "PlayerEnergized": "#FFEA00",
     "Blinky": "#F44336",
@@ -7,10 +8,10 @@
     "Pinky": "#FF80AB",
     "Clyde": "#FFC107",
     "EnemyFrightened": "#2962FF",
-    "Wall": "#1976D2",
+    "Wall": "#5D4037",
     "Door": "#BA68C8",
-    "Dot": "#9E9E9E",
-    "Energizer": "#FFFFFF"
+    "Dot": "#B0BEC5",
+    "Energizer": "#FFEA00"
   },
   "gridSize": {
     "rows": 33,

@@ -1,6 +1,8 @@
 #include "GameWidget.h"
 #include "Configurator.h"
 #include "FileHandler.h"
+#include "GameGlobals.h"
+#include "GamePalette.h"
 #include "GameView.h"
 #include "LifesDisplay.h"
 #include "ScoreDisplay.h"
@@ -24,6 +26,7 @@ GameWidget::GameWidget(QWidget *parent) :
 	configurator.configure(FileHandler::readFile(":/txt/config.json"));
 
 	_gameView->setScene(Game::ref().scene());
+	_gameView->setBackgroundBrush(Game::ref().palette()->color(CR_Background));
 
 	layoutPanel->addWidget(scoreDisplay);
 	layoutPanel->addWidget(lifesDisplay);
