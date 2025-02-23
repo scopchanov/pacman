@@ -1,15 +1,15 @@
-#include "EnemyAnimation.h"
+#include "EnemyAnimating.h"
 #include "GameObject.h"
 #include "PathBuilder.h"
 
-EnemyAnimation::EnemyAnimation(GameObject *parent) :
-	AbstractAnimationBehavior(parent)
+EnemyAnimating::EnemyAnimating(GameObject *parent) :
+	AbstractAnimatingBehavior(parent)
 {
 	setPathType(PathBuilder::GO_Enemy);
 	setFrameRate(20);
 }
 
-void EnemyAnimation::update()
+void EnemyAnimating::update()
 {
 	// TODO: Improve the method's name
 

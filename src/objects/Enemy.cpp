@@ -39,7 +39,7 @@ Enemy::EnemyState Enemy::state() const
 void Enemy::setState(EnemyState state)
 {
 	_state = state;
-	// _characterMovement->reverse();
+	// _moving->reverse();
 }
 
 int Enemy::objectType() const
@@ -53,7 +53,7 @@ void Enemy::scare()
 
 	setBrush(Game::ref().palette()->color(CR_EnemyFrightened));
 	setSpeed(50);
-	findBehavior(BT_KillPlayer)->setEnabled(false);
+	findBehavior(BT_Killing)->setEnabled(false);
 }
 
 void Enemy::calmDown()
@@ -62,7 +62,7 @@ void Enemy::calmDown()
 
 	restoreColor();
 	setSpeed(75);
-	findBehavior(BT_KillPlayer)->setEnabled(true);
+	findBehavior(BT_Killing)->setEnabled(true);
 }
 
 void Enemy::eat()

@@ -7,10 +7,13 @@ CONFIG += c++23
 #DEFINES += DEBUG
 
 SOURCES += \
+    BehaviorBuilder.cpp \
     Configurator.cpp \
     DialogGame.cpp \
     DialogSettings.cpp \
+    Factory.cpp \
     FileHandler.cpp \
+    GameLevel.cpp \
     GameMenu.cpp \
     GamePalette.cpp \
     GameWidget.cpp \
@@ -30,26 +33,25 @@ SOURCES += \
     actions/DeleteGameObject.cpp \
     actions/EnergizePlayer.cpp \
     actions/ScareEnemies.cpp \
-    behaviors/AbstractAnimationBehavior.cpp \
-    behaviors/AbstractOrientationBehavior.cpp \
+    behaviors/AbstractAnimatingBehavior.cpp \
+    behaviors/AbstractControllingBehavior.cpp \
+    behaviors/AbstractOrientatingBehavior.cpp \
     behaviors/AbstractSpatialBehavior.cpp \
     behaviors/AbstractTimedBehavior.cpp \
-    behaviors/CameraFollow.cpp \
-    behaviors/CharacterMovement.cpp \
-    behaviors/CollisionChecking.cpp \
     behaviors/Coloring.cpp \
     behaviors/Delaying.cpp \
     behaviors/DotsEating.cpp \
-    behaviors/EnemyAnimation.cpp \
-    behaviors/EnemyController.cpp \
+    behaviors/EnemyAnimating.cpp \
+    behaviors/EnemyControlling.cpp \
     behaviors/EnemyEating.cpp \
-    behaviors/EnemyOrientation.cpp \
-    behaviors/EnergizerAnimation.cpp \
+    behaviors/EnemyOrientating.cpp \
+    behaviors/EnergizerAnimating.cpp \
     behaviors/Energizing.cpp \
-    behaviors/KillPlayer.cpp \
-    behaviors/PlayerAnimation.cpp \
-    behaviors/PlayerController.cpp \
-    behaviors/PlayerOrientation.cpp \
+    behaviors/Killing.cpp \
+    behaviors/Moving.cpp \
+    behaviors/PlayerAnimating.cpp \
+    behaviors/PlayerControlling.cpp \
+    behaviors/PlayerOrientating.cpp \
     behaviors/Spawning.cpp \
     behaviors/Teleporting.cpp \
     objects/Character.cpp \
@@ -67,11 +69,14 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
+    BehaviorBuilder.h \
     Configurator.h \
     DialogGame.h \
     DialogSettings.h \
+    Factory.h \
     FileHandler.h \
     GameGlobals.h \
+    GameLevel.h \
     GameMenu.h \
     GamePalette.h \
     GameWidget.h \
@@ -91,26 +96,25 @@ HEADERS += \
     actions/DeleteGameObject.h \
     actions/EnergizePlayer.h \
     actions/ScareEnemies.h \
-    behaviors/AbstractAnimationBehavior.h \
-    behaviors/AbstractOrientationBehavior.h \
+    behaviors/AbstractAnimatingBehavior.h \
+    behaviors/AbstractControllingBehavior.h \
+    behaviors/AbstractOrientatingBehavior.h \
     behaviors/AbstractSpatialBehavior.h \
     behaviors/AbstractTimedBehavior.h \
-    behaviors/CameraFollow.h \
-    behaviors/CharacterMovement.h \
-    behaviors/CollisionChecking.h \
     behaviors/Coloring.h \
     behaviors/Delaying.h \
     behaviors/DotsEating.h \
-    behaviors/EnemyAnimation.h \
-    behaviors/EnemyController.h \
+    behaviors/EnemyAnimating.h \
+    behaviors/EnemyControlling.h \
     behaviors/EnemyEating.h \
-    behaviors/EnemyOrientation.h \
-    behaviors/EnergizerAnimation.h \
+    behaviors/EnemyOrientating.h \
+    behaviors/EnergizerAnimating.h \
     behaviors/Energizing.h \
-    behaviors/KillPlayer.h \
-    behaviors/PlayerAnimation.h \
-    behaviors/PlayerController.h \
-    behaviors/PlayerOrientation.h \
+    behaviors/Killing.h \
+    behaviors/Moving.h \
+    behaviors/PlayerAnimating.h \
+    behaviors/PlayerControlling.h \
+    behaviors/PlayerOrientating.h \
     behaviors/Spawning.h \
     behaviors/Teleporting.h \
     objects/Character.h \

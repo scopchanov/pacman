@@ -1,9 +1,9 @@
 #include "Speeding.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
 #include "Grid.h"
 #include "Vector2.h"
-#include "behaviors/CharacterMovement.h"
+#include "behaviors/Moving.h"
+#include "objects/Player.h"
 
 Speeding::Speeding(GameObject *parent) :
 	AbstractPersonality(parent)
@@ -18,13 +18,13 @@ int Speeding::type() const
 
 Vector2 Speeding::calculateTarget() const
 {
-	auto *behavior{player()->findBehavior(BT_CharacterMovement)};
+	auto *behavior{player()->findBehavior(BT_Moving)};
 
 	if (!behavior)
 		return Vector2();
 
-	auto *movement{static_cast<CharacterMovement *>(behavior)};
-	const Vector2 &playerDirection(movement->currentDirection());
+	auto *moving{static_cast<Moving *>(behavior)};
+	const Vector2 &playerDirection(moving->currentDirection());
 	const Vector2 &targetCell{playerCell() + playerDirection*4};
 
 	return grid()->mapFromGrid(targetCell);

@@ -1,7 +1,7 @@
 #include "Teleporting.h"
 #include "GameGlobals.h"
 #include "GameObject.h"
-#include "behaviors/CharacterMovement.h"
+#include "behaviors/Moving.h"
 
 Teleporting::Teleporting(GameObject *parent) :
 	AbstractBehavior(parent)
@@ -34,12 +34,12 @@ void Teleporting::performActions()
 
 void Teleporting::teleport(GameObject *gameObject)
 {
-	auto *behavior{gameObject->findBehavior(BT_CharacterMovement)};
+	auto *behavior{gameObject->findBehavior(BT_Moving)};
 
 	if (!behavior)
 		return;
 
-	auto *movement{static_cast<CharacterMovement *>(behavior)};
+	auto *moving{static_cast<Moving *>(behavior)};
 
-	movement->relocateCharacter(_destination);
+	moving->relocateCharacter(_destination);
 }

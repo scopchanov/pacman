@@ -25,18 +25,16 @@ enum ActionType : int {
 };
 
 enum BehaviorType : int {
-	BT_Animation = 0,
-	BT_CameraFollow,
+	BT_Animating = 0,
 	BT_Coloring,
-	BT_CharacterMovement,
+	BT_Controlling,
 	BT_Delaying,
 	BT_DotsEating,
-	BT_EnemyController,
 	BT_EnemyEating,
 	BT_Energizing,
-	BT_KillPlayer,
-	BT_Orientation,
-	BT_PlayerController,
+	BT_Killing,
+	BT_Moving,
+	BT_Orientating,
 	BT_Spawning,
 	BT_Teleporting
 };
@@ -47,6 +45,13 @@ enum ObjectType : int {
 	OBJ_Enemy,
 	OBJ_Energizer,
 	OBJ_Teleporter
+};
+
+enum PersonalityType : int {
+	PT_Shadowing = 0,
+	PT_Speeding,
+	PT_Shying,
+	PT_Poking
 };
 
 #endif // GAMEGLOBALS_H

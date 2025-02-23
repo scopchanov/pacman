@@ -1,4 +1,5 @@
 #include "Shadowing.h"
+#include "GameGlobals.h"
 #include "GameObject.h"
 #include "Grid.h"
 #include "Vector2.h"

@@ -1,25 +1,16 @@
 #include "Energizing.h"
 #include "AbstractAction.h"
+#include "Game.h"
 #include "GameEvent.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "GameLevel.h"
+#include "objects/Player.h"
 
 Energizing::Energizing(GameObject *parent) :
 	AbstractBehavior(parent),
-	_player{nullptr},
 	_eventPlayerEnergized{nullptr}
 {
 
-}
-
-GameObject *Energizing::player() const
-{
-	return _player;
-}
-
-void Energizing::setPlayer(GameObject *player)
-{
-	_player = player;
 }
 
 void Energizing::setEvent(GameEvent *event)
@@ -34,7 +25,7 @@ int Energizing::type() const
 
 void Energizing::performActions()
 {
-	if (!parent()->collidesWithObject(_player))
+	if (!parent()->collidesWithObject(Game::ref().level()->player()))
 		return;
 
 	findAction(ACT_EnergizePlayer)->trigger();

@@ -1,5 +1,6 @@
 #include "EnergizePlayer.h"
 #include "Game.h"
+#include "GameLevel.h"
 #include "GameGlobals.h"
 #include "objects/Player.h"
 
@@ -16,5 +17,5 @@ int EnergizePlayer::type() const
 
 void EnergizePlayer::performTask()
 {
-	Game::ref().player()->energize();
+	Game::ref().level()->player()->energize();
 }

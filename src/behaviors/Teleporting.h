@@ -4,7 +4,7 @@
 #include "AbstractBehavior.h"
 #include <QPointF>
 
-class CharacterMovement;
+class Moving;
 
 class Teleporting : public AbstractBehavior
 {

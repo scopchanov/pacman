@@ -1,6 +1,6 @@
 {
   "palette": {
-    "Background": "#388E3C",
+    "Background": "#000000",
     "Player": "#FFFFFF",
     "PlayerEnergized": "#FFEA00",
     "Blinky": "#F44336",
@@ -8,7 +8,7 @@
     "Pinky": "#FF80AB",
     "Clyde": "#FFC107",
     "EnemyFrightened": "#2962FF",
-    "Wall": "#5D4037",
+    "Wall": "#795548",
     "Door": "#BA68C8",
     "Dot": "#B0BEC5",
     "Energizer": "#FFEA00"

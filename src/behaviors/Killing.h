@@ -1,14 +1,14 @@
-#ifndef KILLPLAYER_H
-#define KILLPLAYER_H
+#ifndef KILLING_H
+#define KILLING_H
 
 #include "AbstractTimedBehavior.h"
 
 class GameEvent;
 
-class KillPlayer : public AbstractTimedBehavior
+class Killing : public AbstractTimedBehavior
 {
 public:
-	explicit KillPlayer(GameObject *parent = nullptr);
+	explicit Killing(GameObject *parent = nullptr);
 
 	void setEventPlayerDies(GameEvent *gameEvent);
 	int type() const override;
@@ -19,4 +19,4 @@ private:
 	GameEvent *_eventPlayerDies;
 };
 
-#endif // KILLPLAYER_H
+#endif // KILLING_H

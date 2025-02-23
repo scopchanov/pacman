@@ -2,6 +2,7 @@
 #include "Configurator.h"
 #include "FileHandler.h"
 #include "GameGlobals.h"
+#include "GameLevel.h"
 #include "GamePalette.h"
 #include "GameView.h"
 #include "LifesDisplay.h"
@@ -21,16 +22,9 @@ GameWidget::GameWidget(QWidget *parent) :
 	auto *scoreDisplay{new ScoreDisplay(this)};
 	auto *lifesDisplay{new LifesDisplay(this)};
 
-	Configurator configurator;
-
-	configurator.configure(FileHandler::readFile(":/txt/config.json"));
-
-	_gameView->setScene(Game::ref().scene());
-	_gameView->setBackgroundBrush(Game::ref().palette()->color(CR_Background));
-
 	layoutPanel->addWidget(scoreDisplay);
 	layoutPanel->addWidget(lifesDisplay);
-	layoutPanel->setContentsMargins(36, 0, 36, 0);
+	layoutPanel->setContentsMargins(0, 20, 0, 20);
 	layoutPanel->setSpacing(0);
 
 	layoutMiddle->addStretch();
@@ -57,5 +51,14 @@ GameWidget::GameWidget(QWidget *parent) :
 
 void GameWidget::startGame()
 {
+	Configurator configurator;
+
+	configurator.configure(FileHandler::readFile(":/txt/config.json"));
+
+	_gameView->setScene(Game::ref().level());
+	_gameView->setSceneRect(0, 0, 720, 792);
+	_gameView->setBackgroundBrush(Game::ref().palette()->color(CR_Background));
+	_gameView->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+
 	Game::ref().start();
 }

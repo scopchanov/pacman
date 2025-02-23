@@ -1,6 +1,7 @@
 #include "ScareEnemies.h"
 #include "Game.h"
 #include "GameGlobals.h"
+#include "GameLevel.h"
 #include "objects/Enemy.h"
 
 ScareEnemies::ScareEnemies(AbstractBehavior *parent) :
@@ -16,7 +17,7 @@ int ScareEnemies::type() const
 
 void ScareEnemies::performTask()
 {
-	const QList<Enemy *> enemies{Game::ref().enemies()};
+	const QList<Enemy *> enemies{Game::ref().level()->enemies()};
 
 	for (auto *enemy : enemies)
 		if (enemy->state() != Enemy::ST_Eaten)

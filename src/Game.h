@@ -3,9 +3,9 @@
 
 #include <QObject>
 
-class QGraphicsScene;
 class AbstractPersonality;
 class AudioEngine;
+class GameLevel;
 class GameObject;
 class GamePalette;
 class GameScene;
@@ -29,16 +29,11 @@ class Game : public QObject
 
 public:
 	GameClock *clock() const;
-	QGraphicsScene *scene() const;
+	GameLevel *level() const;
 	InputSystem *inputSystem() const;
 	GameStatus *status() const;
 	GamePalette *palette() const;
 	AiStateMachine *stateMachine() const;
-	Grid *grid() const;
-	Tilemap *walls() const;
-	Tilemap *dots() const;
-	Player *player() const;
-	QList<Enemy *> &enemies();
 
 	static Game &ref();
 
@@ -56,17 +51,11 @@ public slots:
 
 private:
 	GameClock *_clock;
-	GameScene *_scene;
+	GameLevel *_level;
 	GameStatus *_status;
 	GamePalette *_palette;
 	AiStateMachine *_stateMachine;
 	AudioEngine *_audioEngine;
-	Grid *_grid;
-	Tilemap *_walls;
-	Tilemap *_dots;
-	Player *_player;
-	QList<Enemy *> _enemies;
-	Deenergizer *_deenergizer;
 
 signals:
 	void playerWins();

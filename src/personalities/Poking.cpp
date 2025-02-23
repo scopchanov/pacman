@@ -1,7 +1,8 @@
 #include "Poking.h"
-#include "GameObject.h"
 #include "Grid.h"
 #include "Vector2.h"
+#include "objects/Player.h"
+#include "GameGlobals.h"
 
 Poking::Poking(GameObject *parent) :
 	AbstractPersonality(parent)

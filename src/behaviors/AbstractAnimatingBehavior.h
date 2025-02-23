@@ -1,10 +1,10 @@
-#ifndef ABSTRACTANIMATIONBEHAVIOR_H
-#define ABSTRACTANIMATIONBEHAVIOR_H
+#ifndef ABSTRACTANIMATINGBEHAVIOR_H
+#define ABSTRACTANIMATINGBEHAVIOR_H
 
 #include "AbstractTimedBehavior.h"
 #include <QtGlobal>
 
-class AbstractAnimationBehavior : public AbstractTimedBehavior
+class AbstractAnimatingBehavior : public AbstractTimedBehavior
 {
 public:
 	enum DirectionType : int {
@@ -12,7 +12,7 @@ public:
 		DIR_Forwards = 1
 	};
 
-	explicit AbstractAnimationBehavior(GameObject *parent = nullptr);
+	explicit AbstractAnimatingBehavior(GameObject *parent = nullptr);
 
 	qreal frameRate() const;
 	void setFrameRate(qreal frameRate);
@@ -39,4 +39,4 @@ private:
 	qreal _value;
 };
 
-#endif // ABSTRACTANIMATIONBEHAVIOR_H
+#endif // ABSTRACTANIMATINGBEHAVIOR_H

@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::onNewGame()
 {
 	setCurrentWidget(_gameWidget);
+
 	_gameWidget->startGame();
 }
 

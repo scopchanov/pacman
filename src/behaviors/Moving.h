@@ -1,14 +1,14 @@
-#ifndef CHARACTERMOVEMENT_H
-#define CHARACTERMOVEMENT_H
+#ifndef MOVING_H
+#define MOVING_H
 
 #include "AbstractSpatialBehavior.h"
 #include <QtGlobal>
 #include <QPointF>
 
-class CharacterMovement : public AbstractSpatialBehavior
+class Moving : public AbstractSpatialBehavior
 {
 public:
-	explicit CharacterMovement(GameObject *parent = nullptr);
+	explicit Moving(GameObject *parent = nullptr);
 
 	qreal speed() const;
 	void setSpeed(qreal speed);
@@ -49,4 +49,4 @@ private:
 	Vector2 _targetPosition;
 };
 
-#endif // CHARACTERMOVEMENT_H
+#endif // MOVING_H

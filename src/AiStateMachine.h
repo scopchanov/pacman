@@ -4,7 +4,7 @@
 #include <QObject>
 
 class GameClock;
-class EnemyController;
+class EnemyControlling;
 
 class AiStateMachine : public QObject
 {
@@ -14,7 +14,7 @@ public:
 
 	GameClock *gameClock() const;
 	void setGameClock(GameClock *clock);
-	void addEnemyController(EnemyController *controller);
+	void addEnemyController(EnemyControlling *controller);
 
 	void reset();
 
@@ -24,7 +24,7 @@ private:
 	int enemyState() const;
 
 	GameClock *_gameClock;
-	QList<EnemyController *> _enemyControllers;
+	QList<EnemyControlling *> _enemyControllers;
 	int _step;
 	qreal _time;
 

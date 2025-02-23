@@ -12,15 +12,12 @@ class Energizing : public AbstractBehavior
 public:
 	explicit Energizing(GameObject *parent = nullptr);
 
-	GameObject *player() const;
-	void setPlayer(GameObject *player);
 	void setEvent(GameEvent *event);
 	int type() const override;
 
 private:
 	void performActions() override;
 
-	GameObject *_player;
 	GameEvent *_eventPlayerEnergized;
 };
 

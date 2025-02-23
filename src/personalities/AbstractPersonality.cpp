@@ -1,12 +1,12 @@
 #include "AbstractPersonality.h"
-#include "GameObject.h"
+#include "Game.h"
+#include "GameLevel.h"
 #include "Grid.h"
 #include "Vector2.h"
+#include "objects/Player.h"
 
 AbstractPersonality::AbstractPersonality(GameObject *parent) :
-	_parent{parent},
-	_player{nullptr},
-	_grid{nullptr}
+	_parent{parent}
 {
 
 }
@@ -21,24 +21,14 @@ void AbstractPersonality::setParent(GameObject *parent)
 	_parent = parent;
 }
 
-GameObject *AbstractPersonality::player() const
+Player *AbstractPersonality::player() const
 {
-	return _player;
-}
-
-void AbstractPersonality::setPlayer(GameObject *player)
-{
-	_player = player;
+	return Game::ref().level()->player();
 }
 
 Grid *AbstractPersonality::grid() const
 {
-	return _grid;
-}
-
-void AbstractPersonality::setGrid(Grid *grid)
-{
-	_grid = grid;
+	return Game::ref().level()->grid();
 }
 
 QPointF AbstractPersonality::scatterTarget() const

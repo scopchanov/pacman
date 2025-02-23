@@ -1,6 +1,7 @@
 #include "DeenergizePlayer.h"
 #include "Game.h"
 #include "GameGlobals.h"
+#include "GameLevel.h"
 #include "objects/Player.h"
 
 DeenergizePlayer::DeenergizePlayer(AbstractBehavior *parent) :
@@ -16,5 +17,5 @@ int DeenergizePlayer::type() const
 
 void DeenergizePlayer::performTask()
 {
-	Game::ref().player()->deenergize();
+	Game::ref().level()->player()->deenergize();
 }

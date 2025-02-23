@@ -1,9 +1,9 @@
 #include "Shying.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
 #include "Grid.h"
 #include "Vector2.h"
-#include "behaviors/CharacterMovement.h"
+#include "behaviors/Moving.h"
+#include "objects/Player.h"
 
 Shying::Shying(GameObject *parent) :
 	AbstractPersonality(parent),
@@ -32,13 +32,13 @@ Vector2 Shying::calculateTarget() const
 	if (!_partner)
 		return Vector2();
 
-	auto *behavior{player()->findBehavior(BT_CharacterMovement)};
+	auto *behavior{player()->findBehavior(BT_Moving)};
 
 	if (!behavior)
 		return Vector2();
 
-	auto *movement{static_cast<CharacterMovement *>(behavior)};
-	const Vector2 &playerDirection(movement->currentDirection());
+	auto *moving{static_cast<Moving *>(behavior)};
+	const Vector2 &playerDirection(moving->currentDirection());
 	const Vector2 &referenceCell{playerCell() + playerDirection*2};
 	const Vector2 &reference{grid()->mapFromGrid(referenceCell)};
 

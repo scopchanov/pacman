@@ -5,16 +5,14 @@
 #include "BonusText.h"
 #include "GameClock.h"
 #include "GameStatus.h"
-#include "GameScene.h"
-#include "Grid.h"
-#include "Tilemap.h"
+#include "GameLevel.h"
 #include "AudioEngine.h"
 #include "GamePalette.h"
 #include "actions/DeleteGameObject.h"
 #include "behaviors/Delaying.h"
-#include "behaviors/EnemyController.h"
-#include "objects/Player.h"
+#include "behaviors/EnemyControlling.h"
 #include "objects/Deenergizer.h"
+#include "objects/Player.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonValue>
@@ -23,23 +21,15 @@
 Game::Game(QObject *parent) :
 	QObject(parent),
 	_clock{new GameClock(this)},
-	_scene{new GameScene(this)},
+	_level{new GameLevel(this)},
 	_status{new GameStatus(this)},
 	_palette{new GamePalette(this)},
 	_stateMachine{new AiStateMachine(this)},
-	_audioEngine{new AudioEngine(this)},
-	_grid{new Grid(this)},
-	_walls{new Tilemap()},
-	_dots{new Tilemap()},
-	_player{new Player()},
-	_deenergizer{new Deenergizer()}
+	_audioEngine{new AudioEngine(this)}
 {
-	_scene->addItem(_walls);
-	_scene->addItem(_dots);
-	_scene->addItem(_player);
-	_scene->addItem(_deenergizer);
+	stateMachine()->setGameClock(_clock);
 
-	connect(_clock, &GameClock::tick, _scene, &GameScene::makeTurn);
+	connect(_clock, &GameClock::tick, _level, &GameLevel::makeTurn);
 	connect(_audioEngine, &AudioEngine::victoryTunePlayed, this, &Game::playerWins);
 	connect(_audioEngine, &AudioEngine::funeralTunePlayed, this, &Game::onFuneralTunePlayed);
 }
@@ -49,14 +39,14 @@ GameClock *Game::clock() const
 	return _clock;
 }
 
-QGraphicsScene *Game::scene() const
+GameLevel *Game::level() const
 {
-	return _scene;
+	return _level;
 }
 
 InputSystem *Game::inputSystem() const
 {
-	return _scene->inputSystem();
+	return _level->inputSystem();
 }
 
 GameStatus *Game::status() const
@@ -74,31 +64,6 @@ AiStateMachine *Game::stateMachine() const
 	return _stateMachine;
 }
 
-Grid *Game::grid() const
-{
-	return _grid;
-}
-
-Tilemap *Game::walls() const
-{
-	return _walls;
-}
-
-Tilemap *Game::dots() const
-{
-	return _dots;
-}
-
-Player *Game::player() const
-{
-	return _player;
-}
-
-QList<Enemy *> &Game::enemies()
-{
-	return _enemies;
-}
-
 Game &Game::ref()
 {
 	static Game game;
@@ -110,7 +75,7 @@ void Game::start()
 {
 	auto *sequence{new StartupSequence(this)};
 
-	_scene->addItem(sequence->message());
+	_level->addItem(sequence->message());
 
 	connect(sequence, &StartupSequence::go, _clock, &GameClock::start);
 
@@ -130,7 +95,7 @@ void Game::resume()
 void Game::reset()
 {
 	_stateMachine->reset();
-	_scene->reset();
+	_level->reset();
 
 	start();
 }
@@ -155,16 +120,16 @@ void Game::onEnemyEaten()
 
 	text->addBehavior(delayedDeleting);
 	text->setText(QString::number(points));
-	text->setPos(_player->pos());
+	text->setPos(_level->player()->pos());
 
-	_scene->addItem(text);
+	_level->addItem(text);
 	_status->increaseScore(points);
 	_audioEngine->playEffect(AudioEngine::SND_EnemyEaten);
 }
 
 void Game::onPlayerEnergized()
 {
-	_deenergizer->reset();
+	_level->deenergizer()->reset();
 	_status->increaseScore(5);
 	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
 }
