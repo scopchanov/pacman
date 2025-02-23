@@ -28,11 +28,11 @@ class Game : public QObject
 	explicit Game(QObject *parent = nullptr);
 
 public:
-	GameClock *clock() const;
 	GameLevel *level() const;
+	GameClock *clock() const;
+	GamePalette *palette() const;
 	InputSystem *inputSystem() const;
 	GameStatus *status() const;
-	GamePalette *palette() const;
 	AiStateMachine *stateMachine() const;
 
 	static Game &ref();
@@ -50,10 +50,8 @@ public slots:
 	void onFuneralTunePlayed();
 
 private:
-	GameClock *_clock;
 	GameLevel *_level;
 	GameStatus *_status;
-	GamePalette *_palette;
 	AiStateMachine *_stateMachine;
 	AudioEngine *_audioEngine;
 

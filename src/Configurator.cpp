@@ -53,14 +53,14 @@ void Configurator::configure(const QJsonObject &json)
 	createEnemies(json.value("enemies").toArray());
 }
 
-GamePalette *Configurator::palette() const
-{
-	return Game::ref().palette();
-}
-
 GameLevel *Configurator::level() const
 {
 	return Game::ref().level();
+}
+
+GamePalette *Configurator::palette() const
+{
+	return level()->palette();
 }
 
 Grid *Configurator::grid() const

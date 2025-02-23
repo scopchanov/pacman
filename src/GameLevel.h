@@ -3,6 +3,8 @@
 
 #include <GameScene.h>
 
+class GameClock;
+class GamePalette;
 class Grid;
 class Tilemap;
 class Player;
@@ -14,6 +16,8 @@ class GameLevel : public GameScene
 public:
 	explicit GameLevel(QObject *parent = nullptr);
 
+	GameClock *clock() const;
+	GamePalette *palette() const;
 	Grid *grid() const;
 	Tilemap *walls() const;
 	Tilemap *dots() const;
@@ -22,6 +26,8 @@ public:
 	Deenergizer *deenergizer() const;
 
 private:
+	GameClock *_clock;
+	GamePalette *_palette;
 	Grid *_grid;
 	Tilemap *_walls;
 	Tilemap *_dots;

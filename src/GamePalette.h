@@ -2,6 +2,7 @@
 #define GAMEPALETTE_H
 
 #include <QObject>
+#include <QHash>
 
 class GamePalette : public QObject
 {
@@ -13,9 +14,7 @@ public:
 	void setColor(int role, const QColor &color);
 
 private:
-	bool isInvalidRole(int role) const;
-
-	QList<QColor> _colors;
+	QHash<int, QColor> _colors;
 };
 
 #endif // GAMEPALETTE_H

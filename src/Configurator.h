@@ -18,8 +18,8 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
-	GamePalette *palette() const;
 	GameLevel *level() const;
+	GamePalette *palette() const;
 	Grid *grid() const;
 	void configurePalette(const QJsonObject &json);
 	void configureGrid(const QJsonObject &json);
