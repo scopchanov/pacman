@@ -1,7 +1,7 @@
 #include "AbstractOrientatingBehavior.h"
 #include "GameGlobals.h"
 
-AbstractOrientatingBehavior::AbstractOrientatingBehavior(GameObject *parent) :
+AbstractOrientatingBehavior::AbstractOrientatingBehavior(AbstractGameObject *parent) :
 	AbstractBehavior(parent),
 	_moving{nullptr}
 {

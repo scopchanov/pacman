@@ -9,7 +9,7 @@ class Vector2;
 class PlayerOrientating : public AbstractOrientatingBehavior
 {
 public:
-	explicit PlayerOrientating(GameObject *parent = nullptr);
+	explicit PlayerOrientating(AbstractGameObject *parent = nullptr);
 
 private:
 	void performOrientationActions() override;

@@ -4,7 +4,7 @@
 #include <GameScene.h>
 
 class GameClock;
-class GamePalette;
+class Palette;
 class Grid;
 class Tilemap;
 class Player;
@@ -17,7 +17,7 @@ public:
 	explicit GameLevel(QObject *parent = nullptr);
 
 	GameClock *clock() const;
-	GamePalette *palette() const;
+	Palette *palette() const;
 	Grid *grid() const;
 	Tilemap *walls() const;
 	Tilemap *dots() const;
@@ -27,7 +27,7 @@ public:
 
 private:
 	GameClock *_clock;
-	GamePalette *_palette;
+	Palette *_palette;
 	Grid *_grid;
 	Tilemap *_walls;
 	Tilemap *_dots;

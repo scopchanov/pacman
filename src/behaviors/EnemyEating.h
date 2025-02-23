@@ -5,12 +5,12 @@
 
 class Enemy;
 class GameEvent;
-class GameObject;
+class AbstractGameObject;
 
 class EnemyEating : public AbstractBehavior
 {
 public:
-	explicit EnemyEating(GameObject *parent = nullptr);
+	explicit EnemyEating(AbstractGameObject *parent = nullptr);
 
 	void setEvent(GameEvent *event);
 	int type() const override;

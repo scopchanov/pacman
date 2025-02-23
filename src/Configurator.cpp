@@ -4,7 +4,7 @@
 #include "Game.h"
 #include "GameGlobals.h"
 #include "GameLevel.h"
-#include "GamePalette.h"
+#include "Palette.h"
 #include "Grid.h"
 #include "PathBuilder.h"
 #include "Tilemap.h"
@@ -32,22 +32,12 @@ void Configurator::configure(const QJsonObject &json)
 	if (json.isEmpty())
 		return;
 
-	auto *walls{level()->walls()};
-	auto *dots{level()->dots()};
-
 	configurePalette(json.value("palette").toObject());
 	configureGrid(json.value("grid").toObject());
-
-	walls->setGrid(grid());
-	dots->setGrid(grid());
-
-	buildTilemap(walls, json.value("walls").toArray(), QPen(palette()->color(CR_Wall), 4), QBrush(Qt::transparent));
-	buildTilemap(dots, json.value("dots").toArray(), QPen(Qt::transparent), palette()->color(CR_Dot));
-
-	walls->setTile(13, 14, createTile(PathBuilder::TT_HLineLow, QPen(palette()->color(CR_Door), 6), Qt::transparent));
-	walls->setTile(13, 15, createTile(PathBuilder::TT_HLineLow, QPen(palette()->color(CR_Door), 6), Qt::transparent));
-
+	configureWalls(json.value("walls").toArray());
+	configureDots(json.value("dots").toArray());
 	configurePlayer(json.value("player").toObject());
+	createDoors(json.value("doors").toArray());
 	createEnergizers(json.value("energizers").toArray());
 	createTeleporters(json.value("teleporters").toArray());
 	createEnemies(json.value("enemies").toArray());
@@ -58,7 +48,7 @@ GameLevel *Configurator::level() const
 	return Game::ref().level();
 }
 
-GamePalette *Configurator::palette() const
+Palette *Configurator::palette() const
 {
 	return level()->palette();
 }
@@ -91,6 +81,22 @@ void Configurator::configureGrid(const QJsonObject &json)
 	grid()->setCellSize(QSizeF(width, height));
 }
 
+void Configurator::configureWalls(const QJsonArray &jsonWalls)
+{
+	auto *walls{level()->walls()};
+
+	walls->setGrid(grid());
+	buildTilemap(walls, jsonWalls, QPen(palette()->color(CR_Wall), 4), QBrush(Qt::transparent));
+}
+
+void Configurator::configureDots(const QJsonArray &jsonDots)
+{
+	auto *dots{level()->dots()};
+
+	dots->setGrid(grid());
+	buildTilemap(dots, jsonDots, QPen(Qt::transparent), palette()->color(CR_Dot));
+}
+
 void Configurator::configurePlayer(const QJsonObject &json)
 {
 	BehaviorBuilder builder;
@@ -114,9 +120,26 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	builder.addEnemyEating();
 
 	player->setSpeed(80);
-	player->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Player, 45));
+	player->setPath(PathBuilder::animatedObjectPath(OBJ_Player, 45));
 	player->setPen(QPen(Qt::transparent));
 	player->reset();
+}
+
+void Configurator::createDoors(const QJsonArray &doors)
+{
+	for (const auto &door : doors)
+		createDoor(door.toObject());
+}
+
+void Configurator::createDoor(const QJsonObject &json)
+{
+	const QPen &pen{palette()->color(CR_Door), 6, Qt::SolidLine, Qt::RoundCap};
+	auto *door{createTile(PathBuilder::TT_Door, pen, Qt::transparent)};
+	auto *walls{level()->walls()};
+	int row{json.value("row").toInt()};
+	int column{json.value("column").toInt()};
+
+	walls->setTile(row, column, door);
 }
 
 void Configurator::createEnemies(const QJsonArray &enemies)
@@ -154,7 +177,7 @@ void Configurator::createEnemy(const QJsonObject &json)
 	builder.addKilling();
 
 	enemy->setSpeed(75);
-	enemy->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Enemy, 0));
+	enemy->setPath(PathBuilder::animatedObjectPath(OBJ_Enemy, 0));
 	enemy->setPen(QPen(Qt::transparent));
 
 	level()->enemies().append(enemy);
@@ -195,7 +218,7 @@ void Configurator::createEnergizer(const QJsonObject &json)
 	builder.addEnergizing();
 	builder.addAnimating(OBJ_Energizer);
 
-	energizer->setPath(PathBuilder::animatedObjectPath(PathBuilder::GO_Energizer, 8));
+	energizer->setPath(PathBuilder::animatedObjectPath(OBJ_Energizer, 8));
 	energizer->setPen(QPen(Qt::transparent));
 	energizer->setBrush(palette()->color(CR_Energizer));
 	energizer->setPos(grid()->mapFromGrid(cell.y(), cell.x()));

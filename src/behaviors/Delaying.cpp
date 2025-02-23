@@ -3,7 +3,7 @@
 #include "GameGlobals.h"
 #include "AbstractAction.h"
 
-Delaying::Delaying(GameObject *parent) :
+Delaying::Delaying(AbstractGameObject *parent) :
 	AbstractTimedBehavior(parent),
 	_duration{0.0},
 	_time{0.0}

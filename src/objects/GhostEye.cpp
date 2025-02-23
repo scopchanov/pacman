@@ -4,8 +4,6 @@
 #include "Vector2.h"
 #include <QPen>
 
-
-
 GhostEye::GhostEye(QGraphicsItem *parent) :
 	QGraphicsEllipseItem{parent},
 	_iris{new QGraphicsEllipseItem(this)}

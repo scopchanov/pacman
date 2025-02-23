@@ -1,12 +1,12 @@
 #ifndef TELEPORTER_H
 #define TELEPORTER_H
 
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 
-class Teleporter : public GameObject
+class Teleporter : public AbstractGameObject
 {
 public:
-	explicit Teleporter(GameObject *parent = nullptr);
+	explicit Teleporter(AbstractGameObject *parent = nullptr);
 
 	int objectType() const override final;
 };

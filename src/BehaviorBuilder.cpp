@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "GameEvent.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "GameLevel.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/ScareEnemies.h"
@@ -29,7 +29,7 @@ BehaviorBuilder::BehaviorBuilder(QObject *parent) :
 
 }
 
-void BehaviorBuilder::setGameObject(GameObject *gameObject)
+void BehaviorBuilder::setGameObject(AbstractGameObject *gameObject)
 {
 	_gameObject = gameObject;
 }

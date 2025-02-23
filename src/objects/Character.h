@@ -1,12 +1,12 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 
-class Character : public GameObject
+class Character : public AbstractGameObject
 {
 public:
-	explicit Character(GameObject *parent = nullptr);
+	explicit Character(AbstractGameObject *parent = nullptr);
 
 	void setSpeed(qreal percent);
 };

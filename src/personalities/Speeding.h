@@ -6,7 +6,7 @@
 class Speeding : public AbstractPersonality
 {
 public:
-	explicit Speeding(GameObject *parent = nullptr);
+	explicit Speeding(AbstractGameObject *parent = nullptr);
 
 	int type() const override;
 

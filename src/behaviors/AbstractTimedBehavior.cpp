@@ -1,7 +1,7 @@
 #include "AbstractTimedBehavior.h"
 #include "Game.h"
 
-AbstractTimedBehavior::AbstractTimedBehavior(GameObject *parent) :
+AbstractTimedBehavior::AbstractTimedBehavior(AbstractGameObject *parent) :
 	AbstractBehavior(parent)
 {
 

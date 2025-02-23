@@ -1,9 +1,9 @@
 #include "Coloring.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include <QBrush>
 
-Coloring::Coloring(GameObject *parent) :
+Coloring::Coloring(AbstractGameObject *parent) :
 	AbstractBehavior(parent)
 {
 

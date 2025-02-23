@@ -39,7 +39,7 @@ GameClock *Game::clock() const
 	return _level->clock();
 }
 
-GamePalette *Game::palette() const
+Palette *Game::palette() const
 {
 	return _level->palette();
 }

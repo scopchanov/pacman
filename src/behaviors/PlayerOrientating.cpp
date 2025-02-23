@@ -1,11 +1,11 @@
 #include "PlayerOrientating.h"
 #include "Moving.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include <QHash>
 
 using Pair = QPair<int, int>;
 
-PlayerOrientating::PlayerOrientating(GameObject *parent) :
+PlayerOrientating::PlayerOrientating(AbstractGameObject *parent) :
 	AbstractOrientatingBehavior(parent)
 {
 

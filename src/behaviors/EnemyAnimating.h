@@ -6,7 +6,7 @@
 class EnemyAnimating : public AbstractAnimatingBehavior
 {
 public:
-	explicit EnemyAnimating(GameObject *parent = nullptr);
+	explicit EnemyAnimating(AbstractGameObject *parent = nullptr);
 
 private:
 	void update() override;

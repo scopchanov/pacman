@@ -14,7 +14,7 @@ public:
 		ET_PlayerWins
 	};
 
-	explicit DotsEating(GameObject *parent = nullptr);
+	explicit DotsEating(AbstractGameObject *parent = nullptr);
 
 	void setEvent(EventType type, GameEvent *event);
 	int type() const override;

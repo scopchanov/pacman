@@ -6,8 +6,8 @@
 class AbstractPersonality;
 class AudioEngine;
 class GameLevel;
-class GameObject;
-class GamePalette;
+class AbstractGameObject;
+class Palette;
 class GameScene;
 class GameStatus;
 class InputSystem;
@@ -30,7 +30,7 @@ class Game : public QObject
 public:
 	GameLevel *level() const;
 	GameClock *clock() const;
-	GamePalette *palette() const;
+	Palette *palette() const;
 	InputSystem *inputSystem() const;
 	GameStatus *status() const;
 	AiStateMachine *stateMachine() const;

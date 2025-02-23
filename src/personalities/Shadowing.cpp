@@ -1,10 +1,10 @@
 #include "Shadowing.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "Grid.h"
 #include "Vector2.h"
 
-Shadowing::Shadowing(GameObject *parent) :
+Shadowing::Shadowing(AbstractGameObject *parent) :
 	AbstractPersonality(parent)
 {
 

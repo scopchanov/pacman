@@ -3,7 +3,7 @@
 
 #include "AbstractAction.h"
 
-class GameObject;
+class AbstractGameObject;
 
 class DeleteGameObject : public AbstractAction
 {
@@ -12,13 +12,13 @@ public:
 
 	int type() const override;
 
-	GameObject *gameObject() const;
-	void setGameObject(GameObject *gameObject);
+	AbstractGameObject *gameObject() const;
+	void setGameObject(AbstractGameObject *gameObject);
 
 private:
 	void performTask() override;
 
-	GameObject *_gameObject;
+	AbstractGameObject *_gameObject;
 };
 
 #endif // DELETEGAMEOBJECT_H

@@ -1,12 +1,12 @@
 #ifndef ENERGIZER_H
 #define ENERGIZER_H
 
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 
-class Energizer : public GameObject
+class Energizer : public AbstractGameObject
 {
 public:
-	explicit Energizer(GameObject *parent = nullptr);
+	explicit Energizer(AbstractGameObject *parent = nullptr);
 
 	int objectType() const override;
 };

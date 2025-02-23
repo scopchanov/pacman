@@ -6,7 +6,7 @@
 #include "GameLevel.h"
 #include "objects/Player.h"
 
-Energizing::Energizing(GameObject *parent) :
+Energizing::Energizing(AbstractGameObject *parent) :
 	AbstractBehavior(parent),
 	_eventPlayerEnergized{nullptr}
 {

@@ -3,10 +3,10 @@
 #include "GameEvent.h"
 #include "GameLevel.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "objects/Player.h"
 
-Killing::Killing(GameObject *parent) :
+Killing::Killing(AbstractGameObject *parent) :
 	AbstractTimedBehavior(parent),
 	_eventPlayerDies{nullptr}
 {

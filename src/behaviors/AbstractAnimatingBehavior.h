@@ -12,7 +12,7 @@ public:
 		DIR_Forwards = 1
 	};
 
-	explicit AbstractAnimatingBehavior(GameObject *parent = nullptr);
+	explicit AbstractAnimatingBehavior(AbstractGameObject *parent = nullptr);
 
 	qreal frameRate() const;
 	void setFrameRate(qreal frameRate);
@@ -20,8 +20,6 @@ public:
 	void setValue(qreal value);
 	DirectionType direction() const;
 	void setDirection(DirectionType direction);
-	int gameObjectType() const;
-	void setPathType(int type);
 	int type() const override;
 
 	void reset() override;
@@ -33,7 +31,6 @@ private:
 	void performActions() override final;
 	virtual void update() = 0;
 
-	int _gameObjectType;
 	qreal _frameRate;
 	DirectionType _direction;
 	qreal _value;

@@ -6,7 +6,7 @@
 class Shadowing : public AbstractPersonality
 {
 public:
-	explicit Shadowing(GameObject *parent = nullptr);
+	explicit Shadowing(AbstractGameObject *parent = nullptr);
 
 	int type() const override;
 

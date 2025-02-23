@@ -1,10 +1,8 @@
 #include "PlayerAnimating.h"
-#include "PathBuilder.h"
 
-PlayerAnimating::PlayerAnimating(GameObject *parent) :
+PlayerAnimating::PlayerAnimating(AbstractGameObject *parent) :
 	AbstractAnimatingBehavior(parent)
 {
-	setPathType(PathBuilder::GO_Player);
 	setFrameRate(150);
 }
 

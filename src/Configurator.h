@@ -5,7 +5,7 @@
 
 class QGraphicsItem;
 class GameLevel;
-class GamePalette;
+class Palette;
 class Grid;
 class Tilemap;
 
@@ -19,11 +19,15 @@ public:
 
 private:
 	GameLevel *level() const;
-	GamePalette *palette() const;
+	Palette *palette() const;
 	Grid *grid() const;
 	void configurePalette(const QJsonObject &json);
 	void configureGrid(const QJsonObject &json);
+	void configureWalls(const QJsonArray &jsonWalls);
+	void configureDots(const QJsonArray &jsonDots);
 	void configurePlayer(const QJsonObject &json);
+	void createDoors(const QJsonArray &doors);
+	void createDoor(const QJsonObject &json);
 	void createEnemies(const QJsonArray &enemies);
 	void createEnemy(const QJsonObject &json);
 	void createEnergizers(const QJsonArray &energizers);

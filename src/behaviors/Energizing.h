@@ -5,12 +5,12 @@
 #include <QList>
 
 class GameEvent;
-class GameObject;
+class AbstractGameObject;
 
 class Energizing : public AbstractBehavior
 {
 public:
-	explicit Energizing(GameObject *parent = nullptr);
+	explicit Energizing(AbstractGameObject *parent = nullptr);
 
 	void setEvent(GameEvent *event);
 	int type() const override;

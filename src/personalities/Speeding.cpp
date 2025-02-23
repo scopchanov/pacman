@@ -5,7 +5,7 @@
 #include "behaviors/Moving.h"
 #include "objects/Player.h"
 
-Speeding::Speeding(GameObject *parent) :
+Speeding::Speeding(AbstractGameObject *parent) :
 	AbstractPersonality(parent)
 {
 

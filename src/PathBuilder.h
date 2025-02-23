@@ -26,19 +26,14 @@ public:
 		TT_SmallCircleUpRight = 13,
 		TT_SmallCircleDownLeft = 15,
 		TT_SmallCircleDownRight = 16,
-		TT_Dot = 17
-	};
-
-	enum GameObjectType : int {
-		GO_Player = 0,
-		GO_Enemy,
-		GO_Energizer
+		TT_Dot = 17,
+		TT_Door = 18
 	};
 
 	explicit PathBuilder(QObject *parent = nullptr);
 
 	static QPainterPath tilePath(TileType type);
-	static QPainterPath animatedObjectPath(GameObjectType type, qreal value);
+	static QPainterPath animatedObjectPath(int type, qreal value);
 	static QPainterPath teleporterPath();
 
 private:
@@ -59,6 +54,7 @@ private:
 	static QPainterPath smallCircleDownLeft();
 	static QPainterPath smallCircleDownRight();
 	static QPainterPath dot();
+	static QPainterPath door();
 	static QPainterPath pacman(qreal d);
 	static QPainterPath ghost(qreal d);
 	static QPainterPath energizer(qreal d);

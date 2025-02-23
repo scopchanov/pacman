@@ -5,19 +5,19 @@
 #include "behaviors/Moving.h"
 #include "objects/Player.h"
 
-Shying::Shying(GameObject *parent) :
+Shying::Shying(AbstractGameObject *parent) :
 	AbstractPersonality(parent),
 	_partner{nullptr}
 {
 
 }
 
-GameObject *Shying::partner() const
+AbstractGameObject *Shying::partner() const
 {
 	return _partner;
 }
 
-void Shying::setPartner(GameObject *partner)
+void Shying::setPartner(AbstractGameObject *partner)
 {
 	_partner = partner;
 }

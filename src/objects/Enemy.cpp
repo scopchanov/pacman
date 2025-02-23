@@ -1,12 +1,12 @@
 #include "Enemy.h"
 #include "Game.h"
 #include "GameGlobals.h"
-#include "GamePalette.h"
+#include "Palette.h"
 #include "behaviors/Coloring.h"
 #include "personalities/AbstractPersonality.h"
 #include <QBrush>
 
-Enemy::Enemy(GameObject *parent) :
+Enemy::Enemy(AbstractGameObject *parent) :
 	Character(parent),
 	_personality{nullptr},
 	_state{ST_Exit}

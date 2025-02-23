@@ -6,7 +6,7 @@
 class PlayerControlling : public AbstractControllingBehavior
 {
 public:
-	explicit PlayerControlling(GameObject *parent = nullptr);
+	explicit PlayerControlling(AbstractGameObject *parent = nullptr);
 
 private:
 	void performControllingActions() override;

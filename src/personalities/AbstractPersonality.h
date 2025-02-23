@@ -3,7 +3,7 @@
 
 #include <QPointF>
 
-class GameObject;
+class AbstractGameObject;
 class Player;
 class Grid;
 class Vector2;
@@ -11,11 +11,11 @@ class Vector2;
 class AbstractPersonality
 {
 public:
-	explicit AbstractPersonality(GameObject *parent = nullptr);
+	explicit AbstractPersonality(AbstractGameObject *parent = nullptr);
 	virtual ~AbstractPersonality() = default;
 
-	GameObject *parent() const;
-	void setParent(GameObject *parent);
+	AbstractGameObject *parent() const;
+	void setParent(AbstractGameObject *parent);
 	Player *player() const;
 	Grid *grid() const;
 	QPointF scatterTarget() const;
@@ -28,7 +28,7 @@ protected:
 	Vector2 playerCell() const;
 
 private:
-	GameObject *_parent;
+	AbstractGameObject *_parent;
 	QPointF _scatterTarget;
 };
 

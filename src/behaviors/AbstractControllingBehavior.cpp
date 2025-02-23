@@ -1,7 +1,7 @@
 #include "AbstractControllingBehavior.h"
 #include "GameGlobals.h"
 
-AbstractControllingBehavior::AbstractControllingBehavior(GameObject *parent) :
+AbstractControllingBehavior::AbstractControllingBehavior(AbstractGameObject *parent) :
 	AbstractBehavior(parent),
 	_moving{nullptr}
 {

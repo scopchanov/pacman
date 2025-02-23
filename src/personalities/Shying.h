@@ -6,16 +6,16 @@
 class Shying : public AbstractPersonality
 {
 public:
-	explicit Shying(GameObject *parent = nullptr);
+	explicit Shying(AbstractGameObject *parent = nullptr);
 
-	GameObject *partner() const;
-	void setPartner(GameObject *partner);
+	AbstractGameObject *partner() const;
+	void setPartner(AbstractGameObject *partner);
 	int type() const override;
 
 	Vector2 calculateTarget() const override;
 
 private:
-	GameObject *_partner;
+	AbstractGameObject *_partner;
 };
 
 #endif // SHYING_H

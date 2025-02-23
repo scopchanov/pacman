@@ -1,12 +1,12 @@
 #ifndef DEENERGIZER_H
 #define DEENERGIZER_H
 
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 
-class Deenergizer : public GameObject
+class Deenergizer : public AbstractGameObject
 {
 public:
-	explicit Deenergizer(GameObject *parent = nullptr);
+	explicit Deenergizer(AbstractGameObject *parent = nullptr);
 
 	void reset() override ;
 

@@ -8,7 +8,7 @@ class Moving;
 class AbstractControllingBehavior : public AbstractBehavior
 {
 public:
-	explicit AbstractControllingBehavior(GameObject *parent = nullptr);
+	explicit AbstractControllingBehavior(AbstractGameObject *parent = nullptr);
 
 	Moving *moving() const;
 	void setMoving(Moving *moving);

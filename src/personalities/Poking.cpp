@@ -4,7 +4,7 @@
 #include "objects/Player.h"
 #include "GameGlobals.h"
 
-Poking::Poking(GameObject *parent) :
+Poking::Poking(AbstractGameObject *parent) :
 	AbstractPersonality(parent)
 {
 

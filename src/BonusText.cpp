@@ -2,8 +2,8 @@
 #include "GameGlobals.h"
 #include <QFont>
 
-BonusText::BonusText(GameObject *parent) :
-	GameObject(parent),
+BonusText::BonusText(AbstractGameObject *parent) :
+	AbstractGameObject(parent),
 	_textItem{new QGraphicsTextItem(this)}
 {
 	_textItem->setDefaultTextColor(0xFFFFFF);

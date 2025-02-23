@@ -3,8 +3,8 @@
 #include "behaviors/Moving.h"
 #include <QPen>
 
-Character::Character(GameObject *parent) :
-	GameObject(parent)
+Character::Character(AbstractGameObject *parent) :
+	AbstractGameObject(parent)
 {
 
 }

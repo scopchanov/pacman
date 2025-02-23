@@ -4,7 +4,7 @@
 #include "Tilemap.h"
 #include <QPointF>
 
-DotsEating::DotsEating(GameObject *parent) :
+DotsEating::DotsEating(AbstractGameObject *parent) :
 	AbstractSpatialBehavior(parent)
 {
 	for (int n{0}; n < 2; n++)

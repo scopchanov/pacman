@@ -1,9 +1,9 @@
 #include "Teleporting.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "behaviors/Moving.h"
 
-Teleporting::Teleporting(GameObject *parent) :
+Teleporting::Teleporting(AbstractGameObject *parent) :
 	AbstractBehavior(parent)
 {
 
@@ -32,7 +32,7 @@ void Teleporting::performActions()
 		teleport(gameObject);
 }
 
-void Teleporting::teleport(GameObject *gameObject)
+void Teleporting::teleport(AbstractGameObject *gameObject)
 {
 	auto *behavior{gameObject->findBehavior(BT_Moving)};
 

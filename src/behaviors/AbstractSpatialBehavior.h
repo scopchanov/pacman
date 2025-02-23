@@ -4,13 +4,13 @@
 #include "AbstractTimedBehavior.h"
 #include "Vector2.h"
 
-class GameObject;
+class AbstractGameObject;
 class Tilemap;
 
 class AbstractSpatialBehavior : public AbstractTimedBehavior
 {
 public:
-	explicit AbstractSpatialBehavior(GameObject *parent = nullptr);
+	explicit AbstractSpatialBehavior(AbstractGameObject *parent = nullptr);
 
 	Tilemap *tilemap() const;
 	virtual void setTilemap(Tilemap *tilemap);

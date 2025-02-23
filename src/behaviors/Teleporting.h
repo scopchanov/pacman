@@ -9,7 +9,7 @@ class Moving;
 class Teleporting : public AbstractBehavior
 {
 public:
-	explicit Teleporting(GameObject *parent = nullptr);
+	explicit Teleporting(AbstractGameObject *parent = nullptr);
 
 	QPointF destination() const;
 	void setDestination(const QPointF &destination);
@@ -17,7 +17,7 @@ public:
 
 private:
 	void performActions() override;
-	void teleport(GameObject *gameObject);
+	void teleport(AbstractGameObject *gameObject);
 
 	QPointF _destination;
 };

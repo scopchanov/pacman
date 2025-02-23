@@ -1,11 +1,12 @@
 #include "LifesDisplay.h"
+#include "GameGlobals.h"
 #include "PathBuilder.h"
 #include <QPainter>
 
 LifesDisplay::LifesDisplay(QWidget *parent) :
 	QWidget{parent},
 	_lifeCount{2},
-	_path{PathBuilder::animatedObjectPath(PathBuilder::GO_Player, 45)}
+	_path{PathBuilder::animatedObjectPath(OBJ_Player, 45)}
 {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }

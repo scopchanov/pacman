@@ -6,7 +6,7 @@
 class Player : public Character
 {
 public:
-	explicit Player(GameObject *parent = nullptr);
+	explicit Player(AbstractGameObject *parent = nullptr);
 	
 	void energize();
 	void deenergize();

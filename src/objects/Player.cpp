@@ -2,10 +2,10 @@
 #include "AbstractBehavior.h"
 #include "Game.h"
 #include "GameGlobals.h"
-#include "GamePalette.h"
+#include "Palette.h"
 #include <QBrush>
 
-Player::Player(GameObject *parent) :
+Player::Player(AbstractGameObject *parent) :
 	Character(parent)
 {
 

@@ -3,7 +3,7 @@
 #include "FileHandler.h"
 #include "GameGlobals.h"
 #include "GameLevel.h"
-#include "GamePalette.h"
+#include "Palette.h"
 #include "GameView.h"
 #include "LifesDisplay.h"
 #include "ScoreDisplay.h"

@@ -1,9 +1,9 @@
 #include "EnemyOrientating.h"
 #include "Moving.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "objects/GhostEye.h"
 
-EnemyOrientating::EnemyOrientating(GameObject *parent) :
+EnemyOrientating::EnemyOrientating(AbstractGameObject *parent) :
 	AbstractOrientatingBehavior(parent)
 {
 

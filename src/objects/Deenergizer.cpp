@@ -6,8 +6,8 @@
 #include "behaviors/Delaying.h"
 #include <QPen>
 
-Deenergizer::Deenergizer(GameObject *parent) :
-	GameObject(parent)
+Deenergizer::Deenergizer(AbstractGameObject *parent) :
+	AbstractGameObject(parent)
 {
 	auto *deenergizing{new Delaying(this)};
 	auto *actDeenergizePlayer{new DeenergizePlayer(deenergizing)};

@@ -6,7 +6,7 @@
 class EnergizerAnimating : public AbstractAnimatingBehavior
 {
 public:
-	explicit EnergizerAnimating(GameObject *parent = nullptr);
+	explicit EnergizerAnimating(AbstractGameObject *parent = nullptr);
 
 private:
 	void update() override;

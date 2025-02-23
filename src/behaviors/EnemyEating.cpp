@@ -4,7 +4,7 @@
 #include "objects/Enemy.h"
 #include <QHash>
 
-EnemyEating::EnemyEating(GameObject *parent) :
+EnemyEating::EnemyEating(AbstractGameObject *parent) :
 	AbstractBehavior(parent),
 	_enemiesEaten{0},
 	_eventEnemyEaten{nullptr}

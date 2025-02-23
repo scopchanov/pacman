@@ -8,7 +8,7 @@ class GameEvent;
 class Killing : public AbstractTimedBehavior
 {
 public:
-	explicit Killing(GameObject *parent = nullptr);
+	explicit Killing(AbstractGameObject *parent = nullptr);
 
 	void setEventPlayerDies(GameEvent *gameEvent);
 	int type() const override;

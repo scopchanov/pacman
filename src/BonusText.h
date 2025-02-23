@@ -1,12 +1,12 @@
 #ifndef BONUSTEXT_H
 #define BONUSTEXT_H
 
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 
-class BonusText : public GameObject
+class BonusText : public AbstractGameObject
 {
 public:
-	explicit BonusText(GameObject *parent = nullptr);
+	explicit BonusText(AbstractGameObject *parent = nullptr);
 
 	void setText(const QString &text);
 	int objectType() const override final;

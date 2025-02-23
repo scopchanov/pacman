@@ -1,9 +1,9 @@
 #include "AbstractSpatialBehavior.h"
 #include "Grid.h"
 #include "Tilemap.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 
-AbstractSpatialBehavior::AbstractSpatialBehavior(GameObject *parent) :
+AbstractSpatialBehavior::AbstractSpatialBehavior(AbstractGameObject *parent) :
 	AbstractTimedBehavior(parent),
 	_tilemap{nullptr}
 {

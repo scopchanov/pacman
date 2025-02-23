@@ -1,11 +1,11 @@
 #include "Moving.h"
 #include "GameClock.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "Grid.h"
 #include "Tilemap.h"
 
-Moving::Moving(GameObject *parent) :
+Moving::Moving(AbstractGameObject *parent) :
 	AbstractSpatialBehavior(parent),
 	_speed{0.0},
 	_initialDirection{V2_LEFT},

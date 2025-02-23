@@ -1,6 +1,6 @@
 #include "DeleteGameObject.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 
 DeleteGameObject::DeleteGameObject(AbstractBehavior *parent) :
 	AbstractAction{parent},
@@ -9,12 +9,12 @@ DeleteGameObject::DeleteGameObject(AbstractBehavior *parent) :
 
 }
 
-GameObject *DeleteGameObject::gameObject() const
+AbstractGameObject *DeleteGameObject::gameObject() const
 {
 	return _gameObject;
 }
 
-void DeleteGameObject::setGameObject(GameObject *gameObject)
+void DeleteGameObject::setGameObject(AbstractGameObject *gameObject)
 {
 	_gameObject = gameObject;
 }

@@ -6,7 +6,7 @@
 class Delaying : public AbstractTimedBehavior
 {
 public:
-	explicit Delaying(GameObject *parent = nullptr);
+	explicit Delaying(AbstractGameObject *parent = nullptr);
 
 	qreal duration() const;
 	void setDuration(qreal duration);

@@ -8,7 +8,7 @@ class Moving;
 class AbstractOrientatingBehavior : public AbstractBehavior
 {
 public:
-	explicit AbstractOrientatingBehavior(GameObject *parent = nullptr);
+	explicit AbstractOrientatingBehavior(AbstractGameObject *parent = nullptr);
 
 	Moving *moving() const;
 	void setMoving(Moving *moving);

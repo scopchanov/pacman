@@ -9,7 +9,7 @@
 #include <QGraphicsScene>
 #include <QRandomGenerator>
 
-EnemyControlling::EnemyControlling(GameObject *parent) :
+EnemyControlling::EnemyControlling(AbstractGameObject *parent) :
 	AbstractControllingBehavior(parent),
 	_globalState{GS_Scatter}
 {

@@ -1,8 +1,8 @@
 #include "Teleporter.h"
 #include "GameGlobals.h"
 
-Teleporter::Teleporter(GameObject *parent) :
-	GameObject(parent)
+Teleporter::Teleporter(AbstractGameObject *parent) :
+	AbstractGameObject(parent)
 {
 
 }

@@ -8,7 +8,7 @@ class GhostEye;
 class EnemyOrientating : public AbstractOrientatingBehavior
 {
 public:
-	explicit EnemyOrientating(GameObject *parent = nullptr);
+	explicit EnemyOrientating(AbstractGameObject *parent = nullptr);
 
 	void reset() override;
 

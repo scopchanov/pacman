@@ -1,12 +1,10 @@
 #include "EnergizerAnimating.h"
-#include "PathBuilder.h"
 
-EnergizerAnimating::EnergizerAnimating(GameObject *parent) :
+EnergizerAnimating::EnergizerAnimating(AbstractGameObject *parent) :
 	AbstractAnimatingBehavior(parent)
 {
 	setValue(0);
 	setFrameRate(15);
-	setPathType(PathBuilder::GO_Energizer);
 }
 
 void EnergizerAnimating::update()

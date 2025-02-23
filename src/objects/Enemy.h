@@ -15,7 +15,7 @@ public:
 		ST_Global
 	};
 
-	explicit Enemy(GameObject *parent = nullptr);
+	explicit Enemy(AbstractGameObject *parent = nullptr);
 	~Enemy();
 
 	AbstractPersonality *personality() const;

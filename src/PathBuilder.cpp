@@ -1,4 +1,5 @@
 #include "PathBuilder.h"
+#include "GameGlobals.h"
 #include <QPainterPath>
 
 PathBuilder::PathBuilder(QObject *parent) :
@@ -44,19 +45,21 @@ QPainterPath PathBuilder::tilePath(TileType type)
 		return smallCircleDownRight();
 	case TT_Dot:
 		return dot();
+	case TT_Door:
+		return door();
 	default:
 		return QPainterPath();
 	}
 }
 
-QPainterPath PathBuilder::animatedObjectPath(GameObjectType type, qreal value)
+QPainterPath PathBuilder::animatedObjectPath(int type, qreal value)
 {
 	switch (type) {
-	case GO_Player:
+	case OBJ_Player:
 		return pacman(value);
-	case GO_Enemy:
+	case OBJ_Enemy:
 		return ghost(value);
-	case GO_Energizer:
+	case OBJ_Energizer:
 		return energizer(value);
 	default:
 		return QPainterPath();
@@ -237,6 +240,16 @@ QPainterPath PathBuilder::dot()
 	QPainterPath p;
 
 	p.addEllipse(-5, -5, 10, 10);
+
+	return p;
+}
+
+QPainterPath PathBuilder::door()
+{
+	QPainterPath p;
+
+	p.moveTo(-8, 2);
+	p.lineTo(8, 2);
 
 	return p;
 }

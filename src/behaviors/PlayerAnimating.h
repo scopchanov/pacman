@@ -6,7 +6,7 @@
 class PlayerAnimating : public AbstractAnimatingBehavior
 {
 public:
-	explicit PlayerAnimating(GameObject *parent = nullptr);
+	explicit PlayerAnimating(AbstractGameObject *parent = nullptr);
 
 	void reset() override;
 

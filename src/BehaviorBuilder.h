@@ -4,7 +4,7 @@
 #include <QObject>
 
 class Moving;
-class GameObject;
+class AbstractGameObject;
 class Vector2;
 
 class BehaviorBuilder : public QObject
@@ -13,7 +13,7 @@ class BehaviorBuilder : public QObject
 public:
 	explicit BehaviorBuilder(QObject *parent = nullptr);
 	
-	void setGameObject(GameObject *gameObject);
+	void setGameObject(AbstractGameObject *gameObject);
 	void addColoring(const QColor &color);
 	void addSpawning(const QPointF &position);
 	void addMoving(int direction);
@@ -30,7 +30,7 @@ private:
 	Moving *moving() const;
 	Vector2 dir2vec(int direction) const;
 
-	GameObject *_gameObject;
+	AbstractGameObject *_gameObject;
 };
 
 #endif // BEHAVIORBUILDER_H

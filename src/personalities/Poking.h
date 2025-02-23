@@ -6,7 +6,7 @@
 class Poking : public AbstractPersonality
 {
 public:
-	explicit Poking(GameObject *parent = nullptr);
+	explicit Poking(AbstractGameObject *parent = nullptr);
 
 	int type() const override;
 

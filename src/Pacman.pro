@@ -15,7 +15,6 @@ SOURCES += \
     FileHandler.cpp \
     GameLevel.cpp \
     GameMenu.cpp \
-    GamePalette.cpp \
     GameWidget.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
@@ -78,7 +77,6 @@ HEADERS += \
     GameGlobals.h \
     GameLevel.h \
     GameMenu.h \
-    GamePalette.h \
     GameWidget.h \
     LifesDisplay.h \
     MainWindow.h \

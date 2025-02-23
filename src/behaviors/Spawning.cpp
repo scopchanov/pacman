@@ -1,8 +1,8 @@
 #include "Spawning.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "GameGlobals.h"
 
-Spawning::Spawning(GameObject *parent) :
+Spawning::Spawning(AbstractGameObject *parent) :
 	AbstractBehavior(parent)
 {
 

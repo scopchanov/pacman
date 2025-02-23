@@ -5,18 +5,18 @@
 #include "Vector2.h"
 #include "objects/Player.h"
 
-AbstractPersonality::AbstractPersonality(GameObject *parent) :
+AbstractPersonality::AbstractPersonality(AbstractGameObject *parent) :
 	_parent{parent}
 {
 
 }
 
-GameObject *AbstractPersonality::parent() const
+AbstractGameObject *AbstractPersonality::parent() const
 {
 	return _parent;
 }
 
-void AbstractPersonality::setParent(GameObject *parent)
+void AbstractPersonality::setParent(AbstractGameObject *parent)
 {
 	_parent = parent;
 }

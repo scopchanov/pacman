@@ -1,12 +1,11 @@
 #include "AbstractAnimatingBehavior.h"
 #include "GameClock.h"
 #include "GameGlobals.h"
-#include "GameObject.h"
+#include "AbstractGameObject.h"
 #include "PathBuilder.h"
 
-AbstractAnimatingBehavior::AbstractAnimatingBehavior(GameObject *parent) :
+AbstractAnimatingBehavior::AbstractAnimatingBehavior(AbstractGameObject *parent) :
 	AbstractTimedBehavior(parent),
-	_gameObjectType{0},
 	_frameRate{100},
 	_direction{DIR_Forwards},
 	_value{0}
@@ -44,16 +43,6 @@ void AbstractAnimatingBehavior::setDirection(DirectionType direction)
 	_direction = direction;
 }
 
-int AbstractAnimatingBehavior::gameObjectType() const
-{
-	return _gameObjectType;
-}
-
-void AbstractAnimatingBehavior::setPathType(int type)
-{
-	_gameObjectType = type;
-}
-
 int AbstractAnimatingBehavior::type() const
 {
 	return BT_Animating;
@@ -68,9 +57,9 @@ void AbstractAnimatingBehavior::reset()
 
 void AbstractAnimatingBehavior::updateParent()
 {
-	auto type{static_cast<PathBuilder::GameObjectType>(_gameObjectType)};
+	int pathType{parent()->objectType()};
 
-	parent()->setPath(PathBuilder::animatedObjectPath(type, _value));
+	parent()->setPath(PathBuilder::animatedObjectPath(pathType, _value));
 	parent()->update();
 }
 
