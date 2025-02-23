@@ -13,13 +13,13 @@
     "Dot": "#B0BEC5",
     "Energizer": "#FFEA00"
   },
-  "gridSize": {
+  "grid": {
     "rows": 33,
-    "columns": 30
-  },
-  "cellSize": {
-    "width": 24,
-    "height": 24
+    "columns": 30,
+    "cell" : {
+      "width": 24,
+      "height": 24
+    }
   },
   "player": {
     "name": "Pacman",
@@ -79,6 +79,46 @@
       "scatterTargetCell": {
 	"row": 32,
 	"column": 1
+      }
+    }
+  ],
+  "energizers": [
+    {
+      "row": 4,
+      "column": 2
+    },
+    {
+      "row": 4,
+      "column": 27
+    },
+    {
+      "row": 24,
+      "column": 2
+    },
+    {
+      "row": 24,
+      "column": 27
+    }
+  ],
+  "teleporters": [
+    {
+      "source": {
+	"row": 15,
+	"column": 0
+      },
+      "destination": {
+	  "row": 15,
+	  "column": 28
+      }
+    },
+    {
+      "source": {
+	"row": 15,
+	"column": 29
+      },
+      "destination": {
+	  "row": 15,
+	  "column": 1
       }
     }
   ],

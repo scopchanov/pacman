@@ -4,11 +4,10 @@
 #include <QObject>
 
 class QGraphicsItem;
-class Game;
-class GameObject;
-class Enemy;
+class GameLevel;
+class GamePalette;
+class Grid;
 class Tilemap;
-class Vector2;
 
 class Configurator : public QObject
 {
@@ -19,12 +18,18 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
-	void configurePalette(const QJsonObject &jsonPalette);
-	void setupPlayer(const QJsonObject &jsonPlayer);
-	void createEnemies(const QJsonObject &json);
-	Enemy *createEnemy(const QPointF &position, const QColor &color, int direction);
-	GameObject *createEnergizer(const QPoint &cell);
-	GameObject *createTeleporter(const QPointF &src, const QPointF &dst);
+	GamePalette *palette() const;
+	GameLevel *level() const;
+	Grid *grid() const;
+	void configurePalette(const QJsonObject &json);
+	void configureGrid(const QJsonObject &json);
+	void configurePlayer(const QJsonObject &json);
+	void createEnemies(const QJsonArray &enemies);
+	void createEnemy(const QJsonObject &json);
+	void createEnergizers(const QJsonArray &energizers);
+	void createEnergizer(const QJsonObject &json);
+	void createTeleporters(const QJsonArray &teleporters);
+	void createTeleporter(const QJsonObject &json);
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	QGraphicsItem *createTile(int index, const QPen &pen, const QBrush &brush);
 	int key2role(const QString &key) const;
