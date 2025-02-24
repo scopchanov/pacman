@@ -1,7 +1,6 @@
 #include "PathBuilder.h"
 #include "GameGlobals.h"
 #include <QPainterPath>
-#include <QDebug>
 
 PathBuilder::PathBuilder(QObject *parent) :
 	QObject{parent}
