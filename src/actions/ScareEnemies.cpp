@@ -17,7 +17,7 @@ int ScareEnemies::type() const
 
 void ScareEnemies::performTask()
 {
-	const QList<Enemy *> enemies{Game::ref().level()->enemies()};
+	const QList<Enemy *> &enemies{Game::ref().level()->enemies()};
 
 	for (auto *enemy : enemies)
 		if (enemy->state() != Enemy::ST_Eaten)

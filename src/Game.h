@@ -3,23 +3,14 @@
 
 #include <QObject>
 
-class AbstractPersonality;
-class AudioEngine;
-class GameLevel;
 class AbstractGameObject;
-class Palette;
-class GameScene;
+class AudioEngine;
 class GameStatus;
-class InputSystem;
-class AiStateMachine;
-class Tilemap;
-class Tile;
-class Grid;
-class Player;
-class Enemy;
+class GameLevel;
 class Clock;
-class Vector2;
-class Deenergizer;
+class Grid;
+class Palette;
+class InputSystem;
 
 class Game : public QObject
 {
@@ -33,7 +24,6 @@ public:
 	Palette *palette() const;
 	InputSystem *inputSystem() const;
 	GameStatus *status() const;
-	AiStateMachine *stateMachine() const;
 
 	static Game &ref();
 
@@ -52,7 +42,6 @@ public slots:
 private:
 	GameLevel *_level;
 	GameStatus *_status;
-	AiStateMachine *_stateMachine;
 	AudioEngine *_audioEngine;
 
 signals:

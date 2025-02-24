@@ -1,7 +1,6 @@
 #include "Game.h"
 #include "Message.h"
 #include "StartupSequence.h"
-#include "AiStateMachine.h"
 #include "BonusText.h"
 #include "Clock.h"
 #include "GameStatus.h"
@@ -20,13 +19,12 @@ Game::Game(QObject *parent) :
 	QObject(parent),
 	_level{new GameLevel(this)},
 	_status{new GameStatus(this)},
-	_stateMachine{new AiStateMachine(this)},
 	_audioEngine{new AudioEngine(this)}
 {
-	stateMachine()->setGameClock(clock());
-
-	connect(_audioEngine, &AudioEngine::victoryTunePlayed, this, &Game::playerWins);
-	connect(_audioEngine, &AudioEngine::funeralTunePlayed, this, &Game::onFuneralTunePlayed);
+	connect(_audioEngine, &AudioEngine::victoryTunePlayed,
+			this, &Game::playerWins);
+	connect(_audioEngine, &AudioEngine::funeralTunePlayed,
+			this, &Game::onFuneralTunePlayed);
 }
 
 GameLevel *Game::level() const
@@ -52,11 +50,6 @@ InputSystem *Game::inputSystem() const
 GameStatus *Game::status() const
 {
 	return _status;
-}
-
-AiStateMachine *Game::stateMachine() const
-{
-	return _stateMachine;
 }
 
 Game &Game::ref()
@@ -89,7 +82,6 @@ void Game::resume()
 
 void Game::reset()
 {
-	_stateMachine->reset();
 	_level->reset();
 
 	start();

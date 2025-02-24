@@ -180,11 +180,8 @@ void Configurator::createEnemy(const QJsonObject &json)
 	enemy->setSpeed(75);
 	enemy->setPen(QPen(Qt::transparent));
 
-	level()->enemies().append(enemy);
-	level()->addItem(enemy);
-
-	auto *behavior{enemy->findBehavior(BT_Controlling)};
-	auto *controller{static_cast<EnemyControlling *>(behavior)};
+	// auto *behavior{enemy->findBehavior(BT_Controlling)};
+	// auto *controller{static_cast<EnemyControlling *>(behavior)};
 	auto *personality{Factory::createPersonality(json.value("personality").toInt())};
 
 	personality->setScatterTarget(gridPosition(row, column));
@@ -193,10 +190,13 @@ void Configurator::createEnemy(const QJsonObject &json)
 		static_cast<Shying *>(personality)->setPartner(level()->enemies().at(0));
 
 	enemy->setPersonality(personality);
-
-	Game::ref().stateMachine()->addEnemyController(controller);
-
 	enemy->reset();
+
+	level()->addEnemy(enemy);
+
+	// level()->enemies().append(enemy);
+	// level()->addItem(enemy);
+	// Game::ref().stateMachine()->addEnemyController(controller);
 }
 
 void Configurator::createEnergizers(const QJsonArray &energizers)

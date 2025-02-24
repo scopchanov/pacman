@@ -5,28 +5,37 @@
 
 AiStateMachine::AiStateMachine(QObject *parent) :
 	QObject{parent},
-	_gameClock{nullptr},
+	_clock{nullptr},
 	_step{0},
 	_time{0.0}
 {
 
 }
 
-Clock *AiStateMachine::gameClock() const
+void AiStateMachine::setClock(Clock *clock)
 {
-	return _gameClock;
-}
-
-void AiStateMachine::setGameClock(Clock *clock)
-{
-	_gameClock = clock;
-
-	connect(clock, &Clock::tick, this, &AiStateMachine::onGameAdvanced);
+	_clock = clock;
 }
 
 void AiStateMachine::addEnemyController(EnemyControlling *controller)
 {
 	_enemyControllers.append(controller);
+}
+
+void AiStateMachine::advance()
+{
+	if (_step > 6)
+		return;
+
+	_time += _clock->deltaTime();
+
+	if (_time < maxTime())
+		return;
+
+	_step++;
+	_time = 0.0;
+
+	changeEnemyState();
 }
 
 void AiStateMachine::reset()
@@ -48,20 +57,4 @@ qreal AiStateMachine::maxTime() const
 {
 	return QHash<int, qreal>{{0, 7.0}, {1, 20.0}, {2, 7.0}, {3, 20.0}, {4, 5.0},
 							 {5, 20.0}, {6, 5.0}, {7, 0.0}}.value(_step);
-}
-
-void AiStateMachine::onGameAdvanced()
-{
-	if (_step > 6)
-		return;
-
-	_time += _gameClock->deltaTime();
-
-	if (_time < maxTime())
-		return;
-
-	_step++;
-	_time = 0.0;
-
-	changeEnemyState();
 }

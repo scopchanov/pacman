@@ -12,10 +12,10 @@ class AiStateMachine : public QObject
 public:
 	explicit AiStateMachine(QObject *parent = nullptr);
 
-	Clock *gameClock() const;
-	void setGameClock(Clock *clock);
+	void setClock(Clock *clock);
 	void addEnemyController(EnemyControlling *controller);
 
+	void advance();
 	void reset();
 
 private:
@@ -23,13 +23,10 @@ private:
 	qreal maxTime() const;
 	int enemyState() const;
 
-	Clock *_gameClock;
+	Clock *_clock;
 	QList<EnemyControlling *> _enemyControllers;
 	int _step;
 	qreal _time;
-
-private slots:
-	void onGameAdvanced();
 };
 
 #endif // AISTATEMACHINE_H
