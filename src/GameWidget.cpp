@@ -53,6 +53,8 @@ void GameWidget::startGame()
 {
 	Configurator configurator;
 
+	Game::ref().newGame();
+
 	configurator.configure(FileHandler::readFile(":/txt/config.json"));
 
 	_gameView->setScene(Game::ref().level());

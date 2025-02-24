@@ -28,6 +28,7 @@ public:
 	static Game &ref();
 
 public slots:
+	void newGame();
 	void start();
 	void stop();
 	void resume();

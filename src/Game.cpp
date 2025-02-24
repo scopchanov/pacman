@@ -17,7 +17,7 @@
 
 Game::Game(QObject *parent) :
 	QObject(parent),
-	_level{new GameLevel(this)},
+	_level{nullptr},
 	_status{new GameStatus(this)},
 	_audioEngine{new AudioEngine(this)}
 {
@@ -57,6 +57,16 @@ Game &Game::ref()
 	static Game game;
 
 	return game;
+}
+
+void Game::newGame()
+{
+	_status->reset();
+
+	if (_level)
+		_level->deleteLater();
+
+	_level = new GameLevel(this);
 }
 
 void Game::start()
