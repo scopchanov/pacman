@@ -1,6 +1,7 @@
 #include "PathBuilder.h"
 #include "GameGlobals.h"
 #include <QPainterPath>
+#include <QDebug>
 
 PathBuilder::PathBuilder(QObject *parent) :
 	QObject{parent}
@@ -251,9 +252,9 @@ QPainterPath PathBuilder::door()
 	return p;
 }
 
-QPainterPath PathBuilder::pacman(qreal d)
+QPainterPath PathBuilder::pacman(qreal angle)
 {
-	qreal startAngle{180 - d};
+	qreal startAngle{180 - angle};
 	qreal sweepLength{-2*startAngle};
 	QPainterPath p;
 
@@ -291,7 +292,7 @@ QPainterPath PathBuilder::energizer(qreal d)
 	return p;
 }
 
-QPainterPath PathBuilder::teleporter(qreal d)
+QPainterPath PathBuilder::teleporter(qreal angle)
 {
 	QPainterPath p;
 
@@ -305,5 +306,19 @@ QPainterPath PathBuilder::teleporter(qreal d)
 	p.cubicTo(-30, 2, -14, -20, 2, -16);
 	p.cubicTo(-2, -18, -8, -20, -16, -12);
 
+	rotate(p, angle);
+
 	return p;
+}
+
+void PathBuilder::rotate(QPainterPath &path, qreal angle)
+{
+	for (int n{0}; n < path.elementCount(); n++) {
+		qreal x{path.elementAt(n).x};
+		qreal y{path.elementAt(n).y};
+		qreal sina{sin(angle)};
+		qreal cosa{cos(angle)};
+
+		path.setElementPositionAt(n, x*cosa - y*sina, x*sina + y*cosa);
+	}
 }

@@ -54,10 +54,11 @@ private:
 	static QPainterPath smallCircleDownRight();
 	static QPainterPath dot();
 	static QPainterPath door();
-	static QPainterPath pacman(qreal d);
+	static QPainterPath pacman(qreal angle);
 	static QPainterPath ghost(qreal d);
 	static QPainterPath energizer(qreal d);
-	static QPainterPath teleporter(qreal d);
+	static QPainterPath teleporter(qreal angle);
+	static void rotate(QPainterPath &path, qreal angle);
 };
 
 #endif // PATHBUILDER_H

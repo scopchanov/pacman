@@ -7,7 +7,7 @@ ScoreDisplay::ScoreDisplay(QWidget *parent) :
 	QPalette p(palette());
 
 	p.setColor(QPalette::Window, Qt::black);
-	p.setColor(QPalette::WindowText, 0x4CAF50);
+	p.setColor(QPalette::WindowText, 0x757575);
 
 	setPalette(p);
 	setScore(0);

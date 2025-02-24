@@ -3,18 +3,18 @@
 TeleporterAnimating::TeleporterAnimating(AbstractGameObject *parent) :
 	AbstractAnimatingBehavior(parent)
 {
-	setFrameRate(150);
+	setFrameRate(5);
 }
 
 void TeleporterAnimating::reset()
 {
-	setValue(45);
+	setValue(0);
 	setDirection(DIR_Forwards);
 	updateParent();
 }
 
 void TeleporterAnimating::update()
 {
-	if (value() > 45)
+	if (value() >= 360)
 		setValue(0);
 }
