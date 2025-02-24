@@ -12,7 +12,7 @@ public:
 
 	Moving *moving() const;
 	void setMoving(Moving *moving);
-	int type() const override;
+	int type() const override final;
 
 	void reset() override;
 

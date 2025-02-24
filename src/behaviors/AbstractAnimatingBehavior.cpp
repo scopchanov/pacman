@@ -48,13 +48,6 @@ int AbstractAnimatingBehavior::type() const
 	return BT_Animating;
 }
 
-void AbstractAnimatingBehavior::reset()
-{
-	setValue(0);
-	setDirection(DIR_Forwards);
-	updateParent();
-}
-
 void AbstractAnimatingBehavior::updateParent()
 {
 	int pathType{parent()->objectType()};

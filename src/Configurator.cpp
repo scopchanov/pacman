@@ -120,7 +120,6 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	builder.addEnemyEating();
 
 	player->setSpeed(80);
-	player->setPath(PathBuilder::animatedObjectPath(OBJ_Player, 45));
 	player->setPen(QPen(Qt::transparent));
 	player->reset();
 }
@@ -150,6 +149,8 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 
 void Configurator::createEnemy(const QJsonObject &json)
 {
+	// TODO: Improve me
+
 	BehaviorBuilder builder;
 	int role{key2role(json.value("name").toString())};
 	const QColor &color{palette()->color(role)};
@@ -177,7 +178,6 @@ void Configurator::createEnemy(const QJsonObject &json)
 	builder.addKilling();
 
 	enemy->setSpeed(75);
-	enemy->setPath(PathBuilder::animatedObjectPath(OBJ_Enemy, 0));
 	enemy->setPen(QPen(Qt::transparent));
 
 	level()->enemies().append(enemy);
@@ -218,7 +218,6 @@ void Configurator::createEnergizer(const QJsonObject &json)
 	builder.addEnergizing();
 	builder.addAnimating(OBJ_Energizer);
 
-	energizer->setPath(PathBuilder::animatedObjectPath(OBJ_Energizer, 8));
 	energizer->setPen(QPen(Qt::transparent));
 	energizer->setBrush(palette()->color(CR_Energizer));
 	energizer->setPos(grid()->mapFromGrid(cell.y(), cell.x()));
@@ -251,7 +250,6 @@ void Configurator::createTeleporter(const QJsonObject &json)
 	builder.addTeleporting(dst);
 
 	teleporter->setPos(src);
-	teleporter->setPath(PathBuilder::animatedObjectPath(OBJ_Teleporter, 10));
 	teleporter->setPen(QPen(Qt::transparent));
 	teleporter->setBrush(palette()->color(CR_Teleporter));
 	teleporter->reset();

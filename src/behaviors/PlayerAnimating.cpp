@@ -9,7 +9,6 @@ PlayerAnimating::PlayerAnimating(AbstractGameObject *parent) :
 void PlayerAnimating::reset()
 {
 	setValue(45);
-	setDirection(DIR_Forwards);
 	updateParent();
 }
 

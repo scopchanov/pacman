@@ -9,7 +9,6 @@ TeleporterAnimating::TeleporterAnimating(AbstractGameObject *parent) :
 void TeleporterAnimating::reset()
 {
 	setValue(0);
-	setDirection(DIR_Forwards);
 	updateParent();
 }
 

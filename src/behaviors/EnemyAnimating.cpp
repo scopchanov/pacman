@@ -7,6 +7,13 @@ EnemyAnimating::EnemyAnimating(AbstractGameObject *parent) :
 	setFrameRate(20);
 }
 
+void EnemyAnimating::reset()
+{
+	setValue(0);
+	setDirection(DIR_Forwards);
+	updateParent();
+}
+
 void EnemyAnimating::update()
 {
 	// TODO: Improve the method's name

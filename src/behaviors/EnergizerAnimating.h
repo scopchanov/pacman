@@ -8,6 +8,8 @@ class EnergizerAnimating : public AbstractAnimatingBehavior
 public:
 	explicit EnergizerAnimating(AbstractGameObject *parent = nullptr);
 
+	void reset() override;
+
 private:
 	void update() override;
 };

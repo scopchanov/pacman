@@ -20,9 +20,7 @@ public:
 	void setValue(qreal value);
 	DirectionType direction() const;
 	void setDirection(DirectionType direction);
-	int type() const override;
-
-	void reset() override;
+	int type() const override final;
 
 protected:
 	void updateParent();
