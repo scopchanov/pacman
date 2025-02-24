@@ -12,7 +12,7 @@
     "Door": "#78909C",
     "Dot": "#388E3C",
     "Energizer": "#FFEA00",
-    "Teleporter": "#FFFFFF"
+    "Teleporter": "#212121"
   },
   "grid": {
     "rows": 33,

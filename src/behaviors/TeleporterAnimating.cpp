@@ -3,7 +3,7 @@
 TeleporterAnimating::TeleporterAnimating(AbstractGameObject *parent) :
 	AbstractAnimatingBehavior(parent)
 {
-	setFrameRate(5);
+	setFrameRate(2);
 }
 
 void TeleporterAnimating::reset()
