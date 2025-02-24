@@ -1,6 +1,6 @@
 #include "GhostEye.h"
 #include "Game.h"
-#include "GameClock.h"
+#include "Clock.h"
 #include "Vector2.h"
 #include <QPen>
 

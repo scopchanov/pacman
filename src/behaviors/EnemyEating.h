@@ -4,7 +4,7 @@
 #include "AbstractBehavior.h"
 
 class Enemy;
-class GameEvent;
+class Event;
 class AbstractGameObject;
 
 class EnemyEating : public AbstractBehavior
@@ -12,7 +12,7 @@ class EnemyEating : public AbstractBehavior
 public:
 	explicit EnemyEating(AbstractGameObject *parent = nullptr);
 
-	void setEvent(GameEvent *event);
+	void setEvent(Event *event);
 	int type() const override;
 
 	void reset() override;
@@ -23,7 +23,7 @@ private:
 	int points() const;
 
 	int _enemiesEaten;
-	GameEvent *_eventEnemyEaten;
+	Event *_eventEnemyEaten;
 };
 
 #endif // ENEMYEATING_H

@@ -1,5 +1,5 @@
 #include "AbstractAnimatingBehavior.h"
-#include "GameClock.h"
+#include "Clock.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "PathBuilder.h"

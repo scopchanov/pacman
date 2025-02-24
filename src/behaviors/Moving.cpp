@@ -1,5 +1,5 @@
 #include "Moving.h"
-#include "GameClock.h"
+#include "Clock.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "Grid.h"

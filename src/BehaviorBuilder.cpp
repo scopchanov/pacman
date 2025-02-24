@@ -1,7 +1,7 @@
 #include "BehaviorBuilder.h"
 #include "Factory.h"
 #include "Game.h"
-#include "GameEvent.h"
+#include "Event.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "GameLevel.h"
@@ -89,8 +89,8 @@ void BehaviorBuilder::addAnimating(int type)
 void BehaviorBuilder::addDotsEating()
 {
 	auto *dotsEating{new DotsEating()};
-	auto *eventDotEaten{new GameEvent()};
-	auto *eventPlayerWins{new GameEvent()};
+	auto *eventDotEaten{new Event()};
+	auto *eventPlayerWins{new Event()};
 
 	dotsEating->setTilemap(Game::ref().level()->dots());
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
@@ -98,36 +98,36 @@ void BehaviorBuilder::addDotsEating()
 
 	_gameObject->addBehavior(dotsEating);
 
-	connect(eventDotEaten, &GameEvent::triggered,
+	connect(eventDotEaten, &Event::triggered,
 			&Game::ref(), &Game::onDotEaten);
-	connect(eventPlayerWins, &GameEvent::triggered,
+	connect(eventPlayerWins, &Event::triggered,
 			&Game::ref(), &Game::onPlayerWins);
 }
 
 void BehaviorBuilder::addEnemyEating()
 {
 	auto *enemyEating{new EnemyEating()};
-	auto *eventEnemyEaten{new GameEvent()};
+	auto *eventEnemyEaten{new Event()};
 
 	enemyEating->setEvent(eventEnemyEaten);
 	enemyEating->setEnabled(false);
 
 	_gameObject->addBehavior(enemyEating);
 
-	connect(eventEnemyEaten, &GameEvent::triggered,
+	connect(eventEnemyEaten, &Event::triggered,
 			&Game::ref(), &Game::onEnemyEaten);
 }
 
 void BehaviorBuilder::addKilling()
 {
 	auto *killing{new Killing()};
-	auto *eventPlayerDied{new GameEvent()};
+	auto *eventPlayerDied{new Event()};
 
 	killing->setEventPlayerDies(eventPlayerDied);
 
 	_gameObject->addBehavior(killing);
 
-	connect(eventPlayerDied, &GameEvent::triggered,
+	connect(eventPlayerDied, &Event::triggered,
 			&Game::ref(), &Game::onPlayerDies);
 }
 
@@ -136,7 +136,7 @@ void BehaviorBuilder::addEnergizing()
 	auto *energizing{new Energizing()};
 	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
 	auto *actFrightenEnemies{new ScareEnemies(energizing)};
-	auto *eventPlayerEnergized{new GameEvent()};
+	auto *eventPlayerEnergized{new Event()};
 
 	energizing->setEvent(eventPlayerEnergized);
 	energizing->addAction(actEnergizePlayer);
@@ -144,7 +144,7 @@ void BehaviorBuilder::addEnergizing()
 
 	_gameObject->addBehavior(energizing);
 
-	QObject::connect(eventPlayerEnergized, &GameEvent::triggered,
+	QObject::connect(eventPlayerEnergized, &Event::triggered,
 					 &Game::ref(), &Game::onPlayerEnergized);
 }
 

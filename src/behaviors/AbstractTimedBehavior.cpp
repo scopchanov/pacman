@@ -7,7 +7,7 @@ AbstractTimedBehavior::AbstractTimedBehavior(AbstractGameObject *parent) :
 
 }
 
-GameClock *AbstractTimedBehavior::clock() const
+Clock *AbstractTimedBehavior::clock() const
 {
 	return Game::ref().clock();
 }

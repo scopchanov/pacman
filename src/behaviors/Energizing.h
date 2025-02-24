@@ -4,7 +4,7 @@
 #include "AbstractBehavior.h"
 #include <QList>
 
-class GameEvent;
+class Event;
 class AbstractGameObject;
 
 class Energizing : public AbstractBehavior
@@ -12,13 +12,13 @@ class Energizing : public AbstractBehavior
 public:
 	explicit Energizing(AbstractGameObject *parent = nullptr);
 
-	void setEvent(GameEvent *event);
+	void setEvent(Event *event);
 	int type() const override;
 
 private:
 	void performActions() override;
 
-	GameEvent *_eventPlayerEnergized;
+	Event *_eventPlayerEnergized;
 };
 
 #endif // ENERGIZING_H

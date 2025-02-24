@@ -1,7 +1,7 @@
 #include "Energizing.h"
 #include "AbstractAction.h"
 #include "Game.h"
-#include "GameEvent.h"
+#include "Event.h"
 #include "GameGlobals.h"
 #include "GameLevel.h"
 #include "objects/Player.h"
@@ -13,7 +13,7 @@ Energizing::Energizing(AbstractGameObject *parent) :
 
 }
 
-void Energizing::setEvent(GameEvent *event)
+void Energizing::setEvent(Event *event)
 {
 	_eventPlayerEnergized = event;
 }

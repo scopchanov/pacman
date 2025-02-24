@@ -1,5 +1,5 @@
 #include "Delaying.h"
-#include "GameClock.h"
+#include "Clock.h"
 #include "GameGlobals.h"
 #include "AbstractAction.h"
 

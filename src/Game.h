@@ -17,7 +17,7 @@ class Tile;
 class Grid;
 class Player;
 class Enemy;
-class GameClock;
+class Clock;
 class Vector2;
 class Deenergizer;
 
@@ -29,7 +29,7 @@ class Game : public QObject
 
 public:
 	GameLevel *level() const;
-	GameClock *clock() const;
+	Clock *clock() const;
 	Palette *palette() const;
 	InputSystem *inputSystem() const;
 	GameStatus *status() const;

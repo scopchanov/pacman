@@ -4,7 +4,7 @@
 #include "AbstractSpatialBehavior.h"
 #include <QList>
 
-class GameEvent;
+class Event;
 
 class DotsEating : public AbstractSpatialBehavior
 {
@@ -15,15 +15,15 @@ public:
 	};
 
 	explicit DotsEating(AbstractGameObject *parent = nullptr);
-
-	void setEvent(EventType type, GameEvent *event);
+	
+	void setEvent(EventType type, Event *event);
 	int type() const override;
 
 private:
 	void performSpatialActions() override;
-	void triggerGameEvent(EventType type);
+	void triggerEvent(EventType type);
 
-	QList<GameEvent *> _gameEvents;
+	QList<Event *> _events;
 };
 
 #endif // DOTSEATING_H

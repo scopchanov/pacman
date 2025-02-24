@@ -1,5 +1,5 @@
 #include "AiStateMachine.h"
-#include "GameClock.h"
+#include "Clock.h"
 #include "behaviors/EnemyControlling.h"
 #include <QHash>
 
@@ -12,16 +12,16 @@ AiStateMachine::AiStateMachine(QObject *parent) :
 
 }
 
-GameClock *AiStateMachine::gameClock() const
+Clock *AiStateMachine::gameClock() const
 {
 	return _gameClock;
 }
 
-void AiStateMachine::setGameClock(GameClock *clock)
+void AiStateMachine::setGameClock(Clock *clock)
 {
 	_gameClock = clock;
 
-	connect(clock, &GameClock::tick, this, &AiStateMachine::onGameAdvanced);
+	connect(clock, &Clock::tick, this, &AiStateMachine::onGameAdvanced);
 }
 
 void AiStateMachine::addEnemyController(EnemyControlling *controller)

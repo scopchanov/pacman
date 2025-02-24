@@ -3,7 +3,7 @@
 #include "StartupSequence.h"
 #include "AiStateMachine.h"
 #include "BonusText.h"
-#include "GameClock.h"
+#include "Clock.h"
 #include "GameStatus.h"
 #include "GameLevel.h"
 #include "AudioEngine.h"
@@ -34,7 +34,7 @@ GameLevel *Game::level() const
 	return _level;
 }
 
-GameClock *Game::clock() const
+Clock *Game::clock() const
 {
 	return _level->clock();
 }
@@ -72,7 +72,7 @@ void Game::start()
 
 	_level->addItem(sequence->message());
 
-	connect(sequence, &StartupSequence::go, clock(), &GameClock::start);
+	connect(sequence, &StartupSequence::go, clock(), &Clock::start);
 
 	sequence->start();
 }

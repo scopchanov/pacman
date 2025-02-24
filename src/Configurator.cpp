@@ -9,8 +9,8 @@
 #include "PathBuilder.h"
 #include "Tilemap.h"
 #include "BehaviorBuilder.h"
-#include "behaviors/Moving.h"
 #include "behaviors/EnemyControlling.h"
+#include "behaviors/Moving.h"
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
 #include "objects/GhostEye.h"
@@ -186,9 +186,8 @@ void Configurator::createEnemy(const QJsonObject &json)
 	auto *behavior{enemy->findBehavior(BT_Controlling)};
 	auto *controller{static_cast<EnemyControlling *>(behavior)};
 	auto *personality{Factory::createPersonality(json.value("personality").toInt())};
-	const auto &target{grid()->mapFromGrid(Vector2(column, row))};
 
-	personality->setScatterTarget(target);
+	personality->setScatterTarget(gridPosition(row, column));
 
 	if (personality->type() == PT_Shying)
 		static_cast<Shying *>(personality)->setPartner(level()->enemies().at(0));
@@ -211,7 +210,6 @@ void Configurator::createEnergizer(const QJsonObject &json)
 	BehaviorBuilder builder;
 	int column{json.value("column").toInt()};
 	int row{json.value("row").toInt()};
-	const QPoint &cell{column, row};
 	auto *energizer{new Energizer()};
 
 	builder.setGameObject(energizer);
@@ -220,7 +218,7 @@ void Configurator::createEnergizer(const QJsonObject &json)
 
 	energizer->setPen(QPen(Qt::transparent));
 	energizer->setBrush(palette()->color(CR_Energizer));
-	energizer->setPos(grid()->mapFromGrid(cell.y(), cell.x()));
+	energizer->setPos(gridPosition(row, column));
 	energizer->reset();
 
 	level()->addItem(energizer);
@@ -241,8 +239,8 @@ void Configurator::createTeleporter(const QJsonObject &json)
 	int srcCol{jsonSource.value("column").toInt()};
 	int dstRow{jsonDestination.value("row").toInt()};
 	int dstCol{jsonDestination.value("column").toInt()};
-	const QPointF &src{grid()->mapFromGrid(srcRow, srcCol).toPointF()};
-	const QPointF &dst{grid()->mapFromGrid(dstRow, dstCol).toPointF()};
+	const QPointF &src{gridPosition(srcRow, srcCol)};
+	const QPointF &dst{gridPosition(dstRow, dstCol)};
 	auto *teleporter{new Teleporter()};
 
 	builder.setGameObject(teleporter);
@@ -306,4 +304,9 @@ int Configurator::key2role(const QString &key) const
 							   {"Dot", CR_Dot},
 							   {"Energizer", CR_Energizer},
 							   {"Teleporter", CR_Teleporter}}.value(key);
+}
+
+QPointF Configurator::gridPosition(int row, int column) const
+{
+	return grid()->mapFromGrid(row, column);
 }

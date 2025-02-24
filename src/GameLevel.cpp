@@ -1,16 +1,10 @@
 #include "GameLevel.h"
-#include "GameClock.h"
-#include "Palette.h"
-#include "Grid.h"
 #include "Tilemap.h"
 #include "objects/Player.h"
 #include "objects/Deenergizer.h"
 
 GameLevel::GameLevel(QObject *parent) :
-	GameScene{parent},
-	_clock{new GameClock(this)},
-	_palette{new Palette(this)},
-	_grid{new Grid(this)},
+	Scene{parent},
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
 	_player{new Player()},
@@ -20,23 +14,6 @@ GameLevel::GameLevel(QObject *parent) :
 	addItem(_dots);
 	addItem(_player);
 	addItem(_deenergizer);
-
-	connect(_clock, &GameClock::tick, this, &GameLevel::makeTurn);
-}
-
-GameClock *GameLevel::clock() const
-{
-	return _clock;
-}
-
-Palette *GameLevel::palette() const
-{
-	return _palette;
-}
-
-Grid *GameLevel::grid() const
-{
-	return _grid;
 }
 
 Tilemap *GameLevel::walls() const

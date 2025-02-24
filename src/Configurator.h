@@ -37,6 +37,7 @@ private:
 	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
 	QGraphicsItem *createTile(int index, const QPen &pen, const QBrush &brush);
 	int key2role(const QString &key) const;
+	QPointF gridPosition(int row, int column) const;
 };
 
 #endif // CONFIGURATOR_H

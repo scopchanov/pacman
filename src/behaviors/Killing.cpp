@@ -1,6 +1,6 @@
 #include "Killing.h"
 #include "Game.h"
-#include "GameEvent.h"
+#include "Event.h"
 #include "GameLevel.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
@@ -13,9 +13,9 @@ Killing::Killing(AbstractGameObject *parent) :
 
 }
 
-void Killing::setEventPlayerDies(GameEvent *gameEvent)
+void Killing::setEventPlayerDies(Event *event)
 {
-	_eventPlayerDies = gameEvent;
+	_eventPlayerDies = event;
 }
 
 int Killing::type() const
@@ -25,6 +25,8 @@ int Killing::type() const
 
 void Killing::performActions()
 {
-	if (parent()->collidesWithObject(Game::ref().level()->player()) && _eventPlayerDies)
+	auto *player{Game::ref().level()->player()};
+
+	if (_eventPlayerDies && parent()->collidesWithObject(player))
 		_eventPlayerDies->trigger();
 }

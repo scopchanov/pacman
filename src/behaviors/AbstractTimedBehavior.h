@@ -3,14 +3,14 @@
 
 #include "AbstractBehavior.h"
 
-class GameClock;
+class Clock;
 
 class AbstractTimedBehavior : public AbstractBehavior
 {
 public:
 	explicit AbstractTimedBehavior(AbstractGameObject *parent = nullptr);
 
-	GameClock *clock() const;
+	Clock *clock() const;
 };
 
 #endif // ABSTRACTTIMEDBEHAVIOR_H

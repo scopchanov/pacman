@@ -3,20 +3,20 @@
 
 #include "AbstractTimedBehavior.h"
 
-class GameEvent;
+class Event;
 
 class Killing : public AbstractTimedBehavior
 {
 public:
 	explicit Killing(AbstractGameObject *parent = nullptr);
 
-	void setEventPlayerDies(GameEvent *gameEvent);
+	void setEventPlayerDies(Event *event);
 	int type() const override;
 
 private:
 	void performActions() override;
 
-	GameEvent *_eventPlayerDies;
+	Event *_eventPlayerDies;
 };
 
 #endif // KILLING_H

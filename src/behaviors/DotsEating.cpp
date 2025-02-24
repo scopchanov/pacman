@@ -1,5 +1,5 @@
 #include "DotsEating.h"
-#include "GameEvent.h"
+#include "Event.h"
 #include "GameGlobals.h"
 #include "Tilemap.h"
 #include <QPointF>
@@ -8,12 +8,12 @@ DotsEating::DotsEating(AbstractGameObject *parent) :
 	AbstractSpatialBehavior(parent)
 {
 	for (int n{0}; n < 2; n++)
-		_gameEvents.append(nullptr);
+		_events.append(nullptr);
 }
 
-void DotsEating::setEvent(EventType type, GameEvent *event)
+void DotsEating::setEvent(EventType type, Event *event)
 {
-	_gameEvents[type] = event;
+	_events[type] = event;
 }
 
 int DotsEating::type() const
@@ -31,20 +31,20 @@ void DotsEating::performSpatialActions()
 		return;
 
 	tilemap()->resetTile(row, column);
-	triggerGameEvent(ET_DotEaten);
+	triggerEvent(ET_DotEaten);
 
 	if (tilemap()->tileCount())
 		return;
 
-	triggerGameEvent(ET_PlayerWins);
+	triggerEvent(ET_PlayerWins);
 }
 
-void DotsEating::triggerGameEvent(EventType type)
+void DotsEating::triggerEvent(EventType type)
 {
-	auto *gameEvent{_gameEvents.at(type)};
+	auto *event{_events.at(type)};
 
-	if (!gameEvent)
+	if (!event)
 		return;
 
-	gameEvent->trigger();
+	event->trigger();
 }

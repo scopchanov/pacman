@@ -1,5 +1,5 @@
 #include "EnemyEating.h"
-#include "GameEvent.h"
+#include "Event.h"
 #include "GameGlobals.h"
 #include "objects/Enemy.h"
 #include <QHash>
@@ -12,7 +12,7 @@ EnemyEating::EnemyEating(AbstractGameObject *parent) :
 
 }
 
-void EnemyEating::setEvent(GameEvent *event)
+void EnemyEating::setEvent(Event *event)
 {
 	_eventEnemyEaten = event;
 }
