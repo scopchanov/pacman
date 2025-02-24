@@ -11,7 +11,8 @@
     "Wall": "#795548",
     "Door": "#78909C",
     "Dot": "#388E3C",
-    "Energizer": "#FFEA00"
+    "Energizer": "#FFEA00",
+    "Teleporter": "#FFFFFF"
   },
   "grid": {
     "rows": 33,
@@ -114,21 +115,21 @@
     {
       "source": {
 	"row": 15,
-	"column": 0
+	"column": 1
       },
       "destination": {
 	  "row": 15,
-	  "column": 28
+	  "column": 27
       }
     },
     {
       "source": {
 	"row": 15,
-	"column": 29
+	"column": 28
       },
       "destination": {
 	  "row": 15,
-	  "column": 1
+	  "column": 2
       }
     }
   ],

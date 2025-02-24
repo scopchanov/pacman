@@ -34,7 +34,6 @@ public:
 
 	static QPainterPath tilePath(TileType type);
 	static QPainterPath animatedObjectPath(int type, qreal value);
-	static QPainterPath teleporterPath();
 
 private:
 	static QPainterPath shortLineLowLeft();
@@ -58,7 +57,7 @@ private:
 	static QPainterPath pacman(qreal d);
 	static QPainterPath ghost(qreal d);
 	static QPainterPath energizer(qreal d);
-	static QPainterPath teleporter();
+	static QPainterPath teleporter(qreal d);
 };
 
 #endif // PATHBUILDER_H

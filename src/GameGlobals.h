@@ -13,7 +13,8 @@ enum ColorRole : int {
 	CR_Wall,
 	CR_Door,
 	CR_Dot,
-	CR_Energizer
+	CR_Energizer,
+	CR_Teleporter
 };
 
 enum ActionType : int {

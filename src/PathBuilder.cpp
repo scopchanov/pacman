@@ -61,14 +61,11 @@ QPainterPath PathBuilder::animatedObjectPath(int type, qreal value)
 		return ghost(value);
 	case OBJ_Energizer:
 		return energizer(value);
+	case OBJ_Teleporter:
+		return teleporter(value);
 	default:
 		return QPainterPath();
 	}
-}
-
-QPainterPath PathBuilder::teleporterPath()
-{
-	return teleporter();
 }
 
 QPainterPath PathBuilder::shortLineLowLeft()
@@ -294,11 +291,19 @@ QPainterPath PathBuilder::energizer(qreal d)
 	return p;
 }
 
-QPainterPath PathBuilder::teleporter()
+QPainterPath PathBuilder::teleporter(qreal d)
 {
 	QPainterPath p;
 
-	p.addRect(-6, -6, 12, 12);
+	p.moveTo(-16, -12);
+	p.cubicTo(-2, -30, 20, -14, 16, 2);
+	p.cubicTo(18, -2, 20, -8, 12, -16);
+	p.cubicTo(30, -2, 14, 20, -2, 16);
+	p.cubicTo(2, 18, 8, 20, 16, 12);
+	p.cubicTo(2, 30, -20, 14, -16, -2);
+	p.cubicTo(-18, 2, -20, 8, -12, 16);
+	p.cubicTo(-30, 2, -14, -20, 2, -16);
+	p.cubicTo(-2, -18, -8, -20, -16, -12);
 
 	return p;
 }

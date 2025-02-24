@@ -247,13 +247,13 @@ void Configurator::createTeleporter(const QJsonObject &json)
 	auto *teleporter{new Teleporter()};
 
 	builder.setGameObject(teleporter);
+	builder.addAnimating(OBJ_Teleporter);
 	builder.addTeleporting(dst);
 
 	teleporter->setPos(src);
-	teleporter->setPath(PathBuilder::teleporterPath());
+	teleporter->setPath(PathBuilder::animatedObjectPath(OBJ_Teleporter, 10));
 	teleporter->setPen(QPen(Qt::transparent));
-	teleporter->setBrush(Qt::transparent);
-	teleporter->setFlag(QGraphicsItem::ItemHasNoContents);
+	teleporter->setBrush(palette()->color(CR_Teleporter));
 	teleporter->reset();
 
 	level()->addItem(teleporter);
@@ -306,5 +306,6 @@ int Configurator::key2role(const QString &key) const
 							   {"Wall", CR_Wall},
 							   {"Door", CR_Door},
 							   {"Dot", CR_Dot},
-							   {"Energizer", CR_Energizer}}.value(key);
+							   {"Energizer", CR_Energizer},
+							   {"Teleporter", CR_Teleporter}}.value(key);
 }

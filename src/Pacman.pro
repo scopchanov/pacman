@@ -52,6 +52,7 @@ SOURCES += \
     behaviors/PlayerControlling.cpp \
     behaviors/PlayerOrientating.cpp \
     behaviors/Spawning.cpp \
+    behaviors/TeleporterAnimating.cpp \
     behaviors/Teleporting.cpp \
     objects/Character.cpp \
     objects/Deenergizer.cpp \
@@ -114,6 +115,7 @@ HEADERS += \
     behaviors/PlayerControlling.h \
     behaviors/PlayerOrientating.h \
     behaviors/Spawning.h \
+    behaviors/TeleporterAnimating.h \
     behaviors/Teleporting.h \
     objects/Character.h \
     objects/Deenergizer.h \

@@ -7,6 +7,7 @@
 #include "behaviors/PlayerAnimating.h"
 #include "behaviors/PlayerControlling.h"
 #include "behaviors/PlayerOrientating.h"
+#include "behaviors/TeleporterAnimating.h"
 #include "personalities/Poking.h"
 #include "personalities/Shadowing.h"
 #include "personalities/Shying.h"
@@ -27,6 +28,8 @@ AbstractAnimatingBehavior *Factory::createAnimating(int type)
 		return new EnemyAnimating();
 	case OBJ_Energizer:
 		return new EnergizerAnimating();
+	case OBJ_Teleporter:
+		return new TeleporterAnimating();
 	default:
 		return nullptr;
 	}
