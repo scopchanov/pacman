@@ -34,12 +34,8 @@ void Teleporting::performActions()
 
 void Teleporting::teleport(AbstractGameObject *gameObject)
 {
-	auto *behavior{gameObject->findBehavior(BT_Moving)};
+	auto *moving{gameObject->findBehavior(BT_Moving)};
 
-	if (!behavior)
-		return;
-
-	auto *moving{static_cast<Moving *>(behavior)};
-
-	moving->relocateCharacter(_destination);
+	if (moving)
+		static_cast<Moving *>(moving)->relocateCharacter(_destination);
 }

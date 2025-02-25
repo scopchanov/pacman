@@ -50,7 +50,8 @@ void AiStateMachine::changeEnemyState()
 												 : EnemyControlling::GS_Scatter};
 
 	for (auto *enemyController : std::as_const(_enemyControllers))
-		enemyController->setGlobalState(state);
+		if (enemyController)
+			enemyController->setGlobalState(state);
 }
 
 qreal AiStateMachine::maxTime() const

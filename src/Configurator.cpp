@@ -86,9 +86,10 @@ void Configurator::configureDots(const QJsonArray &jsonDots)
 void Configurator::configurePlayer(const QJsonObject &json)
 {
 	BehaviorBuilder builder;
+	const QJsonObject &position{json.value("position").toObject()};
+	qreal x{position.value("x").toDouble()};
+	qreal y{position.value("y").toDouble()};
 	auto *player{level()->player()};
-	qreal x{json.value("position").toObject().value("x").toDouble()};
-	qreal y{json.value("position").toObject().value("y").toDouble()};
 
 	builder.setGameObject(player);
 	builder.addColoring(palette()->color(CR_Player));

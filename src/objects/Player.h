@@ -12,6 +12,9 @@ public:
 	void deenergize();
 
 	int objectType() const override final;
+
+private:
+	void enableEnemyEating(bool enable);
 };
 
 #endif // PLAYER_H

@@ -51,18 +51,18 @@ void Enemy::scare()
 {
 	_state = ST_Frightened;
 
+	enableKilling(false);
 	setBrush(Game::ref().palette()->color(CR_EnemyFrightened));
 	setSpeed(50);
-	findBehavior(BT_Killing)->setEnabled(false);
 }
 
 void Enemy::calmDown()
 {
 	_state = ST_Global;
 
+	enableKilling(true);
 	restoreColor();
 	setSpeed(75);
-	findBehavior(BT_Killing)->setEnabled(true);
 }
 
 void Enemy::eat()
@@ -73,9 +73,18 @@ void Enemy::eat()
 	setSpeed(150);
 }
 
+void Enemy::enableKilling(bool enable)
+{
+	auto *killing{findBehavior(BT_Killing)};
+
+	if (killing)
+		killing->setEnabled(enable);
+}
+
 void Enemy::restoreColor()
 {
-	auto *behavior{findBehavior(BT_Coloring)};
+	auto *coloring{findBehavior(BT_Coloring)};
 
-	setBrush(static_cast<Coloring *>(behavior)->color());
+	if (coloring)
+		setBrush(static_cast<Coloring *>(coloring)->color());
 }

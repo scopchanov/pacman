@@ -29,6 +29,7 @@ public:
 	void eat();
 
 private:
+	void enableKilling(bool enable);
 	void restoreColor();
 
 	AbstractPersonality *_personality;

@@ -11,10 +11,11 @@ Character::Character(AbstractGameObject *parent) :
 
 void Character::setSpeed(qreal percent)
 {
-	auto *behavior{findBehavior(BT_Moving)};
+	auto *moving{findBehavior(BT_Moving)};
 	qreal originalSpeed{75.75757625};
 	qreal nominalSpeed{3*originalSpeed};
 	qreal speed{percent*nominalSpeed*0.01};
 
-	static_cast<Moving *>(behavior)->setSpeed(speed);
+	if (moving)
+		static_cast<Moving *>(moving)->setSpeed(speed);
 }

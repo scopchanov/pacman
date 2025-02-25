@@ -15,17 +15,25 @@ void Player::energize()
 {
 	setSpeed(90);
 	setBrush(Game::ref().palette()->color(CR_PlayerEnergized));
-	findBehavior(BT_EnemyEating)->setEnabled(true);
+	enableEnemyEating(true);
 }
 
 void Player::deenergize()
 {
 	setSpeed(80);
 	setBrush(Game::ref().palette()->color(CR_Player));
-	findBehavior(BT_EnemyEating)->setEnabled(false);
+	enableEnemyEating(false);
 }
 
 int Player::objectType() const
 {
 	return OBJ_Player;
+}
+
+void Player::enableEnemyEating(bool enable)
+{
+	auto *enemyEating{findBehavior(BT_EnemyEating)};
+
+	if (enemyEating)
+		enemyEating->setEnabled(enable);
 }

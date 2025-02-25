@@ -30,7 +30,10 @@ Deenergizer::Deenergizer(AbstractGameObject *parent) :
 
 void Deenergizer::reset()
 {
-	findBehavior(BT_Delaying)->reset();
+	auto *delaing{findBehavior(BT_Delaying)};
+
+	if (delaing)
+		delaing->reset();
 }
 
 int Deenergizer::objectType() const
