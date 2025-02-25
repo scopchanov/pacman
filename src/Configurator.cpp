@@ -71,7 +71,8 @@ void Configurator::configureWalls(const QJsonArray &jsonWalls)
 	auto *walls{level()->walls()};
 
 	walls->setGrid(grid());
-	buildTilemap(walls, jsonWalls, QPen(palette()->color(CR_Wall), 4), QBrush(Qt::transparent));
+	buildTilemap(walls, jsonWalls, QPen(palette()->color(CR_Wall), 4),
+				 QBrush(Qt::transparent));
 }
 
 void Configurator::configureDots(const QJsonArray &jsonDots)
@@ -119,11 +120,9 @@ void Configurator::createEnemy(const QJsonObject &json)
 	qreal x{position.value("x").toDouble()};
 	qreal y{position.value("y").toDouble()};
 	auto *enemy{new Enemy()};
-	auto *leftEye{new GhostEye(enemy)};
-	auto *rightEye{new GhostEye(enemy)};
 
-	leftEye->setPos(-6, -6);
-	rightEye->setPos(6, -6);
+	createEye(enemy, {-6, -6});
+	createEye(enemy, {6, -6});
 
 	builder.setGameObject(enemy);
 	builder.addColoring(palette()->color(role));
@@ -155,6 +154,13 @@ AbstractPersonality *Configurator::createPersonality(const QJsonObject &json)
 		static_cast<Shying *>(personality)->setPartner(level()->enemies().at(0));
 
 	return personality;
+}
+
+void Configurator::createEye(AbstractGameObject *gameObject, const QPointF &position)
+{
+	auto *eye{new GhostEye(gameObject)};
+
+	eye->setPos(position);
 }
 
 void Configurator::createDoors(const QJsonArray &doors)

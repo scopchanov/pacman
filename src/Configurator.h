@@ -4,6 +4,7 @@
 #include <QObject>
 
 class QGraphicsItem;
+class AbstractGameObject;
 class AbstractPersonality;
 class GameLevel;
 class Palette;
@@ -27,6 +28,7 @@ private:
 	void createEnemies(const QJsonArray &enemies);
 	void createEnemy(const QJsonObject &json);
 	AbstractPersonality *createPersonality(const QJsonObject &json);
+	void createEye(AbstractGameObject *gameObject, const QPointF &position);
 	void createDoors(const QJsonArray &doors);
 	void createDoor(const QJsonObject &json);
 	void createEnergizers(const QJsonArray &energizers);

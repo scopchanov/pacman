@@ -18,7 +18,6 @@
 #include "behaviors/EnemyEating.h"
 #include "behaviors/Energizing.h"
 #include "behaviors/Killing.h"
-#include "behaviors/PlayerControlling.h"
 #include "behaviors/Spawning.h"
 #include "behaviors/Teleporting.h"
 
