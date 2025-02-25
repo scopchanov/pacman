@@ -1,12 +1,15 @@
 #include "Delaying.h"
 #include "Clock.h"
+#include "Event.h"
 #include "GameGlobals.h"
 #include "AbstractAction.h"
+#include <QVariant>
 
 Delaying::Delaying(AbstractGameObject *parent) :
 	AbstractTimedBehavior(parent),
 	_duration{0.0},
-	_time{0.0}
+	_time{0.0},
+	_eventTick{nullptr}
 {
 
 }
@@ -27,6 +30,11 @@ void Delaying::addAction(AbstractAction *action)
 		return;
 
 	_actions.append(action);
+}
+
+void Delaying::setEventTick(Event *event)
+{
+	_eventTick = event;
 }
 
 int Delaying::type() const
@@ -53,7 +61,18 @@ bool Delaying::increaseTime()
 
 	_time += clock()->deltaTime();
 
+	triggerTickEvent();
+
 	return true;
+}
+
+void Delaying::triggerTickEvent()
+{
+	if (!_eventTick)
+		return;
+
+	_eventTick->setProperty("time", _time);
+	_eventTick->trigger();
 }
 
 bool Delaying::delayDurationExceeded() const

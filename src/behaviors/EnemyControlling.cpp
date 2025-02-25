@@ -60,9 +60,9 @@ void EnemyControlling::performControllingActions()
 
 qreal EnemyControlling::distanceToTarget(Vector2 direction) const
 {
-	// TODO: Improve me
+	const Vector2 &nextCell{moving()->nextCellPositionIn(direction)};
 
-	return moving()->nextCellPositionIn(direction).distanceTo(Vector2(_targetPosition));
+	return nextCell.distanceTo(Vector2(_targetPosition));
 }
 
 void EnemyControlling::updateTargetPosition()

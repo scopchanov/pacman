@@ -1,4 +1,5 @@
 #include "Deenergizer.h"
+#include "Event.h"
 #include "GameGlobals.h"
 #include "Game.h"
 #include "actions/CalmDownEnemies.h"
@@ -12,20 +13,33 @@ Deenergizer::Deenergizer(AbstractGameObject *parent) :
 	auto *deenergizing{new Delaying(this)};
 	auto *actDeenergizePlayer{new DeenergizePlayer(deenergizing)};
 	auto *actCalmDownEnemies{new CalmDownEnemies(deenergizing)};
+	auto *eventTick{new Event()};
 
 	deenergizing->setDuration(6);
 	deenergizing->addAction(actDeenergizePlayer);
 	deenergizing->addAction(actCalmDownEnemies);
+	deenergizing->setEventTick(eventTick);
 
 	addBehavior(deenergizing);
-	setFlag(QGraphicsItem::ItemHasNoContents);
 
-	// QPainterPath p;
+	// TODO: Improve me
 
-	// p.addRect(0, 0, 30*24, 24);
+	QPainterPath p;
 
-	// setPath(p);
-	// setBrush(Qt::green);
+	p.addRect(0, 0, 30*24, 6);
+
+	setPath(p);
+	setBrush(QBrush(0xFFEA00));
+
+	QObject::connect(eventTick, &Event::triggered, [this, eventTick](){
+		qreal a{6 - eventTick->property("time").toDouble()};
+
+		QPainterPath p;
+
+		p.addRect(0, 0, a*100, 6);
+
+		setPath(p);
+	});
 }
 
 void Deenergizer::reset()
