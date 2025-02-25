@@ -4,6 +4,7 @@
 #include <QObject>
 
 class QGraphicsItem;
+class AbstractPersonality;
 class GameLevel;
 class Palette;
 class Grid;
@@ -18,18 +19,16 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
-	GameLevel *level() const;
-	Palette *palette() const;
-	Grid *grid() const;
 	void configurePalette(const QJsonObject &json);
 	void configureGrid(const QJsonObject &json);
 	void configureWalls(const QJsonArray &jsonWalls);
 	void configureDots(const QJsonArray &jsonDots);
 	void configurePlayer(const QJsonObject &json);
-	void createDoors(const QJsonArray &doors);
-	void createDoor(const QJsonObject &json);
 	void createEnemies(const QJsonArray &enemies);
 	void createEnemy(const QJsonObject &json);
+	AbstractPersonality *createPersonality(const QJsonObject &json);
+	void createDoors(const QJsonArray &doors);
+	void createDoor(const QJsonObject &json);
 	void createEnergizers(const QJsonArray &energizers);
 	void createEnergizer(const QJsonObject &json);
 	void createTeleporters(const QJsonArray &teleporters);
@@ -38,6 +37,9 @@ private:
 	QGraphicsItem *createTile(int index, const QPen &pen, const QBrush &brush);
 	int key2role(const QString &key) const;
 	QPointF gridPosition(int row, int column) const;
+	GameLevel *level() const;
+	Palette *palette() const;
+	Grid *grid() const;
 };
 
 #endif // CONFIGURATOR_H

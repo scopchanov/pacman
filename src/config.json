@@ -17,7 +17,7 @@
   "grid": {
     "rows": 33,
     "columns": 30,
-    "cell" : {
+    "cell": {
       "width": 24,
       "height": 24
     }
@@ -33,53 +33,61 @@
     {
       "name": "Blinky",
       "direction": 0,
-      "personality": 0,
       "position": {
 	"x": 360,
 	"y": 300
       },
-      "scatterTargetCell": {
-	"row": 0,
-	"column": 28
+      "personality": {
+	"type": 0,
+	"scatterTargetCell": {
+	  "row": 0,
+	  "column": 28
+	}
       }
     },
     {
       "name": "Inky",
       "direction": 1,
-      "personality": 2,
       "position": {
 	"x": 312,
 	"y": 372
       },
-      "scatterTargetCell": {
-	"row": 32,
-	"column": 28
+      "personality": {
+	"type": 2,
+	"scatterTargetCell": {
+	  "row": 32,
+	  "column": 28
+	}
       }
     },
     {
       "name": "Pinky",
       "direction": 3,
-      "personality": 1,
       "position": {
 	"x": 360,
 	"y": 372
       },
-      "scatterTargetCell": {
-	"row": 0,
-	"column": 1
+      "personality": {
+	"type": 1,
+	"scatterTargetCell": {
+	  "row": 0,
+	  "column": 1
+	}
       }
     },
     {
       "name": "Clyde",
       "direction": 1,
-      "personality": 3,
       "position": {
 	"x": 408,
 	"y": 372
       },
-      "scatterTargetCell": {
-	"row": 32,
-	"column": 1
+      "personality": {
+	"type": 3,
+	"scatterTargetCell": {
+	  "row": 32,
+	  "column": 1
+	}
       }
     }
   ],
@@ -118,8 +126,8 @@
 	"column": 1
       },
       "destination": {
-	  "row": 15,
-	  "column": 27
+	"row": 15,
+	"column": 27
       }
     },
     {
@@ -128,8 +136,8 @@
 	"column": 28
       },
       "destination": {
-	  "row": 15,
-	  "column": 2
+	"row": 15,
+	"column": 2
       }
     }
   ],

@@ -43,21 +43,6 @@ void Configurator::configure(const QJsonObject &json)
 	createEnemies(json.value("enemies").toArray());
 }
 
-GameLevel *Configurator::level() const
-{
-	return Game::ref().level();
-}
-
-Palette *Configurator::palette() const
-{
-	return level()->palette();
-}
-
-Grid *Configurator::grid() const
-{
-	return level()->grid();
-}
-
 void Configurator::configurePalette(const QJsonObject &json)
 {
 	const auto &keys{json.keys()};
@@ -107,12 +92,7 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	builder.setGameObject(player);
 	builder.addColoring(palette()->color(CR_Player));
 	builder.addSpawning({x, y});
-
-	auto *moving{new Moving(player)};
-	moving->setTilemap(level()->walls());
-	moving->setNextDirection(V2_LEFT);
-	player->addBehavior(moving);
-
+	builder.addMoving(0);
 	builder.addControlling(OBJ_Player);
 	builder.addOrientating(OBJ_Player);
 	builder.addAnimating(OBJ_Player);
@@ -122,6 +102,59 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	player->setSpeed(80);
 	player->setPen(QPen(Qt::transparent));
 	player->reset();
+}
+
+void Configurator::createEnemies(const QJsonArray &enemies)
+{
+	for (const auto &enemy : enemies)
+		createEnemy(enemy.toObject());
+}
+
+void Configurator::createEnemy(const QJsonObject &json)
+{
+	BehaviorBuilder builder;
+	const QJsonObject &position{json.value("position").toObject()};
+	const QJsonObject &personality{json.value("personality").toObject()};
+	int role{key2role(json.value("name").toString())};
+	qreal x{position.value("x").toDouble()};
+	qreal y{position.value("y").toDouble()};
+	auto *enemy{new Enemy()};
+	auto *leftEye{new GhostEye(enemy)};
+	auto *rightEye{new GhostEye(enemy)};
+
+	leftEye->setPos(-6, -6);
+	rightEye->setPos(6, -6);
+
+	builder.setGameObject(enemy);
+	builder.addColoring(palette()->color(role));
+	builder.addSpawning({x, y});
+	builder.addMoving(json.value("direction").toInt());
+	builder.addControlling(OBJ_Enemy);
+	builder.addOrientating(OBJ_Enemy);
+	builder.addAnimating(OBJ_Enemy);
+	builder.addKilling();
+
+	enemy->setPersonality(createPersonality(personality));
+	enemy->setPen(QPen(Qt::transparent));
+	enemy->setSpeed(75);
+	enemy->reset();
+
+	level()->addEnemy(enemy);
+}
+
+AbstractPersonality *Configurator::createPersonality(const QJsonObject &json)
+{
+	const QJsonObject &cell{json.value("scatterTargetCell").toObject()};
+	int row{cell.value("row").toInt()};
+	int column{cell.value("column").toInt()};
+	auto *personality{Factory::createPersonality(json.value("type").toInt())};
+
+	personality->setScatterTarget(gridPosition(row, column));
+
+	if (personality->type() == PT_Shying)
+		static_cast<Shying *>(personality)->setPartner(level()->enemies().at(0));
+
+	return personality;
 }
 
 void Configurator::createDoors(const QJsonArray &doors)
@@ -139,64 +172,6 @@ void Configurator::createDoor(const QJsonObject &json)
 	int column{json.value("column").toInt()};
 
 	walls->setTile(row, column, door);
-}
-
-void Configurator::createEnemies(const QJsonArray &enemies)
-{
-	for (const auto &enemy : enemies)
-		createEnemy(enemy.toObject());
-}
-
-void Configurator::createEnemy(const QJsonObject &json)
-{
-	// TODO: Improve me
-
-	BehaviorBuilder builder;
-	int role{key2role(json.value("name").toString())};
-	const QColor &color{palette()->color(role)};
-	const QJsonObject &position{json.value("position").toObject()};
-	qreal posX{position.value("x").toDouble()};
-	qreal posY{position.value("y").toDouble()};
-	int direction{json.value("direction").toInt()};
-	const QJsonObject &cell{json.value("scatterTargetCell").toObject()};
-	int row{cell.value("row").toInt()};
-	int column{cell.value("column").toInt()};
-	auto *enemy{new Enemy()};
-	auto *leftEye{new GhostEye(enemy)};
-	auto *rightEye{new GhostEye(enemy)};
-
-	leftEye->setPos(-6, -6);
-	rightEye->setPos(6, -6);
-
-	builder.setGameObject(enemy);
-	builder.addColoring(color);
-	builder.addSpawning({posX, posY});
-	builder.addMoving(direction);
-	builder.addControlling(OBJ_Enemy);
-	builder.addOrientating(OBJ_Enemy);
-	builder.addAnimating(OBJ_Enemy);
-	builder.addKilling();
-
-	enemy->setSpeed(75);
-	enemy->setPen(QPen(Qt::transparent));
-
-	// auto *behavior{enemy->findBehavior(BT_Controlling)};
-	// auto *controller{static_cast<EnemyControlling *>(behavior)};
-	auto *personality{Factory::createPersonality(json.value("personality").toInt())};
-
-	personality->setScatterTarget(gridPosition(row, column));
-
-	if (personality->type() == PT_Shying)
-		static_cast<Shying *>(personality)->setPartner(level()->enemies().at(0));
-
-	enemy->setPersonality(personality);
-	enemy->reset();
-
-	level()->addEnemy(enemy);
-
-	// level()->enemies().append(enemy);
-	// level()->addItem(enemy);
-	// Game::ref().stateMachine()->addEnemyController(controller);
 }
 
 void Configurator::createEnergizers(const QJsonArray &energizers)
@@ -309,4 +284,19 @@ int Configurator::key2role(const QString &key) const
 QPointF Configurator::gridPosition(int row, int column) const
 {
 	return grid()->mapFromGrid(row, column);
+}
+
+GameLevel *Configurator::level() const
+{
+	return Game::ref().level();
+}
+
+Palette *Configurator::palette() const
+{
+	return level()->palette();
+}
+
+Grid *Configurator::grid() const
+{
+	return level()->grid();
 }
