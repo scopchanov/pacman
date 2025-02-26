@@ -32,12 +32,12 @@ Vector2 Shying::calculateTarget() const
 	if (!_partner)
 		return Vector2();
 
-	auto *behavior{player()->findComponent(BT_Moving)};
+	auto *component{player()->findComponent(BT_Moving)};
 
-	if (!behavior)
+	if (!component)
 		return Vector2();
 
-	auto *moving{static_cast<Moving *>(behavior)};
+	auto *moving{static_cast<Moving *>(component)};
 	const Vector2 &playerDirection(moving->currentDirection());
 	const Vector2 &referenceCell{playerCell() + playerDirection*2};
 	const Vector2 &reference{grid()->mapFromGrid(referenceCell)};

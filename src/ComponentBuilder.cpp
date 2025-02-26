@@ -16,7 +16,6 @@
 #include "behaviors/DotsEating.h"
 #include "behaviors/EnemyControlling.h"
 #include "behaviors/EnemyEating.h"
-#include "behaviors/Energizing.h"
 #include "behaviors/Spawning.h"
 
 ComponentBuilder::ComponentBuilder(QObject *parent) :
@@ -123,13 +122,9 @@ void ComponentBuilder::addKilling()
 
 void ComponentBuilder::addEnergizing()
 {
-	auto *energizing{new Energizing()};
-	auto *energizePlayer{new EnergizePlayer(energizing)};
+	auto *energizePlayer{new EnergizePlayer()};
 
-	energizePlayer->setGameObject(_gameObject);
-	energizing->addComponent(energizePlayer);
-
-	_gameObject->addComponent(energizing);
+	_gameObject->addComponent(energizePlayer);
 
 	QObject::connect(energizePlayer, &EnergizePlayer::playerEnergized,
 					 game(), &Game::onPlayerEnergized);
@@ -151,9 +146,9 @@ Game *ComponentBuilder::game() const
 
 Moving *ComponentBuilder::moving() const
 {
-	auto *behavior{_gameObject->findComponent(BT_Moving)};
+	auto *component{_gameObject->findComponent(BT_Moving)};
 
-	return behavior ? static_cast<Moving *>(behavior) : nullptr;
+	return component ? static_cast<Moving *>(component) : nullptr;
 }
 
 Vector2 ComponentBuilder::dir2vec(int direction) const

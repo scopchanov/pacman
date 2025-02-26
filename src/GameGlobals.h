@@ -34,7 +34,6 @@ enum ComponentType : int {
 	BT_Delaying,
 	BT_DotsEating,
 	BT_EnemyEating,
-	BT_Energizing,
 	BT_Moving,
 	BT_Orientating,
 	BT_Spawning

@@ -40,17 +40,17 @@ Deenergizer::Deenergizer(AbstractGameObject *parent) :
 
 void Deenergizer::activate()
 {
-	modifyBehavior(MOD_Activate);
+	modifyComponent(MOD_Activate);
 }
 
 void Deenergizer::deactivate()
 {
-	modifyBehavior(MOD_Deactivate);
+	modifyComponent(MOD_Deactivate);
 }
 
 void Deenergizer::reset()
 {
-	modifyBehavior(MOD_Reset);
+	modifyComponent(MOD_Reset);
 }
 
 int Deenergizer::objectType() const
@@ -58,7 +58,7 @@ int Deenergizer::objectType() const
 	return OBJ_Deenergizer;
 }
 
-void Deenergizer::modifyBehavior(int t)
+void Deenergizer::modifyComponent(int t)
 {
 	auto *deenergizing{findComponent(BT_Delaying)};
 

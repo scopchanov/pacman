@@ -49,7 +49,6 @@ SOURCES += \
     behaviors/EnemyEating.cpp \
     behaviors/EnemyOrientating.cpp \
     behaviors/EnergizerAnimating.cpp \
-    behaviors/Energizing.cpp \
     behaviors/Moving.cpp \
     behaviors/PlayerAnimating.cpp \
     behaviors/PlayerControlling.cpp \
@@ -114,7 +113,6 @@ HEADERS += \
     behaviors/EnemyEating.h \
     behaviors/EnemyOrientating.h \
     behaviors/EnergizerAnimating.h \
-    behaviors/Energizing.h \
     behaviors/Moving.h \
     behaviors/PlayerAnimating.h \
     behaviors/PlayerControlling.h \

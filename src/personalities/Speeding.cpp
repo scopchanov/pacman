@@ -18,12 +18,12 @@ int Speeding::type() const
 
 Vector2 Speeding::calculateTarget() const
 {
-	auto *behavior{player()->findComponent(BT_Moving)};
+	auto *component{player()->findComponent(BT_Moving)};
 
-	if (!behavior)
+	if (!component)
 		return Vector2();
 
-	auto *moving{static_cast<Moving *>(behavior)};
+	auto *moving{static_cast<Moving *>(component)};
 	const Vector2 &playerDirection(moving->currentDirection());
 	const Vector2 &targetCell{playerCell() + playerDirection*4};
 

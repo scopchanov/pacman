@@ -21,7 +21,7 @@ public:
 	int objectType() const override final;
 
 private:
-	void modifyBehavior(int t);
+	void modifyComponent(int t);
 	void updatePath(qreal value);
 };
 
