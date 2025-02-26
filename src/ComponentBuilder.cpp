@@ -1,4 +1,4 @@
-#include "BehaviorBuilder.h"
+#include "ComponentBuilder.h"
 #include "Factory.h"
 #include "Game.h"
 #include "Event.h"
@@ -23,19 +23,19 @@
 #include "behaviors/Spawning.h"
 #include "behaviors/Teleporting.h"
 
-BehaviorBuilder::BehaviorBuilder(QObject *parent) :
+ComponentBuilder::ComponentBuilder(QObject *parent) :
 	QObject{parent},
 	_gameObject{nullptr}
 {
 
 }
 
-void BehaviorBuilder::setGameObject(AbstractGameObject *gameObject)
+void ComponentBuilder::setGameObject(AbstractGameObject *gameObject)
 {
 	_gameObject = gameObject;
 }
 
-void BehaviorBuilder::addColoring(const QColor &color)
+void ComponentBuilder::addColoring(const QColor &color)
 {
 	auto *coloring{new Coloring()};
 
@@ -45,7 +45,7 @@ void BehaviorBuilder::addColoring(const QColor &color)
 	_gameObject->setBrush(color);
 }
 
-void BehaviorBuilder::addSpawning(const QPointF &position)
+void ComponentBuilder::addSpawning(const QPointF &position)
 {
 	auto *spawning{new Spawning()};
 
@@ -54,7 +54,7 @@ void BehaviorBuilder::addSpawning(const QPointF &position)
 	_gameObject->addComponent(spawning);
 }
 
-void BehaviorBuilder::addMoving(int direction)
+void ComponentBuilder::addMoving(int direction)
 {
 	auto *moving{new Moving()};
 
@@ -64,7 +64,7 @@ void BehaviorBuilder::addMoving(int direction)
 	_gameObject->addComponent(moving);
 }
 
-void BehaviorBuilder::addControlling(int type)
+void ComponentBuilder::addControlling(int type)
 {
 	auto *controller{Factory::createControlling(type)};
 
@@ -73,7 +73,7 @@ void BehaviorBuilder::addControlling(int type)
 	_gameObject->addComponent(controller);
 }
 
-void BehaviorBuilder::addOrientating(int type)
+void ComponentBuilder::addOrientating(int type)
 {
 	auto *orientating{Factory::createOrientating(type)};
 
@@ -82,12 +82,12 @@ void BehaviorBuilder::addOrientating(int type)
 	_gameObject->addComponent(orientating);
 }
 
-void BehaviorBuilder::addAnimating(int type)
+void ComponentBuilder::addAnimating(int type)
 {
 	_gameObject->addComponent(Factory::createAnimating(type));
 }
 
-void BehaviorBuilder::addDotsEating()
+void ComponentBuilder::addDotsEating()
 {
 	auto *dotsEating{new DotsEating()};
 	auto *eventDotEaten{new Event()};
@@ -103,7 +103,7 @@ void BehaviorBuilder::addDotsEating()
 	connect(eventPlayerWins, &Event::triggered, game(), &Game::onPlayerWins);
 }
 
-void BehaviorBuilder::addEnemyEating()
+void ComponentBuilder::addEnemyEating()
 {
 	auto *enemyEating{new EnemyEating()};
 	auto *eventEnemyEaten{new Event()};
@@ -116,7 +116,7 @@ void BehaviorBuilder::addEnemyEating()
 	connect(eventEnemyEaten, &Event::triggered, game(), &Game::onEnemyEaten);
 }
 
-void BehaviorBuilder::addKilling()
+void ComponentBuilder::addKilling()
 {
 	auto *killing{new Killing()};
 	auto *killPlayer{new KillPlayer(killing)};
@@ -129,7 +129,7 @@ void BehaviorBuilder::addKilling()
 	connect(killPlayer, &KillPlayer::playerDied, game(), &Game::onPlayerDied);
 }
 
-void BehaviorBuilder::addEnergizing()
+void ComponentBuilder::addEnergizing()
 {
 	auto *energizing{new Energizing()};
 	auto *energizePlayer{new EnergizePlayer(energizing)};
@@ -143,7 +143,7 @@ void BehaviorBuilder::addEnergizing()
 					 game(), &Game::onPlayerEnergized);
 }
 
-void BehaviorBuilder::addTeleporting(const QPointF &destination)
+void ComponentBuilder::addTeleporting(const QPointF &destination)
 {
 	auto *teleporting{new Teleporting()};
 	auto *teleport{new Teleport(teleporting)};
@@ -156,19 +156,19 @@ void BehaviorBuilder::addTeleporting(const QPointF &destination)
 	_gameObject->addComponent(teleporting);
 }
 
-Game *BehaviorBuilder::game() const
+Game *ComponentBuilder::game() const
 {
 	return &Game::ref();
 }
 
-Moving *BehaviorBuilder::moving() const
+Moving *ComponentBuilder::moving() const
 {
 	auto *behavior{_gameObject->findComponent(BT_Moving)};
 
 	return behavior ? static_cast<Moving *>(behavior) : nullptr;
 }
 
-Vector2 BehaviorBuilder::dir2vec(int direction) const
+Vector2 ComponentBuilder::dir2vec(int direction) const
 {
 	return QHash<int, Vector2>{{0, V2_LEFT}, {1, V2_UP}, {2, V2_RIGHT},
 							   {3, V2_DOWN}}.value(direction);

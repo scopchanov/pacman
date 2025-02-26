@@ -7,7 +7,7 @@
 #include "Grid.h"
 #include "PathBuilder.h"
 #include "Tilemap.h"
-#include "BehaviorBuilder.h"
+#include "ComponentBuilder.h"
 #include "behaviors/EnemyControlling.h"
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
@@ -87,7 +87,7 @@ void Configurator::configureDots(const QJsonArray &jsonDots)
 
 void Configurator::configurePlayer(const QJsonObject &json)
 {
-	BehaviorBuilder builder;
+	ComponentBuilder builder;
 	const QJsonObject &position{json.value("position").toObject()};
 	qreal x{position.value("x").toDouble()};
 	qreal y{position.value("y").toDouble()};
@@ -116,7 +116,7 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 
 void Configurator::createEnemy(const QJsonObject &json)
 {
-	BehaviorBuilder builder;
+	ComponentBuilder builder;
 	const QJsonObject &position{json.value("position").toObject()};
 	const QJsonObject &personality{json.value("personality").toObject()};
 	int role{key2role(json.value("name").toString())};
@@ -191,7 +191,7 @@ void Configurator::createEnergizers(const QJsonArray &energizers)
 
 void Configurator::createEnergizer(const QJsonObject &json)
 {
-	BehaviorBuilder builder;
+	ComponentBuilder builder;
 	int column{json.value("column").toInt()};
 	int row{json.value("row").toInt()};
 	auto *energizer{new Energizer()};
@@ -216,7 +216,7 @@ void Configurator::createTeleporters(const QJsonArray &teleporters)
 
 void Configurator::createTeleporter(const QJsonObject &json)
 {
-	BehaviorBuilder builder;
+	ComponentBuilder builder;
 	const QJsonObject &jsonSource{json.value("source").toObject()};
 	const QJsonObject &jsonDestination{json.value("destination").toObject()};
 	int srcRow{jsonSource.value("row").toInt()};

@@ -1,5 +1,5 @@
-#ifndef BEHAVIORBUILDER_H
-#define BEHAVIORBUILDER_H
+#ifndef COMPONENTBUILDER_H
+#define COMPONENTBUILDER_H
 
 #include <QObject>
 
@@ -8,11 +8,11 @@ class Moving;
 class AbstractGameObject;
 class Vector2;
 
-class BehaviorBuilder : public QObject
+class ComponentBuilder : public QObject
 {
 	Q_OBJECT
 public:
-	explicit BehaviorBuilder(QObject *parent = nullptr);
+	explicit ComponentBuilder(QObject *parent = nullptr);
 	
 	void setGameObject(AbstractGameObject *gameObject);
 	void addColoring(const QColor &color);
@@ -35,4 +35,4 @@ private:
 	AbstractGameObject *_gameObject;
 };
 
-#endif // BEHAVIORBUILDER_H
+#endif // COMPONENTBUILDER_H

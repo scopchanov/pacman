@@ -7,7 +7,7 @@ CONFIG += c++23
 #DEFINES += DEBUG
 
 SOURCES += \
-    BehaviorBuilder.cpp \
+    ComponentBuilder.cpp \
     Configurator.cpp \
     DialogGame.cpp \
     DialogSettings.cpp \
@@ -73,7 +73,7 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
-    BehaviorBuilder.h \
+    ComponentBuilder.h \
     Configurator.h \
     DialogGame.h \
     DialogSettings.h \
