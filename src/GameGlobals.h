@@ -17,7 +17,7 @@ enum ColorRole : int {
 	CR_Teleporter
 };
 
-enum ActionType : int {
+enum ComponentType : int {
 	ACT_ActivateDeenergizer = 0,
 	ACT_CalmDownEnemies ,
 	ACT_DeleteGameObject,
@@ -27,22 +27,17 @@ enum ActionType : int {
 	ACT_KillPlayer,
 	ACT_ScareEnemies,
 	ACT_Teleport,
-	ACT_UpdateDeenergizer
-};
-
-enum BehaviorType : int {
-	BT_Animating = 0,
+	ACT_UpdateDeenergizer,
+	BT_Animating,
 	BT_Coloring,
 	BT_Controlling,
 	BT_Delaying,
 	BT_DotsEating,
 	BT_EnemyEating,
 	BT_Energizing,
-	BT_Killing,
 	BT_Moving,
 	BT_Orientating,
-	BT_Spawning,
-	BT_Teleporting
+	BT_Spawning
 };
 
 enum ObjectType : int {

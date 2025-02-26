@@ -50,14 +50,12 @@ SOURCES += \
     behaviors/EnemyOrientating.cpp \
     behaviors/EnergizerAnimating.cpp \
     behaviors/Energizing.cpp \
-    behaviors/Killing.cpp \
     behaviors/Moving.cpp \
     behaviors/PlayerAnimating.cpp \
     behaviors/PlayerControlling.cpp \
     behaviors/PlayerOrientating.cpp \
     behaviors/Spawning.cpp \
     behaviors/TeleporterAnimating.cpp \
-    behaviors/Teleporting.cpp \
     objects/Character.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
@@ -117,14 +115,12 @@ HEADERS += \
     behaviors/EnemyOrientating.h \
     behaviors/EnergizerAnimating.h \
     behaviors/Energizing.h \
-    behaviors/Killing.h \
     behaviors/Moving.h \
     behaviors/PlayerAnimating.h \
     behaviors/PlayerControlling.h \
     behaviors/PlayerOrientating.h \
     behaviors/Spawning.h \
     behaviors/TeleporterAnimating.h \
-    behaviors/Teleporting.h \
     objects/Character.h \
     objects/Deenergizer.h \
     objects/Enemy.h \

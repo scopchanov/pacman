@@ -75,10 +75,10 @@ void Enemy::eat()
 
 void Enemy::enableKilling(bool enable)
 {
-	auto *killing{findComponent(BT_Killing)};
+	auto *killPlayer{findComponent(ACT_KillPlayer)};
 
-	if (killing)
-		killing->setEnabled(enable);
+	if (killPlayer)
+		killPlayer->setEnabled(enable);
 }
 
 void Enemy::restoreColor()

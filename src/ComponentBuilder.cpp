@@ -5,10 +5,8 @@
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "GameLevel.h"
-#include "actions/ActivateDeenergizer.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/KillPlayer.h"
-#include "actions/ScareEnemies.h"
 #include "actions/Teleport.h"
 #include "behaviors/AbstractOrientatingBehavior.h"
 #include "behaviors/Moving.h"
@@ -19,9 +17,7 @@
 #include "behaviors/EnemyControlling.h"
 #include "behaviors/EnemyEating.h"
 #include "behaviors/Energizing.h"
-#include "behaviors/Killing.h"
 #include "behaviors/Spawning.h"
-#include "behaviors/Teleporting.h"
 
 ComponentBuilder::ComponentBuilder(QObject *parent) :
 	QObject{parent},
@@ -118,13 +114,9 @@ void ComponentBuilder::addEnemyEating()
 
 void ComponentBuilder::addKilling()
 {
-	auto *killing{new Killing()};
-	auto *killPlayer{new KillPlayer(killing)};
+	auto *killPlayer{new KillPlayer()};
 
-	killPlayer->setGameObject(_gameObject);
-	killing->addComponent(killPlayer);
-
-	_gameObject->addComponent(killing);
+	_gameObject->addComponent(killPlayer);
 
 	connect(killPlayer, &KillPlayer::playerDied, game(), &Game::onPlayerDied);
 }
@@ -143,17 +135,13 @@ void ComponentBuilder::addEnergizing()
 					 game(), &Game::onPlayerEnergized);
 }
 
-void ComponentBuilder::addTeleporting(const QPointF &destination)
+void ComponentBuilder::addTeleport(const QPointF &destination)
 {
-	auto *teleporting{new Teleporting()};
-	auto *teleport{new Teleport(teleporting)};
+	auto *teleport{new Teleport()};
 
-	teleport->setGameObject(_gameObject);
 	teleport->setDestination(destination);
 
-	teleporting->addComponent(teleport);
-
-	_gameObject->addComponent(teleporting);
+	_gameObject->addComponent(teleport);
 }
 
 Game *ComponentBuilder::game() const

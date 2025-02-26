@@ -229,7 +229,7 @@ void Configurator::createTeleporter(const QJsonObject &json)
 
 	builder.setGameObject(teleporter);
 	builder.addAnimating(OBJ_Teleporter);
-	builder.addTeleporting(dst);
+	builder.addTeleport(dst);
 
 	teleporter->setPos(src);
 	teleporter->setPen(QPen(Qt::transparent));

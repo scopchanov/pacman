@@ -25,7 +25,7 @@ public:
 	void addEnemyEating();
 	void addKilling();
 	void addEnergizing();
-	void addTeleporting(const QPointF &destination);
+	void addTeleport(const QPointF &destination);
 
 private:
 	Game *game()const;
