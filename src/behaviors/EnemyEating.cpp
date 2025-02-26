@@ -4,7 +4,7 @@
 #include "objects/Enemy.h"
 #include <QHash>
 
-EnemyEating::EnemyEating(AbstractGameObject *parent) :
+EnemyEating::EnemyEating(AbstractComponent *parent) :
 	AbstractBehavior(parent),
 	_enemiesEaten{0},
 	_eventEnemyEaten{nullptr}
@@ -27,12 +27,12 @@ void EnemyEating::reset()
 	_enemiesEaten = 0;
 }
 
-void EnemyEating::performActions()
+void EnemyEating::performTasks()
 {
 	if (!_eventEnemyEaten)
 		return;
 
-	const auto &collidingObjects{parent()->collidingObjects()};
+	const auto &collidingObjects{gameObject()->collidingObjects()};
 
 	for (auto *gameObject : collidingObjects)
 		if (gameObject->objectType() == OBJ_Enemy)

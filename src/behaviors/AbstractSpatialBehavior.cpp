@@ -3,7 +3,7 @@
 #include "Tilemap.h"
 #include "AbstractGameObject.h"
 
-AbstractSpatialBehavior::AbstractSpatialBehavior(AbstractGameObject *parent) :
+AbstractSpatialBehavior::AbstractSpatialBehavior(AbstractComponent *parent) :
 	AbstractTimedBehavior(parent),
 	_tilemap{nullptr}
 {
@@ -20,7 +20,7 @@ void AbstractSpatialBehavior::setTilemap(Tilemap *tilemap)
 	_tilemap = tilemap;
 }
 
-void AbstractSpatialBehavior::performActions()
+void AbstractSpatialBehavior::performTasks()
 {
 	if (!_tilemap)
 		return;
@@ -30,5 +30,5 @@ void AbstractSpatialBehavior::performActions()
 
 Vector2 AbstractSpatialBehavior::currentCell() const
 {
-	return Vector2(_tilemap->grid()->mapToGrid(parent()->pos()));
+	return Vector2(_tilemap->grid()->mapToGrid(gameObject()->pos()));
 }

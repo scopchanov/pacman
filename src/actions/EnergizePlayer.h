@@ -6,12 +6,12 @@
 class EnergizePlayer : public AbstractAction
 {
 public:
-	explicit EnergizePlayer(AbstractBehavior *parent = nullptr);
+	explicit EnergizePlayer(AbstractComponent *parent = nullptr);
 
 	int type() const override;
 
 private:
-	void performTask() override;
+	void performTasks() override;
 };
 
 #endif // ENERGIZEPLAYER_H

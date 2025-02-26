@@ -3,7 +3,7 @@
 #include "AbstractGameObject.h"
 #include <QBrush>
 
-Coloring::Coloring(AbstractGameObject *parent) :
+Coloring::Coloring(AbstractComponent *parent) :
 	AbstractBehavior(parent)
 {
 
@@ -26,5 +26,5 @@ int Coloring::type() const
 
 void Coloring::reset()
 {
-	parent()->setBrush(_color);
+	gameObject()->setBrush(_color);
 }

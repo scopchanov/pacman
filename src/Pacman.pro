@@ -28,8 +28,10 @@ SOURCES += \
     Game.cpp \
     GameStatus.cpp \
     actions/CalmDownEnemies.cpp \
+    actions/DeactivateDeenergizer.cpp \
     actions/DeenergizePlayer.cpp \
     actions/DeleteGameObject.cpp \
+    actions/EnableDeenergizer.cpp \
     actions/EnergizePlayer.cpp \
     actions/ScareEnemies.cpp \
     behaviors/AbstractAnimatingBehavior.cpp \
@@ -91,8 +93,10 @@ HEADERS += \
     Game.h \
     GameStatus.h \
     actions/CalmDownEnemies.h \
+    actions/DeactivateDeenergizer.h \
     actions/DeenergizePlayer.h \
     actions/DeleteGameObject.h \
+    actions/EnableDeenergizer.h \
     actions/EnergizePlayer.h \
     actions/ScareEnemies.h \
     behaviors/AbstractAnimatingBehavior.h \

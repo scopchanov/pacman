@@ -8,16 +8,17 @@ class AbstractGameObject;
 class DeleteGameObject : public AbstractAction
 {
 public:
-	explicit DeleteGameObject(AbstractBehavior *parent = nullptr);
+	explicit DeleteGameObject(AbstractComponent *parent = nullptr);
 
 	int type() const override;
 
 	AbstractGameObject *gameObject() const;
 	void setGameObject(AbstractGameObject *gameObject);
 
-private:
-	void performTask() override;
+protected:
+	void performTasks() override;
 
+private:
 	AbstractGameObject *_gameObject;
 };
 

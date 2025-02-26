@@ -5,7 +5,7 @@
 
 using Pair = QPair<int, int>;
 
-PlayerOrientating::PlayerOrientating(AbstractGameObject *parent) :
+PlayerOrientating::PlayerOrientating(AbstractComponent *parent) :
 	AbstractOrientatingBehavior(parent)
 {
 
@@ -13,7 +13,7 @@ PlayerOrientating::PlayerOrientating(AbstractGameObject *parent) :
 
 void PlayerOrientating::performOrientationActions()
 {
-	parent()->setRotation(directionToAngle(moving()->currentDirection()));
+	gameObject()->setRotation(directionToAngle(moving()->currentDirection()));
 }
 
 qreal PlayerOrientating::directionToAngle(const Vector2 &direction) const

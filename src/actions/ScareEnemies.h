@@ -6,12 +6,12 @@
 class ScareEnemies : public AbstractAction
 {
 public:
-	explicit ScareEnemies(AbstractBehavior *parent = nullptr);
+	explicit ScareEnemies(AbstractComponent *parent = nullptr);
 
 	int type() const override;
 
 private:
-	void performTask() override;
+	void performTasks() override;
 };
 
 #endif // SCAREENEMIES_H

@@ -10,14 +10,15 @@ class AbstractGameObject;
 class Energizing : public AbstractBehavior
 {
 public:
-	explicit Energizing(AbstractGameObject *parent = nullptr);
+	explicit Energizing(AbstractComponent *parent = nullptr);
 
 	void setEvent(Event *event);
 	int type() const override;
 
-private:
-	void performActions() override;
+protected:
+	void performTasks() override;
 
+private:
 	Event *_eventPlayerEnergized;
 };
 

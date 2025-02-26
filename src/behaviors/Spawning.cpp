@@ -2,7 +2,7 @@
 #include "AbstractGameObject.h"
 #include "GameGlobals.h"
 
-Spawning::Spawning(AbstractGameObject *parent) :
+Spawning::Spawning(AbstractComponent *parent) :
 	AbstractBehavior(parent)
 {
 
@@ -32,8 +32,8 @@ void Spawning::reset()
 
 void Spawning::respawn()
 {
-	if (!parent())
+	if (!gameObject())
 		return;
 
-	parent()->setPos(_position);
+	gameObject()->setPos(_position);
 }

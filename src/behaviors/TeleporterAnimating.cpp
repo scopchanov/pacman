@@ -1,6 +1,6 @@
 #include "TeleporterAnimating.h"
 
-TeleporterAnimating::TeleporterAnimating(AbstractGameObject *parent) :
+TeleporterAnimating::TeleporterAnimating(AbstractComponent *parent) :
 	AbstractAnimatingBehavior(parent)
 {
 	setFrameRate(2);

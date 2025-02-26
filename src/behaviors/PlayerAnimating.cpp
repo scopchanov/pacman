@@ -1,6 +1,6 @@
 #include "PlayerAnimating.h"
 
-PlayerAnimating::PlayerAnimating(AbstractGameObject *parent) :
+PlayerAnimating::PlayerAnimating(AbstractComponent *parent) :
 	AbstractAnimatingBehavior(parent)
 {
 	setFrameRate(150);

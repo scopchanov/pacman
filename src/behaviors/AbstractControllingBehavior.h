@@ -8,14 +8,16 @@ class Moving;
 class AbstractControllingBehavior : public AbstractBehavior
 {
 public:
-	explicit AbstractControllingBehavior(AbstractGameObject *parent = nullptr);
+	explicit AbstractControllingBehavior(AbstractComponent *parent = nullptr);
 
 	Moving *moving() const;
 	void setMoving(Moving *moving);
 	int type() const override final;
 
+protected:
+	void performTasks() override;
+
 private:
-	void performActions() override;
 	virtual void performControllingActions() = 0;
 
 	Moving *_moving;

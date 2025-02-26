@@ -8,7 +8,7 @@ class Moving;
 class AbstractOrientatingBehavior : public AbstractBehavior
 {
 public:
-	explicit AbstractOrientatingBehavior(AbstractGameObject *parent = nullptr);
+	explicit AbstractOrientatingBehavior(AbstractComponent *parent = nullptr);
 
 	Moving *moving() const;
 	void setMoving(Moving *moving);
@@ -16,8 +16,10 @@ public:
 
 	void reset() override;
 
+protected:
+	void performTasks() override final;
+
 private:
-	void performActions() override final;
 	virtual void performOrientationActions() = 0;
 
 	Moving *_moving;

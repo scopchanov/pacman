@@ -8,7 +8,7 @@
 class Moving : public AbstractSpatialBehavior
 {
 public:
-	explicit Moving(AbstractGameObject *parent = nullptr);
+	explicit Moving(AbstractComponent *parent = nullptr);
 
 	qreal speed() const;
 	void setSpeed(qreal speed);

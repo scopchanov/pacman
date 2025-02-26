@@ -1,7 +1,7 @@
 #include "AbstractControllingBehavior.h"
 #include "GameGlobals.h"
 
-AbstractControllingBehavior::AbstractControllingBehavior(AbstractGameObject *parent) :
+AbstractControllingBehavior::AbstractControllingBehavior(AbstractComponent *parent) :
 	AbstractBehavior(parent),
 	_moving{nullptr}
 {
@@ -23,7 +23,7 @@ int AbstractControllingBehavior::type() const
 	return BT_Controlling;
 }
 
-void AbstractControllingBehavior::performActions()
+void AbstractControllingBehavior::performTasks()
 {
 	if (!_moving)
 		return;

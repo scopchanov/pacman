@@ -5,9 +5,9 @@
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "GameLevel.h"
+#include "actions/EnableDeenergizer.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/ScareEnemies.h"
-#include "behaviors/AbstractAnimatingBehavior.h"
 #include "behaviors/AbstractOrientatingBehavior.h"
 #include "behaviors/Moving.h"
 #include "behaviors/Coloring.h"
@@ -122,7 +122,7 @@ void BehaviorBuilder::addKilling()
 	auto *killing{new Killing()};
 	auto *eventPlayerDied{new Event()};
 
-	killing->setEventPlayerDies(eventPlayerDied);
+	killing->setEventPlayerDied(eventPlayerDied);
 
 	_gameObject->addBehavior(killing);
 
@@ -135,11 +135,13 @@ void BehaviorBuilder::addEnergizing()
 	auto *energizing{new Energizing()};
 	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
 	auto *actFrightenEnemies{new ScareEnemies(energizing)};
+	auto *actEnableDeenergizer{new EnableDeenergizer(energizing)};
 	auto *eventPlayerEnergized{new Event()};
 
 	energizing->setEvent(eventPlayerEnergized);
-	energizing->addAction(actEnergizePlayer);
-	energizing->addAction(actFrightenEnemies);
+	energizing->addComponent(actEnergizePlayer);
+	energizing->addComponent(actFrightenEnemies);
+	energizing->addComponent(actEnableDeenergizer);
 
 	_gameObject->addBehavior(energizing);
 

@@ -4,7 +4,7 @@
 #include "GameLevel.h"
 #include "objects/Enemy.h"
 
-CalmDownEnemies::CalmDownEnemies(AbstractBehavior *parent) :
+CalmDownEnemies::CalmDownEnemies(AbstractComponent *parent) :
 	AbstractAction{parent}
 {
 
@@ -15,7 +15,7 @@ int CalmDownEnemies::type() const
 	return ACT_CalmDownEnemies;
 }
 
-void CalmDownEnemies::performTask()
+void CalmDownEnemies::performTasks()
 {
 	const QList<Enemy *> &enemies{Game::ref().level()->enemies()};
 

@@ -52,7 +52,7 @@ QPainterPath PathBuilder::tilePath(TileType type)
 	}
 }
 
-QPainterPath PathBuilder::animatedObjectPath(int type, qreal value)
+QPainterPath PathBuilder::dynamicObjectPath(int type, qreal value)
 {
 	switch (type) {
 	case OBJ_Player:
@@ -61,6 +61,8 @@ QPainterPath PathBuilder::animatedObjectPath(int type, qreal value)
 		return ghost(value);
 	case OBJ_Energizer:
 		return energizer(value);
+	case OBJ_Deenergizer:
+		return deenergizer(value);
 	case OBJ_Teleporter:
 		return teleporter(value);
 	default:
@@ -287,6 +289,16 @@ QPainterPath PathBuilder::energizer(qreal d)
 	qreal w{d + 8};
 
 	p.addEllipse(-0.5*w, -0.5*w, w, w);
+
+	return p;
+}
+
+QPainterPath PathBuilder::deenergizer(qreal d)
+{
+	QPainterPath p;
+
+	p.moveTo(0, 12);
+	p.lineTo(d, 12);
 
 	return p;
 }

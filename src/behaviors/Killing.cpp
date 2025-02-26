@@ -6,16 +6,16 @@
 #include "AbstractGameObject.h"
 #include "objects/Player.h"
 
-Killing::Killing(AbstractGameObject *parent) :
+Killing::Killing(AbstractComponent *parent) :
 	AbstractTimedBehavior(parent),
-	_eventPlayerDies{nullptr}
+	_eventPlayerDied{nullptr}
 {
 
 }
 
-void Killing::setEventPlayerDies(Event *event)
+void Killing::setEventPlayerDied(Event *event)
 {
-	_eventPlayerDies = event;
+	_eventPlayerDied = event;
 }
 
 int Killing::type() const
@@ -23,10 +23,10 @@ int Killing::type() const
 	return BT_Killing;
 }
 
-void Killing::performActions()
+void Killing::performTasks()
 {
 	auto *player{Game::ref().level()->player()};
 
-	if (_eventPlayerDies && parent()->collidesWithObject(player))
-		_eventPlayerDies->trigger();
+	if (_eventPlayerDied && gameObject()->collidesWithObject(player))
+		_eventPlayerDied->trigger();
 }

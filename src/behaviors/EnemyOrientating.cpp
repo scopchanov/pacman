@@ -3,7 +3,7 @@
 #include "AbstractGameObject.h"
 #include "objects/GhostEye.h"
 
-EnemyOrientating::EnemyOrientating(AbstractGameObject *parent) :
+EnemyOrientating::EnemyOrientating(AbstractComponent *parent) :
 	AbstractOrientatingBehavior(parent)
 {
 
@@ -27,5 +27,5 @@ void EnemyOrientating::performOrientationActions()
 
 GhostEye *EnemyOrientating::ghostEye(int n) const
 {
-	return static_cast<GhostEye *>(parent()->childItems().at(n));
+	return static_cast<GhostEye *>(gameObject()->childItems().at(n));
 }

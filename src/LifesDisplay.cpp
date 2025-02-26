@@ -6,7 +6,7 @@
 LifesDisplay::LifesDisplay(QWidget *parent) :
 	QWidget{parent},
 	_lifeCount{2},
-	_path{PathBuilder::animatedObjectPath(OBJ_Player, 45)}
+	_path{PathBuilder::dynamicObjectPath(OBJ_Player, 45)}
 {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
 }

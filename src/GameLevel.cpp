@@ -67,4 +67,5 @@ void GameLevel::reset()
 	Scene::reset();
 
 	_stateMachine->reset();
+	_deenergizer->deactivate();
 }

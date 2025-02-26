@@ -6,7 +6,7 @@
 class EnemyAnimating : public AbstractAnimatingBehavior
 {
 public:
-	explicit EnemyAnimating(AbstractGameObject *parent = nullptr);
+	explicit EnemyAnimating(AbstractComponent *parent = nullptr);
 
 	void reset() override;
 

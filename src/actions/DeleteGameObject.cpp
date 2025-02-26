@@ -2,7 +2,7 @@
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 
-DeleteGameObject::DeleteGameObject(AbstractBehavior *parent) :
+DeleteGameObject::DeleteGameObject(AbstractComponent *parent) :
 	AbstractAction{parent},
 	_gameObject{nullptr}
 {
@@ -24,7 +24,7 @@ int DeleteGameObject::type() const
 	return ACT_DeleteGameObject;
 }
 
-void DeleteGameObject::performTask()
+void DeleteGameObject::performTasks()
 {
 	if (!_gameObject)
 		return;

@@ -3,7 +3,7 @@
 #include "AbstractGameObject.h"
 #include "behaviors/Moving.h"
 
-Teleporting::Teleporting(AbstractGameObject *parent) :
+Teleporting::Teleporting(AbstractComponent *parent) :
 	AbstractBehavior(parent)
 {
 
@@ -24,9 +24,9 @@ int Teleporting::type() const
 	return BT_Teleporting;
 }
 
-void Teleporting::performActions()
+void Teleporting::performTasks()
 {
-	const auto &collidingObjects{parent()->collidingObjects()};
+	const auto &collidingObjects{gameObject()->collidingObjects()};
 
 	for (auto *gameObject : collidingObjects)
 		teleport(gameObject);

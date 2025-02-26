@@ -8,7 +8,7 @@ class Clock;
 class AbstractTimedBehavior : public AbstractBehavior
 {
 public:
-	explicit AbstractTimedBehavior(AbstractGameObject *parent = nullptr);
+	explicit AbstractTimedBehavior(AbstractComponent *parent = nullptr);
 
 	Clock *clock() const;
 };

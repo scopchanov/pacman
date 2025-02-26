@@ -12,7 +12,7 @@ public:
 		DIR_Forwards = 1
 	};
 
-	explicit AbstractAnimatingBehavior(AbstractGameObject *parent = nullptr);
+	explicit AbstractAnimatingBehavior(AbstractComponent *parent = nullptr);
 
 	qreal frameRate() const;
 	void setFrameRate(qreal frameRate);
@@ -23,10 +23,10 @@ public:
 	int type() const override final;
 
 protected:
+	void performTasks() override final;
 	void updateParent();
 
 private:
-	void performActions() override final;
 	virtual void update() = 0;
 
 	qreal _frameRate;

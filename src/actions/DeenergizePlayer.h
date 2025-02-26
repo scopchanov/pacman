@@ -6,12 +6,12 @@
 class DeenergizePlayer : public AbstractAction
 {
 public:
-	explicit DeenergizePlayer(AbstractBehavior *parent = nullptr);
+	explicit DeenergizePlayer(AbstractComponent *parent = nullptr);
 
 	int type() const override;
 
-private:
-	void performTask() override;
+protected:
+	void performTasks() override;
 };
 
 #endif // DEENERGIZEPLAYER_H

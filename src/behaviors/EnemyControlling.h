@@ -17,7 +17,7 @@ public:
 		GS_Chase
 	};
 
-	explicit EnemyControlling(AbstractGameObject *parent = nullptr);
+	explicit EnemyControlling(AbstractComponent *parent = nullptr);
 
 	void setGlobalState(GlobalState state);
 

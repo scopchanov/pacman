@@ -10,16 +10,16 @@ class Tilemap;
 class AbstractSpatialBehavior : public AbstractTimedBehavior
 {
 public:
-	explicit AbstractSpatialBehavior(AbstractGameObject *parent = nullptr);
+	explicit AbstractSpatialBehavior(AbstractComponent *parent = nullptr);
 
 	Tilemap *tilemap() const;
 	virtual void setTilemap(Tilemap *tilemap);
 
 protected:
+	void performTasks() override final;
 	Vector2 currentCell() const;
 
 private:
-	void performActions() override final;
 	virtual void performSpatialActions() = 0;
 
 	Tilemap *_tilemap;

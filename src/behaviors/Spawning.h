@@ -7,7 +7,7 @@
 class Spawning : public AbstractBehavior
 {
 public:
-	explicit Spawning(AbstractGameObject *parent = nullptr);
+	explicit Spawning(AbstractComponent *parent = nullptr);
 
 	QPointF position() const;
 	void setPosition(const QPointF &point);

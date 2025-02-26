@@ -6,12 +6,12 @@
 class CalmDownEnemies : public AbstractAction
 {
 public:
-	explicit CalmDownEnemies(AbstractBehavior *parent = nullptr);
+	explicit CalmDownEnemies(AbstractComponent *parent = nullptr);
 
 	int type() const override;
 
-private:
-	void performTask() override;
+protected:
+	void performTasks() override;
 };
 
 #endif // CALMDOWNENEMIES_H

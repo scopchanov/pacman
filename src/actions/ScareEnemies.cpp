@@ -4,7 +4,7 @@
 #include "GameLevel.h"
 #include "objects/Enemy.h"
 
-ScareEnemies::ScareEnemies(AbstractBehavior *parent) :
+ScareEnemies::ScareEnemies(AbstractComponent *parent) :
 	AbstractAction{parent}
 {
 
@@ -15,7 +15,7 @@ int ScareEnemies::type() const
 	return ACT_ScareEnemies;
 }
 
-void ScareEnemies::performTask()
+void ScareEnemies::performTasks()
 {
 	const QList<Enemy *> &enemies{Game::ref().level()->enemies()};
 

@@ -1,12 +1,11 @@
 #include "Energizing.h"
-#include "AbstractAction.h"
 #include "Game.h"
 #include "Event.h"
 #include "GameGlobals.h"
 #include "GameLevel.h"
 #include "objects/Player.h"
 
-Energizing::Energizing(AbstractGameObject *parent) :
+Energizing::Energizing(AbstractComponent *parent) :
 	AbstractBehavior(parent),
 	_eventPlayerEnergized{nullptr}
 {
@@ -23,14 +22,16 @@ int Energizing::type() const
 	return BT_Energizing;
 }
 
-void Energizing::performActions()
+void Energizing::performTasks()
 {
-	if (!parent()->collidesWithObject(Game::ref().level()->player()))
+	if (!gameObject()->collidesWithObject(Game::ref().level()->player()))
 		return;
 
-	findAction(ACT_EnergizePlayer)->trigger();
-	findAction(ACT_ScareEnemies)->trigger();
-	parent()->deleteLater();
+	// for (auto *action : actions)
+	findComponent(ACT_EnergizePlayer)->execute();
+	findComponent(ACT_ScareEnemies)->execute();
+	findComponent(ACT_ActivateDeenergizer)->execute();
+	gameObject()->deleteLater();
 
 	_eventPlayerEnergized->trigger();
 }

@@ -33,7 +33,7 @@ public:
 	explicit PathBuilder(QObject *parent = nullptr);
 
 	static QPainterPath tilePath(TileType type);
-	static QPainterPath animatedObjectPath(int type, qreal value);
+	static QPainterPath dynamicObjectPath(int type, qreal value);
 
 private:
 	static QPainterPath shortLineLowLeft();
@@ -57,6 +57,7 @@ private:
 	static QPainterPath pacman(qreal angle);
 	static QPainterPath ghost(qreal d);
 	static QPainterPath energizer(qreal d);
+	static QPainterPath deenergizer(qreal d);
 	static QPainterPath teleporter(qreal angle);
 	static void rotate(QPainterPath &path, qreal angle);
 };

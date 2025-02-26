@@ -21,8 +21,11 @@ enum ActionType : int {
 	ACT_CalmDownEnemies = 0,
 	ACT_DeleteGameObject,
 	ACT_DeenergizePlayer,
+	ACT_ActivateDeenergizer,
+	ACT_DeactivateDeenergizer,
 	ACT_EnergizePlayer,
-	ACT_ScareEnemies
+	ACT_ScareEnemies,
+	ACT_UpdateDeenergizer
 };
 
 enum BehaviorType : int {
@@ -45,6 +48,7 @@ enum ObjectType : int {
 	OBJ_Player,
 	OBJ_Enemy,
 	OBJ_Energizer,
+	OBJ_Deenergizer,
 	OBJ_Teleporter
 };
 

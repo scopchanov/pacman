@@ -1,5 +1,4 @@
 #include "Configurator.h"
-#include "AiStateMachine.h"
 #include "Factory.h"
 #include "Game.h"
 #include "GameGlobals.h"
@@ -10,7 +9,6 @@
 #include "Tilemap.h"
 #include "BehaviorBuilder.h"
 #include "behaviors/EnemyControlling.h"
-#include "behaviors/Moving.h"
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
 #include "objects/GhostEye.h"
@@ -68,6 +66,8 @@ void Configurator::configureGrid(const QJsonObject &json)
 
 void Configurator::configureWalls(const QJsonArray &jsonWalls)
 {
+	// TODO: Improve me
+
 	auto *walls{level()->walls()};
 
 	walls->setGrid(grid());
@@ -77,6 +77,8 @@ void Configurator::configureWalls(const QJsonArray &jsonWalls)
 
 void Configurator::configureDots(const QJsonArray &jsonDots)
 {
+	// TODO: Improve me
+
 	auto *dots{level()->dots()};
 
 	dots->setGrid(grid());
@@ -240,6 +242,8 @@ void Configurator::createTeleporter(const QJsonObject &json)
 void Configurator::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
 								const QPen &pen, const QBrush &brush)
 {
+	// TODO: Improve me
+
 	int m{0};
 
 	for (const auto &row : matrix) {

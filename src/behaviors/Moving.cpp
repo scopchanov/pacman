@@ -5,7 +5,7 @@
 #include "Grid.h"
 #include "Tilemap.h"
 
-Moving::Moving(AbstractGameObject *parent) :
+Moving::Moving(AbstractComponent *parent) :
 	AbstractSpatialBehavior(parent),
 	_speed{0.0},
 	_initialDirection{V2_LEFT},
@@ -137,7 +137,7 @@ void Moving::changeDirection(const Vector2 &direction)
 
 void Moving::targetParentPosition()
 {
-	if (!parent())
+	if (!gameObject())
 		return;
 
 	_targetPosition = parentPosition();
@@ -180,10 +180,10 @@ Vector2 Moving::cellPosition(const Vector2 &cell) const
 
 Vector2 Moving::parentPosition() const
 {
-	return Vector2(parent()->pos());
+	return Vector2(gameObject()->pos());
 }
 
 void Moving::setParentPosition(const QPointF &position)
 {
-	parent()->setPos(position);
+	gameObject()->setPos(position);
 }

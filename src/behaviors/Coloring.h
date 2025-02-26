@@ -7,7 +7,7 @@
 class Coloring : public AbstractBehavior
 {
 public:
-	explicit Coloring(AbstractGameObject *parent = nullptr);
+	explicit Coloring(AbstractComponent *parent = nullptr);
 
 	QColor color() const;
 	void setColor(const QColor &color);

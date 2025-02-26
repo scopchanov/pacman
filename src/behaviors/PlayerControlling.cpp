@@ -4,7 +4,7 @@
 #include "InputSystem.h"
 #include "Moving.h"
 
-PlayerControlling::PlayerControlling(AbstractGameObject *parent) :
+PlayerControlling::PlayerControlling(AbstractComponent *parent) :
 	AbstractControllingBehavior(parent)
 {
 

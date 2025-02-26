@@ -8,15 +8,16 @@ class Event;
 class Killing : public AbstractTimedBehavior
 {
 public:
-	explicit Killing(AbstractGameObject *parent = nullptr);
+	explicit Killing(AbstractComponent *parent = nullptr);
 
-	void setEventPlayerDies(Event *event);
+	void setEventPlayerDied(Event *event);
 	int type() const override;
 
-private:
-	void performActions() override;
+protected:
+	void performTasks() override;
 
-	Event *_eventPlayerDies;
+private:
+	Event *_eventPlayerDied;
 };
 
 #endif // KILLING_H

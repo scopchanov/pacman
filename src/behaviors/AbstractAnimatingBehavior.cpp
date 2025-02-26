@@ -4,7 +4,7 @@
 #include "AbstractGameObject.h"
 #include "PathBuilder.h"
 
-AbstractAnimatingBehavior::AbstractAnimatingBehavior(AbstractGameObject *parent) :
+AbstractAnimatingBehavior::AbstractAnimatingBehavior(AbstractComponent *parent) :
 	AbstractTimedBehavior(parent),
 	_frameRate{100},
 	_direction{DIR_Forwards},
@@ -48,18 +48,18 @@ int AbstractAnimatingBehavior::type() const
 	return BT_Animating;
 }
 
-void AbstractAnimatingBehavior::updateParent()
-{
-	int pathType{parent()->objectType()};
-
-	parent()->setPath(PathBuilder::animatedObjectPath(pathType, _value));
-	parent()->update();
-}
-
-void AbstractAnimatingBehavior::performActions()
+void AbstractAnimatingBehavior::performTasks()
 {
 	_value += _direction*_frameRate*clock()->deltaTime();
 
 	update();
 	updateParent();
+}
+
+void AbstractAnimatingBehavior::updateParent()
+{
+	int pathType{gameObject()->objectType()};
+
+	gameObject()->setPath(PathBuilder::dynamicObjectPath(pathType, _value));
+	gameObject()->update();
 }

@@ -1,6 +1,6 @@
 #include "EnergizerAnimating.h"
 
-EnergizerAnimating::EnergizerAnimating(AbstractGameObject *parent) :
+EnergizerAnimating::EnergizerAnimating(AbstractComponent *parent) :
 	AbstractAnimatingBehavior(parent)
 {
 	setValue(0);

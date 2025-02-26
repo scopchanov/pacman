@@ -6,7 +6,7 @@
 class TeleporterAnimating : public AbstractAnimatingBehavior
 {
 public:
-	explicit TeleporterAnimating(AbstractGameObject *parent = nullptr);
+	explicit TeleporterAnimating(AbstractComponent *parent = nullptr);
 
 	void reset() override;
 

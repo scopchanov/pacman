@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "GameGlobals.h"
 #include "Message.h"
 #include "StartupSequence.h"
 #include "BonusText.h"
@@ -107,12 +108,12 @@ void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
 	auto *text{new BonusText()};
-	auto *delayedDeleting{new Delaying(text)};
+	auto *delayedDeleting{new Delaying()};
 	auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
 
 	actDeleteGameObject->setGameObject(text);
 
-	delayedDeleting->addAction(actDeleteGameObject);
+	delayedDeleting->addComponent(actDeleteGameObject);
 	delayedDeleting->setDuration(2);
 
 	text->addBehavior(delayedDeleting);
@@ -126,7 +127,6 @@ void Game::onEnemyEaten()
 
 void Game::onPlayerEnergized()
 {
-	_level->deenergizer()->reset();
 	_status->increaseScore(5);
 	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
 }

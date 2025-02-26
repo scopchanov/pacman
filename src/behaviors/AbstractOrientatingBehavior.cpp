@@ -1,7 +1,7 @@
 #include "AbstractOrientatingBehavior.h"
 #include "GameGlobals.h"
 
-AbstractOrientatingBehavior::AbstractOrientatingBehavior(AbstractGameObject *parent) :
+AbstractOrientatingBehavior::AbstractOrientatingBehavior(AbstractComponent *parent) :
 	AbstractBehavior(parent),
 	_moving{nullptr}
 {
@@ -25,10 +25,10 @@ int AbstractOrientatingBehavior::type() const
 
 void AbstractOrientatingBehavior::reset()
 {
-	performActions();
+	performTasks();
 }
 
-void AbstractOrientatingBehavior::performActions()
+void AbstractOrientatingBehavior::performTasks()
 {
 	if (!_moving)
 		return;

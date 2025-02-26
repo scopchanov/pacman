@@ -1,7 +1,6 @@
 #include "EnemyAnimating.h"
-#include "AbstractGameObject.h"
 
-EnemyAnimating::EnemyAnimating(AbstractGameObject *parent) :
+EnemyAnimating::EnemyAnimating(AbstractComponent *parent) :
 	AbstractAnimatingBehavior(parent)
 {
 	setFrameRate(20);

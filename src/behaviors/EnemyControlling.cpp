@@ -9,7 +9,7 @@
 #include <QGraphicsScene>
 #include <QRandomGenerator>
 
-EnemyControlling::EnemyControlling(AbstractGameObject *parent) :
+EnemyControlling::EnemyControlling(AbstractComponent *parent) :
 	AbstractControllingBehavior(parent),
 	_globalState{GS_Scatter}
 {
@@ -89,7 +89,7 @@ void EnemyControlling::updateTargetPosition()
 bool EnemyControlling::isTargetReached()
 {
 	auto *grid{Game::ref().level()->grid()};
-	const QPoint &parentCell{grid->mapToGrid(parent()->pos())};
+	const QPoint &parentCell{grid->mapToGrid(gameObject()->pos())};
 	const QPoint &targetCell{grid->mapToGrid(_targetPosition)};
 
 	return parentCell == targetCell;
@@ -119,5 +119,5 @@ void EnemyControlling::actFrightened()
 
 Enemy *EnemyControlling::parentEnemy()
 {
-	return static_cast<Enemy *>(parent());
+	return static_cast<Enemy *>(gameObject());
 }

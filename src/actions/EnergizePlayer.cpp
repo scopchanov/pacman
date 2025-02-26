@@ -4,7 +4,7 @@
 #include "GameGlobals.h"
 #include "objects/Player.h"
 
-EnergizePlayer::EnergizePlayer(AbstractBehavior *parent) :
+EnergizePlayer::EnergizePlayer(AbstractComponent *parent) :
 	AbstractAction{parent}
 {
 
@@ -15,7 +15,7 @@ int EnergizePlayer::type() const
 	return ACT_EnergizePlayer;
 }
 
-void EnergizePlayer::performTask()
+void EnergizePlayer::performTasks()
 {
 	Game::ref().level()->player()->energize();
 }
