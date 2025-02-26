@@ -11,7 +11,7 @@ Character::Character(AbstractGameObject *parent) :
 
 void Character::setSpeed(qreal percent)
 {
-	auto *moving{findBehavior(BT_Moving)};
+	auto *moving{findComponent(BT_Moving)};
 	qreal originalSpeed{75.75757625};
 	qreal nominalSpeed{3*originalSpeed};
 	qreal speed{percent*nominalSpeed*0.01};

@@ -18,13 +18,15 @@ enum ColorRole : int {
 };
 
 enum ActionType : int {
-	ACT_CalmDownEnemies = 0,
+	ACT_ActivateDeenergizer = 0,
+	ACT_CalmDownEnemies ,
 	ACT_DeleteGameObject,
 	ACT_DeenergizePlayer,
-	ACT_ActivateDeenergizer,
 	ACT_DeactivateDeenergizer,
 	ACT_EnergizePlayer,
+	ACT_KillPlayer,
 	ACT_ScareEnemies,
+	ACT_Teleport,
 	ACT_UpdateDeenergizer
 };
 

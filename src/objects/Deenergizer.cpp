@@ -25,7 +25,7 @@ Deenergizer::Deenergizer(AbstractGameObject *parent) :
 	deenergizing->setEventTick(eventTick);
 	deenergizing->setEnabled(false);
 
-	addBehavior(deenergizing);
+	addComponent(deenergizing);
 
 	// TODO: Improve me
 
@@ -60,7 +60,7 @@ int Deenergizer::objectType() const
 
 void Deenergizer::modifyBehavior(int t)
 {
-	auto *deenergizing{findBehavior(BT_Delaying)};
+	auto *deenergizing{findComponent(BT_Delaying)};
 
 	if (!deenergizing)
 		return;

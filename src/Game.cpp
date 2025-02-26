@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "GameGlobals.h"
 #include "Message.h"
 #include "StartupSequence.h"
 #include "BonusText.h"
@@ -9,7 +8,6 @@
 #include "AudioEngine.h"
 #include "actions/DeleteGameObject.h"
 #include "behaviors/Delaying.h"
-#include "objects/Deenergizer.h"
 #include "objects/Player.h"
 #include <QJsonObject>
 #include <QJsonArray>
@@ -116,7 +114,7 @@ void Game::onEnemyEaten()
 	delayedDeleting->addComponent(actDeleteGameObject);
 	delayedDeleting->setDuration(2);
 
-	text->addBehavior(delayedDeleting);
+	text->addComponent(delayedDeleting);
 	text->setText(QString::number(points));
 	text->setPos(_level->player()->pos());
 
@@ -137,7 +135,7 @@ void Game::onPlayerWins()
 	_audioEngine->playEffect(AudioEngine::SND_PlayerWins);
 }
 
-void Game::onPlayerDies()
+void Game::onPlayerDied()
 {
 	clock()->stop();
 	_audioEngine->playEffect(AudioEngine::SND_PlayerDies);

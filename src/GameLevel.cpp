@@ -43,7 +43,7 @@ Player *GameLevel::player() const
 
 void GameLevel::addEnemy(Enemy *enemy)
 {
-	auto *behavior{enemy->findBehavior(BT_Controlling)};
+	auto *behavior{enemy->findComponent(BT_Controlling)};
 	auto *controller{static_cast<EnemyControlling *>(behavior)};
 
 	_stateMachine->addEnemyController(controller);

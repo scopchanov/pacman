@@ -18,7 +18,7 @@ int Speeding::type() const
 
 Vector2 Speeding::calculateTarget() const
 {
-	auto *behavior{player()->findBehavior(BT_Moving)};
+	auto *behavior{player()->findComponent(BT_Moving)};
 
 	if (!behavior)
 		return Vector2();

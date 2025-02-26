@@ -5,6 +5,7 @@
 
 class EnergizePlayer : public AbstractAction
 {
+	Q_OBJECT
 public:
 	explicit EnergizePlayer(AbstractComponent *parent = nullptr);
 
@@ -12,6 +13,9 @@ public:
 
 private:
 	void performTasks() override;
+
+signals:
+	void playerEnergized();
 };
 
 #endif // ENERGIZEPLAYER_H

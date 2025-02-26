@@ -75,7 +75,7 @@ void Enemy::eat()
 
 void Enemy::enableKilling(bool enable)
 {
-	auto *killing{findBehavior(BT_Killing)};
+	auto *killing{findComponent(BT_Killing)};
 
 	if (killing)
 		killing->setEnabled(enable);
@@ -83,7 +83,7 @@ void Enemy::enableKilling(bool enable)
 
 void Enemy::restoreColor()
 {
-	auto *coloring{findBehavior(BT_Coloring)};
+	auto *coloring{findComponent(BT_Coloring)};
 
 	if (coloring)
 		setBrush(static_cast<Coloring *>(coloring)->color());

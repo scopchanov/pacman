@@ -37,7 +37,7 @@ public slots:
 	void onEnemyEaten();
 	void onPlayerEnergized();
 	void onPlayerWins();
-	void onPlayerDies();
+	void onPlayerDied();
 	void onFuneralTunePlayed();
 
 private:

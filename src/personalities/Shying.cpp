@@ -32,7 +32,7 @@ Vector2 Shying::calculateTarget() const
 	if (!_partner)
 		return Vector2();
 
-	auto *behavior{player()->findBehavior(BT_Moving)};
+	auto *behavior{player()->findComponent(BT_Moving)};
 
 	if (!behavior)
 		return Vector2();

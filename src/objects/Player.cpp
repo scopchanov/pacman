@@ -32,7 +32,7 @@ int Player::objectType() const
 
 void Player::enableEnemyEating(bool enable)
 {
-	auto *enemyEating{findBehavior(BT_EnemyEating)};
+	auto *enemyEating{findComponent(BT_EnemyEating)};
 
 	if (enemyEating)
 		enemyEating->setEnabled(enable);

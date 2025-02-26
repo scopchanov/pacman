@@ -27,13 +27,15 @@ SOURCES += \
     BonusText.cpp \
     Game.cpp \
     GameStatus.cpp \
+    actions/ActivateDeenergizer.cpp \
     actions/CalmDownEnemies.cpp \
     actions/DeactivateDeenergizer.cpp \
     actions/DeenergizePlayer.cpp \
     actions/DeleteGameObject.cpp \
-    actions/EnableDeenergizer.cpp \
     actions/EnergizePlayer.cpp \
+    actions/KillPlayer.cpp \
     actions/ScareEnemies.cpp \
+    actions/Teleport.cpp \
     behaviors/AbstractAnimatingBehavior.cpp \
     behaviors/AbstractControllingBehavior.cpp \
     behaviors/AbstractOrientatingBehavior.cpp \
@@ -92,13 +94,15 @@ HEADERS += \
     BonusText.h \
     Game.h \
     GameStatus.h \
+    actions/ActivateDeenergizer.h \
     actions/CalmDownEnemies.h \
     actions/DeactivateDeenergizer.h \
     actions/DeenergizePlayer.h \
     actions/DeleteGameObject.h \
-    actions/EnableDeenergizer.h \
     actions/EnergizePlayer.h \
+    actions/KillPlayer.h \
     actions/ScareEnemies.h \
+    actions/Teleport.h \
     behaviors/AbstractAnimatingBehavior.h \
     behaviors/AbstractControllingBehavior.h \
     behaviors/AbstractOrientatingBehavior.h \

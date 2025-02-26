@@ -5,9 +5,11 @@
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "GameLevel.h"
-#include "actions/EnableDeenergizer.h"
+#include "actions/ActivateDeenergizer.h"
 #include "actions/EnergizePlayer.h"
+#include "actions/KillPlayer.h"
 #include "actions/ScareEnemies.h"
+#include "actions/Teleport.h"
 #include "behaviors/AbstractOrientatingBehavior.h"
 #include "behaviors/Moving.h"
 #include "behaviors/Coloring.h"
@@ -39,7 +41,7 @@ void BehaviorBuilder::addColoring(const QColor &color)
 
 	coloring->setColor(color);
 
-	_gameObject->addBehavior(coloring);
+	_gameObject->addComponent(coloring);
 	_gameObject->setBrush(color);
 }
 
@@ -49,7 +51,7 @@ void BehaviorBuilder::addSpawning(const QPointF &position)
 
 	spawning->setPosition(position);
 
-	_gameObject->addBehavior(spawning);
+	_gameObject->addComponent(spawning);
 }
 
 void BehaviorBuilder::addMoving(int direction)
@@ -59,7 +61,7 @@ void BehaviorBuilder::addMoving(int direction)
 	moving->setTilemap(Game::ref().level()->walls());
 	moving->setInitialDirection(dir2vec(direction));
 
-	_gameObject->addBehavior(moving);
+	_gameObject->addComponent(moving);
 }
 
 void BehaviorBuilder::addControlling(int type)
@@ -68,7 +70,7 @@ void BehaviorBuilder::addControlling(int type)
 
 	controller->setMoving(moving());
 
-	_gameObject->addBehavior(controller);
+	_gameObject->addComponent(controller);
 }
 
 void BehaviorBuilder::addOrientating(int type)
@@ -77,12 +79,12 @@ void BehaviorBuilder::addOrientating(int type)
 
 	orientating->setMoving(moving());
 
-	_gameObject->addBehavior(orientating);
+	_gameObject->addComponent(orientating);
 }
 
 void BehaviorBuilder::addAnimating(int type)
 {
-	_gameObject->addBehavior(Factory::createAnimating(type));
+	_gameObject->addComponent(Factory::createAnimating(type));
 }
 
 void BehaviorBuilder::addDotsEating()
@@ -95,12 +97,10 @@ void BehaviorBuilder::addDotsEating()
 	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
 	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
 
-	_gameObject->addBehavior(dotsEating);
+	_gameObject->addComponent(dotsEating);
 
-	connect(eventDotEaten, &Event::triggered,
-			&Game::ref(), &Game::onDotEaten);
-	connect(eventPlayerWins, &Event::triggered,
-			&Game::ref(), &Game::onPlayerWins);
+	connect(eventDotEaten, &Event::triggered, game(), &Game::onDotEaten);
+	connect(eventPlayerWins, &Event::triggered, game(), &Game::onPlayerWins);
 }
 
 void BehaviorBuilder::addEnemyEating()
@@ -111,56 +111,59 @@ void BehaviorBuilder::addEnemyEating()
 	enemyEating->setEvent(eventEnemyEaten);
 	enemyEating->setEnabled(false);
 
-	_gameObject->addBehavior(enemyEating);
+	_gameObject->addComponent(enemyEating);
 
-	connect(eventEnemyEaten, &Event::triggered,
-			&Game::ref(), &Game::onEnemyEaten);
+	connect(eventEnemyEaten, &Event::triggered, game(), &Game::onEnemyEaten);
 }
 
 void BehaviorBuilder::addKilling()
 {
 	auto *killing{new Killing()};
-	auto *eventPlayerDied{new Event()};
+	auto *killPlayer{new KillPlayer(killing)};
 
-	killing->setEventPlayerDied(eventPlayerDied);
+	killPlayer->setGameObject(_gameObject);
+	killing->addComponent(killPlayer);
 
-	_gameObject->addBehavior(killing);
+	_gameObject->addComponent(killing);
 
-	connect(eventPlayerDied, &Event::triggered,
-			&Game::ref(), &Game::onPlayerDies);
+	connect(killPlayer, &KillPlayer::playerDied, game(), &Game::onPlayerDied);
 }
 
 void BehaviorBuilder::addEnergizing()
 {
 	auto *energizing{new Energizing()};
-	auto *actEnergizePlayer{new EnergizePlayer(energizing)};
-	auto *actFrightenEnemies{new ScareEnemies(energizing)};
-	auto *actEnableDeenergizer{new EnableDeenergizer(energizing)};
-	auto *eventPlayerEnergized{new Event()};
+	auto *energizePlayer{new EnergizePlayer(energizing)};
 
-	energizing->setEvent(eventPlayerEnergized);
-	energizing->addComponent(actEnergizePlayer);
-	energizing->addComponent(actFrightenEnemies);
-	energizing->addComponent(actEnableDeenergizer);
+	energizePlayer->setGameObject(_gameObject);
+	energizing->addComponent(energizePlayer);
 
-	_gameObject->addBehavior(energizing);
+	_gameObject->addComponent(energizing);
 
-	QObject::connect(eventPlayerEnergized, &Event::triggered,
-					 &Game::ref(), &Game::onPlayerEnergized);
+	QObject::connect(energizePlayer, &EnergizePlayer::playerEnergized,
+					 game(), &Game::onPlayerEnergized);
 }
 
 void BehaviorBuilder::addTeleporting(const QPointF &destination)
 {
 	auto *teleporting{new Teleporting()};
+	auto *teleport{new Teleport(teleporting)};
 
-	teleporting->setDestination(destination);
+	teleport->setGameObject(_gameObject);
+	teleport->setDestination(destination);
 
-	_gameObject->addBehavior(teleporting);
+	teleporting->addComponent(teleport);
+
+	_gameObject->addComponent(teleporting);
+}
+
+Game *BehaviorBuilder::game() const
+{
+	return &Game::ref();
 }
 
 Moving *BehaviorBuilder::moving() const
 {
-	auto *behavior{_gameObject->findBehavior(BT_Moving)};
+	auto *behavior{_gameObject->findComponent(BT_Moving)};
 
 	return behavior ? static_cast<Moving *>(behavior) : nullptr;
 }

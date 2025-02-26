@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+class Game;
 class Moving;
 class AbstractGameObject;
 class Vector2;
@@ -27,6 +28,7 @@ public:
 	void addTeleporting(const QPointF &destination);
 
 private:
+	Game *game()const;
 	Moving *moving() const;
 	Vector2 dir2vec(int direction) const;
 
