@@ -1,10 +1,11 @@
 #include "ComponentBuilder.h"
 #include "Factory.h"
 #include "Game.h"
-#include "Event.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "GameLevel.h"
+#include "actions/EatDot.h"
+#include "actions/EatEnemy.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/KillPlayer.h"
 #include "actions/Teleport.h"
@@ -13,9 +14,7 @@
 #include "behaviors/Coloring.h"
 #include "behaviors/Moving.h"
 #include "behaviors/Coloring.h"
-#include "behaviors/DotsEating.h"
 #include "behaviors/EnemyControlling.h"
-#include "behaviors/EnemyEating.h"
 #include "behaviors/Spawning.h"
 
 ComponentBuilder::ComponentBuilder(QObject *parent) :
@@ -82,36 +81,30 @@ void ComponentBuilder::addAnimating(int type)
 	_gameObject->addComponent(Factory::createAnimating(type));
 }
 
-void ComponentBuilder::addDotsEating()
+void ComponentBuilder::addEatDot()
 {
-	auto *dotsEating{new DotsEating()};
-	auto *eventDotEaten{new Event()};
-	auto *eventPlayerWins{new Event()};
+	auto *eatDot{new EatDot()};
 
-	dotsEating->setTilemap(Game::ref().level()->dots());
-	dotsEating->setEvent(DotsEating::ET_DotEaten, eventDotEaten);
-	dotsEating->setEvent(DotsEating::ET_PlayerWins, eventPlayerWins);
+	eatDot->setTilemap(Game::ref().level()->dots());
 
-	_gameObject->addComponent(dotsEating);
+	_gameObject->addComponent(eatDot);
 
-	connect(eventDotEaten, &Event::triggered, game(), &Game::onDotEaten);
-	connect(eventPlayerWins, &Event::triggered, game(), &Game::onPlayerWins);
+	connect(eatDot, &EatDot::dotEaten, game(), &Game::onDotEaten);
+	connect(eatDot, &EatDot::playerWon, game(), &Game::onPlayerWon);
 }
 
-void ComponentBuilder::addEnemyEating()
+void ComponentBuilder::addEatEnemy()
 {
-	auto *enemyEating{new EnemyEating()};
-	auto *eventEnemyEaten{new Event()};
+	auto *eatEnemy{new EatEnemy()};
 
-	enemyEating->setEvent(eventEnemyEaten);
-	enemyEating->setEnabled(false);
+	eatEnemy->setEnabled(false);
 
-	_gameObject->addComponent(enemyEating);
+	_gameObject->addComponent(eatEnemy);
 
-	connect(eventEnemyEaten, &Event::triggered, game(), &Game::onEnemyEaten);
+	connect(eatEnemy, &EatEnemy::enemyEaten, game(), &Game::onEnemyEaten);
 }
 
-void ComponentBuilder::addKilling()
+void ComponentBuilder::addKillPlayer()
 {
 	auto *killPlayer{new KillPlayer()};
 
@@ -120,7 +113,7 @@ void ComponentBuilder::addKilling()
 	connect(killPlayer, &KillPlayer::playerDied, game(), &Game::onPlayerDied);
 }
 
-void ComponentBuilder::addEnergizing()
+void ComponentBuilder::addEnergizePlayer()
 {
 	auto *energizePlayer{new EnergizePlayer()};
 

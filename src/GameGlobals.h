@@ -23,6 +23,8 @@ enum ComponentType : int {
 	ACT_DeleteGameObject,
 	ACT_DeenergizePlayer,
 	ACT_DeactivateDeenergizer,
+	ACT_EatDot,
+	ACT_EatEnemy,
 	ACT_EnergizePlayer,
 	ACT_KillPlayer,
 	ACT_ScareEnemies,
@@ -32,8 +34,6 @@ enum ComponentType : int {
 	BT_Coloring,
 	BT_Controlling,
 	BT_Delaying,
-	BT_DotsEating,
-	BT_EnemyEating,
 	BT_Moving,
 	BT_Orientating,
 	BT_Spawning

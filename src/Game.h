@@ -36,7 +36,7 @@ public slots:
 	void onDotEaten();
 	void onEnemyEaten();
 	void onPlayerEnergized();
-	void onPlayerWins();
+	void onPlayerWon();
 	void onPlayerDied();
 	void onFuneralTunePlayed();
 

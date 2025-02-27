@@ -13,16 +13,12 @@ Player::Player(AbstractGameObject *parent) :
 
 void Player::energize()
 {
-	setSpeed(90);
-	setBrush(Game::ref().palette()->color(CR_PlayerEnergized));
-	enableEnemyEating(true);
+	foo(90, Game::ref().palette()->color(CR_PlayerEnergized), true);
 }
 
 void Player::deenergize()
 {
-	setSpeed(80);
-	setBrush(Game::ref().palette()->color(CR_Player));
-	enableEnemyEating(false);
+	foo(80, Game::ref().palette()->color(CR_Player), false);
 }
 
 int Player::objectType() const
@@ -30,10 +26,20 @@ int Player::objectType() const
 	return OBJ_Player;
 }
 
-void Player::enableEnemyEating(bool enable)
+void Player::foo(qreal speed, const QColor &color, bool eatEnemy)
 {
-	auto *enemyEating{findComponent(BT_EnemyEating)};
+	setSpeed(speed);
+	setBrush(color);
+	enableEatEnemy(eatEnemy);
+}
 
-	if (enemyEating)
-		enemyEating->setEnabled(enable);
+void Player::enableEatEnemy(bool enable)
+{
+	auto *eatEnemy{findComponent(ACT_EatEnemy)};
+
+	if (!eatEnemy)
+		return;
+
+	eatEnemy->setEnabled(enable);
+	eatEnemy->reset();
 }

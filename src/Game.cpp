@@ -129,7 +129,7 @@ void Game::onPlayerEnergized()
 	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
 }
 
-void Game::onPlayerWins()
+void Game::onPlayerWon()
 {
 	clock()->stop();
 	_audioEngine->playEffect(AudioEngine::SND_PlayerWins);

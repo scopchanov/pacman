@@ -100,8 +100,8 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	builder.addControlling(OBJ_Player);
 	builder.addOrientating(OBJ_Player);
 	builder.addAnimating(OBJ_Player);
-	builder.addDotsEating();
-	builder.addEnemyEating();
+	builder.addEatDot();
+	builder.addEatEnemy();
 
 	player->setSpeed(80);
 	player->setPen(QPen(Qt::transparent));
@@ -134,7 +134,7 @@ void Configurator::createEnemy(const QJsonObject &json)
 	builder.addControlling(OBJ_Enemy);
 	builder.addOrientating(OBJ_Enemy);
 	builder.addAnimating(OBJ_Enemy);
-	builder.addKilling();
+	builder.addKillPlayer();
 
 	enemy->setPersonality(createPersonality(personality));
 	enemy->setPen(QPen(Qt::transparent));
@@ -197,7 +197,7 @@ void Configurator::createEnergizer(const QJsonObject &json)
 	auto *energizer{new Energizer()};
 
 	builder.setGameObject(energizer);
-	builder.addEnergizing();
+	builder.addEnergizePlayer();
 	builder.addAnimating(OBJ_Energizer);
 
 	energizer->setPen(QPen(Qt::transparent));

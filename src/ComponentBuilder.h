@@ -21,10 +21,10 @@ public:
 	void addControlling(int type);
 	void addOrientating(int type);
 	void addAnimating(int type);
-	void addDotsEating();
-	void addEnemyEating();
-	void addKilling();
-	void addEnergizing();
+	void addEatDot();
+	void addEatEnemy();
+	void addKillPlayer();
+	void addEnergizePlayer();
 	void addTeleport(const QPointF &destination);
 
 private:

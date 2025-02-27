@@ -32,6 +32,8 @@ SOURCES += \
     actions/DeactivateDeenergizer.cpp \
     actions/DeenergizePlayer.cpp \
     actions/DeleteGameObject.cpp \
+    actions/EatDot.cpp \
+    actions/EatEnemy.cpp \
     actions/EnergizePlayer.cpp \
     actions/KillPlayer.cpp \
     actions/ScareEnemies.cpp \
@@ -43,10 +45,8 @@ SOURCES += \
     behaviors/AbstractTimedBehavior.cpp \
     behaviors/Coloring.cpp \
     behaviors/Delaying.cpp \
-    behaviors/DotsEating.cpp \
     behaviors/EnemyAnimating.cpp \
     behaviors/EnemyControlling.cpp \
-    behaviors/EnemyEating.cpp \
     behaviors/EnemyOrientating.cpp \
     behaviors/EnergizerAnimating.cpp \
     behaviors/Moving.cpp \
@@ -96,6 +96,8 @@ HEADERS += \
     actions/DeactivateDeenergizer.h \
     actions/DeenergizePlayer.h \
     actions/DeleteGameObject.h \
+    actions/EatDot.h \
+    actions/EatEnemy.h \
     actions/EnergizePlayer.h \
     actions/KillPlayer.h \
     actions/ScareEnemies.h \
@@ -107,10 +109,8 @@ HEADERS += \
     behaviors/AbstractTimedBehavior.h \
     behaviors/Coloring.h \
     behaviors/Delaying.h \
-    behaviors/DotsEating.h \
     behaviors/EnemyAnimating.h \
     behaviors/EnemyControlling.h \
-    behaviors/EnemyEating.h \
     behaviors/EnemyOrientating.h \
     behaviors/EnergizerAnimating.h \
     behaviors/Moving.h \

@@ -14,7 +14,8 @@ public:
 	int objectType() const override final;
 
 private:
-	void enableEnemyEating(bool enable);
+	void foo(qreal speed, const QColor &color, bool eatEnemy);
+	void enableEatEnemy(bool enable);
 };
 
 #endif // PLAYER_H
