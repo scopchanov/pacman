@@ -9,9 +9,10 @@
 #include "Tilemap.h"
 #include "ComponentBuilder.h"
 #include "behaviors/EnemyControlling.h"
+#include "behaviors/Moving.h"
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
-#include "objects/GhostEye.h"
+#include "objects/EnemyEye.h"
 #include "objects/Player.h"
 #include "objects/Teleporter.h"
 #include "personalities/Shying.h"
@@ -98,7 +99,7 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	builder.addSpawning({x, y});
 	builder.addMoving(0);
 	builder.addControlling(OBJ_Player);
-	builder.addOrientating(OBJ_Player);
+	builder.addOrientating(OBJ_Player, static_cast<Moving *>(player->findComponent(BT_Moving)));
 	builder.addAnimating(OBJ_Player);
 	builder.addEatDot();
 	builder.addEatEnemy();
@@ -124,17 +125,16 @@ void Configurator::createEnemy(const QJsonObject &json)
 	qreal y{position.value("y").toDouble()};
 	auto *enemy{new Enemy()};
 
-	createEye(enemy, {-6, -6});
-	createEye(enemy, {6, -6});
-
 	builder.setGameObject(enemy);
 	builder.addColoring(palette()->color(role));
 	builder.addSpawning({x, y});
 	builder.addMoving(json.value("direction").toInt());
 	builder.addControlling(OBJ_Enemy);
-	builder.addOrientating(OBJ_Enemy);
 	builder.addAnimating(OBJ_Enemy);
 	builder.addKillPlayer();
+
+	createEye(enemy, {-6, -6});
+	createEye(enemy, {6, -6});
 
 	enemy->setPersonality(createPersonality(personality));
 	enemy->setPen(QPen(Qt::transparent));
@@ -142,6 +142,19 @@ void Configurator::createEnemy(const QJsonObject &json)
 	enemy->reset();
 
 	level()->addEnemy(enemy);
+}
+
+void Configurator::createEye(AbstractGameObject *parent, const QPointF &pos)
+{
+	ComponentBuilder builder;
+	auto *eye{new EnemyEye(parent)};
+	auto *moving{static_cast<Moving *>(parent->findComponent(BT_Moving))};
+
+	builder.setGameObject(eye);
+	builder.addOrientating(OBJ_Enemy, moving);
+
+	eye->setPos(pos);
+	eye->reset();
 }
 
 AbstractPersonality *Configurator::createPersonality(const QJsonObject &json)
@@ -157,13 +170,6 @@ AbstractPersonality *Configurator::createPersonality(const QJsonObject &json)
 		static_cast<Shying *>(personality)->setPartner(level()->enemies().at(0));
 
 	return personality;
-}
-
-void Configurator::createEye(AbstractGameObject *gameObject, const QPointF &position)
-{
-	auto *eye{new GhostEye(gameObject)};
-
-	eye->setPos(position);
 }
 
 void Configurator::createDoors(const QJsonArray &doors)

@@ -2,7 +2,7 @@
 #include "GameGlobals.h"
 #include "behaviors/EnemyAnimating.h"
 #include "behaviors/EnemyControlling.h"
-#include "behaviors/EnemyOrientating.h"
+#include "behaviors/EyeOrientating.h"
 #include "behaviors/EnergizerAnimating.h"
 #include "behaviors/PlayerAnimating.h"
 #include "behaviors/PlayerControlling.h"
@@ -53,7 +53,7 @@ AbstractOrientatingBehavior *Factory::createOrientating(int type)
 	case OBJ_Player:
 		return new PlayerOrientating();
 	case OBJ_Enemy:
-		return new EnemyOrientating();
+		return new EyeOrientating();
 	default:
 		return nullptr;
 	}

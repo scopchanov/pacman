@@ -19,7 +19,7 @@ public:
 	void addSpawning(const QPointF &position);
 	void addMoving(int direction);
 	void addControlling(int type);
-	void addOrientating(int type);
+	void addOrientating(int type, Moving *moving);
 	void addAnimating(int type);
 	void addEatDot();
 	void addEatEnemy();

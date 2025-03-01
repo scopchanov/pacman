@@ -67,11 +67,11 @@ void ComponentBuilder::addControlling(int type)
 	_gameObject->addComponent(controller);
 }
 
-void ComponentBuilder::addOrientating(int type)
+void ComponentBuilder::addOrientating(int type, Moving *moving)
 {
 	auto *orientating{Factory::createOrientating(type)};
 
-	orientating->setMoving(moving());
+	orientating->setMoving(moving);
 
 	_gameObject->addComponent(orientating);
 }

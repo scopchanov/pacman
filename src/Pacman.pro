@@ -47,8 +47,8 @@ SOURCES += \
     behaviors/Delaying.cpp \
     behaviors/EnemyAnimating.cpp \
     behaviors/EnemyControlling.cpp \
-    behaviors/EnemyOrientating.cpp \
     behaviors/EnergizerAnimating.cpp \
+    behaviors/EyeOrientating.cpp \
     behaviors/Moving.cpp \
     behaviors/PlayerAnimating.cpp \
     behaviors/PlayerControlling.cpp \
@@ -58,8 +58,8 @@ SOURCES += \
     objects/Character.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
+    objects/EnemyEye.cpp \
     objects/Energizer.cpp \
-    objects/GhostEye.cpp \
     objects/Player.cpp \
     objects/Teleporter.cpp \
     personalities/AbstractPersonality.cpp \
@@ -111,8 +111,8 @@ HEADERS += \
     behaviors/Delaying.h \
     behaviors/EnemyAnimating.h \
     behaviors/EnemyControlling.h \
-    behaviors/EnemyOrientating.h \
     behaviors/EnergizerAnimating.h \
+    behaviors/EyeOrientating.h \
     behaviors/Moving.h \
     behaviors/PlayerAnimating.h \
     behaviors/PlayerControlling.h \
@@ -122,8 +122,8 @@ HEADERS += \
     objects/Character.h \
     objects/Deenergizer.h \
     objects/Enemy.h \
+    objects/EnemyEye.h \
     objects/Energizer.h \
-    objects/GhostEye.h \
     objects/Player.h \
     objects/Teleporter.h \
     personalities/AbstractPersonality.h \

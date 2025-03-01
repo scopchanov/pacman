@@ -43,6 +43,7 @@ enum ObjectType : int {
 	OBJ_Npc = 0,
 	OBJ_Player,
 	OBJ_Enemy,
+	OBJ_EnemyEye,
 	OBJ_Energizer,
 	OBJ_Deenergizer,
 	OBJ_Teleporter

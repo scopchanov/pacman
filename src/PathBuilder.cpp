@@ -56,9 +56,9 @@ QPainterPath PathBuilder::dynamicObjectPath(int type, qreal value)
 {
 	switch (type) {
 	case OBJ_Player:
-		return pacman(value);
+		return player(value);
 	case OBJ_Enemy:
-		return ghost(value);
+		return enemy(value);
 	case OBJ_Energizer:
 		return energizer(value);
 	case OBJ_Deenergizer:
@@ -253,7 +253,7 @@ QPainterPath PathBuilder::door()
 	return p;
 }
 
-QPainterPath PathBuilder::pacman(qreal angle)
+QPainterPath PathBuilder::player(qreal angle)
 {
 	qreal startAngle{180 - angle};
 	qreal sweepLength{-2*startAngle};
@@ -264,7 +264,7 @@ QPainterPath PathBuilder::pacman(qreal angle)
 	return p;
 }
 
-QPainterPath PathBuilder::ghost(qreal d)
+QPainterPath PathBuilder::enemy(qreal d)
 {
 	QPainterPath p;
 

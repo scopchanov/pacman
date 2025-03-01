@@ -29,7 +29,8 @@ public:
 	void eat();
 
 private:
-	void enableKilling(bool enable);
+	void enableEyesOrientating(bool enabled);
+	void enableKilling(bool enabled);
 	void restoreColor();
 
 	AbstractPersonality *_personality;
