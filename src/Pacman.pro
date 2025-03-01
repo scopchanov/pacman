@@ -27,6 +27,7 @@ SOURCES += \
     BonusText.cpp \
     Game.cpp \
     GameStatus.cpp \
+    actions/AbstractOrientate.cpp \
     actions/ActivateDeenergizer.cpp \
     actions/CalmDownEnemies.cpp \
     actions/DeactivateDeenergizer.cpp \
@@ -35,12 +36,13 @@ SOURCES += \
     actions/EatDot.cpp \
     actions/EatEnemy.cpp \
     actions/EnergizePlayer.cpp \
+    actions/EyeOrientate.cpp \
     actions/KillPlayer.cpp \
+    actions/PlayerOrientate.cpp \
     actions/ScareEnemies.cpp \
     actions/Teleport.cpp \
     behaviors/AbstractAnimatingBehavior.cpp \
     behaviors/AbstractControllingBehavior.cpp \
-    behaviors/AbstractOrientatingBehavior.cpp \
     behaviors/AbstractSpatialBehavior.cpp \
     behaviors/AbstractTimedBehavior.cpp \
     behaviors/Coloring.cpp \
@@ -48,11 +50,9 @@ SOURCES += \
     behaviors/EnemyAnimating.cpp \
     behaviors/EnemyControlling.cpp \
     behaviors/EnergizerAnimating.cpp \
-    behaviors/EyeOrientating.cpp \
     behaviors/Moving.cpp \
     behaviors/PlayerAnimating.cpp \
     behaviors/PlayerControlling.cpp \
-    behaviors/PlayerOrientating.cpp \
     behaviors/Spawning.cpp \
     behaviors/TeleporterAnimating.cpp \
     objects/Character.cpp \
@@ -91,6 +91,7 @@ HEADERS += \
     BonusText.h \
     Game.h \
     GameStatus.h \
+    actions/AbstractOrientate.h \
     actions/ActivateDeenergizer.h \
     actions/CalmDownEnemies.h \
     actions/DeactivateDeenergizer.h \
@@ -99,12 +100,13 @@ HEADERS += \
     actions/EatDot.h \
     actions/EatEnemy.h \
     actions/EnergizePlayer.h \
+    actions/EyeOrientate.h \
     actions/KillPlayer.h \
+    actions/PlayerOrientate.h \
     actions/ScareEnemies.h \
     actions/Teleport.h \
     behaviors/AbstractAnimatingBehavior.h \
     behaviors/AbstractControllingBehavior.h \
-    behaviors/AbstractOrientatingBehavior.h \
     behaviors/AbstractSpatialBehavior.h \
     behaviors/AbstractTimedBehavior.h \
     behaviors/Coloring.h \
@@ -112,11 +114,9 @@ HEADERS += \
     behaviors/EnemyAnimating.h \
     behaviors/EnemyControlling.h \
     behaviors/EnergizerAnimating.h \
-    behaviors/EyeOrientating.h \
     behaviors/Moving.h \
     behaviors/PlayerAnimating.h \
     behaviors/PlayerControlling.h \
-    behaviors/PlayerOrientating.h \
     behaviors/Spawning.h \
     behaviors/TeleporterAnimating.h \
     objects/Character.h \

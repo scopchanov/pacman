@@ -27,6 +27,7 @@ enum ComponentType : int {
 	ACT_EatEnemy,
 	ACT_EnergizePlayer,
 	ACT_KillPlayer,
+	ACT_Orientate,
 	ACT_ScareEnemies,
 	ACT_Teleport,
 	ACT_UpdateDeenergizer,
@@ -35,7 +36,6 @@ enum ComponentType : int {
 	BT_Controlling,
 	BT_Delaying,
 	BT_Moving,
-	BT_Orientating,
 	BT_Spawning
 };
 

@@ -5,7 +5,7 @@
 
 class AbstractBehavior;
 class AbstractControllingBehavior;
-class AbstractOrientatingBehavior;
+class AbstractOrientate;
 class AbstractPersonality;
 
 class Factory : public QObject
@@ -16,7 +16,7 @@ public:
 
 	static AbstractBehavior *createAnimating(int type);
 	static AbstractControllingBehavior *createControlling(int type);
-	static AbstractOrientatingBehavior *createOrientating(int type);
+	static AbstractOrientate *createOrientating(int type);
 	static AbstractPersonality *createPersonality(int type);
 };
 

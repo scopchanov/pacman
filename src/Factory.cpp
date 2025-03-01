@@ -1,12 +1,12 @@
 #include "Factory.h"
 #include "GameGlobals.h"
+#include "actions/EyeOrientate.h"
+#include "actions/PlayerOrientate.h"
 #include "behaviors/EnemyAnimating.h"
 #include "behaviors/EnemyControlling.h"
-#include "behaviors/EyeOrientating.h"
 #include "behaviors/EnergizerAnimating.h"
 #include "behaviors/PlayerAnimating.h"
 #include "behaviors/PlayerControlling.h"
-#include "behaviors/PlayerOrientating.h"
 #include "behaviors/TeleporterAnimating.h"
 #include "personalities/Poking.h"
 #include "personalities/Shadowing.h"
@@ -47,13 +47,13 @@ AbstractControllingBehavior *Factory::createControlling(int type)
 	}
 }
 
-AbstractOrientatingBehavior *Factory::createOrientating(int type)
+AbstractOrientate *Factory::createOrientating(int type)
 {
 	switch (type) {
 	case OBJ_Player:
-		return new PlayerOrientating();
+		return new PlayerOrientate();
 	case OBJ_Enemy:
-		return new EyeOrientating();
+		return new EyeOrientate();
 	default:
 		return nullptr;
 	}

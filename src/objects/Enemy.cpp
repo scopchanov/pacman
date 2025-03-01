@@ -83,7 +83,7 @@ void Enemy::enableEyesOrientating(bool enabled)
 	const QList<AbstractGameObject *> &eyes{findChildObjects(OBJ_EnemyEye)};
 
 	for (auto *eye : eyes) {
-		auto *orientating{eye->findComponent(BT_Orientating)};
+		auto *orientating{eye->findComponent(ACT_Orientate)};
 
 		if (!enabled)
 			static_cast<EnemyEye *>(eye)->setDirection(V2_ZERO);

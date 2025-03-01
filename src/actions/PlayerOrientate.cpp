@@ -1,22 +1,27 @@
-#include "PlayerOrientating.h"
-#include "Moving.h"
+#include "PlayerOrientate.h"
 #include "AbstractGameObject.h"
+#include "behaviors/Moving.h"
 #include <QHash>
 
 using Pair = QPair<int, int>;
 
-PlayerOrientating::PlayerOrientating(AbstractComponent *parent) :
-	AbstractOrientatingBehavior(parent)
+PlayerOrientate::PlayerOrientate(AbstractComponent *parent) :
+	AbstractOrientate(parent)
 {
 
 }
 
-void PlayerOrientating::performOrientationActions()
+void PlayerOrientate::reset()
+{
+	orientate();
+}
+
+void PlayerOrientate::orientate()
 {
 	gameObject()->setRotation(directionToAngle(moving()->currentDirection()));
 }
 
-qreal PlayerOrientating::directionToAngle(const Vector2 &direction) const
+qreal PlayerOrientate::directionToAngle(const Vector2 &direction) const
 {
 	const QHash<Pair, qreal> &hash{{{-1, 0}, 0.0}, {{1, 0}, 180.0},
 								   {{0, -1}, 90.0}, {{0, 1}, 270.0}};
