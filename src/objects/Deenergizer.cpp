@@ -2,10 +2,10 @@
 #include "GameGlobals.h"
 #include "Game.h"
 #include "PathBuilder.h"
-#include "actions/CalmDownEnemies.h"
-#include "actions/DeactivateDeenergizer.h"
-#include "actions/DeenergizePlayer.h"
-#include "behaviors/Delaying.h"
+#include "components/actions/CalmDownEnemies.h"
+#include "components/actions/DeactivateDeenergizer.h"
+#include "components/actions/DeenergizePlayer.h"
+#include "components/behaviors/Delaying.h"
 #include <QPen>
 
 Deenergizer::Deenergizer(AbstractGameObject *parent) :

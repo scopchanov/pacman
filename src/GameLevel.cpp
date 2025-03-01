@@ -3,7 +3,7 @@
 #include "Clock.h"
 #include "GameGlobals.h"
 #include "Tilemap.h"
-#include "actions/control/ControlEnemy.h"
+#include "components/actions/control/ControlEnemy.h"
 #include "objects/Enemy.h"
 #include "objects/Player.h"
 #include "objects/Deenergizer.h"

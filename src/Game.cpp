@@ -6,8 +6,8 @@
 #include "GameStatus.h"
 #include "GameLevel.h"
 #include "AudioEngine.h"
-#include "actions/DeleteGameObject.h"
-#include "behaviors/Delaying.h"
+#include "components/actions/DeleteGameObject.h"
+#include "components/behaviors/Delaying.h"
 #include "objects/Player.h"
 #include <QJsonObject>
 #include <QJsonArray>

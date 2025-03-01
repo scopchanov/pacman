@@ -1,7 +1,7 @@
 #include "Speeding.h"
 #include "GameGlobals.h"
 #include "Grid.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 #include "objects/Player.h"
 
 Speeding::Speeding(AbstractGameObject *parent) :

@@ -1,6 +1,6 @@
 #include "OrientatePlayer.h"
 #include "AbstractGameObject.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 #include <QHash>
 
 using Pair = QPair<int, int>;

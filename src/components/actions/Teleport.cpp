@@ -1,7 +1,7 @@
 #include "Teleport.h"
 #include "AbstractGameObject.h"
 #include "GameGlobals.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 
 Teleport::Teleport(AbstractComponent *parent) :
 	AbstractAction(parent)

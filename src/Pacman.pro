@@ -27,33 +27,33 @@ SOURCES += \
     BonusText.cpp \
     Game.cpp \
     GameStatus.cpp \
-    actions/AbstractTimedAction.cpp \
-    actions/ActivateDeenergizer.cpp \
-    actions/CalmDownEnemies.cpp \
-    actions/DeactivateDeenergizer.cpp \
-    actions/DeenergizePlayer.cpp \
-    actions/DeleteGameObject.cpp \
-    actions/EatEnemy.cpp \
-    actions/EnergizePlayer.cpp \
-    actions/KillPlayer.cpp \
-    actions/ScareEnemies.cpp \
-    actions/Spawn.cpp \
-    actions/Teleport.cpp \
-    actions/animate/AbstractAnimate.cpp \
-    actions/animate/AnimateEnemy.cpp \
-    actions/animate/AnimateEnergizer.cpp \
-    actions/animate/AnimatePlayer.cpp \
-    actions/animate/AnimateTeleporter.cpp \
-    actions/control/AbstractControl.cpp \
-    actions/control/ControlEnemy.cpp \
-    actions/control/ControlPlayer.cpp \
-    actions/orientate/AbstractOrientate.cpp \
-    actions/orientate/OrientateEye.cpp \
-    actions/orientate/OrientatePlayer.cpp \
-    actions/tilemap/AbstractTilemapAction.cpp \
-    actions/tilemap/EatDot.cpp \
-    actions/tilemap/Move.cpp \
-    behaviors/Delaying.cpp \
+    components/actions/AbstractTimedAction.cpp \
+    components/actions/ActivateDeenergizer.cpp \
+    components/actions/CalmDownEnemies.cpp \
+    components/actions/DeactivateDeenergizer.cpp \
+    components/actions/DeenergizePlayer.cpp \
+    components/actions/DeleteGameObject.cpp \
+    components/actions/EatEnemy.cpp \
+    components/actions/EnergizePlayer.cpp \
+    components/actions/KillPlayer.cpp \
+    components/actions/ScareEnemies.cpp \
+    components/actions/Spawn.cpp \
+    components/actions/Teleport.cpp \
+    components/actions/animate/AbstractAnimate.cpp \
+    components/actions/animate/AnimateEnemy.cpp \
+    components/actions/animate/AnimateEnergizer.cpp \
+    components/actions/animate/AnimatePlayer.cpp \
+    components/actions/animate/AnimateTeleporter.cpp \
+    components/actions/control/AbstractControl.cpp \
+    components/actions/control/ControlEnemy.cpp \
+    components/actions/control/ControlPlayer.cpp \
+    components/actions/orientate/AbstractOrientate.cpp \
+    components/actions/orientate/OrientateEye.cpp \
+    components/actions/orientate/OrientatePlayer.cpp \
+    components/actions/tilemap/AbstractTilemapAction.cpp \
+    components/actions/tilemap/EatDot.cpp \
+    components/actions/tilemap/Move.cpp \
+    components/behaviors/Delaying.cpp \
     objects/AbstractCharacter.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
@@ -90,33 +90,33 @@ HEADERS += \
     BonusText.h \
     Game.h \
     GameStatus.h \
-    actions/AbstractTimedAction.h \
-    actions/ActivateDeenergizer.h \
-    actions/CalmDownEnemies.h \
-    actions/DeactivateDeenergizer.h \
-    actions/DeenergizePlayer.h \
-    actions/DeleteGameObject.h \
-    actions/EatEnemy.h \
-    actions/EnergizePlayer.h \
-    actions/KillPlayer.h \
-    actions/ScareEnemies.h \
-    actions/Spawn.h \
-    actions/Teleport.h \
-    actions/animate/AbstractAnimate.h \
-    actions/animate/AnimateEnemy.h \
-    actions/animate/AnimateEnergizer.h \
-    actions/animate/AnimatePlayer.h \
-    actions/animate/AnimateTeleporter.h \
-    actions/control/AbstractControl.h \
-    actions/control/ControlEnemy.h \
-    actions/control/ControlPlayer.h \
-    actions/orientate/AbstractOrientate.h \
-    actions/orientate/OrientateEye.h \
-    actions/orientate/OrientatePlayer.h \
-    actions/tilemap/AbstractTilemapAction.h \
-    actions/tilemap/EatDot.h \
-    actions/tilemap/Move.h \
-    behaviors/Delaying.h \
+    components/actions/AbstractTimedAction.h \
+    components/actions/ActivateDeenergizer.h \
+    components/actions/CalmDownEnemies.h \
+    components/actions/DeactivateDeenergizer.h \
+    components/actions/DeenergizePlayer.h \
+    components/actions/DeleteGameObject.h \
+    components/actions/EatEnemy.h \
+    components/actions/EnergizePlayer.h \
+    components/actions/KillPlayer.h \
+    components/actions/ScareEnemies.h \
+    components/actions/Spawn.h \
+    components/actions/Teleport.h \
+    components/actions/animate/AbstractAnimate.h \
+    components/actions/animate/AnimateEnemy.h \
+    components/actions/animate/AnimateEnergizer.h \
+    components/actions/animate/AnimatePlayer.h \
+    components/actions/animate/AnimateTeleporter.h \
+    components/actions/control/AbstractControl.h \
+    components/actions/control/ControlEnemy.h \
+    components/actions/control/ControlPlayer.h \
+    components/actions/orientate/AbstractOrientate.h \
+    components/actions/orientate/OrientateEye.h \
+    components/actions/orientate/OrientatePlayer.h \
+    components/actions/tilemap/AbstractTilemapAction.h \
+    components/actions/tilemap/EatDot.h \
+    components/actions/tilemap/Move.h \
+    components/behaviors/Delaying.h \
     objects/AbstractCharacter.h \
     objects/Deenergizer.h \
     objects/Enemy.h \

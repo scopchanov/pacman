@@ -2,7 +2,7 @@
 #include "GameGlobals.h"
 #include "Grid.h"
 #include "Vector2.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 #include "objects/Player.h"
 
 Shying::Shying(AbstractGameObject *parent) :

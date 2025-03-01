@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "GameLevel.h"
 #include "InputSystem.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 
 ControlPlayer::ControlPlayer(AbstractComponent *parent) :
 	AbstractControl(parent)

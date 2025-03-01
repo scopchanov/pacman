@@ -3,7 +3,7 @@
 #include "GameLevel.h"
 #include "Grid.h"
 #include "AiStateMachine.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 #include "objects/Enemy.h"
 #include "personalities/AbstractPersonality.h"
 #include <QGraphicsScene>

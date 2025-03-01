@@ -1,6 +1,6 @@
 #include "AiStateMachine.h"
 #include "Clock.h"
-#include "actions/control/ControlEnemy.h"
+#include "components/actions/control/ControlEnemy.h"
 #include <QHash>
 
 AiStateMachine::AiStateMachine(QObject *parent) :

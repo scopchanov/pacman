@@ -1,6 +1,6 @@
 #include "OrientateEye.h"
 #include "AbstractGameObject.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 #include "objects/EnemyEye.h"
 
 OrientateEye::OrientateEye(AbstractComponent *parent) :

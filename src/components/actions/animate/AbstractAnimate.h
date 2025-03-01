@@ -1,7 +1,7 @@
 #ifndef ABSTRACTANIMATE_H
 #define ABSTRACTANIMATE_H
 
-#include "actions/AbstractTimedAction.h"
+#include "components/actions/AbstractTimedAction.h"
 #include <QtGlobal>
 
 class AbstractAnimate : public AbstractTimedAction

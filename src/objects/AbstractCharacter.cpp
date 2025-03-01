@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "GameGlobals.h"
 #include "Palette.h"
-#include "actions/tilemap/Move.h"
+#include "components/actions/tilemap/Move.h"
 #include <QBrush>
 
 AbstractCharacter::AbstractCharacter(AbstractGameObject *parent) :
