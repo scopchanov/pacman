@@ -1,6 +1,6 @@
 #include "OrientateEye.h"
 #include "AbstractGameObject.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/Move.h"
 #include "objects/EnemyEye.h"
 
 OrientateEye::OrientateEye(AbstractComponent *parent) :
@@ -21,7 +21,7 @@ void OrientateEye::orientate()
 
 Vector2 OrientateEye::currentDirection()
 {
-	return moving() ? moving()->currentDirection() : Vector2();
+	return move() ? move()->currentDirection() : Vector2();
 }
 
 EnemyEye *OrientateEye::enemyEye() const

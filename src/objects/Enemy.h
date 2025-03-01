@@ -32,8 +32,8 @@ protected:
 	int colorRole() const override;
 
 private:
-	void enableEyesOrientating(bool enabled);
-	void enableKilling(bool enabled);
+	void enableOrientateEyes(bool enabled);
+	void enableKillPlayer(bool enabled);
 
 	AbstractPersonality *_personality;
 	EnemyState _state;

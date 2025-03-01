@@ -3,7 +3,7 @@
 #include "GameLevel.h"
 #include "Grid.h"
 #include "AiStateMachine.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/Move.h"
 #include "objects/Enemy.h"
 #include "personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
@@ -31,10 +31,10 @@ void ControlEnemy::control()
 {
 	updateTargetPosition();
 
-	const QList<Vector2> &directions{moving()->possibleMoves()};
+	const QList<Vector2> &directions{move()->possibleMoves()};
 
 	if (directions.isEmpty()) {
-		moving()->reverse();
+		move()->reverse();
 		return;
 	}
 
@@ -55,12 +55,12 @@ void ControlEnemy::control()
 		n++;
 	}
 
-	moving()->setNextDirection(directions.at(index));
+	move()->setNextDirection(directions.at(index));
 }
 
 qreal ControlEnemy::distanceToTarget(Vector2 direction) const
 {
-	const Vector2 &nextCell{moving()->nextCellPositionIn(direction)};
+	const Vector2 &nextCell{move()->nextCellPositionIn(direction)};
 
 	return nextCell.distanceTo(Vector2(_targetPosition));
 }
@@ -114,7 +114,7 @@ void ControlEnemy::actFrightened()
 	// ranadom movement
 	// int cnt{static_cast<int>(directions.count())};
 	// int ind{QRandomGenerator::global()->bounded(0, cnt)};
-	// _moving->setNextMove(directions.at(ind));
+	// _move->setNextMove(directions.at(ind));
 }
 
 Enemy *ControlEnemy::parentEnemy()

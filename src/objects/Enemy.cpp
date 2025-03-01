@@ -41,7 +41,7 @@ Enemy::EnemyState Enemy::state() const
 void Enemy::setState(EnemyState state)
 {
 	_state = state;
-	// _moving->reverse();
+	// _move->reverse();
 }
 
 int Enemy::objectType() const
@@ -53,8 +53,8 @@ void Enemy::scare()
 {
 	_state = ST_Frightened;
 
-	enableKilling(false);
-	enableEyesOrientating(false);
+	enableKillPlayer(false);
+	enableOrientateEyes(false);
 	setBrush(paletteColor(CR_EnemyFrightened));
 	setSpeed(50);
 }
@@ -63,8 +63,8 @@ void Enemy::calmDown()
 {
 	_state = ST_Global;
 
-	enableKilling(true);
-	enableEyesOrientating(true);
+	enableKillPlayer(true);
+	enableOrientateEyes(true);
 	setBrush(paletteColor(colorRole()));
 	setSpeed(75);
 }
@@ -73,7 +73,7 @@ void Enemy::eat()
 {
 	_state = ST_Eaten;
 
-	enableEyesOrientating(true);
+	enableOrientateEyes(true);
 	setBrush(Qt::transparent);
 	setSpeed(150);
 }
@@ -83,22 +83,22 @@ int Enemy::colorRole() const
 	return _personality ? _personality->colorRole() : -1;
 }
 
-void Enemy::enableEyesOrientating(bool enabled)
+void Enemy::enableOrientateEyes(bool enabled)
 {
 	const QList<AbstractGameObject *> &eyes{findChildObjects(OBJ_EnemyEye)};
 
 	for (auto *eye : eyes) {
-		auto *orientating{eye->findComponent(ACT_Orientate)};
+		auto *orientate{eye->findComponent(ACT_Orientate)};
 
 		if (!enabled)
 			static_cast<EnemyEye *>(eye)->setDirection(V2_ZERO);
 
-		if (orientating)
-			orientating->setEnabled(enabled);
+		if (orientate)
+			orientate->setEnabled(enabled);
 	}
 }
 
-void Enemy::enableKilling(bool enabled)
+void Enemy::enableKillPlayer(bool enabled)
 {
 	auto *killPlayer{findComponent(ACT_KillPlayer)};
 

@@ -3,19 +3,19 @@
 
 AbstractControl::AbstractControl(AbstractComponent *parent) :
 	AbstractAction(parent),
-	_moving{nullptr}
+	_move{nullptr}
 {
 
 }
 
-Moving *AbstractControl::moving() const
+Move *AbstractControl::move() const
 {
-	return _moving;
+	return _move;
 }
 
-void AbstractControl::setMoving(Moving *moving)
+void AbstractControl::setMove(Move *move)
 {
-	_moving = moving;
+	_move = move;
 }
 
 int AbstractControl::type() const
@@ -25,7 +25,7 @@ int AbstractControl::type() const
 
 void AbstractControl::performTasks()
 {
-	if (!_moving)
+	if (!_move)
 		return;
 
 	control();

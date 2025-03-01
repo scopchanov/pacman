@@ -1,7 +1,7 @@
 #include "Teleport.h"
 #include "AbstractGameObject.h"
 #include "GameGlobals.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/Move.h"
 
 Teleport::Teleport(AbstractComponent *parent) :
 	AbstractAction(parent)
@@ -34,8 +34,8 @@ void Teleport::performTasks()
 
 void Teleport::teleport(AbstractGameObject *gameObject)
 {
-	auto *moving{gameObject->findComponent(BT_Moving)};
+	auto *move{gameObject->findComponent(ACT_Move)};
 
-	if (moving)
-		static_cast<Moving *>(moving)->relocateCharacter(_destination);
+	if (move)
+		static_cast<Move *>(move)->relocateCharacter(_destination);
 }

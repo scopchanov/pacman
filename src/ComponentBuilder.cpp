@@ -3,8 +3,6 @@
 #include "Game.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
-#include "GameLevel.h"
-#include "actions/EatDot.h"
 #include "actions/EatEnemy.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/KillPlayer.h"
@@ -12,7 +10,8 @@
 #include "actions/Teleport.h"
 #include "actions/control/ControlEnemy.h"
 #include "actions/orientate/AbstractOrientate.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/EatDot.h"
+#include "actions/tilemap/Move.h"
 
 ComponentBuilder::ComponentBuilder(QObject *parent) :
 	QObject{parent},
@@ -26,53 +25,50 @@ void ComponentBuilder::setGameObject(AbstractGameObject *gameObject)
 	_gameObject = gameObject;
 }
 
-void ComponentBuilder::addSpawning(const QPointF &position)
+void ComponentBuilder::addSpawn(const QPointF &position)
 {
-	auto *spawning{new Spawn()};
+	auto *spawn{new Spawn()};
 
-	spawning->setPosition(position);
+	spawn->setPosition(position);
 
-	_gameObject->addComponent(spawning);
+	_gameObject->addComponent(spawn);
 }
 
-void ComponentBuilder::addMoving(int direction)
+void ComponentBuilder::addMove(int direction)
 {
-	auto *moving{new Moving()};
+	auto *move{new Move()};
 
-	moving->setTilemap(Game::ref().level()->walls());
-	moving->setInitialDirection(dir2vec(direction));
+	move->setInitialDirection(dir2vec(direction));
 
-	_gameObject->addComponent(moving);
+	_gameObject->addComponent(move);
 }
 
-void ComponentBuilder::addControlling(int type)
+void ComponentBuilder::addControl(int type)
 {
-	auto *controller{Factory::createControlling(type)};
+	auto *control{Factory::createControl(type)};
 
-	controller->setMoving(moving());
+	control->setMove(move());
 
-	_gameObject->addComponent(controller);
+	_gameObject->addComponent(control);
 }
 
-void ComponentBuilder::addOrientating(int type, Moving *moving)
+void ComponentBuilder::addOrientate(int type, Move *move)
 {
-	auto *orientating{Factory::createOrientating(type)};
+	auto *orientate{Factory::createOrientate(type)};
 
-	orientating->setMoving(moving);
+	orientate->setMove(move);
 
-	_gameObject->addComponent(orientating);
+	_gameObject->addComponent(orientate);
 }
 
-void ComponentBuilder::addAnimating(int type)
+void ComponentBuilder::addAnimate(int type)
 {
-	_gameObject->addComponent(Factory::createAnimating(type));
+	_gameObject->addComponent(Factory::createAnimate(type));
 }
 
 void ComponentBuilder::addEatDot()
 {
 	auto *eatDot{new EatDot()};
-
-	eatDot->setTilemap(Game::ref().level()->dots());
 
 	_gameObject->addComponent(eatDot);
 
@@ -124,11 +120,11 @@ Game *ComponentBuilder::game() const
 	return &Game::ref();
 }
 
-Moving *ComponentBuilder::moving() const
+Move *ComponentBuilder::move() const
 {
-	auto *component{_gameObject->findComponent(BT_Moving)};
+	auto *component{_gameObject->findComponent(ACT_Move)};
 
-	return component ? static_cast<Moving *>(component) : nullptr;
+	return component ? static_cast<Move *>(component) : nullptr;
 }
 
 Vector2 ComponentBuilder::dir2vec(int direction) const

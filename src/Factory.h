@@ -14,9 +14,9 @@ class Factory : public QObject
 public:
 	explicit Factory(QObject *parent = nullptr);
 
-	static AbstractAction *createAnimating(int type);
-	static AbstractControl *createControlling(int type);
-	static AbstractOrientate *createOrientating(int type);
+	static AbstractAction *createAnimate(int type);
+	static AbstractControl *createControl(int type);
+	static AbstractOrientate *createOrientate(int type);
 	static AbstractPersonality *createPersonality(int type);
 };
 

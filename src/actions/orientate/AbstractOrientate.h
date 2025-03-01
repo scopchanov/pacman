@@ -3,15 +3,15 @@
 
 #include "AbstractAction.h"
 
-class Moving;
+class Move;
 
 class AbstractOrientate : public AbstractAction
 {
 public:
 	explicit AbstractOrientate(AbstractComponent *parent = nullptr);
 
-	Moving *moving() const;
-	void setMoving(Moving *moving);
+	Move *move() const;
+	void setMove(Move *move);
 	int type() const override final;
 
 protected:
@@ -19,7 +19,7 @@ protected:
 	virtual void orientate() = 0;
 
 private:
-	Moving *_moving;
+	Move *_move;
 };
 
 #endif // ABSTRACTORIENTATE_H

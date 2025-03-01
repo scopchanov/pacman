@@ -1,28 +1,21 @@
 #ifndef EATDOT_H
 #define EATDOT_H
 
-#include <AbstractAction.h>
+#include "AbstractTilemapAction.h"
 
-class Tilemap;
-class Vector2;
-
-class EatDot : public AbstractAction
+class EatDot : public AbstractTilemapAction
 {
 	Q_OBJECT
 public:
 	explicit EatDot(AbstractComponent *parent = nullptr);
 
-	Tilemap *tilemap() const;
-	virtual void setTilemap(Tilemap *tilemap);
 	int type() const override;
 
 protected:
 	void performTasks() override;
 
 private:
-	Vector2 currentCell() const;
-
-	Tilemap *_tilemap;
+	Tilemap *tilemap() const override;
 
 signals:
 	void dotEaten();

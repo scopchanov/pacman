@@ -6,7 +6,7 @@
 #include <QPointF>
 
 class QGraphicsRectItem;
-class Moving;
+class Move;
 class Enemy;
 
 class ControlEnemy : public AbstractControl

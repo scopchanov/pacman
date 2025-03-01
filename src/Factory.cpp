@@ -19,7 +19,7 @@ Factory::Factory(QObject *parent) :
 
 }
 
-AbstractAction *Factory::createAnimating(int type)
+AbstractAction *Factory::createAnimate(int type)
 {
 	switch (type) {
 	case OBJ_Player:
@@ -35,7 +35,7 @@ AbstractAction *Factory::createAnimating(int type)
 	}
 }
 
-AbstractControl *Factory::createControlling(int type)
+AbstractControl *Factory::createControl(int type)
 {
 	switch (type) {
 	case OBJ_Player:
@@ -47,7 +47,7 @@ AbstractControl *Factory::createControlling(int type)
 	}
 }
 
-AbstractOrientate *Factory::createOrientating(int type)
+AbstractOrientate *Factory::createOrientate(int type)
 {
 	switch (type) {
 	case OBJ_Player:

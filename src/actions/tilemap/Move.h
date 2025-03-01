@@ -1,14 +1,15 @@
-#ifndef MOVING_H
-#define MOVING_H
+#ifndef MOVE_H
+#define MOVE_H
 
-#include "AbstractSpatialBehavior.h"
+#include "AbstractTilemapAction.h"
 #include <QtGlobal>
 #include <QPointF>
+#include "Vector2.h"
 
-class Moving : public AbstractSpatialBehavior
+class Move : public AbstractTilemapAction
 {
 public:
-	explicit Moving(AbstractComponent *parent = nullptr);
+	explicit Move(AbstractComponent *parent = nullptr);
 
 	qreal speed() const;
 	void setSpeed(qreal speed);
@@ -26,7 +27,8 @@ public:
 	void reset() override;
 
 protected:
-	void performSpatialActions() override;
+	void performTasks() override;
+	Tilemap *tilemap() const override;
 
 private:
 	void moveCharacter();
@@ -51,4 +53,4 @@ private:
 	Vector2 _targetPosition;
 };
 
-#endif // MOVING_H
+#endif // MOVE_H

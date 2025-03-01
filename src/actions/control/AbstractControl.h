@@ -3,15 +3,16 @@
 
 #include <AbstractAction.h>
 
-class Moving;
+class Move;
 
 class AbstractControl : public AbstractAction
 {
 public:
 	explicit AbstractControl(AbstractComponent *parent = nullptr);
+	
+	Move *move() const;
+	void setMove(Move *move);
 
-	Moving *moving() const;
-	void setMoving(Moving *moving);
 	int type() const override final;
 
 protected:
@@ -19,7 +20,7 @@ protected:
 	virtual void control() = 0;
 
 private:
-	Moving *_moving;
+	Move *_move;
 };
 
 #endif // ABSTRACTCONTROL_H

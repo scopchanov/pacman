@@ -1,12 +1,14 @@
-#include "Moving.h"
-#include "Clock.h"
-#include "GameGlobals.h"
+#include "Move.h"
 #include "AbstractGameObject.h"
+#include "Clock.h"
+#include "Game.h"
+#include "GameGlobals.h"
+#include "GameLevel.h"
 #include "Grid.h"
 #include "Tilemap.h"
 
-Moving::Moving(AbstractComponent *parent) :
-	AbstractSpatialBehavior(parent),
+Move::Move(AbstractComponent *parent) :
+	AbstractTilemapAction(parent),
 	_speed{0.0},
 	_initialDirection{V2_LEFT},
 	_currentDirection{_initialDirection}
@@ -14,48 +16,48 @@ Moving::Moving(AbstractComponent *parent) :
 
 }
 
-qreal Moving::speed() const
+qreal Move::speed() const
 {
 	return _speed;
 }
 
-void Moving::setSpeed(qreal speed)
+void Move::setSpeed(qreal speed)
 {
 	_speed = speed;
 }
 
-Vector2 Moving::initialDirection() const
+Vector2 Move::initialDirection() const
 {
 	return _initialDirection;
 }
 
-void Moving::setInitialDirection(const Vector2 &direction)
+void Move::setInitialDirection(const Vector2 &direction)
 {
 	_initialDirection = direction;
 	_currentDirection = _initialDirection;
 }
 
-Vector2 Moving::currentDirection() const
+Vector2 Move::currentDirection() const
 {
 	return _currentDirection;
 }
 
-Vector2 Moving::nextDirection() const
+Vector2 Move::nextDirection() const
 {
 	return _nextDirection;
 }
 
-void Moving::setNextDirection(const Vector2 &direction)
+void Move::setNextDirection(const Vector2 &direction)
 {
 	_nextDirection = direction;
 }
 
-Vector2 Moving::nextCellPositionIn(const Vector2 &direction) const
+Vector2 Move::nextCellPositionIn(const Vector2 &direction) const
 {
 	return cellPosition(currentCell() + direction);
 }
 
-QList<Vector2> Moving::possibleMoves() const
+QList<Vector2> Move::possibleMoves() const
 {
 	QList<Vector2> directions;
 	const Vector2 &forwardDirection{_currentDirection};
@@ -74,23 +76,23 @@ QList<Vector2> Moving::possibleMoves() const
 	return directions;
 }
 
-int Moving::type() const
+int Move::type() const
 {
-	return BT_Moving;
+	return ACT_Move;
 }
 
-void Moving::relocateCharacter(const QPointF &destination)
+void Move::relocateCharacter(const QPointF &destination)
 {
 	setParentPosition(destination);
 	targetNextCell();
 }
 
-void Moving::reverse()
+void Move::reverse()
 {
 	// changeDirection(_currentDirection.reversed());
 }
 
-void Moving::reset()
+void Move::reset()
 {
 	_currentDirection = _initialDirection;
 	_nextDirection = _currentDirection;
@@ -98,26 +100,31 @@ void Moving::reset()
 	targetParentPosition();
 }
 
-void Moving::performSpatialActions()
+void Move::performTasks()
 {
 	chooseHeading();
 	moveCharacter();
 }
 
-void Moving::moveCharacter()
+Tilemap *Move::tilemap() const
 {
-	qreal step{_speed*clock()->deltaTime()};
+	return Game::ref().level()->walls();
+}
+
+void Move::moveCharacter()
+{
+	qreal step{_speed*Game::ref().clock()->deltaTime()};
 
 	setParentPosition(parentPosition().movedTowards(_targetPosition, step));
 }
 
-void Moving::chooseHeading()
+void Move::chooseHeading()
 {
 	if (!headIn(_nextDirection) && !headIn(_currentDirection))
 		targetCurrentCell();
 }
 
-bool Moving::headIn(const Vector2 &direction)
+bool Move::headIn(const Vector2 &direction)
 {
 	if (!canMoveIn(direction))
 		return false;
@@ -128,14 +135,14 @@ bool Moving::headIn(const Vector2 &direction)
 	return true;
 }
 
-void Moving::changeDirection(const Vector2 &direction)
+void Move::changeDirection(const Vector2 &direction)
 {
 	_currentDirection = direction;
 
 	targetNextCell();
 }
 
-void Moving::targetParentPosition()
+void Move::targetParentPosition()
 {
 	if (!gameObject())
 		return;
@@ -143,47 +150,47 @@ void Moving::targetParentPosition()
 	_targetPosition = parentPosition();
 }
 
-void Moving::targetCurrentCell()
+void Move::targetCurrentCell()
 {
 	_targetPosition = cellPosition(currentCell());
 }
 
-void Moving::targetNextCell()
+void Move::targetNextCell()
 {
 	_targetPosition = nextCellPositionIn(_currentDirection);
 }
 
-bool Moving::alignedWithTargetCellCenter() const
+bool Move::alignedWithTargetCellCenter() const
 {
 	return parentPosition().distanceTo(_targetPosition) < 0.001;
 }
 
-bool Moving::canMoveIn(const Vector2 &direction) const
+bool Move::canMoveIn(const Vector2 &direction) const
 {
 	return isUnderDoor() ? true : isWayClear(direction);
 }
 
-bool Moving::isUnderDoor() const
+bool Move::isUnderDoor() const
 {
 	return currentCell() == QPoint(14, 14) || currentCell() == QPoint(14, 15);
 }
 
-bool Moving::isWayClear(const Vector2 &direction) const
+bool Move::isWayClear(const Vector2 &direction) const
 {
 	return !tilemap()->hasTile(currentCell() + direction);
 }
 
-Vector2 Moving::cellPosition(const Vector2 &cell) const
+Vector2 Move::cellPosition(const Vector2 &cell) const
 {
 	return tilemap()->grid()->mapFromGrid(cell);
 }
 
-Vector2 Moving::parentPosition() const
+Vector2 Move::parentPosition() const
 {
 	return Vector2(gameObject()->pos());
 }
 
-void Moving::setParentPosition(const QPointF &position)
+void Move::setParentPosition(const QPointF &position)
 {
 	gameObject()->setPos(position);
 }

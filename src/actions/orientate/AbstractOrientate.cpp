@@ -3,19 +3,19 @@
 
 AbstractOrientate::AbstractOrientate(AbstractComponent *parent) :
 	AbstractAction(parent),
-	_moving{nullptr}
+	_move{nullptr}
 {
 
 }
 
-Moving *AbstractOrientate::moving() const
+Move *AbstractOrientate::move() const
 {
-	return _moving;
+	return _move;
 }
 
-void AbstractOrientate::setMoving(Moving *moving)
+void AbstractOrientate::setMove(Move *move)
 {
-	_moving = moving;
+	_move = move;
 }
 
 int AbstractOrientate::type() const
@@ -25,7 +25,7 @@ int AbstractOrientate::type() const
 
 void AbstractOrientate::performTasks()
 {
-	if (!_moving)
+	if (!_move)
 		return;
 
 	orientate();

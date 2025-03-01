@@ -4,7 +4,7 @@
 #include <QObject>
 
 class Game;
-class Moving;
+class Move;
 class AbstractGameObject;
 class Vector2;
 
@@ -15,11 +15,11 @@ public:
 	explicit ComponentBuilder(QObject *parent = nullptr);
 	
 	void setGameObject(AbstractGameObject *gameObject);
-	void addSpawning(const QPointF &position);
-	void addMoving(int direction);
-	void addControlling(int type);
-	void addOrientating(int type, Moving *moving);
-	void addAnimating(int type);
+	void addSpawn(const QPointF &position);
+	void addMove(int direction);
+	void addControl(int type);
+	void addOrientate(int type, Move *move);
+	void addAnimate(int type);
 	void addEatDot();
 	void addEatEnemy();
 	void addKillPlayer();
@@ -28,7 +28,7 @@ public:
 
 private:
 	Game *game()const;
-	Moving *moving() const;
+	Move *move() const;
 	Vector2 dir2vec(int direction) const;
 
 	AbstractGameObject *_gameObject;

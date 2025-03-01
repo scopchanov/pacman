@@ -9,7 +9,7 @@
 #include "Tilemap.h"
 #include "ComponentBuilder.h"
 #include "actions/control/ControlEnemy.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/Move.h"
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
 #include "objects/EnemyEye.h"
@@ -95,11 +95,11 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	auto *player{level()->player()};
 
 	builder.setGameObject(player);
-	builder.addSpawning({x, y});
-	builder.addMoving(0);
-	builder.addControlling(OBJ_Player);
-	builder.addOrientating(OBJ_Player, static_cast<Moving *>(player->findComponent(BT_Moving)));
-	builder.addAnimating(OBJ_Player);
+	builder.addSpawn({x, y});
+	builder.addMove(0);
+	builder.addControl(OBJ_Player);
+	builder.addOrientate(OBJ_Player, static_cast<Move *>(player->findComponent(ACT_Move)));
+	builder.addAnimate(OBJ_Player);
 	builder.addEatDot();
 	builder.addEatEnemy();
 
@@ -124,10 +124,10 @@ void Configurator::createEnemy(const QJsonObject &json)
 	auto *enemy{new Enemy()};
 
 	builder.setGameObject(enemy);
-	builder.addSpawning({x, y});
-	builder.addMoving(json.value("direction").toInt());
-	builder.addControlling(OBJ_Enemy);
-	builder.addAnimating(OBJ_Enemy);
+	builder.addSpawn({x, y});
+	builder.addMove(json.value("direction").toInt());
+	builder.addControl(OBJ_Enemy);
+	builder.addAnimate(OBJ_Enemy);
 	builder.addKillPlayer();
 
 	createEye(enemy, {-6, -6});
@@ -145,10 +145,10 @@ void Configurator::createEye(AbstractGameObject *parent, const QPointF &pos)
 {
 	ComponentBuilder builder;
 	auto *eye{new EnemyEye(parent)};
-	auto *moving{static_cast<Moving *>(parent->findComponent(BT_Moving))};
+	auto *move{static_cast<Move *>(parent->findComponent(ACT_Move))};
 
 	builder.setGameObject(eye);
-	builder.addOrientating(OBJ_Enemy, moving);
+	builder.addOrientate(OBJ_Enemy, move);
 
 	eye->setPos(pos);
 	eye->reset();
@@ -202,7 +202,7 @@ void Configurator::createEnergizer(const QJsonObject &json)
 
 	builder.setGameObject(energizer);
 	builder.addEnergizePlayer();
-	builder.addAnimating(OBJ_Energizer);
+	builder.addAnimate(OBJ_Energizer);
 
 	energizer->setPen(QPen(Qt::transparent));
 	energizer->setBrush(palette()->color(CR_Energizer));
@@ -232,7 +232,7 @@ void Configurator::createTeleporter(const QJsonObject &json)
 	auto *teleporter{new Teleporter()};
 
 	builder.setGameObject(teleporter);
-	builder.addAnimating(OBJ_Teleporter);
+	builder.addAnimate(OBJ_Teleporter);
 	builder.addTeleport(dst);
 
 	teleporter->setPos(src);

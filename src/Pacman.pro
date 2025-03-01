@@ -33,7 +33,6 @@ SOURCES += \
     actions/DeactivateDeenergizer.cpp \
     actions/DeenergizePlayer.cpp \
     actions/DeleteGameObject.cpp \
-    actions/EatDot.cpp \
     actions/EatEnemy.cpp \
     actions/EnergizePlayer.cpp \
     actions/KillPlayer.cpp \
@@ -51,9 +50,10 @@ SOURCES += \
     actions/orientate/AbstractOrientate.cpp \
     actions/orientate/OrientateEye.cpp \
     actions/orientate/OrientatePlayer.cpp \
-    behaviors/AbstractSpatialBehavior.cpp \
+    actions/tilemap/AbstractTilemapAction.cpp \
+    actions/tilemap/EatDot.cpp \
+    actions/tilemap/Move.cpp \
     behaviors/Delaying.cpp \
-    behaviors/Moving.cpp \
     objects/AbstractCharacter.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
@@ -96,7 +96,6 @@ HEADERS += \
     actions/DeactivateDeenergizer.h \
     actions/DeenergizePlayer.h \
     actions/DeleteGameObject.h \
-    actions/EatDot.h \
     actions/EatEnemy.h \
     actions/EnergizePlayer.h \
     actions/KillPlayer.h \
@@ -114,9 +113,10 @@ HEADERS += \
     actions/orientate/AbstractOrientate.h \
     actions/orientate/OrientateEye.h \
     actions/orientate/OrientatePlayer.h \
-    behaviors/AbstractSpatialBehavior.h \
+    actions/tilemap/AbstractTilemapAction.h \
+    actions/tilemap/EatDot.h \
+    actions/tilemap/Move.h \
     behaviors/Delaying.h \
-    behaviors/Moving.h \
     objects/AbstractCharacter.h \
     objects/Deenergizer.h \
     objects/Enemy.h \

@@ -20,7 +20,7 @@ enum ColorRole : int {
 enum ComponentType : int {
 	ACT_ActivateDeenergizer = 0,
 	ACT_Animate,
-	ACT_CalmDownEnemies ,
+	ACT_CalmDownEnemies,
 	ACT_Control,
 	ACT_DeleteGameObject,
 	ACT_DeenergizePlayer,
@@ -29,13 +29,12 @@ enum ComponentType : int {
 	ACT_EatEnemy,
 	ACT_EnergizePlayer,
 	ACT_KillPlayer,
+	ACT_Move,
 	ACT_Orientate,
 	ACT_ScareEnemies,
+	ACT_Spawn,
 	ACT_Teleport,
-	ACT_UpdateDeenergizer,
-	BT_Delaying,
-	BT_Moving,
-	BT_Spawning
+	BT_Delaying
 };
 
 enum ObjectType : int {

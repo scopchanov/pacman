@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "GameGlobals.h"
 #include "Palette.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/Move.h"
 #include <QBrush>
 
 AbstractCharacter::AbstractCharacter(AbstractGameObject *parent) :
@@ -18,13 +18,13 @@ QColor AbstractCharacter::paletteColor(int role) const
 
 void AbstractCharacter::setSpeed(qreal percent)
 {
-	auto *moving{findComponent(BT_Moving)};
+	auto *move{findComponent(ACT_Move)};
 	qreal originalSpeed{75.75757625};
 	qreal nominalSpeed{3*originalSpeed};
 	qreal speed{percent*nominalSpeed*0.01};
 
-	if (moving)
-		static_cast<Moving *>(moving)->setSpeed(speed);
+	if (move)
+		static_cast<Move *>(move)->setSpeed(speed);
 }
 
 void AbstractCharacter::reset()

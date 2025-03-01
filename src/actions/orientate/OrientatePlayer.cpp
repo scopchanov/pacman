@@ -1,6 +1,6 @@
 #include "OrientatePlayer.h"
 #include "AbstractGameObject.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/Move.h"
 #include <QHash>
 
 using Pair = QPair<int, int>;
@@ -18,7 +18,7 @@ void OrientatePlayer::reset()
 
 void OrientatePlayer::orientate()
 {
-	gameObject()->setRotation(directionToAngle(moving()->currentDirection()));
+	gameObject()->setRotation(directionToAngle(move()->currentDirection()));
 }
 
 qreal OrientatePlayer::directionToAngle(const Vector2 &direction) const

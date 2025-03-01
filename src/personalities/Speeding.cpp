@@ -1,8 +1,7 @@
 #include "Speeding.h"
 #include "GameGlobals.h"
 #include "Grid.h"
-#include "Vector2.h"
-#include "behaviors/Moving.h"
+#include "actions/tilemap/Move.h"
 #include "objects/Player.h"
 
 Speeding::Speeding(AbstractGameObject *parent) :
@@ -18,13 +17,13 @@ int Speeding::type() const
 
 Vector2 Speeding::calculateTarget() const
 {
-	auto *component{player()->findComponent(BT_Moving)};
+	auto *component{player()->findComponent(ACT_Move)};
 
 	if (!component)
 		return Vector2();
 
-	auto *moving{static_cast<Moving *>(component)};
-	const Vector2 &playerDirection(moving->currentDirection());
+	auto *move{static_cast<Move *>(component)};
+	const Vector2 &playerDirection(move->currentDirection());
 	const Vector2 &targetCell{playerCell() + playerDirection*4};
 
 	return grid()->mapFromGrid(targetCell);

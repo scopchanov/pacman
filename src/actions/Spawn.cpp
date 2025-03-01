@@ -22,7 +22,7 @@ void Spawn::setPosition(const QPointF &point)
 
 int Spawn::type() const
 {
-	return BT_Spawning;
+	return ACT_Spawn;
 }
 
 void Spawn::reset()
