@@ -25,8 +25,10 @@ public:
 	void reverse();
 	void reset() override;
 
-private:
+protected:
 	void performSpatialActions() override;
+
+private:
 	void moveCharacter();
 	void chooseHeading();
 	bool headIn(const Vector2 &direction);

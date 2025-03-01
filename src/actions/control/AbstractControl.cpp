@@ -28,5 +28,5 @@ void AbstractControl::performTasks()
 	if (!_moving)
 		return;
 
-	performControlTasks();
+	control();
 }

@@ -27,7 +27,7 @@ void ControlEnemy::reset()
 	_targetPosition = QPointF(360, 300);
 }
 
-void ControlEnemy::performControlTasks()
+void ControlEnemy::control()
 {
 	updateTargetPosition();
 

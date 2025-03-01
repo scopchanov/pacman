@@ -15,8 +15,10 @@ public:
 
 	void reset() override;
 
-private:
+protected:
 	void performTasks() override;
+
+private:
 	void eatEnemy(Enemy *enemy);
 	int points() const;
 

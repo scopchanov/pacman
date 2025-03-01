@@ -17,11 +17,10 @@ public:
 
 protected:
 	void performTasks() override final;
+	virtual void performSpatialActions() = 0;
 	Vector2 currentCell() const;
 
 private:
-	virtual void performSpatialActions() = 0;
-
 	Tilemap *_tilemap;
 };
 

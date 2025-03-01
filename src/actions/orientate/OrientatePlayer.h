@@ -13,8 +13,10 @@ public:
 
 	void reset()  override;
 
-private:
+protected:
 	void orientate() override;
+
+private:
 	qreal directionToAngle(const Vector2 &direction) const;
 };
 

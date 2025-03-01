@@ -11,7 +11,7 @@ public:
 
 	int type() const override;
 
-private:
+protected:
 	void performTasks() override;
 
 signals:

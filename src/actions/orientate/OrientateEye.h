@@ -13,8 +13,10 @@ public:
 
 	void reset() override;
 
-private:
+protected:
 	void orientate() override;
+
+private:
 	Vector2 currentDirection();
 	EnemyEye *enemyEye() const;
 };

@@ -9,7 +9,7 @@ public:
 	explicit ControlPlayer(AbstractComponent *parent = nullptr);
 
 protected:
-	void performControlTasks() override;
+	void control() override;
 };
 
 #endif // CONTROLPLAYER_H

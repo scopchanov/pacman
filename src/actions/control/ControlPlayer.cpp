@@ -10,7 +10,7 @@ ControlPlayer::ControlPlayer(AbstractComponent *parent) :
 
 }
 
-void ControlPlayer::performControlTasks()
+void ControlPlayer::control()
 {
 	const Vector2 &userInput{Game::ref().level()->inputSystem()->userInput()};
 

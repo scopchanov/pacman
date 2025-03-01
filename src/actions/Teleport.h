@@ -14,8 +14,10 @@ public:
 	void setDestination(const QPointF &destination);
 	int type() const override;
 
-private:
+protected:
 	void performTasks() override;
+
+private:
 	void teleport(AbstractGameObject *gameObject);
 
 	QPointF _destination;

@@ -24,7 +24,7 @@ public:
 	void reset() override;
 
 protected:
-	void performControlTasks() override;
+	void control() override;
 
 private:
 	qreal distanceToTarget(Vector2 direction) const;

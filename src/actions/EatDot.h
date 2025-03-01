@@ -16,8 +16,10 @@ public:
 	virtual void setTilemap(Tilemap *tilemap);
 	int type() const override;
 
-private:
+protected:
 	void performTasks() override;
+
+private:
 	Vector2 currentCell() const;
 
 	Tilemap *_tilemap;

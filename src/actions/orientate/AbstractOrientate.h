@@ -16,10 +16,9 @@ public:
 
 protected:
 	void performTasks() override final;
-
-private:
 	virtual void orientate() = 0;
 
+private:
 	Moving *_moving;
 };
 

@@ -16,7 +16,7 @@ public:
 
 protected:
 	void performTasks() override;
-	virtual void performControlTasks() = 0;
+	virtual void control() = 0;
 
 private:
 	Moving *_moving;
