@@ -1,9 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Character.h"
+#include "AbstractCharacter.h"
 
-class Player : public Character
+class Player : public AbstractCharacter
 {
 public:
 	explicit Player(AbstractGameObject *parent = nullptr);
@@ -13,8 +13,11 @@ public:
 
 	int objectType() const override final;
 
+protected:
+	int colorRole() const override;
+
 private:
-	void foo(qreal speed, const QColor &color, bool eatEnemy);
+	void mutate(qreal speed, const QColor &color, bool eatEnemy);
 	void enableEatEnemy(bool enable);
 };
 

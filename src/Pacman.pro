@@ -45,7 +45,6 @@ SOURCES += \
     behaviors/AbstractControllingBehavior.cpp \
     behaviors/AbstractSpatialBehavior.cpp \
     behaviors/AbstractTimedBehavior.cpp \
-    behaviors/Coloring.cpp \
     behaviors/Delaying.cpp \
     behaviors/EnemyAnimating.cpp \
     behaviors/EnemyControlling.cpp \
@@ -55,7 +54,7 @@ SOURCES += \
     behaviors/PlayerControlling.cpp \
     behaviors/Spawning.cpp \
     behaviors/TeleporterAnimating.cpp \
-    objects/Character.cpp \
+    objects/AbstractCharacter.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
     objects/EnemyEye.cpp \
@@ -109,7 +108,6 @@ HEADERS += \
     behaviors/AbstractControllingBehavior.h \
     behaviors/AbstractSpatialBehavior.h \
     behaviors/AbstractTimedBehavior.h \
-    behaviors/Coloring.h \
     behaviors/Delaying.h \
     behaviors/EnemyAnimating.h \
     behaviors/EnemyControlling.h \
@@ -119,7 +117,7 @@ HEADERS += \
     behaviors/PlayerControlling.h \
     behaviors/Spawning.h \
     behaviors/TeleporterAnimating.h \
-    objects/Character.h \
+    objects/AbstractCharacter.h \
     objects/Deenergizer.h \
     objects/Enemy.h \
     objects/EnemyEye.h \

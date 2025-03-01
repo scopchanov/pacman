@@ -95,7 +95,6 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	auto *player{level()->player()};
 
 	builder.setGameObject(player);
-	builder.addColoring(palette()->color(CR_Player));
 	builder.addSpawning({x, y});
 	builder.addMoving(0);
 	builder.addControlling(OBJ_Player);
@@ -120,13 +119,11 @@ void Configurator::createEnemy(const QJsonObject &json)
 	ComponentBuilder builder;
 	const QJsonObject &position{json.value("position").toObject()};
 	const QJsonObject &personality{json.value("personality").toObject()};
-	int role{key2role(json.value("name").toString())};
 	qreal x{position.value("x").toDouble()};
 	qreal y{position.value("y").toDouble()};
 	auto *enemy{new Enemy()};
 
 	builder.setGameObject(enemy);
-	builder.addColoring(palette()->color(role));
 	builder.addSpawning({x, y});
 	builder.addMoving(json.value("direction").toInt());
 	builder.addControlling(OBJ_Enemy);
@@ -164,6 +161,7 @@ AbstractPersonality *Configurator::createPersonality(const QJsonObject &json)
 	int column{cell.value("column").toInt()};
 	auto *personality{Factory::createPersonality(json.value("type").toInt())};
 
+	personality->setColorRole(json.value("colorRole").toInt());
 	personality->setScatterTarget(gridPosition(row, column));
 
 	if (personality->type() == PT_Shying)
@@ -287,8 +285,8 @@ int Configurator::key2role(const QString &key) const
 							   {"Player", CR_Player},
 							   {"PlayerEnergized", CR_PlayerEnergized},
 							   {"Blinky", CR_Blinky},
-							   {"Inky", CR_Inky},
 							   {"Pinky", CR_Pinky},
+							   {"Inky", CR_Inky},
 							   {"Clyde", CR_Clyde},
 							   {"EnemyFrightened", CR_EnemyFrightened},
 							   {"Wall", CR_Wall},

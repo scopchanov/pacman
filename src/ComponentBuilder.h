@@ -15,7 +15,6 @@ public:
 	explicit ComponentBuilder(QObject *parent = nullptr);
 	
 	void setGameObject(AbstractGameObject *gameObject);
-	void addColoring(const QColor &color);
 	void addSpawning(const QPointF &position);
 	void addMoving(int direction);
 	void addControlling(int type);

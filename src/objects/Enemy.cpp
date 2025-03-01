@@ -1,15 +1,15 @@
 #include "Enemy.h"
+#include "AbstractComponent.h"
 #include "Game.h"
 #include "GameGlobals.h"
 #include "Palette.h"
 #include "Vector2.h"
-#include "behaviors/Coloring.h"
 #include "objects/EnemyEye.h"
 #include "personalities/AbstractPersonality.h"
 #include <QBrush>
 
 Enemy::Enemy(AbstractGameObject *parent) :
-	Character(parent),
+	AbstractCharacter(parent),
 	_personality{nullptr},
 	_state{ST_Exit}
 {
@@ -55,7 +55,7 @@ void Enemy::scare()
 
 	enableKilling(false);
 	enableEyesOrientating(false);
-	setBrush(Game::ref().palette()->color(CR_EnemyFrightened));
+	setBrush(paletteColor(CR_EnemyFrightened));
 	setSpeed(50);
 }
 
@@ -65,7 +65,7 @@ void Enemy::calmDown()
 
 	enableKilling(true);
 	enableEyesOrientating(true);
-	restoreColor();
+	setBrush(paletteColor(colorRole()));
 	setSpeed(75);
 }
 
@@ -76,6 +76,11 @@ void Enemy::eat()
 	enableEyesOrientating(true);
 	setBrush(Qt::transparent);
 	setSpeed(150);
+}
+
+int Enemy::colorRole() const
+{
+	return _personality ? _personality->colorRole() : -1;
 }
 
 void Enemy::enableEyesOrientating(bool enabled)
@@ -99,12 +104,4 @@ void Enemy::enableKilling(bool enabled)
 
 	if (killPlayer)
 		killPlayer->setEnabled(enabled);
-}
-
-void Enemy::restoreColor()
-{
-	auto *coloring{findComponent(BT_Coloring)};
-
-	if (coloring)
-		setBrush(static_cast<Coloring *>(coloring)->color());
 }

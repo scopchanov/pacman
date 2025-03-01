@@ -1,11 +1,11 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Character.h"
+#include "AbstractCharacter.h"
 
 class AbstractPersonality;
 
-class Enemy : public Character
+class Enemy : public AbstractCharacter
 {
 public:
 	enum EnemyState : int {
@@ -28,10 +28,12 @@ public:
 	void calmDown();
 	void eat();
 
+protected:
+	int colorRole() const override;
+
 private:
 	void enableEyesOrientating(bool enabled);
 	void enableKilling(bool enabled);
-	void restoreColor();
 
 	AbstractPersonality *_personality;
 	EnemyState _state;

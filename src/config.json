@@ -4,8 +4,8 @@
     "Player": "#FFFFFF",
     "PlayerEnergized": "#FFEA00",
     "Blinky": "#F44336",
-    "Inky": "#82B1FF",
     "Pinky": "#FF80AB",
+    "Inky": "#82B1FF",
     "Clyde": "#FFC107",
     "EnemyFrightened": "#BDBDBD",
     "Wall": "#795548",
@@ -39,23 +39,9 @@
       },
       "personality": {
 	"type": 0,
+	"colorRole": 3,
 	"scatterTargetCell": {
 	  "row": 0,
-	  "column": 28
-	}
-      }
-    },
-    {
-      "name": "Inky",
-      "direction": 1,
-      "position": {
-	"x": 312,
-	"y": 372
-      },
-      "personality": {
-	"type": 2,
-	"scatterTargetCell": {
-	  "row": 32,
 	  "column": 28
 	}
       }
@@ -69,9 +55,26 @@
       },
       "personality": {
 	"type": 1,
+	"colorRole": 4,
 	"scatterTargetCell": {
 	  "row": 0,
 	  "column": 1
+	}
+      }
+    },
+    {
+      "name": "Inky",
+      "direction": 1,
+      "position": {
+	"x": 312,
+	"y": 372
+      },
+      "personality": {
+	"type": 2,
+	"colorRole": 5,
+	"scatterTargetCell": {
+	  "row": 32,
+	  "column": 28
 	}
       }
     },
@@ -84,6 +87,7 @@
       },
       "personality": {
 	"type": 3,
+	"colorRole": 6,
 	"scatterTargetCell": {
 	  "row": 32,
 	  "column": 1

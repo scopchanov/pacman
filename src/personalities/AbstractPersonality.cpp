@@ -21,14 +21,14 @@ void AbstractPersonality::setParent(AbstractGameObject *parent)
 	_parent = parent;
 }
 
-Player *AbstractPersonality::player() const
+int AbstractPersonality::colorRole() const
 {
-	return Game::ref().level()->player();
+	return _colorRole;
 }
 
-Grid *AbstractPersonality::grid() const
+void AbstractPersonality::setColorRole(int role)
 {
-	return Game::ref().level()->grid();
+	_colorRole = role;
 }
 
 QPointF AbstractPersonality::scatterTarget() const
@@ -39,6 +39,16 @@ QPointF AbstractPersonality::scatterTarget() const
 void AbstractPersonality::setScatterTarget(const QPointF &point)
 {
 	_scatterTarget = point;
+}
+
+Player *AbstractPersonality::player() const
+{
+	return Game::ref().level()->player();
+}
+
+Grid *AbstractPersonality::grid() const
+{
+	return Game::ref().level()->grid();
 }
 
 Vector2 AbstractPersonality::playerCell() const

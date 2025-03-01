@@ -10,11 +10,8 @@
 #include "actions/EnergizePlayer.h"
 #include "actions/KillPlayer.h"
 #include "actions/Teleport.h"
-#include "behaviors/Moving.h"
-#include "behaviors/Coloring.h"
-#include "behaviors/Moving.h"
-#include "behaviors/Coloring.h"
 #include "behaviors/EnemyControlling.h"
+#include "behaviors/Moving.h"
 #include "behaviors/Spawning.h"
 
 ComponentBuilder::ComponentBuilder(QObject *parent) :
@@ -27,16 +24,6 @@ ComponentBuilder::ComponentBuilder(QObject *parent) :
 void ComponentBuilder::setGameObject(AbstractGameObject *gameObject)
 {
 	_gameObject = gameObject;
-}
-
-void ComponentBuilder::addColoring(const QColor &color)
-{
-	auto *coloring{new Coloring()};
-
-	coloring->setColor(color);
-
-	_gameObject->addComponent(coloring);
-	_gameObject->setBrush(color);
 }
 
 void ComponentBuilder::addSpawning(const QPointF &position)
