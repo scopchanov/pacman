@@ -1,13 +1,13 @@
 #include "Game.h"
 #include "Message.h"
 #include "StartupSequence.h"
-#include "BonusText.h"
 #include "Clock.h"
 #include "GameStatus.h"
 #include "GameLevel.h"
 #include "AudioEngine.h"
 #include "components/actions/DeleteGameObject.h"
 #include "components/behaviors/Delaying.h"
+#include "objects/BonusText.h"
 #include "objects/Player.h"
 #include <QJsonObject>
 #include <QJsonArray>

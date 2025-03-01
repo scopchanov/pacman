@@ -24,7 +24,6 @@ SOURCES += \
     StartupSequence.cpp \
     AiStateMachine.cpp \
     AudioEngine.cpp \
-    BonusText.cpp \
     Game.cpp \
     GameStatus.cpp \
     components/actions/AbstractTimedAction.cpp \
@@ -55,6 +54,7 @@ SOURCES += \
     components/actions/tilemap/Move.cpp \
     components/behaviors/Delaying.cpp \
     objects/AbstractCharacter.cpp \
+    objects/BonusText.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
     objects/EnemyEye.cpp \
@@ -87,7 +87,6 @@ HEADERS += \
     StartupSequence.h \
     AiStateMachine.h \
     AudioEngine.h \
-    BonusText.h \
     Game.h \
     GameStatus.h \
     components/actions/AbstractTimedAction.h \
@@ -118,6 +117,7 @@ HEADERS += \
     components/actions/tilemap/Move.h \
     components/behaviors/Delaying.h \
     objects/AbstractCharacter.h \
+    objects/BonusText.h \
     objects/Deenergizer.h \
     objects/Enemy.h \
     objects/EnemyEye.h \

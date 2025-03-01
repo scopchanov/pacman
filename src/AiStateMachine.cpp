@@ -42,6 +42,8 @@ void AiStateMachine::reset()
 {
 	_step = 0;
 	_time = 0.0;
+
+	changeEnemyState();
 }
 
 void AiStateMachine::changeEnemyState()
