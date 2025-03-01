@@ -1,18 +1,16 @@
 #ifndef DELAYING_H
 #define DELAYING_H
 
-#include "AbstractTimedBehavior.h"
+#include "AbstractBehavior.h"
 
-class Event;
-
-class Delaying : public AbstractTimedBehavior
+class Delaying : public AbstractBehavior
 {
+	Q_OBJECT
 public:
 	explicit Delaying(AbstractComponent *parent = nullptr);
 
 	qreal duration() const;
 	void setDuration(qreal duration);
-	void setEventTick(Event *event);
 	int type() const override;
 
 	void reset() override;
@@ -22,12 +20,13 @@ protected:
 
 private:
 	bool increaseTime();
-	void triggerTickEvent();
 	bool delayDurationExceeded() const;
 
 	qreal _duration;
 	qreal _time;
-	Event *_eventTick;
+
+signals:
+	void tick(qreal time);
 };
 
 #endif // DELAYING_H

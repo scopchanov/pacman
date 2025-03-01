@@ -19,7 +19,7 @@ Factory::Factory(QObject *parent) :
 
 }
 
-AbstractBehavior *Factory::createAnimating(int type)
+AbstractAction *Factory::createAnimating(int type)
 {
 	switch (type) {
 	case OBJ_Player:

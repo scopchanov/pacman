@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class AbstractBehavior;
+class AbstractAction;
 class AbstractControllingBehavior;
 class AbstractOrientate;
 class AbstractPersonality;
@@ -14,7 +14,7 @@ class Factory : public QObject
 public:
 	explicit Factory(QObject *parent = nullptr);
 
-	static AbstractBehavior *createAnimating(int type);
+	static AbstractAction *createAnimating(int type);
 	static AbstractControllingBehavior *createControlling(int type);
 	static AbstractOrientate *createOrientating(int type);
 	static AbstractPersonality *createPersonality(int type);

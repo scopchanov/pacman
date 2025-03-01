@@ -2,7 +2,7 @@
 #include "Game.h"
 
 AbstractTimedBehavior::AbstractTimedBehavior(AbstractComponent *parent) :
-	AbstractBehavior(parent)
+	AbstractAction(parent)
 {
 
 }

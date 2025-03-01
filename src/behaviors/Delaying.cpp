@@ -1,15 +1,13 @@
 #include "Delaying.h"
+#include "Game.h"
 #include "Clock.h"
-#include "Event.h"
 #include "GameGlobals.h"
-#include "AbstractAction.h"
 #include <QVariant>
 
 Delaying::Delaying(AbstractComponent *parent) :
-	AbstractTimedBehavior(parent),
+	AbstractBehavior(parent),
 	_duration{0.0},
-	_time{0.0},
-	_eventTick{nullptr}
+	_time{0.0}
 {
 
 }
@@ -22,11 +20,6 @@ qreal Delaying::duration() const
 void Delaying::setDuration(qreal duration)
 {
 	_duration = duration;
-}
-
-void Delaying::setEventTick(Event *event)
-{
-	_eventTick = event;
 }
 
 int Delaying::type() const
@@ -50,20 +43,11 @@ bool Delaying::increaseTime()
 	if (delayDurationExceeded())
 		return false;
 
-	_time += clock()->deltaTime();
+	_time += Game::ref().clock()->deltaTime();
 
-	triggerTickEvent();
+	emit tick(_time);
 
 	return true;
-}
-
-void Delaying::triggerTickEvent()
-{
-	if (!_eventTick)
-		return;
-
-	_eventTick->setProperty("time", _time);
-	_eventTick->trigger();
 }
 
 bool Delaying::delayDurationExceeded() const

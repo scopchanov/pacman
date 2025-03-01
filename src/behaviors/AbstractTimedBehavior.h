@@ -1,11 +1,11 @@
 #ifndef ABSTRACTTIMEDBEHAVIOR_H
 #define ABSTRACTTIMEDBEHAVIOR_H
 
-#include "AbstractBehavior.h"
+#include "AbstractAction.h"
 
 class Clock;
 
-class AbstractTimedBehavior : public AbstractBehavior
+class AbstractTimedBehavior : public AbstractAction
 {
 public:
 	explicit AbstractTimedBehavior(AbstractComponent *parent = nullptr);

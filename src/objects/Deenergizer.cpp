@@ -1,5 +1,4 @@
 #include "Deenergizer.h"
-#include "Event.h"
 #include "GameGlobals.h"
 #include "Game.h"
 #include "PathBuilder.h"
@@ -16,25 +15,21 @@ Deenergizer::Deenergizer(AbstractGameObject *parent) :
 	auto *actDeenergizePlayer{new DeenergizePlayer(deenergizing)};
 	auto *actCalmDownEnemies{new CalmDownEnemies(deenergizing)};
 	auto *actDeactivateDeenergizer{new DeactivateDeenergizer(deenergizing)};
-	auto *eventTick{new Event()};
 
 	deenergizing->setDuration(6);
 	deenergizing->addComponent(actDeenergizePlayer);
 	deenergizing->addComponent(actCalmDownEnemies);
 	deenergizing->addComponent(actDeactivateDeenergizer);
-	deenergizing->setEventTick(eventTick);
 	deenergizing->setEnabled(false);
 
 	addComponent(deenergizing);
-
-	// TODO: Improve me
 
 	updatePath(0);
 	setPen(QPen(QBrush(0xFFEA00), 4, Qt::SolidLine, Qt::RoundCap));
 	setBrush(Qt::transparent);
 
-	QObject::connect(eventTick, &Event::triggered, [this, eventTick](){
-		updatePath((6 - eventTick->property("time").toDouble())*30*24/6.0);
+	QObject::connect(deenergizing, &Delaying::tick, [this](qreal time){
+		updatePath((6 - time)*30*24/6.0);
 	});
 }
 
