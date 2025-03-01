@@ -1,13 +1,13 @@
-#ifndef SPAWNING_H
-#define SPAWNING_H
+#ifndef SPAWN_H
+#define SPAWN_H
 
-#include <AbstractBehavior.h>
+#include <AbstractAction.h>
 #include <QPointF>
 
-class Spawning : public AbstractBehavior
+class Spawn : public AbstractAction
 {
 public:
-	explicit Spawning(AbstractComponent *parent = nullptr);
+	explicit Spawn(AbstractComponent *parent = nullptr);
 
 	QPointF position() const;
 	void setPosition(const QPointF &point);
@@ -21,4 +21,4 @@ private:
 	QPointF _position;
 };
 
-#endif // SPAWNING_H
+#endif // SPAWN_H

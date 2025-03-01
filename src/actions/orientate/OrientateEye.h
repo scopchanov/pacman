@@ -1,15 +1,15 @@
-#ifndef EYEORIENTATE_H
-#define EYEORIENTATE_H
+#ifndef ORIENTATEEYE_H
+#define ORIENTATEEYE_H
 
 #include "AbstractOrientate.h"
 
 class EnemyEye;
 class Vector2;
 
-class EyeOrientate : public AbstractOrientate
+class OrientateEye : public AbstractOrientate
 {
 public:
-	explicit EyeOrientate(AbstractComponent *parent = nullptr);
+	explicit OrientateEye(AbstractComponent *parent = nullptr);
 
 	void reset() override;
 
@@ -19,4 +19,4 @@ private:
 	EnemyEye *enemyEye() const;
 };
 
-#endif // EYEORIENTATE_H
+#endif // ORIENTATEEYE_H

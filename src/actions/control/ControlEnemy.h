@@ -1,7 +1,7 @@
-#ifndef ENEMYCONTROLLING_H
-#define ENEMYCONTROLLING_H
+#ifndef CONTROLENEMY_H
+#define CONTROLENEMY_H
 
-#include "AbstractControllingBehavior.h"
+#include "AbstractControl.h"
 #include "Vector2.h"
 #include <QPointF>
 
@@ -9,7 +9,7 @@ class QGraphicsRectItem;
 class Moving;
 class Enemy;
 
-class EnemyControlling : public AbstractControllingBehavior
+class ControlEnemy : public AbstractControl
 {
 public:
 	enum GlobalState : int {
@@ -17,14 +17,16 @@ public:
 		GS_Chase
 	};
 
-	explicit EnemyControlling(AbstractComponent *parent = nullptr);
+	explicit ControlEnemy(AbstractComponent *parent = nullptr);
 
 	void setGlobalState(GlobalState state);
 
 	void reset() override;
 
+protected:
+	void performControlTasks() override;
+
 private:
-	void performControllingActions() override;
 	qreal distanceToTarget(Vector2 direction) const;
 	void updateTargetPosition();
 	bool isTargetReached();
@@ -36,4 +38,4 @@ private:
 	QPointF _targetPosition;
 };
 
-#endif // ENEMYCONTROLLING_H
+#endif // CONTROLENEMY_H

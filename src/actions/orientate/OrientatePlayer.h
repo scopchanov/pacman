@@ -1,15 +1,15 @@
-#ifndef PLAYERORIENTATE_H
-#define PLAYERORIENTATE_H
+#ifndef ORIENTATEPLAYER_H
+#define ORIENTATEPLAYER_H
 
 #include "AbstractOrientate.h"
 #include <QtGlobal>
 
 class Vector2;
 
-class PlayerOrientate : public AbstractOrientate
+class OrientatePlayer : public AbstractOrientate
 {
 public:
-	explicit PlayerOrientate(AbstractComponent *parent = nullptr);
+	explicit OrientatePlayer(AbstractComponent *parent = nullptr);
 
 	void reset()  override;
 
@@ -18,4 +18,4 @@ private:
 	qreal directionToAngle(const Vector2 &direction) const;
 };
 
-#endif // PLAYERORIENTATE_H
+#endif // ORIENTATEPLAYER_H

@@ -1,6 +1,6 @@
 #include "AiStateMachine.h"
 #include "Clock.h"
-#include "behaviors/EnemyControlling.h"
+#include "actions/control/ControlEnemy.h"
 #include <QHash>
 
 AiStateMachine::AiStateMachine(QObject *parent) :
@@ -17,7 +17,7 @@ void AiStateMachine::setClock(Clock *clock)
 	_clock = clock;
 }
 
-void AiStateMachine::addEnemyController(EnemyControlling *controller)
+void AiStateMachine::addEnemyController(ControlEnemy *controller)
 {
 	_enemyControllers.append(controller);
 }
@@ -46,8 +46,8 @@ void AiStateMachine::reset()
 
 void AiStateMachine::changeEnemyState()
 {
-	EnemyControlling::GlobalState state{_step % 2 ? EnemyControlling::GS_Chase
-												 : EnemyControlling::GS_Scatter};
+	ControlEnemy::GlobalState state{_step % 2 ? ControlEnemy::GS_Chase
+												 : ControlEnemy::GS_Scatter};
 
 	for (auto *enemyController : std::as_const(_enemyControllers))
 		if (enemyController)

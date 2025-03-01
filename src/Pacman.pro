@@ -27,7 +27,6 @@ SOURCES += \
     BonusText.cpp \
     Game.cpp \
     GameStatus.cpp \
-    actions/AbstractOrientate.cpp \
     actions/AbstractTimedAction.cpp \
     actions/ActivateDeenergizer.cpp \
     actions/CalmDownEnemies.cpp \
@@ -37,23 +36,24 @@ SOURCES += \
     actions/EatDot.cpp \
     actions/EatEnemy.cpp \
     actions/EnergizePlayer.cpp \
-    actions/EyeOrientate.cpp \
     actions/KillPlayer.cpp \
-    actions/PlayerOrientate.cpp \
     actions/ScareEnemies.cpp \
+    actions/Spawn.cpp \
     actions/Teleport.cpp \
     actions/animate/AbstractAnimate.cpp \
     actions/animate/AnimateEnemy.cpp \
     actions/animate/AnimateEnergizer.cpp \
     actions/animate/AnimatePlayer.cpp \
     actions/animate/AnimateTeleporter.cpp \
-    behaviors/AbstractControllingBehavior.cpp \
+    actions/control/AbstractControl.cpp \
+    actions/control/ControlEnemy.cpp \
+    actions/control/ControlPlayer.cpp \
+    actions/orientate/AbstractOrientate.cpp \
+    actions/orientate/OrientateEye.cpp \
+    actions/orientate/OrientatePlayer.cpp \
     behaviors/AbstractSpatialBehavior.cpp \
     behaviors/Delaying.cpp \
-    behaviors/EnemyControlling.cpp \
     behaviors/Moving.cpp \
-    behaviors/PlayerControlling.cpp \
-    behaviors/Spawning.cpp \
     objects/AbstractCharacter.cpp \
     objects/Deenergizer.cpp \
     objects/Enemy.cpp \
@@ -90,7 +90,6 @@ HEADERS += \
     BonusText.h \
     Game.h \
     GameStatus.h \
-    actions/AbstractOrientate.h \
     actions/AbstractTimedAction.h \
     actions/ActivateDeenergizer.h \
     actions/CalmDownEnemies.h \
@@ -100,23 +99,24 @@ HEADERS += \
     actions/EatDot.h \
     actions/EatEnemy.h \
     actions/EnergizePlayer.h \
-    actions/EyeOrientate.h \
     actions/KillPlayer.h \
-    actions/PlayerOrientate.h \
     actions/ScareEnemies.h \
+    actions/Spawn.h \
     actions/Teleport.h \
     actions/animate/AbstractAnimate.h \
     actions/animate/AnimateEnemy.h \
     actions/animate/AnimateEnergizer.h \
     actions/animate/AnimatePlayer.h \
     actions/animate/AnimateTeleporter.h \
-    behaviors/AbstractControllingBehavior.h \
+    actions/control/AbstractControl.h \
+    actions/control/ControlEnemy.h \
+    actions/control/ControlPlayer.h \
+    actions/orientate/AbstractOrientate.h \
+    actions/orientate/OrientateEye.h \
+    actions/orientate/OrientatePlayer.h \
     behaviors/AbstractSpatialBehavior.h \
     behaviors/Delaying.h \
-    behaviors/EnemyControlling.h \
     behaviors/Moving.h \
-    behaviors/PlayerControlling.h \
-    behaviors/Spawning.h \
     objects/AbstractCharacter.h \
     objects/Deenergizer.h \
     objects/Enemy.h \

@@ -3,7 +3,7 @@
 #include "Clock.h"
 #include "GameGlobals.h"
 #include "Tilemap.h"
-#include "behaviors/EnemyControlling.h"
+#include "actions/control/ControlEnemy.h"
 #include "objects/Enemy.h"
 #include "objects/Player.h"
 #include "objects/Deenergizer.h"
@@ -43,8 +43,8 @@ Player *GameLevel::player() const
 
 void GameLevel::addEnemy(Enemy *enemy)
 {
-	auto *component{enemy->findComponent(BT_Controlling)};
-	auto *controller{static_cast<EnemyControlling *>(component)};
+	auto *component{enemy->findComponent(ACT_Control)};
+	auto *controller{static_cast<ControlEnemy *>(component)};
 
 	_stateMachine->addEnemyController(controller);
 	_enemies.append(enemy);

@@ -21,6 +21,7 @@ enum ComponentType : int {
 	ACT_ActivateDeenergizer = 0,
 	ACT_Animate,
 	ACT_CalmDownEnemies ,
+	ACT_Control,
 	ACT_DeleteGameObject,
 	ACT_DeenergizePlayer,
 	ACT_DeactivateDeenergizer,
@@ -32,7 +33,6 @@ enum ComponentType : int {
 	ACT_ScareEnemies,
 	ACT_Teleport,
 	ACT_UpdateDeenergizer,
-	BT_Controlling,
 	BT_Delaying,
 	BT_Moving,
 	BT_Spawning

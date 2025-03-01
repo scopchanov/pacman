@@ -1,30 +1,30 @@
-#include "EyeOrientate.h"
+#include "OrientateEye.h"
 #include "AbstractGameObject.h"
 #include "behaviors/Moving.h"
 #include "objects/EnemyEye.h"
 
-EyeOrientate::EyeOrientate(AbstractComponent *parent) :
+OrientateEye::OrientateEye(AbstractComponent *parent) :
 	AbstractOrientate(parent)
 {
 
 }
 
-void EyeOrientate::reset()
+void OrientateEye::reset()
 {
 	enemyEye()->setDirection(currentDirection());
 }
 
-void EyeOrientate::orientate()
+void OrientateEye::orientate()
 {
 	enemyEye()->orientate(currentDirection());
 }
 
-Vector2 EyeOrientate::currentDirection()
+Vector2 OrientateEye::currentDirection()
 {
 	return moving() ? moving()->currentDirection() : Vector2();
 }
 
-EnemyEye *EyeOrientate::enemyEye() const
+EnemyEye *OrientateEye::enemyEye() const
 {
 	return static_cast<EnemyEye *>(gameObject());
 }

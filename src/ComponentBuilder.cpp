@@ -4,15 +4,15 @@
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "GameLevel.h"
-#include "actions/AbstractOrientate.h"
 #include "actions/EatDot.h"
 #include "actions/EatEnemy.h"
 #include "actions/EnergizePlayer.h"
 #include "actions/KillPlayer.h"
+#include "actions/Spawn.h"
 #include "actions/Teleport.h"
-#include "behaviors/EnemyControlling.h"
+#include "actions/control/ControlEnemy.h"
+#include "actions/orientate/AbstractOrientate.h"
 #include "behaviors/Moving.h"
-#include "behaviors/Spawning.h"
 
 ComponentBuilder::ComponentBuilder(QObject *parent) :
 	QObject{parent},
@@ -28,7 +28,7 @@ void ComponentBuilder::setGameObject(AbstractGameObject *gameObject)
 
 void ComponentBuilder::addSpawning(const QPointF &position)
 {
-	auto *spawning{new Spawning()};
+	auto *spawning{new Spawn()};
 
 	spawning->setPosition(position);
 

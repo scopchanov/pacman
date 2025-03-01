@@ -1,16 +1,16 @@
-#include "PlayerControlling.h"
+#include "ControlPlayer.h"
 #include "Game.h"
 #include "GameLevel.h"
 #include "InputSystem.h"
-#include "Moving.h"
+#include "behaviors/Moving.h"
 
-PlayerControlling::PlayerControlling(AbstractComponent *parent) :
-	AbstractControllingBehavior(parent)
+ControlPlayer::ControlPlayer(AbstractComponent *parent) :
+	AbstractControl(parent)
 {
 
 }
 
-void PlayerControlling::performControllingActions()
+void ControlPlayer::performControlTasks()
 {
 	const Vector2 &userInput{Game::ref().level()->inputSystem()->userInput()};
 

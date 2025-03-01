@@ -8,7 +8,7 @@
 #include "PathBuilder.h"
 #include "Tilemap.h"
 #include "ComponentBuilder.h"
-#include "behaviors/EnemyControlling.h"
+#include "actions/control/ControlEnemy.h"
 #include "behaviors/Moving.h"
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"

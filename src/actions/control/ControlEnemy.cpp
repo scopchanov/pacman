@@ -1,4 +1,4 @@
-#include "EnemyControlling.h"
+#include "ControlEnemy.h"
 #include "Game.h"
 #include "GameLevel.h"
 #include "Grid.h"
@@ -9,25 +9,25 @@
 #include <QGraphicsScene>
 #include <QRandomGenerator>
 
-EnemyControlling::EnemyControlling(AbstractComponent *parent) :
-	AbstractControllingBehavior(parent),
+ControlEnemy::ControlEnemy(AbstractComponent *parent) :
+	AbstractControl(parent),
 	_globalState{GS_Scatter}
 {
 
 }
 
-void EnemyControlling::setGlobalState(GlobalState state)
+void ControlEnemy::setGlobalState(GlobalState state)
 {
 	_globalState = state;
 }
 
-void EnemyControlling::reset()
+void ControlEnemy::reset()
 {
 	parentEnemy()->setState(Enemy::ST_Exit);
 	_targetPosition = QPointF(360, 300);
 }
 
-void EnemyControlling::performControllingActions()
+void ControlEnemy::performControlTasks()
 {
 	updateTargetPosition();
 
@@ -58,14 +58,14 @@ void EnemyControlling::performControllingActions()
 	moving()->setNextDirection(directions.at(index));
 }
 
-qreal EnemyControlling::distanceToTarget(Vector2 direction) const
+qreal ControlEnemy::distanceToTarget(Vector2 direction) const
 {
 	const Vector2 &nextCell{moving()->nextCellPositionIn(direction)};
 
 	return nextCell.distanceTo(Vector2(_targetPosition));
 }
 
-void EnemyControlling::updateTargetPosition()
+void ControlEnemy::updateTargetPosition()
 {
 	switch (parentEnemy()->state()) {
 	case Enemy::ST_Exit:
@@ -86,7 +86,7 @@ void EnemyControlling::updateTargetPosition()
 	}
 }
 
-bool EnemyControlling::isTargetReached()
+bool ControlEnemy::isTargetReached()
 {
 	auto *grid{Game::ref().level()->grid()};
 	const QPoint &parentCell{grid->mapToGrid(gameObject()->pos())};
@@ -95,7 +95,7 @@ bool EnemyControlling::isTargetReached()
 	return parentCell == targetCell;
 }
 
-void EnemyControlling::processGlobalState()
+void ControlEnemy::processGlobalState()
 {
 	auto *personality{parentEnemy()->personality()};
 
@@ -109,7 +109,7 @@ void EnemyControlling::processGlobalState()
 	}
 }
 
-void EnemyControlling::actFrightened()
+void ControlEnemy::actFrightened()
 {
 	// ranadom movement
 	// int cnt{static_cast<int>(directions.count())};
@@ -117,7 +117,7 @@ void EnemyControlling::actFrightened()
 	// _moving->setNextMove(directions.at(ind));
 }
 
-Enemy *EnemyControlling::parentEnemy()
+Enemy *ControlEnemy::parentEnemy()
 {
 	return static_cast<Enemy *>(gameObject());
 }

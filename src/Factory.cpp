@@ -1,13 +1,13 @@
 #include "Factory.h"
 #include "GameGlobals.h"
-#include "actions/EyeOrientate.h"
-#include "actions/PlayerOrientate.h"
+#include "actions/orientate/OrientateEye.h"
+#include "actions/orientate/OrientatePlayer.h"
 #include "actions/animate/AnimateEnemy.h"
 #include "actions/animate/AnimateEnergizer.h"
 #include "actions/animate/AnimatePlayer.h"
 #include "actions/animate/AnimateTeleporter.h"
-#include "behaviors/EnemyControlling.h"
-#include "behaviors/PlayerControlling.h"
+#include "actions/control/ControlEnemy.h"
+#include "actions/control/ControlPlayer.h"
 #include "personalities/Poking.h"
 #include "personalities/Shadowing.h"
 #include "personalities/Shying.h"
@@ -35,13 +35,13 @@ AbstractAction *Factory::createAnimating(int type)
 	}
 }
 
-AbstractControllingBehavior *Factory::createControlling(int type)
+AbstractControl *Factory::createControlling(int type)
 {
 	switch (type) {
 	case OBJ_Player:
-		return new PlayerControlling();
+		return new ControlPlayer();
 	case OBJ_Enemy:
-		return new EnemyControlling();
+		return new ControlEnemy();
 	default:
 		return nullptr;
 	}
@@ -51,9 +51,9 @@ AbstractOrientate *Factory::createOrientating(int type)
 {
 	switch (type) {
 	case OBJ_Player:
-		return new PlayerOrientate();
+		return new OrientatePlayer();
 	case OBJ_Enemy:
-		return new EyeOrientate();
+		return new OrientateEye();
 	default:
 		return nullptr;
 	}
