@@ -2,12 +2,12 @@
 #include "GameGlobals.h"
 #include "actions/EyeOrientate.h"
 #include "actions/PlayerOrientate.h"
-#include "behaviors/EnemyAnimating.h"
+#include "actions/animate/AnimateEnemy.h"
+#include "actions/animate/AnimateEnergizer.h"
+#include "actions/animate/AnimatePlayer.h"
+#include "actions/animate/AnimateTeleporter.h"
 #include "behaviors/EnemyControlling.h"
-#include "behaviors/EnergizerAnimating.h"
-#include "behaviors/PlayerAnimating.h"
 #include "behaviors/PlayerControlling.h"
-#include "behaviors/TeleporterAnimating.h"
 #include "personalities/Poking.h"
 #include "personalities/Shadowing.h"
 #include "personalities/Shying.h"
@@ -23,13 +23,13 @@ AbstractAction *Factory::createAnimating(int type)
 {
 	switch (type) {
 	case OBJ_Player:
-		return new PlayerAnimating();
+		return new AnimatePlayer();
 	case OBJ_Enemy:
-		return new EnemyAnimating();
+		return new AnimateEnemy();
 	case OBJ_Energizer:
-		return new EnergizerAnimating();
+		return new AnimateEnergizer();
 	case OBJ_Teleporter:
-		return new TeleporterAnimating();
+		return new AnimateTeleporter();
 	default:
 		return nullptr;
 	}

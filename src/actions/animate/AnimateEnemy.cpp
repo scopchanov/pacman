@@ -1,19 +1,19 @@
-#include "EnemyAnimating.h"
+#include "AnimateEnemy.h"
 
-EnemyAnimating::EnemyAnimating(AbstractComponent *parent) :
-	AbstractAnimatingBehavior(parent)
+AnimateEnemy::AnimateEnemy(AbstractComponent *parent) :
+	AbstractAnimate(parent)
 {
 	setFrameRate(20);
 }
 
-void EnemyAnimating::reset()
+void AnimateEnemy::reset()
 {
 	setValue(0);
 	setDirection(DIR_Forwards);
 	updateParent();
 }
 
-void EnemyAnimating::update()
+void AnimateEnemy::update()
 {
 	// TODO: Improve the method's name
 

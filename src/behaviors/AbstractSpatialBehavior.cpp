@@ -4,7 +4,7 @@
 #include "AbstractGameObject.h"
 
 AbstractSpatialBehavior::AbstractSpatialBehavior(AbstractComponent *parent) :
-	AbstractTimedBehavior(parent),
+	AbstractTimedAction(parent),
 	_tilemap{nullptr}
 {
 

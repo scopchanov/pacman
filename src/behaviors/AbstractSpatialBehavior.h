@@ -1,13 +1,13 @@
 #ifndef ABSTRACTSPATIALBEHAVIOR_H
 #define ABSTRACTSPATIALBEHAVIOR_H
 
-#include "AbstractTimedBehavior.h"
+#include "actions/AbstractTimedAction.h"
 #include "Vector2.h"
 
 class AbstractGameObject;
 class Tilemap;
 
-class AbstractSpatialBehavior : public AbstractTimedBehavior
+class AbstractSpatialBehavior : public AbstractTimedAction
 {
 public:
 	explicit AbstractSpatialBehavior(AbstractComponent *parent = nullptr);
