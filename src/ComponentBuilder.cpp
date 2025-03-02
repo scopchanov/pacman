@@ -5,10 +5,11 @@
 #include "AbstractGameObject.h"
 #include "components/actions/EatEnemy.h"
 #include "components/actions/EnergizePlayer.h"
-#include "components/actions/ExecuteStateMachine.h"
+#include "components/actions/ManageLevelMode.h"
 #include "components/actions/KillPlayer.h"
 #include "components/actions/Spawn.h"
 #include "components/actions/Teleport.h"
+#include "components/actions/UpdateDeenergizer.h"
 #include "components/actions/control/ControlEnemy.h"
 #include "components/actions/orientate/AbstractOrientate.h"
 #include "components/actions/tilemap/EatDot.h"
@@ -26,11 +27,14 @@ void ComponentBuilder::setGameObject(AbstractGameObject *gameObject)
 	_gameObject = gameObject;
 }
 
-void ComponentBuilder::addFoo()
+void ComponentBuilder::addManageLevelMode(const StepDurations &stepDurations)
 {
-	auto *m{new ExecuteStateMachine()};
+	auto *manageLevelMode{new ManageLevelMode()};
 
-	_gameObject->addComponent(m);
+	for(const auto &pair : stepDurations)
+		manageLevelMode->setStepDuration(pair.first, pair.second);
+
+	_gameObject->addComponent(manageLevelMode);
 }
 
 void ComponentBuilder::addSpawn(const QPointF &position)
@@ -112,6 +116,13 @@ void ComponentBuilder::addEnergizePlayer()
 
 	QObject::connect(energizePlayer, &EnergizePlayer::playerEnergized,
 					 game(), &Game::onPlayerEnergized);
+}
+
+void ComponentBuilder::addUpdateDeenergizer()
+{
+	auto *updateDeenergizer{new UpdateDeenergizer()};
+
+	_gameObject->addComponent(updateDeenergizer);
 }
 
 void ComponentBuilder::addTeleport(const QPointF &destination)

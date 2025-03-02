@@ -2,7 +2,6 @@
 #include "AbstractComponent.h"
 #include "Game.h"
 #include "GameGlobals.h"
-#include "Palette.h"
 #include "Vector2.h"
 #include "objects/EnemyEye.h"
 #include "personalities/AbstractPersonality.h"

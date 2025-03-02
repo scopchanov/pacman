@@ -1,36 +1,11 @@
 #include "Deenergizer.h"
+#include "AbstractComponent.h"
 #include "GameGlobals.h"
-#include "Game.h"
-#include "PathBuilder.h"
-#include "components/actions/CalmDownEnemies.h"
-#include "components/actions/DeactivateDeenergizer.h"
-#include "components/actions/DeenergizePlayer.h"
-#include "components/behaviors/Delaying.h"
-#include <QPen>
 
 Deenergizer::Deenergizer(AbstractGameObject *parent) :
 	AbstractGameObject(parent)
 {
-	auto *deenergizing{new Delaying()};
-	auto *actDeenergizePlayer{new DeenergizePlayer(deenergizing)};
-	auto *actCalmDownEnemies{new CalmDownEnemies(deenergizing)};
-	auto *actDeactivateDeenergizer{new DeactivateDeenergizer(deenergizing)};
 
-	deenergizing->setDuration(6);
-	deenergizing->addComponent(actDeenergizePlayer);
-	deenergizing->addComponent(actCalmDownEnemies);
-	deenergizing->addComponent(actDeactivateDeenergizer);
-	deenergizing->setEnabled(false);
-
-	addComponent(deenergizing);
-
-	updatePath(0);
-	setPen(QPen(QBrush(0xFFEA00), 4, Qt::SolidLine, Qt::RoundCap));
-	setBrush(Qt::transparent);
-
-	QObject::connect(deenergizing, &Delaying::tick, [this](qreal time){
-		updatePath((6 - time)*30*24/6.0);
-	});
 }
 
 void Deenergizer::activate()
@@ -53,30 +28,24 @@ int Deenergizer::objectType() const
 	return OBJ_Deenergizer;
 }
 
-void Deenergizer::modifyComponent(int t)
+void Deenergizer::modifyComponent(int type)
 {
-	auto *deenergizing{findComponent(BT_Delaying)};
+	auto *delaying{findComponent(BT_Delaying)};
 
-	if (!deenergizing)
+	if (!delaying)
 		return;
 
-	switch (t) {
+	switch (type) {
 	case MOD_Activate:
-		deenergizing->setEnabled(true);
-		deenergizing->reset();
+		delaying->setEnabled(true);
+		delaying->reset();
 		break;
 	case MOD_Deactivate:
-		deenergizing->setEnabled(false);
+		delaying->setEnabled(false);
 		setPath(QPainterPath());
 		break;
 	case MOD_Reset:
-		deenergizing->reset();
+		delaying->reset();
 		break;
 	}
-}
-
-void Deenergizer::updatePath(qreal value)
-{
-	setPath(PathBuilder::dynamicObjectPath(OBJ_Deenergizer, value));
-	update();
 }

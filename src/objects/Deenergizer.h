@@ -5,13 +5,13 @@
 
 class Deenergizer : public AbstractGameObject
 {
-public:
 	enum ModificationType : int {
 		MOD_Activate = 0,
 		MOD_Deactivate,
 		MOD_Reset
 	};
 
+public:
 	explicit Deenergizer(AbstractGameObject *parent = nullptr);
 
 	void activate();
@@ -21,8 +21,7 @@ public:
 	int objectType() const override final;
 
 private:
-	void modifyComponent(int t);
-	void updatePath(qreal value);
+	void modifyComponent(int type);
 };
 
 #endif // DEENERGIZER_H

@@ -16,7 +16,6 @@ SOURCES += \
     GameLevel.cpp \
     GameMenu.cpp \
     GameWidget.cpp \
-    LevelState.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
@@ -34,11 +33,11 @@ SOURCES += \
     components/actions/DeleteGameObject.cpp \
     components/actions/EatEnemy.cpp \
     components/actions/EnergizePlayer.cpp \
-    components/actions/ExecuteStateMachine.cpp \
     components/actions/KillPlayer.cpp \
-    components/actions/ScareEnemies.cpp \
+    components/actions/ManageLevelMode.cpp \
     components/actions/Spawn.cpp \
     components/actions/Teleport.cpp \
+    components/actions/UpdateDeenergizer.cpp \
     components/actions/animate/AbstractAnimate.cpp \
     components/actions/animate/AnimateEnemy.cpp \
     components/actions/animate/AnimateEnergizer.cpp \
@@ -60,6 +59,7 @@ SOURCES += \
     objects/Enemy.cpp \
     objects/EnemyEye.cpp \
     objects/Energizer.cpp \
+    objects/LevelMode.cpp \
     objects/Player.cpp \
     objects/Teleporter.cpp \
     personalities/AbstractPersonality.cpp \
@@ -80,7 +80,6 @@ HEADERS += \
     GameLevel.h \
     GameMenu.h \
     GameWidget.h \
-    LevelState.h \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
@@ -98,11 +97,11 @@ HEADERS += \
     components/actions/DeleteGameObject.h \
     components/actions/EatEnemy.h \
     components/actions/EnergizePlayer.h \
-    components/actions/ExecuteStateMachine.h \
     components/actions/KillPlayer.h \
-    components/actions/ScareEnemies.h \
+    components/actions/ManageLevelMode.h \
     components/actions/Spawn.h \
     components/actions/Teleport.h \
+    components/actions/UpdateDeenergizer.h \
     components/actions/animate/AbstractAnimate.h \
     components/actions/animate/AnimateEnemy.h \
     components/actions/animate/AnimateEnergizer.h \
@@ -124,6 +123,7 @@ HEADERS += \
     objects/Enemy.h \
     objects/EnemyEye.h \
     objects/Energizer.h \
+    objects/LevelMode.h \
     objects/Player.h \
     objects/Teleporter.h \
     personalities/AbstractPersonality.h \

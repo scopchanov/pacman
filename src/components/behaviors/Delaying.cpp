@@ -22,6 +22,11 @@ void Delaying::setDuration(qreal duration)
 	_duration = duration;
 }
 
+qreal Delaying::time() const
+{
+	return _time;
+}
+
 int Delaying::type() const
 {
 	return BT_Delaying;
@@ -44,8 +49,6 @@ bool Delaying::increaseTime()
 		return false;
 
 	_time += Game::ref().clock()->deltaTime();
-
-	emit tick(_time);
 
 	return true;
 }

@@ -3,7 +3,7 @@
 
 #include <Scene.h>
 
-class LevelState;
+class LevelMode;
 class Clock;
 class Palette;
 class Grid;
@@ -22,7 +22,7 @@ public:
 	Player *player() const;
 	void addEnemy(Enemy *enemy);
 	QList<Enemy *> enemies() const;
-	LevelState *state() const;
+	LevelMode *mode() const;
 	Deenergizer *deenergizer() const;
 
 	void reset() override;
@@ -32,7 +32,7 @@ private:
 	Tilemap *_dots;
 	Player *_player;
 	QList<Enemy *> _enemies;
-	LevelState *_state;
+	LevelMode *_mode;
 	Deenergizer *_deenergizer;
 };
 

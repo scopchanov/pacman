@@ -293,12 +293,12 @@ QPainterPath PathBuilder::energizer(qreal d)
 	return p;
 }
 
-QPainterPath PathBuilder::deenergizer(qreal d)
+QPainterPath PathBuilder::deenergizer(qreal length)
 {
 	QPainterPath p;
 
-	p.moveTo(0, 12);
-	p.lineTo(d, 12);
+	p.moveTo(0, 0);
+	p.lineTo(length, 0);
 
 	return p;
 }

@@ -14,6 +14,10 @@
     "Energizer": "#FFEA00",
     "Teleporter": "#424242"
   },
+  "stepDurations": [7, 20, 7, 20, 5, 20, 5, 0],
+  "deenergizer": {
+    "duration": 6
+  },
   "grid": {
     "rows": 33,
     "columns": 30,

@@ -8,12 +8,17 @@
 #include "PathBuilder.h"
 #include "Tilemap.h"
 #include "ComponentBuilder.h"
+#include "components/actions/CalmDownEnemies.h"
+#include "components/actions/DeactivateDeenergizer.h"
+#include "components/actions/DeenergizePlayer.h"
 #include "components/actions/control/ControlEnemy.h"
 #include "components/actions/tilemap/Move.h"
+#include "components/behaviors/Delaying.h"
+#include "objects/Deenergizer.h"
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
 #include "objects/EnemyEye.h"
-#include "LevelState.h"
+#include "objects/LevelMode.h"
 #include "objects/Player.h"
 #include "objects/Teleporter.h"
 #include "personalities/Shying.h"
@@ -32,11 +37,12 @@ void Configurator::configure(const QJsonObject &json)
 	if (json.isEmpty())
 		return;
 
-	configureFoo();
+	configureLevelMode(json.value("stepDurations").toArray());
 	configurePalette(json.value("palette").toObject());
 	configureGrid(json.value("grid").toObject());
 	configureWalls(json.value("walls").toArray());
 	configureDots(json.value("dots").toArray());
+	configureDeenergizer(json.value("deenergizer").toObject());
 	configurePlayer(json.value("player").toObject());
 	createDoors(json.value("doors").toArray());
 	createEnergizers(json.value("energizers").toArray());
@@ -44,12 +50,19 @@ void Configurator::configure(const QJsonObject &json)
 	createEnemies(json.value("enemies").toArray());
 }
 
-void Configurator::configureFoo()
+void Configurator::configureLevelMode(const QJsonArray &jsonStepDurations)
 {
 	ComponentBuilder builder;
+	StepDurations stepDurations;
+	int step{0};
 
-	builder.setGameObject(level()->state());
-	builder.addFoo();
+	for (auto const &duration : jsonStepDurations) {
+		stepDurations.append({step, duration.toDouble()});
+		step++;
+	}
+
+	builder.setGameObject(level()->mode());
+	builder.addManageLevelMode(stepDurations);
 }
 
 void Configurator::configurePalette(const QJsonObject &json)
@@ -96,6 +109,35 @@ void Configurator::configureDots(const QJsonArray &jsonDots)
 	buildTilemap(dots, jsonDots, QPen(Qt::transparent), palette()->color(CR_Dot));
 }
 
+void Configurator::configureDeenergizer(const QJsonObject &json)
+{
+	// TODO: Move the creation of the actions to the ComponentBuilder
+
+	ComponentBuilder builder;
+	auto *delaying{new Delaying()};
+	auto *actDeenergizePlayer{new DeenergizePlayer(delaying)};
+	auto *actCalmDownEnemies{new CalmDownEnemies(delaying)};
+	auto *actDeactivateDeenergizer{new DeactivateDeenergizer(delaying)};
+	auto *deenergizer{level()->deenergizer()};
+	const QBrush &brush{palette()->color(CR_PlayerEnergized)};
+
+	delaying->setDuration(json.value("duration").toDouble());
+	delaying->addComponent(actDeenergizePlayer);
+	delaying->addComponent(actCalmDownEnemies);
+	delaying->addComponent(actDeactivateDeenergizer);
+	delaying->setEnabled(false);
+
+	deenergizer->addComponent(delaying);
+
+	builder.setGameObject(deenergizer);
+	builder.addUpdateDeenergizer();
+
+	deenergizer->setPos(36, 8);
+	deenergizer->setPen(QPen(brush, 8, Qt::SolidLine, Qt::RoundCap));
+	deenergizer->setBrush(Qt::transparent);
+	deenergizer->reset();
+}
+
 void Configurator::configurePlayer(const QJsonObject &json)
 {
 	ComponentBuilder builder;
@@ -138,7 +180,7 @@ void Configurator::createEnemy(const QJsonObject &json)
 	builder.addMove(json.value("direction").toInt());
 	builder.addControl(OBJ_Enemy);
 	builder.addAnimate(OBJ_Enemy);
-	builder.addKillPlayer();
+	// builder.addKillPlayer();
 
 	createEye(enemy, {-6, -6});
 	createEye(enemy, {6, -6});

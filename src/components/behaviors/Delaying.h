@@ -11,6 +11,7 @@ public:
 
 	qreal duration() const;
 	void setDuration(qreal duration);
+	qreal time() const;
 	int type() const override;
 
 	void reset() override;
@@ -24,9 +25,6 @@ private:
 
 	qreal _duration;
 	qreal _time;
-
-signals:
-	void tick(qreal time);
 };
 
 #endif // DELAYING_H

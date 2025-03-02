@@ -57,7 +57,7 @@ private:
 	static QPainterPath player(qreal angle);
 	static QPainterPath enemy(qreal d);
 	static QPainterPath energizer(qreal d);
-	static QPainterPath deenergizer(qreal d);
+	static QPainterPath deenergizer(qreal length);
 	static QPainterPath teleporter(qreal angle);
 	static void rotate(QPainterPath &path, qreal angle);
 };

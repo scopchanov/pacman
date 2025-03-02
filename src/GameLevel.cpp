@@ -1,10 +1,9 @@
 #include "GameLevel.h"
-#include "LevelState.h"
 #include "Clock.h"
-// #include "GameGlobals.h"
 #include "Tilemap.h"
 #include "components/actions/control/ControlEnemy.h"
 #include "objects/Enemy.h"
+#include "objects/LevelMode.h"
 #include "objects/Player.h"
 #include "objects/Deenergizer.h"
 
@@ -13,14 +12,14 @@ GameLevel::GameLevel(QObject *parent) :
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
 	_player{new Player()},
-	_state{new LevelState()},
+	_mode{new LevelMode()},
 	_deenergizer{new Deenergizer()}
 {
 	addItem(_walls);
 	addItem(_dots);
 	addItem(_player);
 	addItem(_deenergizer);
-	addItem(_state);
+	addItem(_mode);
 
 	// connect(clock(), &Clock::tick, _stateMachine, &AiStateMachine::advance);
 }
@@ -56,9 +55,9 @@ QList<Enemy *> GameLevel::enemies() const
 	return _enemies;
 }
 
-LevelState *GameLevel::state() const
+LevelMode *GameLevel::mode() const
 {
-	return _state;
+	return _mode;
 }
 
 Deenergizer *GameLevel::deenergizer() const

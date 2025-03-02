@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+using StepDurations = QList<QPair<int, qreal>>;
+
 class Game;
 class Move;
 class AbstractGameObject;
@@ -15,7 +17,7 @@ public:
 	explicit ComponentBuilder(QObject *parent = nullptr);
 	
 	void setGameObject(AbstractGameObject *gameObject);
-	void addFoo();
+	void addManageLevelMode(const StepDurations &stepDurations);
 	void addSpawn(const QPointF &position);
 	void addMove(int direction);
 	void addControl(int type);
@@ -25,6 +27,7 @@ public:
 	void addEatEnemy();
 	void addKillPlayer();
 	void addEnergizePlayer();
+	void addUpdateDeenergizer();
 	void addTeleport(const QPointF &destination);
 
 private:

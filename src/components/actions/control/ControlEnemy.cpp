@@ -3,10 +3,10 @@
 #include "GameGlobals.h"
 #include "GameLevel.h"
 #include "Grid.h"
-#include "LevelState.h"
-#include "components/actions/ExecuteStateMachine.h"
+#include "components/actions/ManageLevelMode.h"
 #include "components/actions/tilemap/Move.h"
 #include "objects/Enemy.h"
+#include "objects/LevelMode.h"
 #include "personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
 #include <QRandomGenerator>
@@ -29,10 +29,8 @@ void ControlEnemy::control()
 
 	const QList<Vector2> &directions{move()->possibleMoves()};
 
-	if (directions.isEmpty()) {
-		move()->reverse();
+	if (directions.isEmpty())
 		return;
-	}
 
 	qreal minimalDistence{distanceToTarget(directions.first())};
 	int index{0};
@@ -94,10 +92,8 @@ bool ControlEnemy::isTargetReached()
 void ControlEnemy::processLevelState()
 {
 	auto *personality{parentEnemy()->personality()};
-	auto *levelState{Game::ref().level()->state()};
-	auto *component{levelState->findComponent(ACT_ExecuteStateMachine)};
-	auto *control{static_cast<ExecuteStateMachine *>(component)};
-	int mode{control->step() % 2 ? WM_Chase : WM_Scatter};
+	auto *levelMode{Game::ref().level()->mode()};
+	int mode{levelMode->step() % 2 ? WM_Chase : WM_Scatter};
 
 	switch (mode) {
 	case WM_Scatter:

@@ -20,11 +20,12 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
-	void configureFoo();
+	void configureLevelMode(const QJsonArray &jsonStepDurations);
 	void configurePalette(const QJsonObject &json);
 	void configureGrid(const QJsonObject &json);
 	void configureWalls(const QJsonArray &jsonWalls);
 	void configureDots(const QJsonArray &jsonDots);
+	void configureDeenergizer(const QJsonObject &json);
 	void configurePlayer(const QJsonObject &json);
 	void createEnemies(const QJsonArray &enemies);
 	void createEnemy(const QJsonObject &json);
