@@ -1,8 +1,10 @@
 #include "ControlEnemy.h"
 #include "Game.h"
+#include "GameGlobals.h"
 #include "GameLevel.h"
 #include "Grid.h"
-#include "AiStateMachine.h"
+#include "LevelState.h"
+#include "components/actions/ExecuteStateMachine.h"
 #include "components/actions/tilemap/Move.h"
 #include "objects/Enemy.h"
 #include "personalities/AbstractPersonality.h"
@@ -10,15 +12,9 @@
 #include <QRandomGenerator>
 
 ControlEnemy::ControlEnemy(AbstractComponent *parent) :
-	AbstractControl(parent),
-	_globalState{GS_Scatter}
+	AbstractControl(parent)
 {
 
-}
-
-void ControlEnemy::setGlobalState(GlobalState state)
-{
-	_globalState = state;
 }
 
 void ControlEnemy::reset()
@@ -79,7 +75,7 @@ void ControlEnemy::updateTargetPosition()
 		actFrightened();
 		break;
 	case Enemy::ST_Global:
-		processGlobalState();
+		processLevelState();
 		break;
 	default:
 		break;
@@ -95,15 +91,19 @@ bool ControlEnemy::isTargetReached()
 	return parentCell == targetCell;
 }
 
-void ControlEnemy::processGlobalState()
+void ControlEnemy::processLevelState()
 {
 	auto *personality{parentEnemy()->personality()};
+	auto *levelState{Game::ref().level()->state()};
+	auto *component{levelState->findComponent(ACT_ExecuteStateMachine)};
+	auto *control{static_cast<ExecuteStateMachine *>(component)};
+	int mode{control->step() % 2 ? WM_Chase : WM_Scatter};
 
-	switch (_globalState) {
-	case GS_Scatter:
+	switch (mode) {
+	case WM_Scatter:
 		_targetPosition = personality->scatterTarget();
 		break;
-	case GS_Chase:
+	case WM_Chase:
 		_targetPosition = personality->calculateTarget();
 		break;
 	}

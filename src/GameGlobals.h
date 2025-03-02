@@ -28,6 +28,7 @@ enum ComponentType : int {
 	ACT_EatDot,
 	ACT_EatEnemy,
 	ACT_EnergizePlayer,
+	ACT_ExecuteStateMachine,
 	ACT_KillPlayer,
 	ACT_Move,
 	ACT_Orientate,
@@ -52,6 +53,11 @@ enum PersonalityType : int {
 	PT_Speeding,
 	PT_Shying,
 	PT_Poking
+};
+
+enum WanderMode : int {
+	WM_Scatter = 0,
+	WM_Chase
 };
 
 #endif // GAMEGLOBALS_H

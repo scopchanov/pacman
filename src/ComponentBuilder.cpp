@@ -5,6 +5,7 @@
 #include "AbstractGameObject.h"
 #include "components/actions/EatEnemy.h"
 #include "components/actions/EnergizePlayer.h"
+#include "components/actions/ExecuteStateMachine.h"
 #include "components/actions/KillPlayer.h"
 #include "components/actions/Spawn.h"
 #include "components/actions/Teleport.h"
@@ -23,6 +24,13 @@ ComponentBuilder::ComponentBuilder(QObject *parent) :
 void ComponentBuilder::setGameObject(AbstractGameObject *gameObject)
 {
 	_gameObject = gameObject;
+}
+
+void ComponentBuilder::addFoo()
+{
+	auto *m{new ExecuteStateMachine()};
+
+	_gameObject->addComponent(m);
 }
 
 void ComponentBuilder::addSpawn(const QPointF &position)

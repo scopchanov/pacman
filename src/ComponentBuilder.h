@@ -15,6 +15,7 @@ public:
 	explicit ComponentBuilder(QObject *parent = nullptr);
 	
 	void setGameObject(AbstractGameObject *gameObject);
+	void addFoo();
 	void addSpawn(const QPointF &position);
 	void addMove(int direction);
 	void addControl(int type);

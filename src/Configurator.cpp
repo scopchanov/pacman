@@ -13,6 +13,7 @@
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
 #include "objects/EnemyEye.h"
+#include "LevelState.h"
 #include "objects/Player.h"
 #include "objects/Teleporter.h"
 #include "personalities/Shying.h"
@@ -31,6 +32,7 @@ void Configurator::configure(const QJsonObject &json)
 	if (json.isEmpty())
 		return;
 
+	configureFoo();
 	configurePalette(json.value("palette").toObject());
 	configureGrid(json.value("grid").toObject());
 	configureWalls(json.value("walls").toArray());
@@ -40,6 +42,14 @@ void Configurator::configure(const QJsonObject &json)
 	createEnergizers(json.value("energizers").toArray());
 	createTeleporters(json.value("teleporters").toArray());
 	createEnemies(json.value("enemies").toArray());
+}
+
+void Configurator::configureFoo()
+{
+	ComponentBuilder builder;
+
+	builder.setGameObject(level()->state());
+	builder.addFoo();
 }
 
 void Configurator::configurePalette(const QJsonObject &json)

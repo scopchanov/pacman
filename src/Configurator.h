@@ -20,6 +20,7 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
+	void configureFoo();
 	void configurePalette(const QJsonObject &json);
 	void configureGrid(const QJsonObject &json);
 	void configureWalls(const QJsonArray &jsonWalls);

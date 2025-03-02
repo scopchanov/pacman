@@ -12,14 +12,7 @@ class Enemy;
 class ControlEnemy : public AbstractControl
 {
 public:
-	enum GlobalState : int {
-		GS_Scatter,
-		GS_Chase
-	};
-
 	explicit ControlEnemy(AbstractComponent *parent = nullptr);
-
-	void setGlobalState(GlobalState state);
 
 	void reset() override;
 
@@ -30,11 +23,10 @@ private:
 	qreal distanceToTarget(Vector2 direction) const;
 	void updateTargetPosition();
 	bool isTargetReached();
-	void processGlobalState();
+	void processLevelState();
 	void actFrightened();
 	Enemy *parentEnemy();
 
-	GlobalState _globalState;
 	QPointF _targetPosition;
 };
 

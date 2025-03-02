@@ -16,13 +16,13 @@ SOURCES += \
     GameLevel.cpp \
     GameMenu.cpp \
     GameWidget.cpp \
+    LevelState.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
     PathBuilder.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
-    AiStateMachine.cpp \
     AudioEngine.cpp \
     Game.cpp \
     GameStatus.cpp \
@@ -34,6 +34,7 @@ SOURCES += \
     components/actions/DeleteGameObject.cpp \
     components/actions/EatEnemy.cpp \
     components/actions/EnergizePlayer.cpp \
+    components/actions/ExecuteStateMachine.cpp \
     components/actions/KillPlayer.cpp \
     components/actions/ScareEnemies.cpp \
     components/actions/Spawn.cpp \
@@ -79,13 +80,13 @@ HEADERS += \
     GameLevel.h \
     GameMenu.h \
     GameWidget.h \
+    LevelState.h \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
     PathBuilder.h \
     ScoreDisplay.h \
     StartupSequence.h \
-    AiStateMachine.h \
     AudioEngine.h \
     Game.h \
     GameStatus.h \
@@ -97,6 +98,7 @@ HEADERS += \
     components/actions/DeleteGameObject.h \
     components/actions/EatEnemy.h \
     components/actions/EnergizePlayer.h \
+    components/actions/ExecuteStateMachine.h \
     components/actions/KillPlayer.h \
     components/actions/ScareEnemies.h \
     components/actions/Spawn.h \
