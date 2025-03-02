@@ -180,7 +180,7 @@ void Configurator::createEnemy(const QJsonObject &json)
 	builder.addMove(json.value("direction").toInt());
 	builder.addControl(OBJ_Enemy);
 	builder.addAnimate(OBJ_Enemy);
-	// builder.addKillPlayer();
+	builder.addKillPlayer();
 
 	createEye(enemy, {-6, -6});
 	createEye(enemy, {6, -6});
