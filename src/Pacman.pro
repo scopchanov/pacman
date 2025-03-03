@@ -7,7 +7,6 @@ CONFIG += c++23
 #DEFINES += DEBUG
 
 SOURCES += \
-    ComponentBuilder.cpp \
     Configurator.cpp \
     DialogGame.cpp \
     DialogSettings.cpp \
@@ -19,6 +18,7 @@ SOURCES += \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
+    ObjectBuilder.cpp \
     PathBuilder.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
@@ -34,7 +34,7 @@ SOURCES += \
     components/actions/EatEnemy.cpp \
     components/actions/EnergizePlayer.cpp \
     components/actions/KillPlayer.cpp \
-    components/actions/ManageLevelMode.cpp \
+    components/actions/ManageLevelState.cpp \
     components/actions/Spawn.cpp \
     components/actions/Teleport.cpp \
     components/actions/UpdateDeenergizer.cpp \
@@ -59,7 +59,7 @@ SOURCES += \
     objects/Enemy.cpp \
     objects/EnemyEye.cpp \
     objects/Energizer.cpp \
-    objects/LevelMode.cpp \
+    objects/LevelState.cpp \
     objects/Player.cpp \
     objects/Teleporter.cpp \
     personalities/AbstractPersonality.cpp \
@@ -70,7 +70,6 @@ SOURCES += \
     main.cpp
 
 HEADERS += \
-    ComponentBuilder.h \
     Configurator.h \
     DialogGame.h \
     DialogSettings.h \
@@ -83,6 +82,7 @@ HEADERS += \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
+    ObjectBuilder.h \
     PathBuilder.h \
     ScoreDisplay.h \
     StartupSequence.h \
@@ -98,7 +98,7 @@ HEADERS += \
     components/actions/EatEnemy.h \
     components/actions/EnergizePlayer.h \
     components/actions/KillPlayer.h \
-    components/actions/ManageLevelMode.h \
+    components/actions/ManageLevelState.h \
     components/actions/Spawn.h \
     components/actions/Teleport.h \
     components/actions/UpdateDeenergizer.h \
@@ -123,7 +123,7 @@ HEADERS += \
     objects/Enemy.h \
     objects/EnemyEye.h \
     objects/Energizer.h \
-    objects/LevelMode.h \
+    objects/LevelState.h \
     objects/Player.h \
     objects/Teleporter.h \
     personalities/AbstractPersonality.h \

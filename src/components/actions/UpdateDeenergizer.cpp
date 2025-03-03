@@ -40,7 +40,6 @@ void UpdateDeenergizer::updateDeenergizer(qreal len)
 qreal UpdateDeenergizer::barLength(AbstractComponent *component) const
 {
 	auto *delaying{static_cast<Delaying *>(component)};
-	qreal sceneWidth{gameObject()->scene()->sceneRect().width()};
 
-	return (sceneWidth - 60)*(1 - delaying->time()/delaying->duration());
+	return 648*(1 - delaying->time()/delaying->duration());
 }

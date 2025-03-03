@@ -106,15 +106,15 @@ void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
 	auto *text{new BonusText()};
-	auto *delayedDeleting{new Delaying()};
-	auto *actDeleteGameObject{new DeleteGameObject(delayedDeleting)};
+	auto *delaying{new Delaying()};
+	auto *actDeleteGameObject{new DeleteGameObject(delaying)};
 
 	actDeleteGameObject->setGameObject(text);
 
-	delayedDeleting->addComponent(actDeleteGameObject);
-	delayedDeleting->setDuration(2);
+	delaying->addComponent(actDeleteGameObject);
+	delaying->setDuration(2);
 
-	text->addComponent(delayedDeleting);
+	text->addComponent(delaying);
 	text->setText(QString::number(points));
 	text->setPos(_level->player()->pos());
 

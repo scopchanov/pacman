@@ -1,5 +1,5 @@
-#ifndef COMPONENTBUILDER_H
-#define COMPONENTBUILDER_H
+#ifndef OBJECTBUILDER_H
+#define OBJECTBUILDER_H
 
 #include <QObject>
 
@@ -10,14 +10,14 @@ class Move;
 class AbstractGameObject;
 class Vector2;
 
-class ComponentBuilder : public QObject
+class ObjectBuilder : public QObject
 {
 	Q_OBJECT
 public:
-	explicit ComponentBuilder(QObject *parent = nullptr);
+	explicit ObjectBuilder(QObject *parent = nullptr);
 	
 	void setGameObject(AbstractGameObject *gameObject);
-	void addManageLevelMode(const StepDurations &stepDurations);
+	void addManageLevelState(const StepDurations &stepDurations);
 	void addSpawn(const QPointF &position);
 	void addMove(int direction);
 	void addControl(int type);
@@ -38,4 +38,4 @@ private:
 	AbstractGameObject *_gameObject;
 };
 
-#endif // COMPONENTBUILDER_H
+#endif // OBJECTBUILDER_H

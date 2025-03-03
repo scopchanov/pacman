@@ -3,10 +3,11 @@
 #include "GameGlobals.h"
 #include "GameLevel.h"
 #include "Grid.h"
-#include "components/actions/ManageLevelMode.h"
+#include "Palette.h"
+#include "components/actions/ManageLevelState.h"
 #include "components/actions/tilemap/Move.h"
 #include "objects/Enemy.h"
-#include "objects/LevelMode.h"
+#include "objects/LevelState.h"
 #include "personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
 #include <QRandomGenerator>
@@ -64,7 +65,7 @@ void ControlEnemy::updateTargetPosition()
 	switch (parentEnemy()->state()) {
 	case Enemy::ST_Exit:
 	case Enemy::ST_Eaten:
-		_targetPosition = QPointF(360, 300);
+		_targetPosition = QPointF(359, 300);
 
 		if (isTargetReached())
 			parentEnemy()->calmDown();
@@ -78,6 +79,17 @@ void ControlEnemy::updateTargetPosition()
 	default:
 		break;
 	}
+
+	updateTargetMark();
+}
+
+void ControlEnemy::updateTargetMark()
+{
+	auto *mark{parentEnemy()->targetMark()};
+	int role{parentEnemy()->personality()->colorRole()};
+
+	mark->setBrush(Game::ref().palette()->color(role));
+	mark->setPos(parentEnemy()->mapFromScene(_targetPosition));
 }
 
 bool ControlEnemy::isTargetReached()
@@ -92,10 +104,8 @@ bool ControlEnemy::isTargetReached()
 void ControlEnemy::processLevelState()
 {
 	auto *personality{parentEnemy()->personality()};
-	auto *levelMode{Game::ref().level()->mode()};
-	int mode{levelMode->step() % 2 ? WM_Chase : WM_Scatter};
 
-	switch (mode) {
+	switch (Game::ref().level()->state()->mode()) {
 	case WM_Scatter:
 		_targetPosition = personality->scatterTarget();
 		break;
@@ -113,7 +123,7 @@ void ControlEnemy::actFrightened()
 	// _move->setNextMove(directions.at(ind));
 }
 
-Enemy *ControlEnemy::parentEnemy()
+Enemy *ControlEnemy::parentEnemy() const
 {
 	return static_cast<Enemy *>(gameObject());
 }

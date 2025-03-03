@@ -5,14 +5,18 @@
 #include "Vector2.h"
 #include "objects/EnemyEye.h"
 #include "personalities/AbstractPersonality.h"
-#include <QBrush>
+#include <QPen>
 
 Enemy::Enemy(AbstractGameObject *parent) :
 	AbstractCharacter(parent),
 	_personality{nullptr},
-	_state{ST_Exit}
+	_state{ST_Exit},
+	_targetMark{new QGraphicsRectItem(this)}
 {
 
+	_targetMark->setRect(-8, -8, 16, 16);
+	_targetMark->setPen(QPen(Qt::transparent));
+	_targetMark->setBrush(Qt::red);
 }
 
 Enemy::~Enemy()
@@ -41,6 +45,11 @@ void Enemy::setState(EnemyState state)
 {
 	_state = state;
 	// _move->reverse();
+}
+
+QGraphicsRectItem *Enemy::targetMark() const
+{
+	return _targetMark;
 }
 
 int Enemy::objectType() const

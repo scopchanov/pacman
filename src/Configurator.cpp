@@ -7,7 +7,7 @@
 #include "Grid.h"
 #include "PathBuilder.h"
 #include "Tilemap.h"
-#include "ComponentBuilder.h"
+#include "ObjectBuilder.h"
 #include "components/actions/CalmDownEnemies.h"
 #include "components/actions/DeactivateDeenergizer.h"
 #include "components/actions/DeenergizePlayer.h"
@@ -18,7 +18,7 @@
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
 #include "objects/EnemyEye.h"
-#include "objects/LevelMode.h"
+#include "objects/LevelState.h"
 #include "objects/Player.h"
 #include "objects/Teleporter.h"
 #include "personalities/Shying.h"
@@ -37,7 +37,7 @@ void Configurator::configure(const QJsonObject &json)
 	if (json.isEmpty())
 		return;
 
-	configureLevelMode(json.value("stepDurations").toArray());
+	configureLevelState(json.value("stepDurations").toArray());
 	configurePalette(json.value("palette").toObject());
 	configureGrid(json.value("grid").toObject());
 	configureWalls(json.value("walls").toArray());
@@ -50,9 +50,9 @@ void Configurator::configure(const QJsonObject &json)
 	createEnemies(json.value("enemies").toArray());
 }
 
-void Configurator::configureLevelMode(const QJsonArray &jsonStepDurations)
+void Configurator::configureLevelState(const QJsonArray &jsonStepDurations)
 {
-	ComponentBuilder builder;
+	ObjectBuilder builder;
 	StepDurations stepDurations;
 	int step{0};
 
@@ -61,8 +61,8 @@ void Configurator::configureLevelMode(const QJsonArray &jsonStepDurations)
 		step++;
 	}
 
-	builder.setGameObject(level()->mode());
-	builder.addManageLevelMode(stepDurations);
+	builder.setGameObject(level()->state());
+	builder.addManageLevelState(stepDurations);
 }
 
 void Configurator::configurePalette(const QJsonObject &json)
@@ -111,9 +111,9 @@ void Configurator::configureDots(const QJsonArray &jsonDots)
 
 void Configurator::configureDeenergizer(const QJsonObject &json)
 {
-	// TODO: Move the creation of the actions to the ComponentBuilder
+	// TODO: Move the creation of the actions to the ObjectBuilder
 
-	ComponentBuilder builder;
+	ObjectBuilder builder;
 	auto *delaying{new Delaying()};
 	auto *actDeenergizePlayer{new DeenergizePlayer(delaying)};
 	auto *actCalmDownEnemies{new CalmDownEnemies(delaying)};
@@ -140,7 +140,7 @@ void Configurator::configureDeenergizer(const QJsonObject &json)
 
 void Configurator::configurePlayer(const QJsonObject &json)
 {
-	ComponentBuilder builder;
+	ObjectBuilder builder;
 	const QJsonObject &position{json.value("position").toObject()};
 	qreal x{position.value("x").toDouble()};
 	qreal y{position.value("y").toDouble()};
@@ -168,7 +168,7 @@ void Configurator::createEnemies(const QJsonArray &enemies)
 
 void Configurator::createEnemy(const QJsonObject &json)
 {
-	ComponentBuilder builder;
+	ObjectBuilder builder;
 	const QJsonObject &position{json.value("position").toObject()};
 	const QJsonObject &personality{json.value("personality").toObject()};
 	qreal x{position.value("x").toDouble()};
@@ -180,7 +180,7 @@ void Configurator::createEnemy(const QJsonObject &json)
 	builder.addMove(json.value("direction").toInt());
 	builder.addControl(OBJ_Enemy);
 	builder.addAnimate(OBJ_Enemy);
-	builder.addKillPlayer();
+	// builder.addKillPlayer();
 
 	createEye(enemy, {-6, -6});
 	createEye(enemy, {6, -6});
@@ -195,7 +195,7 @@ void Configurator::createEnemy(const QJsonObject &json)
 
 void Configurator::createEye(AbstractGameObject *parent, const QPointF &pos)
 {
-	ComponentBuilder builder;
+	ObjectBuilder builder;
 	auto *eye{new EnemyEye(parent)};
 	auto *move{static_cast<Move *>(parent->findComponent(ACT_Move))};
 
@@ -247,7 +247,7 @@ void Configurator::createEnergizers(const QJsonArray &energizers)
 
 void Configurator::createEnergizer(const QJsonObject &json)
 {
-	ComponentBuilder builder;
+	ObjectBuilder builder;
 	int column{json.value("column").toInt()};
 	int row{json.value("row").toInt()};
 	auto *energizer{new Energizer()};
@@ -272,7 +272,7 @@ void Configurator::createTeleporters(const QJsonArray &teleporters)
 
 void Configurator::createTeleporter(const QJsonObject &json)
 {
-	ComponentBuilder builder;
+	ObjectBuilder builder;
 	const QJsonObject &jsonSource{json.value("source").toObject()};
 	const QJsonObject &jsonDestination{json.value("destination").toObject()};
 	int srcRow{jsonSource.value("row").toInt()};

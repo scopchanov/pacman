@@ -22,10 +22,11 @@ protected:
 private:
 	qreal distanceToTarget(Vector2 direction) const;
 	void updateTargetPosition();
+	void updateTargetMark();
 	bool isTargetReached();
 	void processLevelState();
 	void actFrightened();
-	Enemy *parentEnemy();
+	Enemy *parentEnemy() const;
 
 	QPointF _targetPosition;
 };

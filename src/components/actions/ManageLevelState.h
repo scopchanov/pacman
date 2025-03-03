@@ -1,16 +1,16 @@
-#ifndef MANAGELEVELMODE_H
-#define MANAGELEVELMODE_H
+#ifndef MANAGELEVELSTATE_H
+#define MANAGELEVELSTATE_H
 
 #include "AbstractTimedAction.h"
 #include <QHash>
 
-class LevelMode;
+class LevelState;
 
-class ManageLevelMode : public AbstractTimedAction
+class ManageLevelState : public AbstractTimedAction
 {
 	Q_OBJECT
 public:
-	explicit ManageLevelMode(AbstractComponent *parent = nullptr);
+	explicit ManageLevelState(AbstractComponent *parent = nullptr);
 
 	void setStepDuration(int step, qreal duration);
 	int type() const override;
@@ -20,10 +20,10 @@ protected:
 	void performTasks() override;
 
 private:
-	LevelMode *levelMode() const;
+	LevelState *levelState() const;
 
 	qreal _time;
 	QHash<int, qreal> _stepDurations;
 };
 
-#endif // MANAGELEVELMODE_H
+#endif // MANAGELEVELSTATE_H

@@ -22,6 +22,7 @@ public:
 	void setPersonality(AbstractPersonality *personality);
 	EnemyState state() const;
 	void setState(EnemyState state);
+	QGraphicsRectItem *targetMark() const;
 	int objectType() const override final;
 
 	void scare();
@@ -37,6 +38,7 @@ private:
 
 	AbstractPersonality *_personality;
 	EnemyState _state;
+	QGraphicsRectItem *_targetMark;
 };
 
 #endif // ENEMY_H

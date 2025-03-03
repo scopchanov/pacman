@@ -1,11 +1,11 @@
-#include "ComponentBuilder.h"
+#include "ObjectBuilder.h"
 #include "Factory.h"
 #include "Game.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "components/actions/EatEnemy.h"
 #include "components/actions/EnergizePlayer.h"
-#include "components/actions/ManageLevelMode.h"
+#include "components/actions/ManageLevelState.h"
 #include "components/actions/KillPlayer.h"
 #include "components/actions/Spawn.h"
 #include "components/actions/Teleport.h"
@@ -15,29 +15,29 @@
 #include "components/actions/tilemap/EatDot.h"
 #include "components/actions/tilemap/Move.h"
 
-ComponentBuilder::ComponentBuilder(QObject *parent) :
+ObjectBuilder::ObjectBuilder(QObject *parent) :
 	QObject{parent},
 	_gameObject{nullptr}
 {
 
 }
 
-void ComponentBuilder::setGameObject(AbstractGameObject *gameObject)
+void ObjectBuilder::setGameObject(AbstractGameObject *gameObject)
 {
 	_gameObject = gameObject;
 }
 
-void ComponentBuilder::addManageLevelMode(const StepDurations &stepDurations)
+void ObjectBuilder::addManageLevelState(const StepDurations &stepDurations)
 {
-	auto *manageLevelMode{new ManageLevelMode()};
+	auto *manageLevelState{new ManageLevelState()};
 
 	for(const auto &pair : stepDurations)
-		manageLevelMode->setStepDuration(pair.first, pair.second);
+		manageLevelState->setStepDuration(pair.first, pair.second);
 
-	_gameObject->addComponent(manageLevelMode);
+	_gameObject->addComponent(manageLevelState);
 }
 
-void ComponentBuilder::addSpawn(const QPointF &position)
+void ObjectBuilder::addSpawn(const QPointF &position)
 {
 	auto *spawn{new Spawn()};
 
@@ -46,7 +46,7 @@ void ComponentBuilder::addSpawn(const QPointF &position)
 	_gameObject->addComponent(spawn);
 }
 
-void ComponentBuilder::addMove(int direction)
+void ObjectBuilder::addMove(int direction)
 {
 	auto *move{new Move()};
 
@@ -55,7 +55,7 @@ void ComponentBuilder::addMove(int direction)
 	_gameObject->addComponent(move);
 }
 
-void ComponentBuilder::addControl(int type)
+void ObjectBuilder::addControl(int type)
 {
 	auto *control{Factory::createControl(type)};
 
@@ -64,7 +64,7 @@ void ComponentBuilder::addControl(int type)
 	_gameObject->addComponent(control);
 }
 
-void ComponentBuilder::addOrientate(int type, Move *move)
+void ObjectBuilder::addOrientate(int type, Move *move)
 {
 	auto *orientate{Factory::createOrientate(type)};
 
@@ -73,12 +73,12 @@ void ComponentBuilder::addOrientate(int type, Move *move)
 	_gameObject->addComponent(orientate);
 }
 
-void ComponentBuilder::addAnimate(int type)
+void ObjectBuilder::addAnimate(int type)
 {
 	_gameObject->addComponent(Factory::createAnimate(type));
 }
 
-void ComponentBuilder::addEatDot()
+void ObjectBuilder::addEatDot()
 {
 	auto *eatDot{new EatDot()};
 
@@ -88,7 +88,7 @@ void ComponentBuilder::addEatDot()
 	connect(eatDot, &EatDot::playerWon, game(), &Game::onPlayerWon);
 }
 
-void ComponentBuilder::addEatEnemy()
+void ObjectBuilder::addEatEnemy()
 {
 	auto *eatEnemy{new EatEnemy()};
 
@@ -99,7 +99,7 @@ void ComponentBuilder::addEatEnemy()
 	connect(eatEnemy, &EatEnemy::enemyEaten, game(), &Game::onEnemyEaten);
 }
 
-void ComponentBuilder::addKillPlayer()
+void ObjectBuilder::addKillPlayer()
 {
 	auto *killPlayer{new KillPlayer()};
 
@@ -108,7 +108,7 @@ void ComponentBuilder::addKillPlayer()
 	connect(killPlayer, &KillPlayer::playerDied, game(), &Game::onPlayerDied);
 }
 
-void ComponentBuilder::addEnergizePlayer()
+void ObjectBuilder::addEnergizePlayer()
 {
 	auto *energizePlayer{new EnergizePlayer()};
 
@@ -118,14 +118,14 @@ void ComponentBuilder::addEnergizePlayer()
 					 game(), &Game::onPlayerEnergized);
 }
 
-void ComponentBuilder::addUpdateDeenergizer()
+void ObjectBuilder::addUpdateDeenergizer()
 {
 	auto *updateDeenergizer{new UpdateDeenergizer()};
 
 	_gameObject->addComponent(updateDeenergizer);
 }
 
-void ComponentBuilder::addTeleport(const QPointF &destination)
+void ObjectBuilder::addTeleport(const QPointF &destination)
 {
 	auto *teleport{new Teleport()};
 
@@ -134,19 +134,19 @@ void ComponentBuilder::addTeleport(const QPointF &destination)
 	_gameObject->addComponent(teleport);
 }
 
-Game *ComponentBuilder::game() const
+Game *ObjectBuilder::game() const
 {
 	return &Game::ref();
 }
 
-Move *ComponentBuilder::move() const
+Move *ObjectBuilder::move() const
 {
 	auto *component{_gameObject->findComponent(ACT_Move)};
 
 	return component ? static_cast<Move *>(component) : nullptr;
 }
 
-Vector2 ComponentBuilder::dir2vec(int direction) const
+Vector2 ObjectBuilder::dir2vec(int direction) const
 {
 	return QHash<int, Vector2>{{0, V2_LEFT}, {1, V2_UP}, {2, V2_RIGHT},
 							   {3, V2_DOWN}}.value(direction);

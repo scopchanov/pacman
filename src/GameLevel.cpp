@@ -3,7 +3,7 @@
 #include "Tilemap.h"
 #include "components/actions/control/ControlEnemy.h"
 #include "objects/Enemy.h"
-#include "objects/LevelMode.h"
+#include "objects/LevelState.h"
 #include "objects/Player.h"
 #include "objects/Deenergizer.h"
 
@@ -12,14 +12,14 @@ GameLevel::GameLevel(QObject *parent) :
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
 	_player{new Player()},
-	_mode{new LevelMode()},
+	_state{new LevelState()},
 	_deenergizer{new Deenergizer()}
 {
 	addItem(_walls);
 	addItem(_dots);
 	addItem(_player);
 	addItem(_deenergizer);
-	addItem(_mode);
+	addItem(_state);
 
 	// connect(clock(), &Clock::tick, _stateMachine, &AiStateMachine::advance);
 }
@@ -55,9 +55,9 @@ QList<Enemy *> GameLevel::enemies() const
 	return _enemies;
 }
 
-LevelMode *GameLevel::mode() const
+LevelState *GameLevel::state() const
 {
-	return _mode;
+	return _state;
 }
 
 Deenergizer *GameLevel::deenergizer() const

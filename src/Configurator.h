@@ -20,7 +20,7 @@ public:
 	void configure(const QJsonObject &json);
 
 private:
-	void configureLevelMode(const QJsonArray &jsonStepDurations);
+	void configureLevelState(const QJsonArray &jsonStepDurations);
 	void configurePalette(const QJsonObject &json);
 	void configureGrid(const QJsonObject &json);
 	void configureWalls(const QJsonArray &jsonWalls);
