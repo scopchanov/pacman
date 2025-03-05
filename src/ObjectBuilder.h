@@ -27,7 +27,6 @@ public:
 	void addEatEnemy();
 	void addKillPlayer();
 	void addEnergizePlayer();
-	void addUpdateDeenergizer();
 	void addTeleport(const QPointF &destination);
 
 private:

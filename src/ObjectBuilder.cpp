@@ -9,7 +9,6 @@
 #include "components/actions/KillPlayer.h"
 #include "components/actions/Spawn.h"
 #include "components/actions/Teleport.h"
-#include "components/actions/UpdateDeenergizer.h"
 #include "components/actions/control/ControlEnemy.h"
 #include "components/actions/orientate/AbstractOrientate.h"
 #include "components/actions/tilemap/EatDot.h"
@@ -116,13 +115,6 @@ void ObjectBuilder::addEnergizePlayer()
 
 	QObject::connect(energizePlayer, &EnergizePlayer::playerEnergized,
 					 game(), &Game::onPlayerEnergized);
-}
-
-void ObjectBuilder::addUpdateDeenergizer()
-{
-	auto *updateDeenergizer{new UpdateDeenergizer()};
-
-	_gameObject->addComponent(updateDeenergizer);
 }
 
 void ObjectBuilder::addTeleport(const QPointF &destination)

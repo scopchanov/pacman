@@ -35,6 +35,8 @@ int Delaying::type() const
 void Delaying::reset()
 {
 	_time = 0.0;
+
+	emitSignal();
 }
 
 void Delaying::performTasks()
@@ -50,7 +52,14 @@ bool Delaying::increaseTime()
 
 	_time += Game::ref().clock()->deltaTime();
 
+	emitSignal();
+
 	return true;
+}
+
+void Delaying::emitSignal()
+{
+	emit progressChanged(_time/_duration);
 }
 
 bool Delaying::delayDurationExceeded() const

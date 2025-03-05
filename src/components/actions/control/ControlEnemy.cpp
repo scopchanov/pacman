@@ -80,7 +80,7 @@ void ControlEnemy::updateTargetPosition()
 		break;
 	}
 
-	updateTargetMark();
+	// updateTargetMark();
 }
 
 void ControlEnemy::updateTargetMark()

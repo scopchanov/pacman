@@ -21,10 +21,14 @@ protected:
 
 private:
 	bool increaseTime();
+	void emitSignal();
 	bool delayDurationExceeded() const;
 
 	qreal _duration;
 	qreal _time;
+
+signals:
+	void progressChanged(qreal progress);
 };
 
 #endif // DELAYING_H

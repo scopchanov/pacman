@@ -11,12 +11,11 @@ Enemy::Enemy(AbstractGameObject *parent) :
 	AbstractCharacter(parent),
 	_personality{nullptr},
 	_state{ST_Exit},
-	_targetMark{new QGraphicsRectItem(this)}
+	_targetMark{nullptr}//new QGraphicsRectItem(this)}
 {
-
-	_targetMark->setRect(-8, -8, 16, 16);
-	_targetMark->setPen(QPen(Qt::transparent));
-	_targetMark->setBrush(Qt::red);
+	// _targetMark->setRect(-8, -8, 16, 16);
+	// _targetMark->setPen(QPen(Qt::transparent));
+	// _targetMark->setBrush(Qt::red);
 }
 
 Enemy::~Enemy()

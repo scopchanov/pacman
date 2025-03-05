@@ -14,6 +14,7 @@ class Deenergizer;
 
 class GameLevel : public Scene
 {
+	Q_OBJECT
 public:
 	explicit GameLevel(QObject *parent = nullptr);
 
@@ -34,6 +35,9 @@ private:
 	QList<Enemy *> _enemies;
 	LevelState *_state;
 	Deenergizer *_deenergizer;
+
+signals:
+	void foo(qreal a);
 };
 
 #endif // GAMELEVEL_H

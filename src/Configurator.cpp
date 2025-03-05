@@ -111,9 +111,6 @@ void Configurator::configureDots(const QJsonArray &jsonDots)
 
 void Configurator::configureDeenergizer(const QJsonObject &json)
 {
-	// TODO: Move the creation of the actions to the ObjectBuilder
-
-	ObjectBuilder builder;
 	auto *delaying{new Delaying()};
 	auto *actDeenergizePlayer{new DeenergizePlayer(delaying)};
 	auto *actCalmDownEnemies{new CalmDownEnemies(delaying)};
@@ -127,14 +124,10 @@ void Configurator::configureDeenergizer(const QJsonObject &json)
 	delaying->addComponent(actDeactivateDeenergizer);
 	delaying->setEnabled(false);
 
+	connect(delaying, &Delaying::progressChanged, level(), &GameLevel::foo);
+
 	deenergizer->addComponent(delaying);
-
-	builder.setGameObject(deenergizer);
-	builder.addUpdateDeenergizer();
-
-	deenergizer->setPos(36, 8);
-	deenergizer->setPen(QPen(brush, 8, Qt::SolidLine, Qt::RoundCap));
-	deenergizer->setBrush(Qt::transparent);
+	deenergizer->setFlags(QGraphicsItem::ItemHasNoContents);
 	deenergizer->reset();
 }
 
@@ -180,7 +173,7 @@ void Configurator::createEnemy(const QJsonObject &json)
 	builder.addMove(json.value("direction").toInt());
 	builder.addControl(OBJ_Enemy);
 	builder.addAnimate(OBJ_Enemy);
-	// builder.addKillPlayer();
+	builder.addKillPlayer();
 
 	createEye(enemy, {-6, -6});
 	createEye(enemy, {6, -6});

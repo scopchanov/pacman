@@ -1,22 +1,19 @@
 #include "GameMenu.h"
+#include "Button.h"
 #include <QApplication>
 #include <QBoxLayout>
-#include <QPushButton>
 
 GameMenu::GameMenu(QWidget *parent) :
 	QWidget(parent)
 {
 	auto *layoutMain{new QVBoxLayout(this)};
-	auto *btnStart{new QPushButton(tr("S&tart"), this)};
-	auto *btnSettings{new QPushButton(tr("&Settings"), this)};
-	auto *btnExit{new QPushButton(tr("E&xit"), this)};
+	auto *btnStart{new Button(this)};
+	auto *btnSettings{new Button(this)};
+	auto *btnExit{new Button(this)};
 
-	btnStart->setMinimumHeight(48);
-	btnStart->setMinimumWidth(250);
-	btnSettings->setMinimumHeight(48);
-	btnSettings->setMinimumWidth(250);
-	btnExit->setMinimumHeight(48);
-	btnExit->setMinimumWidth(250);
+	btnStart->setText(tr("S&tart"));
+	btnSettings->setText(tr("&Settings"));
+	btnExit->setText(tr("E&xit"));
 
 	layoutMain->addStretch();
 	layoutMain->addWidget(btnStart);
@@ -25,6 +22,8 @@ GameMenu::GameMenu(QWidget *parent) :
 	layoutMain->addStretch();
 	layoutMain->setSpacing(20);
 	layoutMain->setAlignment(Qt::AlignCenter);
+
+	setAutoFillBackground(true);
 
 	connect(btnStart, &QPushButton::clicked, this, &GameMenu::newGame);
 	connect(btnExit, &QPushButton::clicked, &QApplication::quit);

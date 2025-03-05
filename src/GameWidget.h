@@ -5,6 +5,8 @@
 
 class Game;
 class GameView;
+class ProgressBar;
+class ScatterIndicator;
 
 class GameWidget : public QWidget
 {
@@ -16,8 +18,15 @@ public:
 
 private:
 	GameView *_gameView;
+	ProgressBar *_progressLeft;
+	ProgressBar *_progressRight;
+	ScatterIndicator *_scatterIndicator;
+
+private slots:
+	void onPauseGame();
 
 signals:
+	void pauseGame();
 	void exitGame();
 };
 

@@ -70,13 +70,15 @@ void Game::newGame()
 
 void Game::start()
 {
-	auto *sequence{new StartupSequence(this)};
+	// auto *sequence{new StartupSequence(this)};
 
-	_level->addItem(sequence->message());
+	// _level->addItem(sequence->message());
 
-	connect(sequence, &StartupSequence::go, clock(), &Clock::start);
+	// connect(sequence, &StartupSequence::go, clock(), &Clock::start);
 
-	sequence->start();
+	// sequence->start();
+
+	clock()->start();
 }
 
 void Game::stop()
@@ -86,7 +88,7 @@ void Game::stop()
 
 void Game::resume()
 {
-	clock()->start();
+	start();
 }
 
 void Game::reset()

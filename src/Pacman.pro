@@ -7,6 +7,7 @@ CONFIG += c++23
 #DEFINES += DEBUG
 
 SOURCES += \
+    Button.cpp \
     Configurator.cpp \
     DialogGame.cpp \
     DialogSettings.cpp \
@@ -37,7 +38,6 @@ SOURCES += \
     components/actions/ManageLevelState.cpp \
     components/actions/Spawn.cpp \
     components/actions/Teleport.cpp \
-    components/actions/UpdateDeenergizer.cpp \
     components/actions/animate/AbstractAnimate.cpp \
     components/actions/animate/AnimateEnemy.cpp \
     components/actions/animate/AnimateEnergizer.cpp \
@@ -67,9 +67,12 @@ SOURCES += \
     personalities/Shadowing.cpp \
     personalities/Shying.cpp \
     personalities/Speeding.cpp \
-    main.cpp
+    main.cpp \
+    ui/ProgressBar.cpp \
+    ui/ScatterIndicator.cpp
 
 HEADERS += \
+    Button.h \
     Configurator.h \
     DialogGame.h \
     DialogSettings.h \
@@ -101,7 +104,6 @@ HEADERS += \
     components/actions/ManageLevelState.h \
     components/actions/Spawn.h \
     components/actions/Teleport.h \
-    components/actions/UpdateDeenergizer.h \
     components/actions/animate/AbstractAnimate.h \
     components/actions/animate/AnimateEnemy.h \
     components/actions/animate/AnimateEnergizer.h \
@@ -130,7 +132,9 @@ HEADERS += \
     personalities/Poking.h \
     personalities/Shadowing.h \
     personalities/Shying.h \
-    personalities/Speeding.h
+    personalities/Speeding.h \
+    ui/ProgressBar.h \
+    ui/ScatterIndicator.h
 
 RESOURCES += \
     resources.qrc

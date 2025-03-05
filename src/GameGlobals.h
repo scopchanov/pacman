@@ -34,7 +34,6 @@ enum ComponentType : int {
 	ACT_Orientate,
 	ACT_Spawn,
 	ACT_Teleport,
-	ACT_UpdateDeenergizer,
 	BT_Delaying
 };
 

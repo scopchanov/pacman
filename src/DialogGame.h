@@ -1,15 +1,13 @@
 #ifndef DIALOGGAME_H
 #define DIALOGGAME_H
 
-#include <QWidget>
+#include <QDialog>
 
-class DialogGame : public QWidget
+class DialogGame : public QDialog
 {
 	Q_OBJECT
 public:
 	explicit DialogGame(QWidget *parent = nullptr);
-
-signals:
 };
 
 #endif // DIALOGGAME_H
