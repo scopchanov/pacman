@@ -42,7 +42,7 @@ public slots:
 	void onFuneralTunePlayed();
 
 private:
-	void rewardBonusPoints(int points, int sfxIndex);
+	void rewardBonus(int points, int sfxIndex);
 	void showBonusText(int points, qreal duration);
 	void rewardPoints(int points, int sfxIndex);
 	void stopGame(int sfxIndex);

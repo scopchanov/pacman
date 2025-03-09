@@ -78,17 +78,6 @@ void ControlEnemy::updateTargetPosition()
 	default:
 		break;
 	}
-
-	// updateTargetMark();
-}
-
-void ControlEnemy::updateTargetMark()
-{
-	auto *mark{parentEnemy()->targetMark()};
-	int role{parentEnemy()->personality()->colorRole()};
-
-	mark->setBrush(Game::ref().palette()->color(role));
-	mark->setPos(parentEnemy()->mapFromScene(_targetPosition));
 }
 
 bool ControlEnemy::isTargetReached()

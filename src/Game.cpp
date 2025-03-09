@@ -109,17 +109,17 @@ void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
 
-	rewardBonusPoints(points, AudioEngine::SND_EnemyEaten);
+	rewardBonus(points, AudioEngine::SND_EnemyEaten);
 }
 
 void Game::onFruitEaten()
 {
-	rewardBonusPoints(10, AudioEngine::SND_EnemyEaten);
+	rewardBonus(10, AudioEngine::SND_EnemyEaten);
 }
 
 void Game::onPlayerEnergized()
 {
-	rewardBonusPoints(5, AudioEngine::SND_DotEaten);
+	rewardBonus(5, AudioEngine::SND_DotEaten);
 }
 
 void Game::onPlayerWon()
@@ -142,7 +142,7 @@ void Game::onFuneralTunePlayed()
 	}
 }
 
-void Game::rewardBonusPoints(int points, int sfxIndex)
+void Game::rewardBonus(int points, int sfxIndex)
 {
 	showBonusText(points, 2);
 	rewardPoints(points, sfxIndex);

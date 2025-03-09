@@ -83,7 +83,7 @@ void GameLevel::onDotEaten()
 
 void GameLevel::createFruit()
 {
-	auto *item{new Fruit()};
+	auto *fruit{new Fruit()};
 
-	addItem(item);
+	addItem(fruit);
 }
