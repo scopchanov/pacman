@@ -17,7 +17,7 @@ protected:
 	void orientate() override;
 
 private:
-	qreal directionToAngle(const Vector2 &direction) const;
+	bool transformObject(qreal x, qreal y, qreal angle);
 };
 
 #endif // ORIENTATEPLAYER_H

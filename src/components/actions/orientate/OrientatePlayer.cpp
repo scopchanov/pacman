@@ -1,9 +1,6 @@
 #include "OrientatePlayer.h"
 #include "AbstractGameObject.h"
 #include "components/actions/tilemap/Move.h"
-#include <QHash>
-
-using Pair = QPair<int, int>;
 
 OrientatePlayer::OrientatePlayer(AbstractComponent *parent) :
 	AbstractOrientate(parent)
@@ -18,13 +15,20 @@ void OrientatePlayer::reset()
 
 void OrientatePlayer::orientate()
 {
-	gameObject()->setRotation(directionToAngle(move()->currentDirection()));
+	const Vector2 &currentDirection{move()->currentDirection()};
+	qreal x{currentDirection.x()};
+	qreal y{currentDirection.y()};
+
+	transformObject(-x, 1, 0) || transformObject(1, -y, 90);
 }
 
-qreal OrientatePlayer::directionToAngle(const Vector2 &direction) const
+bool OrientatePlayer::transformObject(qreal x, qreal y, qreal angle)
 {
-	const QHash<Pair, qreal> &hash{{{-1, 0}, 0.0}, {{1, 0}, 180.0},
-								   {{0, -1}, 90.0}, {{0, 1}, 270.0}};
+	if (!x || !y)
+		return false;
 
-	return hash.value({direction.x(), direction.y()});
+	gameObject()->setRotation(angle);
+	gameObject()->setTransform(QTransform::fromScale(x, y));
+
+	return true;
 }
