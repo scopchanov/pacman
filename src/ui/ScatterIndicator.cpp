@@ -6,9 +6,9 @@ ScatterIndicator::ScatterIndicator(QWidget *parent) :
 {
 	QPalette p{palette()};
 
-	p.setBrush(QPalette::Window, Qt::red);
-	p.setBrush(QPalette::WindowText, Qt::transparent);
-	p.setBrush(QPalette::Button, Qt::white);
+	p.setColor(QPalette::Window, 0x1976D2);
+	p.setColor(QPalette::WindowText, Qt::transparent);
+	p.setColor(QPalette::Button, Qt::white);
 
 	setPalette(p);
 	setContentsMargins(15, 15, 15, 15);

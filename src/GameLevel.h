@@ -28,13 +28,19 @@ public:
 
 	void reset() override;
 
+public slots:
+	void onDotEaten();
+
 private:
+	void createFruit();
+
 	LevelState *_state;
 	Tilemap *_walls;
 	Tilemap *_dots;
 	Player *_player;
 	QList<Enemy *> _enemies;
 	Deenergizer *_deenergizer;
+	int _dotsEaten;
 
 signals:
 	void energizedProgressChanged(qreal value);

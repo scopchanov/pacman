@@ -146,6 +146,7 @@ void Configurator::configurePlayer(const QJsonObject &json)
 	builder.addAnimate(OBJ_Player);
 	builder.addEatDot();
 	builder.addEatEnemy();
+	builder.addEatFruit();
 
 	player->setSpeed(80);
 	player->setPen(QPen(Qt::transparent));

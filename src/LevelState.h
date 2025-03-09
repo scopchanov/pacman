@@ -10,12 +10,8 @@ class LevelState : public QObject
 public:
 	explicit LevelState(QObject *parent = nullptr);
 
-	int step() const;
-	void setStep(int step);
 	int mode() const;
-
 	void setStepDuration(int step, qreal duration);
-	void incrementStep();
 	void advance();
 	void reset();
 
@@ -25,7 +21,7 @@ private:
 	QHash<int, qreal> _stepDurations;
 
 signals:
-	void modeChanged(int mode);
+	void modeChanged();
 };
 
 #endif // LEVELSTATE_H

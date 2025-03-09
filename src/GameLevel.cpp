@@ -4,6 +4,7 @@
 #include "Tilemap.h"
 #include "components/actions/control/ControlEnemy.h"
 #include "objects/Enemy.h"
+#include "objects/Fruit.h"
 #include "objects/Player.h"
 #include "objects/Deenergizer.h"
 
@@ -13,7 +14,8 @@ GameLevel::GameLevel(QObject *parent) :
 	_walls{new Tilemap()},
 	_dots{new Tilemap()},
 	_player{new Player()},
-	_deenergizer{new Deenergizer()}
+	_deenergizer{new Deenergizer()},
+	_dotsEaten{0}
 {
 	addItem(_walls);
 	addItem(_dots);
@@ -40,10 +42,6 @@ Player *GameLevel::player() const
 
 void GameLevel::addEnemy(Enemy *enemy)
 {
-	// auto *component{enemy->findComponent(ACT_Control)};
-	// auto *controller{static_cast<ControlEnemy *>(component)};
-
-	// _stateMachine->addEnemyController(controller);
 	_enemies.append(enemy);
 
 	addItem(enemy);
@@ -70,4 +68,22 @@ void GameLevel::reset()
 
 	_state->reset();
 	_deenergizer->deactivate();
+}
+
+void GameLevel::onDotEaten()
+{
+	_dotsEaten++;
+
+	if (_dotsEaten == 70)
+		createFruit();
+
+	if (_dotsEaten == 170)
+		createFruit();
+}
+
+void GameLevel::createFruit()
+{
+	auto *item{new Fruit()};
+
+	addItem(item);
 }

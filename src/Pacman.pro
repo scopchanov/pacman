@@ -35,6 +35,7 @@ SOURCES += \
     components/actions/DeenergizePlayer.cpp \
     components/actions/DeleteGameObject.cpp \
     components/actions/EatEnemy.cpp \
+    components/actions/EatFruit.cpp \
     components/actions/EnergizePlayer.cpp \
     components/actions/KillPlayer.cpp \
     components/actions/Spawn.cpp \
@@ -60,6 +61,7 @@ SOURCES += \
     objects/Enemy.cpp \
     objects/EnemyEye.cpp \
     objects/Energizer.cpp \
+    objects/Fruit.cpp \
     objects/Player.cpp \
     objects/Teleporter.cpp \
     personalities/AbstractPersonality.cpp \
@@ -102,6 +104,7 @@ HEADERS += \
     components/actions/DeenergizePlayer.h \
     components/actions/DeleteGameObject.h \
     components/actions/EatEnemy.h \
+    components/actions/EatFruit.h \
     components/actions/EnergizePlayer.h \
     components/actions/KillPlayer.h \
     components/actions/Spawn.h \
@@ -127,6 +130,7 @@ HEADERS += \
     objects/Enemy.h \
     objects/EnemyEye.h \
     objects/Energizer.h \
+    objects/Fruit.h \
     objects/Player.h \
     objects/Teleporter.h \
     personalities/AbstractPersonality.h \

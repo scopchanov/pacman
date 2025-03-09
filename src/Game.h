@@ -35,12 +35,19 @@ public slots:
 	void reset();
 	void onDotEaten();
 	void onEnemyEaten();
+	void onFruitEaten();
 	void onPlayerEnergized();
 	void onPlayerWon();
 	void onPlayerDied();
 	void onFuneralTunePlayed();
 
 private:
+	void rewardBonusPoints(int points, int sfxIndex);
+	void showBonusText(int points, qreal duration);
+	void rewardPoints(int points, int sfxIndex);
+	void stopGame(int sfxIndex);
+	void playSoundEffect(int sfxIndex);
+
 	GameLevel *_level;
 	GameStatus *_status;
 	AudioEngine *_audioEngine;

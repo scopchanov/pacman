@@ -43,4 +43,3 @@ Tilemap *EatDot::tilemap() const
 {
 	return Game::ref().level()->dots();
 }
-

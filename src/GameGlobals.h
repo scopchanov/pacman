@@ -27,6 +27,7 @@ enum ComponentType : int {
 	ACT_DeactivateDeenergizer,
 	ACT_EatDot,
 	ACT_EatEnemy,
+	ACT_EatFruit,
 	ACT_EnergizePlayer,
 	ACT_KillPlayer,
 	ACT_Move,
@@ -43,7 +44,8 @@ enum ObjectType : int {
 	OBJ_EnemyEye,
 	OBJ_Energizer,
 	OBJ_Deenergizer,
-	OBJ_Teleporter
+	OBJ_Teleporter,
+	OBJ_Fruit
 };
 
 enum PersonalityType : int {

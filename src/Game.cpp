@@ -100,47 +100,36 @@ void Game::reset()
 
 void Game::onDotEaten()
 {
-	_status->increaseScore(1);
-	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
+	rewardPoints(1, AudioEngine::SND_DotEaten);
+
+	_level->onDotEaten();
 }
 
 void Game::onEnemyEaten()
 {
 	int points{sender()->property("points").toInt()};
-	auto *text{new BonusText()};
-	auto *delaying{new Delaying()};
-	auto *actDeleteGameObject{new DeleteGameObject(delaying)};
 
-	actDeleteGameObject->setGameObject(text);
+	rewardBonusPoints(points, AudioEngine::SND_EnemyEaten);
+}
 
-	delaying->addComponent(actDeleteGameObject);
-	delaying->setDuration(2);
-
-	text->addComponent(delaying);
-	text->setText(QString::number(points));
-	text->setPos(_level->player()->pos());
-
-	_level->addItem(text);
-	_status->increaseScore(points);
-	_audioEngine->playEffect(AudioEngine::SND_EnemyEaten);
+void Game::onFruitEaten()
+{
+	rewardBonusPoints(10, AudioEngine::SND_EnemyEaten);
 }
 
 void Game::onPlayerEnergized()
 {
-	_status->increaseScore(5);
-	_audioEngine->playEffect(AudioEngine::SND_DotEaten);
+	rewardBonusPoints(5, AudioEngine::SND_DotEaten);
 }
 
 void Game::onPlayerWon()
 {
-	clock()->stop();
-	_audioEngine->playEffect(AudioEngine::SND_PlayerWins);
+	stopGame(AudioEngine::SND_PlayerWins);
 }
 
 void Game::onPlayerDied()
 {
-	clock()->stop();
-	_audioEngine->playEffect(AudioEngine::SND_PlayerDies);
+	stopGame(AudioEngine::SND_PlayerDies);
 }
 
 void Game::onFuneralTunePlayed()
@@ -151,4 +140,45 @@ void Game::onFuneralTunePlayed()
 	} else {
 		emit gameOver();
 	}
+}
+
+void Game::rewardBonusPoints(int points, int sfxIndex)
+{
+	showBonusText(points, 2);
+	rewardPoints(points, sfxIndex);
+}
+
+void Game::showBonusText(int points, qreal duration)
+{
+	auto *text{new BonusText()};
+	auto *delaying{new Delaying()};
+	auto *deleteGameObject{new DeleteGameObject(delaying)};
+
+	deleteGameObject->setGameObject(text);
+
+	delaying->addComponent(deleteGameObject);
+	delaying->setDuration(duration);
+
+	text->addComponent(delaying);
+	text->setText(QString::number(points));
+	text->setPos(_level->player()->pos());
+
+	_level->addItem(text);
+}
+
+void Game::rewardPoints(int points, int sfxIndex)
+{
+	_status->increaseScore(points);
+	playSoundEffect(sfxIndex);
+}
+
+void Game::stopGame(int sfxIndex)
+{
+	clock()->stop();
+	playSoundEffect(sfxIndex);
+}
+
+void Game::playSoundEffect(int sfxIndex)
+{
+	_audioEngine->playEffect(static_cast<AudioEngine::EffectType>(sfxIndex));
 }

@@ -22,6 +22,7 @@ public:
 	void addAnimate(int type);
 	void addEatDot();
 	void addEatEnemy();
+	void addEatFruit();
 	void addKillPlayer();
 	void addEnergizePlayer();
 	void addTeleport(const QPointF &destination);

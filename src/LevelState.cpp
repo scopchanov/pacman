@@ -12,26 +12,14 @@ LevelState::LevelState(QObject *parent) :
 
 }
 
+int LevelState::mode() const
+{
+	return _step % 2 ? WM_Chase : WM_Scatter;
+}
+
 void LevelState::setStepDuration(int step, qreal duration)
 {
 	_stepDurations.insert(step, duration);
-}
-
-int LevelState::step() const
-{
-	return _step;
-}
-
-void LevelState::setStep(int step)
-{
-	_step = step;
-
-	emit modeChanged(mode());
-}
-
-void LevelState::incrementStep()
-{
-	setStep(step() + 1);
 }
 
 void LevelState::advance()
@@ -45,16 +33,15 @@ void LevelState::advance()
 		return;
 
 	_time = 0.0;
-	incrementStep();
+	_step++;
+
+	emit modeChanged();
 }
 
 void LevelState::reset()
 {
 	_time = 0.0;
-	setStep(0);
-}
+	_step = 0;
 
-int LevelState::mode() const
-{
-	return _step % 2 ? WM_Chase : WM_Scatter;
+	emit modeChanged();
 }

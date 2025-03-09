@@ -4,6 +4,7 @@
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
 #include "components/actions/EatEnemy.h"
+#include "components/actions/EatFruit.h"
 #include "components/actions/EnergizePlayer.h"
 #include "components/actions/KillPlayer.h"
 #include "components/actions/Spawn.h"
@@ -85,6 +86,15 @@ void ObjectBuilder::addEatEnemy()
 	_gameObject->addComponent(eatEnemy);
 
 	connect(eatEnemy, &EatEnemy::enemyEaten, game(), &Game::onEnemyEaten);
+}
+
+void ObjectBuilder::addEatFruit()
+{
+	auto *eatFruit{new EatFruit()};
+
+	_gameObject->addComponent(eatFruit);
+
+	connect(eatFruit, &EatFruit::fruitEaten, game(), &Game::onFruitEaten);
 }
 
 void ObjectBuilder::addKillPlayer()
