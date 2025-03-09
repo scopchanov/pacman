@@ -70,6 +70,25 @@ QPainterPath PathBuilder::dynamicObjectPath(int type, qreal value)
 	}
 }
 
+QPainterPath PathBuilder::scatter()
+{
+	QPainterPath p;
+
+	p.moveTo(-6, 13);
+	p.cubicTo(-9, 13, -9, 10, -9, 10);
+	p.cubicTo(-15, 7, -18, 1, -18, -8);
+	p.lineTo(-18, -11);
+	p.cubicTo(-18, -14, -18, -14, -15, -14);
+	p.lineTo(15, -14);
+	p.cubicTo(18, -14, 18, -14, 18, -11);
+	p.lineTo(18, -8);
+	p.cubicTo(18, 1, 15, 7, 9, 10);
+	p.cubicTo(9, 10, 9, 13, 6, 13);
+	p.lineTo(-6, 13);
+
+	return p;
+}
+
 QPainterPath PathBuilder::shortLineLowLeft()
 {
 	QPainterPath p;

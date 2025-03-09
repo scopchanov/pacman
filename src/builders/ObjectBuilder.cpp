@@ -5,7 +5,6 @@
 #include "AbstractGameObject.h"
 #include "components/actions/EatEnemy.h"
 #include "components/actions/EnergizePlayer.h"
-#include "components/actions/ManageLevelState.h"
 #include "components/actions/KillPlayer.h"
 #include "components/actions/Spawn.h"
 #include "components/actions/Teleport.h"
@@ -24,16 +23,6 @@ ObjectBuilder::ObjectBuilder(QObject *parent) :
 void ObjectBuilder::setGameObject(AbstractGameObject *gameObject)
 {
 	_gameObject = gameObject;
-}
-
-void ObjectBuilder::addManageLevelState(const StepDurations &stepDurations)
-{
-	auto *manageLevelState{new ManageLevelState()};
-
-	for(const auto &pair : stepDurations)
-		manageLevelState->setStepDuration(pair.first, pair.second);
-
-	_gameObject->addComponent(manageLevelState);
 }
 
 void ObjectBuilder::addSpawn(const QPointF &position)

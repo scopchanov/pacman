@@ -4,10 +4,9 @@
 #include "GameLevel.h"
 #include "Grid.h"
 #include "Palette.h"
-#include "components/actions/ManageLevelState.h"
+#include "LevelState.h"
 #include "components/actions/tilemap/Move.h"
 #include "objects/Enemy.h"
-#include "objects/LevelState.h"
 #include "personalities/AbstractPersonality.h"
 #include <QGraphicsScene>
 #include <QRandomGenerator>

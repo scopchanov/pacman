@@ -23,6 +23,7 @@ private:
 	ScatterIndicator *_scatterIndicator;
 
 private slots:
+	void onLevelModeChanged();
 	void onPauseGame();
 
 signals:

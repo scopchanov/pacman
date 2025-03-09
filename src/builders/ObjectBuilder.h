@@ -3,11 +3,9 @@
 
 #include <QObject>
 
-using StepDurations = QList<QPair<int, qreal>>;
-
+class AbstractGameObject;
 class Game;
 class Move;
-class AbstractGameObject;
 class Vector2;
 
 class ObjectBuilder : public QObject
@@ -17,7 +15,6 @@ public:
 	explicit ObjectBuilder(QObject *parent = nullptr);
 	
 	void setGameObject(AbstractGameObject *gameObject);
-	void addManageLevelState(const StepDurations &stepDurations);
 	void addSpawn(const QPointF &position);
 	void addMove(int direction);
 	void addControl(int type);

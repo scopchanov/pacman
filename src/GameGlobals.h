@@ -29,7 +29,6 @@ enum ComponentType : int {
 	ACT_EatEnemy,
 	ACT_EnergizePlayer,
 	ACT_KillPlayer,
-	ACT_ManageLevelState,
 	ACT_Move,
 	ACT_Orientate,
 	ACT_Spawn,

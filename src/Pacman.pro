@@ -7,23 +7,24 @@ CONFIG += c++23
 #DEFINES += DEBUG
 
 SOURCES += \
+    AudioEngine.cpp \
     Button.cpp \
     Configurator.cpp \
     DialogGame.cpp \
     DialogSettings.cpp \
     Factory.cpp \
     FileHandler.cpp \
+    Game.cpp \
     GameLevel.cpp \
     GameMenu.cpp \
+    GameStatus.cpp \
     GameWidget.cpp \
+    LevelState.cpp \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
-    AudioEngine.cpp \
-    Game.cpp \
-    GameStatus.cpp \
     builders/ObjectBuilder.cpp \
     builders/PathBuilder.cpp \
     builders/TilemapBuilder.cpp \
@@ -36,7 +37,6 @@ SOURCES += \
     components/actions/EatEnemy.cpp \
     components/actions/EnergizePlayer.cpp \
     components/actions/KillPlayer.cpp \
-    components/actions/ManageLevelState.cpp \
     components/actions/Spawn.cpp \
     components/actions/Teleport.cpp \
     components/actions/animate/AbstractAnimate.cpp \
@@ -60,7 +60,6 @@ SOURCES += \
     objects/Enemy.cpp \
     objects/EnemyEye.cpp \
     objects/Energizer.cpp \
-    objects/LevelState.cpp \
     objects/Player.cpp \
     objects/Teleporter.cpp \
     personalities/AbstractPersonality.cpp \
@@ -68,29 +67,31 @@ SOURCES += \
     personalities/Shadowing.cpp \
     personalities/Shying.cpp \
     personalities/Speeding.cpp \
-    main.cpp \
+    ui/AbstractIndicator.cpp \
     ui/ProgressBar.cpp \
-    ui/ScatterIndicator.cpp
+    ui/ScatterIndicator.cpp \
+    main.cpp
 
 HEADERS += \
+    AudioEngine.h \
     Button.h \
     Configurator.h \
     DialogGame.h \
     DialogSettings.h \
     Factory.h \
     FileHandler.h \
+    Game.h \
     GameGlobals.h \
     GameLevel.h \
     GameMenu.h \
+    GameStatus.h \
     GameWidget.h \
+    LevelState.h \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
     ScoreDisplay.h \
     StartupSequence.h \
-    AudioEngine.h \
-    Game.h \
-    GameStatus.h \
     builders/ObjectBuilder.h \
     builders/PathBuilder.h \
     builders/TilemapBuilder.h \
@@ -103,7 +104,6 @@ HEADERS += \
     components/actions/EatEnemy.h \
     components/actions/EnergizePlayer.h \
     components/actions/KillPlayer.h \
-    components/actions/ManageLevelState.h \
     components/actions/Spawn.h \
     components/actions/Teleport.h \
     components/actions/animate/AbstractAnimate.h \
@@ -127,7 +127,6 @@ HEADERS += \
     objects/Enemy.h \
     objects/EnemyEye.h \
     objects/Energizer.h \
-    objects/LevelState.h \
     objects/Player.h \
     objects/Teleporter.h \
     personalities/AbstractPersonality.h \
@@ -135,6 +134,7 @@ HEADERS += \
     personalities/Shadowing.h \
     personalities/Shying.h \
     personalities/Speeding.h \
+    ui/AbstractIndicator.h \
     ui/ProgressBar.h \
     ui/ScatterIndicator.h
 

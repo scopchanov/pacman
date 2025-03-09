@@ -29,11 +29,11 @@ public:
 	void reset() override;
 
 private:
+	LevelState *_state;
 	Tilemap *_walls;
 	Tilemap *_dots;
 	Player *_player;
 	QList<Enemy *> _enemies;
-	LevelState *_state;
 	Deenergizer *_deenergizer;
 
 signals:

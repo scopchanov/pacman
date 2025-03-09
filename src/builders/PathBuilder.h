@@ -34,6 +34,7 @@ public:
 
 	static QPainterPath tilePath(TileType type);
 	static QPainterPath dynamicObjectPath(int type, qreal value);
+	static QPainterPath scatter();
 
 private:
 	static QPainterPath shortLineLowLeft();

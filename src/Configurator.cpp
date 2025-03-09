@@ -3,8 +3,9 @@
 #include "Game.h"
 #include "GameGlobals.h"
 #include "GameLevel.h"
-#include "Palette.h"
 #include "Grid.h"
+#include "LevelState.h"
+#include "Palette.h"
 #include "Tilemap.h"
 #include "builders/ObjectBuilder.h"
 #include "builders/PathBuilder.h"
@@ -19,7 +20,6 @@
 #include "objects/Enemy.h"
 #include "objects/Energizer.h"
 #include "objects/EnemyEye.h"
-#include "objects/LevelState.h"
 #include "objects/Player.h"
 #include "objects/Teleporter.h"
 #include "personalities/Shying.h"
@@ -53,17 +53,12 @@ void Configurator::configure(const QJsonObject &json)
 
 void Configurator::configureLevelState(const QJsonArray &jsonStepDurations)
 {
-	ObjectBuilder builder;
-	StepDurations stepDurations;
 	int step{0};
 
 	for (auto const &duration : jsonStepDurations) {
-		stepDurations.append({step, duration.toDouble()});
+		level()->state()->setStepDuration(step, duration.toDouble());
 		step++;
 	}
-
-	builder.setGameObject(level()->state());
-	builder.addManageLevelState(stepDurations);
 }
 
 void Configurator::configurePalette(const QJsonObject &json)

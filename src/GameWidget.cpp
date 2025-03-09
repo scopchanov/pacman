@@ -6,6 +6,7 @@
 #include "GameLevel.h"
 #include "Palette.h"
 #include "GameView.h"
+#include "LevelState.h"
 #include "LifesDisplay.h"
 #include "ScoreDisplay.h"
 #include "Game.h"
@@ -84,7 +85,17 @@ void GameWidget::startGame()
 	connect(Game::ref().level(), &GameLevel::energizedProgressChanged,
 			_progressRight, &ProgressBar::setValue);
 
+	connect(Game::ref().level()->state(), &LevelState::modeChanged,
+			this, &GameWidget::onLevelModeChanged);
+
 	Game::ref().start();
+}
+
+void GameWidget::onLevelModeChanged()
+{
+	Game::ref().level()->state()->mode() == WM_Scatter
+		? _scatterIndicator->turnOn()
+		: _scatterIndicator->turnOff();
 }
 
 void GameWidget::onPauseGame()
