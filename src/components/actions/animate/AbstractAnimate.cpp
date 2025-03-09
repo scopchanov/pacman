@@ -2,7 +2,7 @@
 #include "Clock.h"
 #include "GameGlobals.h"
 #include "AbstractGameObject.h"
-#include "PathBuilder.h"
+#include "builders/PathBuilder.h"
 
 AbstractAnimate::AbstractAnimate(AbstractComponent *parent) :
 	AbstractTimedAction(parent),

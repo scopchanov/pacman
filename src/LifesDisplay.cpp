@@ -1,6 +1,6 @@
 #include "LifesDisplay.h"
 #include "GameGlobals.h"
-#include "PathBuilder.h"
+#include "builders/PathBuilder.h"
 #include <QPainter>
 
 LifesDisplay::LifesDisplay(QWidget *parent) :

@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "GameGlobals.h"
 #include "Palette.h"
-#include "PathBuilder.h"
+#include "builders/PathBuilder.h"
 #include <QPaintEvent>
 #include <QPainterPath>
 #include <QPainter>
