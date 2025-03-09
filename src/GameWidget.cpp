@@ -79,8 +79,10 @@ void GameWidget::startGame()
 	_gameView->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
 	connect(Game::ref().level(), &GameLevel::escapePressed, this, &GameWidget::onPauseGame);
-	connect(Game::ref().level(), &GameLevel::foo, _progressLeft, &ProgressBar::setValue);
-	connect(Game::ref().level(), &GameLevel::foo, _progressRight, &ProgressBar::setValue);
+	connect(Game::ref().level(), &GameLevel::energizedProgressChanged,
+			_progressLeft, &ProgressBar::setValue);
+	connect(Game::ref().level(), &GameLevel::energizedProgressChanged,
+			_progressRight, &ProgressBar::setValue);
 
 	Game::ref().start();
 }

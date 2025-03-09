@@ -3,13 +3,11 @@
 
 #include <QObject>
 
-class QGraphicsItem;
 class AbstractGameObject;
 class AbstractPersonality;
 class GameLevel;
 class Palette;
 class Grid;
-class Tilemap;
 
 class Configurator : public QObject
 {
@@ -37,8 +35,6 @@ private:
 	void createEnergizer(const QJsonObject &json);
 	void createTeleporters(const QJsonArray &teleporters);
 	void createTeleporter(const QJsonObject &json);
-	void buildTilemap(Tilemap *tilemap, const QJsonArray &matrix, const QPen &pen, const QBrush &brush);
-	QGraphicsItem *createTile(int index, const QPen &pen, const QBrush &brush);
 	int key2role(const QString &key) const;
 	QPointF gridPosition(int row, int column) const;
 	GameLevel *level() const;

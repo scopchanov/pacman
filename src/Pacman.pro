@@ -19,13 +19,14 @@ SOURCES += \
     LifesDisplay.cpp \
     MainWindow.cpp \
     Message.cpp \
-    ObjectBuilder.cpp \
-    PathBuilder.cpp \
     ScoreDisplay.cpp \
     StartupSequence.cpp \
     AudioEngine.cpp \
     Game.cpp \
     GameStatus.cpp \
+    builders/ObjectBuilder.cpp \
+    builders/PathBuilder.cpp \
+    builders/TilemapBuilder.cpp \
     components/actions/AbstractTimedAction.cpp \
     components/actions/ActivateDeenergizer.cpp \
     components/actions/CalmDownEnemies.cpp \
@@ -85,13 +86,14 @@ HEADERS += \
     LifesDisplay.h \
     MainWindow.h \
     Message.h \
-    ObjectBuilder.h \
-    PathBuilder.h \
     ScoreDisplay.h \
     StartupSequence.h \
     AudioEngine.h \
     Game.h \
     GameStatus.h \
+    builders/ObjectBuilder.h \
+    builders/PathBuilder.h \
+    builders/TilemapBuilder.h \
     components/actions/AbstractTimedAction.h \
     components/actions/ActivateDeenergizer.h \
     components/actions/CalmDownEnemies.h \

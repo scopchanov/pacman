@@ -5,9 +5,10 @@
 #include "GameLevel.h"
 #include "Palette.h"
 #include "Grid.h"
-#include "PathBuilder.h"
 #include "Tilemap.h"
-#include "ObjectBuilder.h"
+#include "builders/ObjectBuilder.h"
+#include "builders/PathBuilder.h"
+#include "builders/TilemapBuilder.h"
 #include "components/actions/CalmDownEnemies.h"
 #include "components/actions/DeactivateDeenergizer.h"
 #include "components/actions/DeenergizePlayer.h"
@@ -90,41 +91,44 @@ void Configurator::configureGrid(const QJsonObject &json)
 
 void Configurator::configureWalls(const QJsonArray &jsonWalls)
 {
-	// TODO: Improve me
+	TilemapBuilder builder;
 
-	auto *walls{level()->walls()};
+	builder.setGrid(grid());
+	builder.setTilemap(level()->walls());
+	builder.setPen(QPen(palette()->color(CR_Wall), 4));
+	builder.setBrush(Qt::transparent);
 
-	walls->setGrid(grid());
-	buildTilemap(walls, jsonWalls, QPen(palette()->color(CR_Wall), 4),
-				 QBrush(Qt::transparent));
+	builder.build(jsonWalls);
 }
 
 void Configurator::configureDots(const QJsonArray &jsonDots)
 {
-	// TODO: Improve me
+	TilemapBuilder builder;
 
-	auto *dots{level()->dots()};
+	builder.setGrid(grid());
+	builder.setTilemap(level()->dots());
+	builder.setPen(QPen(Qt::transparent));
+	builder.setBrush(palette()->color(CR_Dot));
 
-	dots->setGrid(grid());
-	buildTilemap(dots, jsonDots, QPen(Qt::transparent), palette()->color(CR_Dot));
+	builder.build(jsonDots);
 }
 
 void Configurator::configureDeenergizer(const QJsonObject &json)
 {
 	auto *delaying{new Delaying()};
-	auto *actDeenergizePlayer{new DeenergizePlayer(delaying)};
-	auto *actCalmDownEnemies{new CalmDownEnemies(delaying)};
-	auto *actDeactivateDeenergizer{new DeactivateDeenergizer(delaying)};
+	auto *deenergizePlayer{new DeenergizePlayer(delaying)};
+	auto *calmDownEnemies{new CalmDownEnemies(delaying)};
+	auto *deactivateDeenergizer{new DeactivateDeenergizer(delaying)};
 	auto *deenergizer{level()->deenergizer()};
-	const QBrush &brush{palette()->color(CR_PlayerEnergized)};
 
 	delaying->setDuration(json.value("duration").toDouble());
-	delaying->addComponent(actDeenergizePlayer);
-	delaying->addComponent(actCalmDownEnemies);
-	delaying->addComponent(actDeactivateDeenergizer);
+	delaying->addComponent(deenergizePlayer);
+	delaying->addComponent(calmDownEnemies);
+	delaying->addComponent(deactivateDeenergizer);
 	delaying->setEnabled(false);
 
-	connect(delaying, &Delaying::progressChanged, level(), &GameLevel::foo);
+	connect(delaying, &Delaying::progressChanged,
+			level(), &GameLevel::energizedProgressChanged);
 
 	deenergizer->addComponent(delaying);
 	deenergizer->setFlags(QGraphicsItem::ItemHasNoContents);
@@ -223,13 +227,15 @@ void Configurator::createDoors(const QJsonArray &doors)
 
 void Configurator::createDoor(const QJsonObject &json)
 {
-	const QPen &pen{palette()->color(CR_Door), 6, Qt::SolidLine, Qt::RoundCap};
-	auto *door{createTile(PathBuilder::TT_Door, pen, Qt::transparent)};
-	auto *walls{level()->walls()};
+	TilemapBuilder builder;
 	int row{json.value("row").toInt()};
 	int column{json.value("column").toInt()};
+	const QColor &color{palette()->color(CR_Door)};
 
-	walls->setTile(row, column, door);
+	builder.setTilemap(level()->walls());
+	builder.setPen(QPen(color, 6, Qt::SolidLine, Qt::RoundCap));
+	builder.setBrush(Qt::transparent);
+	builder.setTile(row, column, PathBuilder::TT_Door);
 }
 
 void Configurator::createEnergizers(const QJsonArray &energizers)
@@ -286,42 +292,6 @@ void Configurator::createTeleporter(const QJsonObject &json)
 	teleporter->reset();
 
 	level()->addItem(teleporter);
-}
-
-void Configurator::buildTilemap(Tilemap *tilemap, const QJsonArray &matrix,
-								const QPen &pen, const QBrush &brush)
-{
-	// TODO: Improve me
-
-	int m{0};
-
-	for (const auto &row : matrix) {
-		const QJsonArray &columns{row.toArray()};
-		int n{0};
-
-		for (const auto &column : columns) {
-			const QJsonObject &element{column.toObject()};
-			auto *tile{element.isEmpty() ? nullptr
-										 : createTile(element["index"].toInt(),
-													  pen, brush)};
-
-			tilemap->setTile(m, n, tile);
-			n++;
-		}
-
-		m++;
-	}
-}
-
-QGraphicsItem *Configurator::createTile(int index, const QPen &pen, const QBrush &brush)
-{
-	auto *tile{new QGraphicsPathItem()};
-
-	tile->setPath(PathBuilder::tilePath(PathBuilder::TileType(index)));
-	tile->setPen(pen);
-	tile->setBrush(brush);
-
-	return tile;
 }
 
 int Configurator::key2role(const QString &key) const
