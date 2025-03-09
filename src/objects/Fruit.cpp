@@ -35,3 +35,8 @@ int Fruit::objectType() const
 {
 	return OBJ_Fruit;
 }
+
+void Fruit::reset()
+{
+	deleteLater();
+}

@@ -9,6 +9,8 @@ public:
 	explicit Fruit(AbstractGameObject *parent = nullptr);
 
 	int objectType() const override;
+
+	void reset() override;
 };
 
 #endif // FRUIT_H

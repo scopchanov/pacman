@@ -4,9 +4,6 @@
 #include <Scene.h>
 
 class LevelState;
-class Clock;
-class Palette;
-class Grid;
 class Tilemap;
 class Player;
 class Enemy;

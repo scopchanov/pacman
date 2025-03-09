@@ -2,7 +2,9 @@
 #include "Clock.h"
 #include "LevelState.h"
 #include "Tilemap.h"
+#include "components/actions/DeleteGameObject.h"
 #include "components/actions/control/ControlEnemy.h"
+#include "components/behaviors/Delaying.h"
 #include "objects/Enemy.h"
 #include "objects/Fruit.h"
 #include "objects/Player.h"
@@ -84,6 +86,15 @@ void GameLevel::onDotEaten()
 void GameLevel::createFruit()
 {
 	auto *fruit{new Fruit()};
+	auto *delaying{new Delaying()};
+	auto *deleteGameObject{new DeleteGameObject(delaying)};
+
+	deleteGameObject->setGameObject(fruit);
+
+	delaying->addComponent(deleteGameObject);
+	delaying->setDuration(9.5);
+
+	fruit->addComponent(delaying);
 
 	addItem(fruit);
 }
