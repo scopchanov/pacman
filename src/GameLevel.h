@@ -37,7 +37,7 @@ private:
 	Deenergizer *_deenergizer;
 
 signals:
-	void energizedProgressChanged(qreal a);
+	void energizedProgressChanged(qreal value);
 };
 
 #endif // GAMELEVEL_H

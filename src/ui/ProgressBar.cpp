@@ -17,6 +17,10 @@ ProgressBar::ProgressBar(QWidget *parent) :
 void ProgressBar::setValue(qreal value)
 {
 	_value = value;
+
+	if (_value >= 1)
+		_value = 0;
+
 	update();
 }
 
