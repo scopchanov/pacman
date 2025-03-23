@@ -26,5 +26,5 @@ void EatFruit::eatFruit(Fruit *fruit)
 {
 	fruit->deleteLater();
 
-	emit fruitEaten();
+	emit fruitEaten(fruit->pos());
 }

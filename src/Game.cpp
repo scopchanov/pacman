@@ -105,21 +105,21 @@ void Game::onDotEaten()
 	_level->onDotEaten();
 }
 
-void Game::onEnemyEaten()
+void Game::onEnemyEaten(const QPointF &position)
 {
 	int points{sender()->property("points").toInt()};
 
-	rewardBonus(points, AudioEngine::SND_EnemyEaten);
+	rewardBonus(points, position, AudioEngine::SND_EnemyEaten);
 }
 
-void Game::onFruitEaten()
+void Game::onFruitEaten(const QPointF &position)
 {
-	rewardBonus(10, AudioEngine::SND_EnemyEaten);
+	rewardBonus(10, position, AudioEngine::SND_EnemyEaten);
 }
 
-void Game::onPlayerEnergized()
+void Game::onPlayerEnergized(const QPointF &position)
 {
-	rewardBonus(5, AudioEngine::SND_DotEaten);
+	rewardBonus(5, position, AudioEngine::SND_DotEaten);
 }
 
 void Game::onPlayerWon()
@@ -142,13 +142,13 @@ void Game::onFuneralTunePlayed()
 	}
 }
 
-void Game::rewardBonus(int points, int sfxIndex)
+void Game::rewardBonus(int points, const QPointF &position, int sfxIndex)
 {
-	showBonusText(points, 2);
+	showBonusText(points, position, 2);
 	rewardPoints(points, sfxIndex);
 }
 
-void Game::showBonusText(int points, qreal duration)
+void Game::showBonusText(int points, const QPointF &position, qreal duration)
 {
 	auto *text{new BonusText()};
 	auto *delaying{new Delaying()};
@@ -161,7 +161,7 @@ void Game::showBonusText(int points, qreal duration)
 
 	text->addComponent(delaying);
 	text->setText(QString::number(points));
-	text->setPos(_level->player()->pos());
+	text->setPos(position);
 
 	_level->addItem(text);
 }

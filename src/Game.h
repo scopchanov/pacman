@@ -34,16 +34,16 @@ public slots:
 	void resume();
 	void reset();
 	void onDotEaten();
-	void onEnemyEaten();
-	void onFruitEaten();
-	void onPlayerEnergized();
+	void onEnemyEaten(const QPointF &position);
+	void onFruitEaten(const QPointF &position);
+	void onPlayerEnergized(const QPointF &position);
 	void onPlayerWon();
 	void onPlayerDied();
 	void onFuneralTunePlayed();
 
 private:
-	void rewardBonus(int points, int sfxIndex);
-	void showBonusText(int points, qreal duration);
+	void rewardBonus(int points, const QPointF &position, int sfxIndex);
+	void showBonusText(int points, const QPointF &position, qreal duration);
 	void rewardPoints(int points, int sfxIndex);
 	void stopGame(int sfxIndex);
 	void playSoundEffect(int sfxIndex);

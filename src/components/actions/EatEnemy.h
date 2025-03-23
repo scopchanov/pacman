@@ -25,7 +25,7 @@ private:
 	int _enemiesEaten;
 
 signals:
-	void enemyEaten();
+	void enemyEaten(const QPointF &position);
 };
 
 #endif // EATENEMY_H

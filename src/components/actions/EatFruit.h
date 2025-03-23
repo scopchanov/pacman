@@ -20,7 +20,7 @@ private:
 	void eatFruit(Fruit *fruit);
 
 signals:
-	void fruitEaten();
+	void fruitEaten(const QPointF &position);
 };
 
 #endif // EATFRUIT_H

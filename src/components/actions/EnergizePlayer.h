@@ -15,7 +15,7 @@ protected:
 	void performTasks() override;
 
 signals:
-	void playerEnergized();
+	void playerEnergized(const QPointF &position);
 };
 
 #endif // ENERGIZEPLAYER_H

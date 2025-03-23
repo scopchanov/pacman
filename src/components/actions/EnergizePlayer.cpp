@@ -33,5 +33,5 @@ void EnergizePlayer::performTasks()
 	Game::ref().level()->deenergizer()->activate();
 	gameObject()->deleteLater();
 
-	emit playerEnergized();
+	emit playerEnergized(gameObject()->pos());
 }

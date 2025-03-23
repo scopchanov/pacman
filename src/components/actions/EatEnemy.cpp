@@ -40,7 +40,7 @@ void EatEnemy::eatEnemy(Enemy *enemy)
 
 	setProperty("points", points());
 
-	emit enemyEaten();
+	emit enemyEaten(enemy->pos());
 }
 
 int EatEnemy::points() const
